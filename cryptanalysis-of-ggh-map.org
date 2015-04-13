@@ -218,7 +218,7 @@ following a discrete Gaussian distribution. We also skipped several tests from t
 specifications. However, this simplified variant is sufficient to explain the attack of Hu and Jia.
 
 The attack proceeds in two steps. The *first step* was already known as the *“weak discrete log
-attack”*. Say, we have some level-$1$ encoding $u_0 = e_0 \cdot y + \rho_{00} x_0 + \rho_{01} x_1$.
+attack”*. (*Update:* Hu and Jia do not present the first step of their attack this way. Instead, they give another way of computing a “kind of” level-0 encoding from a, say, level-1 encoding. Damien Stéhle was the first to point out to me that this step can be replaced by the “normal” weak discrete log attack.)  Say, we have some level-$1$ encoding $u_0 = e_0 \cdot y + \rho_{00} x_0 + \rho_{01} x_1$.
 We can compute:
 
 \[v_0 = \left(u_0 \cdot x_0 \cdot y^{\kappa-2} \cdot p_{zt}\right) \mod q = e_0\, b_0\, h + \xi_0 g\]
@@ -331,3 +331,4 @@ def run(n, kappa):
     # now run the attack
     print ggh_break(params, U)
 #+END_SRC
+
