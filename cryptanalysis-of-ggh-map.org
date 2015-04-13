@@ -1,0 +1,333 @@
+#+BLOG: wordpress
+#+POSTID: 1140
+#+DATE: [2015-04-13 Mon 14:39]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography, sage
+#+TAGS: cryptography, cryptanalysis, multilinear maps, lattice-based cryptography, sage
+#+DESCRIPTION:
+#+TITLE: Sage Code for GGH Cryptanalysis by Hu and Jia
+
+Recently, Yupu Hu and Huiwen Jia put a [[https://eprint.iacr.org/2015/301][paper]] on the [[https://eprint.iacr.org/][Cryptology ePrint Archive]] which describes a
+successful attack of the GGH (and GGHLite) [[https://eprint.iacr.org/2012/610][candidate multilinear map]]. The attack does not try to
+recover the secret $g$ or any other secret parameter of the map. Instead, it solves the Extraction
+$\kappa$-graded CDH (Ext-GCDH) problem directly.
+
+#+HTML: <!--more-->
+
+For GGHLite the Ext-GCDH problem is defined as computing the higher order bits of $v = h/g \cdot
+\prod_{i=0}^{\kappa} e_i$ from $u_i = e_i \cdot y + \rho_{i0} x_0 + \rho_{i1} x_1$, $x_0 = b_0 \cdot
+g/z$, $x_1 = b_1 \cdot g/z$, $y = (1+a \cdot g)/z$ and $p_{zt} = h \cdot z^\kappa/g$. 
+
+All elements involving a $z$ live in $R_q = \mathbb{Z}_q[x]/(x^n+1)$ where $n$ is a power of two,
+the other elements live in $R = \mathbb{Z}[x]/(x^n+1)$. All elements except for $z$ and $h$ are
+small: $z$ is random in $R_q$ and $\Vert h \Vert \approx \sqrt{q}$. We define “levels” by the powers
+of $z$, e.g. $(e_0 +cg)/z^i$ is a level-$i$ encoding of $e_0$ for some $c \in R$.
+
+In a non-interactive key exchange ([[http://www.nike.com][NIKE]]) based on GGH-like maps, the higher order bits of the value
+$v$ are essentially the shared secret. Let’s look at a simple [[http://sagemath.org][Sage]] implementation of non-interactive
+key echange based on a GGH-like multilinear map.
+
+#+BEGIN_SRC python
+class NIKESloppy:
+    """
+    A sloppy implementation of NIKE for testing.
+
+    By "sloppy" we mean that we do not care about distributions,
+    verifying some properties or exact sizes.
+    """
+
+    def __init__(self, n, kappa):
+        """
+        Initialise a new sloppy GGHLite instance.
+
+        :param n: dimension (must be power of two)
+        :param kappa: multilinearity level `κ`
+        """
+        self.n = ZZ(n)
+        if not n.is_power_of(2):
+            raise ValueError
+        self.kappa = ZZ(kappa)
+
+        self.R = ZZ["x"]
+        self.K = CyclotomicField(2*n, "x")
+        self.f = self.R.gen()**self.n + 1
+
+        self.sigma = self.n
+        self.sigma_p = round(self.n**(ZZ(5)/2) * self.sigma)
+        self.sigma_s = round(self.n**(ZZ(3)/2) * self.sigma_p**2)
+
+        self.q = next_prime((3*self.n**(ZZ(3)/2) * self.sigma_s*self.sigma_p)**(3*self.kappa))
+        self.Rq = self.R.change_ring(IntegerModRing(self.q))
+
+        g = self.discrete_gaussian(self.sigma)
+        # we enforce primality to ensure we can invert mod ⟨g⟩
+        while not self.K(g).is_prime():
+            g = self.discrete_gaussian(self.sigma)
+
+        h = self.discrete_gaussian(sqrt(self.q))
+        z = self.Rq.random_element(degree=n-1)
+
+        # encoding of one
+        a = self.discrete_gaussian(self.sigma_p/self.sigma)
+        self.y = ((1+a*g) * z.inverse_mod(self.f)) % self.f
+
+        # encoding of zero
+        b0 = self.discrete_gaussian(self.sigma_p/self.sigma)
+        self.x0 = ((b0*g) * z.inverse_mod(self.f)) % self.f
+
+        # encoding or zero
+        b1 = self.discrete_gaussian(self.sigma_p/self.sigma)
+        self.x1 = ((b1*g) * z.inverse_mod(self.f)) % self.f
+
+        # zero testing parameter
+        self.pzt = h*z**kappa * self.Rq(g).inverse_mod(self.f)
+
+        # we migh as well give these to the attacker, as they can be computed
+        # easily
+        self.G = self.canonical_basis(g)
+        self.I = self.K.ideal([self.R(row.list()) for row in self.G.rows()])
+#+END_SRC
+
+Logarithms of Euclidean norms is useful as “small” and “not-so-small” are what distinguishes
+between secret and not-so-secret.
+
+#+BEGIN_SRC python
+    @staticmethod
+    def norm(f):
+        "Return log of Euclidean norm of `f`"
+        return log(max(map(abs, f)), 2.).n()
+#+END_SRC
+
+It is easy to compute a canonical basis for $\langle g \rangle \in R$ from publically available
+information. In this simplified version we simply give this canonical basis to the attacker.
+
+#+BEGIN_SRC python
+    def canonical_basis(self, g):
+        "Return HNF of g"
+        x = self.R.gen()
+        n = self.n
+        G = [x**n + ((x**i * g) % self.f) for i in range(n)]
+        G = [r.list()[:-1] for r in G]
+        G = matrix(ZZ, n, n, G)
+        return G.hermite_form()
+#+END_SRC
+
+It will be useful below to compute short remainders modulo some number ring element. We use Babai’s
+rounding trick for that.
+
+#+BEGIN_SRC python
+    def rem(self, h, g):
+        """
+        Compute a small remainder of `h` modulo `g`
+
+        :param h: a polynomial in ZZ[x]/x^n+1
+        :param g: a polynomial in ZZ[x]/x^n+1
+        :returns: small representative of `h mod g`
+
+        """
+        g_inv = g.change_ring(QQ).inverse_mod(self.f)
+        q = (h * g_inv) % self.f
+        q = self.R([round(c) for c in q.coefficients()])
+        r = (h - q*g) % self.f
+        return r
+#+END_SRC
+
+We do not care about distributions of elements in our toy example, so we simply return random
+polynomials where the coefficients are bounded by $\sigma$.
+
+#+BEGIN_SRC python
+    def discrete_gaussian(self, sigma):
+        """
+        sample element with coefficients bounded by sigma
+
+        .. note:: this is obviously *not* a discrete Gaussian, but we don't care here.
+        """
+        sigma = round(sigma)
+        return self.R.random_element(x=-sigma, y=sigma, degree=self.n-1)
+#+END_SRC
+
+We need a function to sample new encodings:
+
+#+BEGIN_SRC python
+    def sample(self):
+        """
+        Sample level-0 and level-1 encodeing.
+        """
+        e0 = self.discrete_gaussian(self.sigma_p)
+        r0 = self.discrete_gaussian(self.sigma_s)
+        r1 = self.discrete_gaussian(self.sigma_s)
+
+        u0 = ((e0*self.y + r0*self.x0 + r1*self.x1)) % self.f
+        return e0, u0
+#+END_SRC
+
+For the final step we need to extract a representation over the Integers from our representation
+modulo $q$. Sage does not normalise to $[-\lfloor q/2 \rfloor,\dots, \lfloor q/2 \rfloor]$ but to
+$[0,\dots,q)$. We work around this behaviour. Also, lower order bits are noisy so we discard them.
+
+#+BEGIN_SRC python
+    def extract(self, p, mul_pzt=True, drop_noise=True):
+        """
+        Convert mod q element to element over the integers
+
+        :param p: a polynomial in ZZ[x]/x^n+1
+        :param mul_pzt: multiply by pzt
+        :param drop_noise: remove lower order terms
+        """
+        p = p % self.f
+        if mul_pzt:
+            p = (self.pzt*p) % self.f
+        q = parent(p).base_ring().order()
+        f = []
+        for c in p.change_ring(ZZ).list():
+            if c<q/2:
+                f.append(c)
+            else:
+                f.append(c-q)
+
+        if drop_noise:
+            f = [f[i] >> floor(log(self.q//2, 2)) for i in range(self.n)]
+        return ZZ['x'](f)
+
+#+END_SRC
+
+Finally, we implement NIKE: we multiply $\kappa$ level-1 encodings and our secret level-0 encoding
+to produce a level-$\kappa$ encoding of $\prod_{i=0}^\kappa e_i$ from which we then extract our
+shared key.
+
+#+BEGIN_SRC python
+    def __call__(self, e0, U):
+        """
+        Run NIKE with `e_0` and `U`
+
+        :param e0: a level-0 encoding
+        :param U: κ level-1 encodings
+        """
+        if len(U) != self.kappa:
+            raise ValueError
+
+        t = prod(U) % self.f
+        t = t * e0 % self.f
+        t = self.extract(t)
+        return tuple(t.list())
+#+END_SRC
+
+Let me stress once more that the above is not a proper implementation of a GGH-like candidate
+multilinear maps. For starters, the method called ~discrete_gaussian~ does not return elements
+following a discrete Gaussian distribution. We also skipped several tests from the GGH and GGHLite
+specifications. However, this simplified variant is sufficient to explain the attack of Hu and Jia.
+
+The attack proceeds in two steps. The *first step* was already known as the *“weak discrete log
+attack”*. Say, we have some level-$1$ encoding $u_0 = e_0 \cdot y + \rho_{00} x_0 + \rho_{01} x_1$.
+We can compute:
+
+\[v_0 = \left(u_0 \cdot x_0 \cdot y^{\kappa-2} \cdot p_{zt}\right) \mod q = e_0\, b_0\, h + \xi_0 g\]
+
+for some $\xi_0$. Note that the right hand side has no modular reduction modulo $q$. Also note that  $e_0\, b_0\, h + \xi_0 g \equiv  e_0\, b_0\, h \mod \langle g \rangle$, i.e. we have a representative of $e_0\, b_0\, h$.
+
+Similarly, we can compute:
+
+\[v_{-1} = \left(x_0 \cdot y^{\kappa-1} \cdot p_{zt}\right) \mod q = b_0\, h + \xi_1 g  \equiv  b_0\, h \mod \langle g \rangle \]
+
+Now, assume $v_{-1}$ is invertible modulo $\langle g\rangle$, then we can compute $\tilde{v}_{-1} =
+v_{-1}^{-1} \mod \langle g \rangle$ and $\tilde{v}_{-1} \cdot v_0 \mod \langle g \rangle \equiv e_0
+\mod \langle g \rangle$. In other words, we can compute a representative of $e_0$ “kind of” at
+level-0. Here’s some Sage code implementing this step:
+
+#+BEGIN_SRC python
+def weak_dlog(params, u):
+    """
+    Weak discrete log attack from [EC:GarGenHal13]_
+
+    :param params: GGH parameters
+    :param u: a level-1 encoding
+    """
+    kappa = params.kappa
+    v0 = params.extract(u*params.x0*params.y**(kappa-2), drop_noise=False)
+    vn = params.extract(params.y**(kappa-1)*params.x0, drop_noise=False)
+
+    v0 = params.K(v0).mod(params.I)
+    vn = params.K(vn).mod(params.I)
+
+    r =  (v0 * vn.inverse_mod(params.I)).mod(params.I)
+    return r.polynomial().change_ring(ZZ)
+#+END_SRC
+
+
+Now, compute representivatives $v_i$ for all $i \in \{0,\dots,\kappa\}$ and finally $\eta =
+\prod_{i=0}^{\kappa} v_i$. This produces a “kind of” level-0 encoding of $\prod_{i=0}^{\kappa} e_i$,
+where “kind of” stands for “not small”. If $\eta$ was small, we could simply compute $\eta \cdot
+y^{\kappa} \cdot p_{zt}$ to solve the Ext-GCDH problem. However, $\eta$ is not small.
+
+This is where Hu and Jia come in with a clever and remarkably simple *step two*. They define:
+
+- $Y   = \left(y^{\kappa-1} x_1     p_{zt}\right) \mod q = h \cdot (1+ag)^{\kappa-1}\cdot b_1$
+- $X_i = \left(y^{\kappa-2} x_i x_1 p_{zt}\right) \mod q = h \cdot (1+ag)^{\kappa-2}\cdot b_1 \cdot b_i\ cdot g$
+
+Again, note that the right hand sides have no modular reductions modulo $q$ because they are “somewhat short”.
+
+Recall that $\eta = \prod_{i=0}^{\kappa} e_i + \zeta_0 g$ for some $\zeta_0 \in R$ and compute:
+
+1. $\eta' := Y \cdot \eta= Y\cdot\prod_{i=0}^\kappa e_i + \zeta_1\, b_1\, g$. Note that $Y$ is a
+   multiple of $b_1\, g$.
+
+2. $\eta'' := \eta' \mod X_1 = Y\cdot\prod_{i=0}^\kappa e_i + \zeta_2\, b_1 g$ which holds because $X_1$
+   is a multiple of $b_1\,g$. Note that $\eta''$ has roughly the same size as $X_1$, which is
+   “somewhat short”.
+
+3. $\eta''' := \eta' \cdot y \cdot (x_1)^{-1} \eta'' \mod q$ This effectively replaces the factor
+   $x_1$ in $Y$ by $y$. Consequently, we have $$\eta''' = y^\kappa\cdot p_{zt} \cdot
+   \prod_{i=0}^\kappa e_i + \zeta_2 (1+ag) \mod q$$ where the second summand is small. In other
+   words, we have computed $$h/g\cdot \prod_{i=0}^\kappa e_i + \textnormal{something small} \mod
+   q,$$ i.e. we have solved the Ext-GCDH problem.
+
+Here’s some Sage code implementing these three steps:
+
+#+BEGIN_SRC python
+def ggh_break(params, U):
+    """
+    Attack from [EPRINT:HuJia14]_
+
+    :param params: GGH parameters
+    :param U: κ+1 level-1 encodings
+    """
+    if len(U) != params.kappa + 1:
+        raise ValueError
+
+    kappa = params.kappa
+
+    # large "level-0" encodings of U
+    V = [weak_dlog(params, u) for u in U]
+
+    # large "level-0" encoding of prod(U)
+    eta = prod(V) % params.f
+
+    # Y = (b_0 ⋅ h ⋅ (1+ag))^(κ-2) ⋅ (1+ag)
+    Y = params.extract(params.y**(kappa-1) * params.x0, drop_noise=False)
+    # X = (b_0 ⋅ h ⋅ (1+ag))^(κ-2) ⋅ (b_0⋅g)
+    X = params.extract(params.y**(kappa-2) * params.x0**2, drop_noise=False)
+
+    # η'' = (Y ∏ u_i) mod X
+    eta_ = (eta * Y) % params.f
+    eta__ = params.rem(eta_, X)
+
+    # η''' = η'' ⋅ y/x
+    xy = params.y * params.x0.inverse_mod(params.f) % params.f
+    eta___ = params.extract(xy * eta__, mul_pzt=False)
+    return tuple(eta___.list())
+#+END_SRC
+
+Finally, let’s put everything together and [[http://aleph.sagemath.org/?z=eJylWc1y28gRvqtK7zCRKmUAosAf2YmLtXKtV6ElrX-ylizHtkoLDcEBODE4Aw0AidQ9VanKIY-w1-wTpMrX3P0QfpJ0zwDED0FZ3mXJEojp7unu6Z-vx9tk19klvpxwEQ5Jlga7j_HN5sbW1tbmxoFaxCkVNFokPCEyIIeHR-QljTc3NjeOBTkf_XRy_OrN8Cj7kdP-owuPUEFomlL_IwH6WMlYJmxCbqbcn8ImszhiKYsWZKzoR5aQdMo2N3wqJnxCU0ZmWZTyiAtGFZnRGBhEkqrMT7kUJFByBhseDA-pOmTiiEb9Pb3hZHMDX7-g4jRl8NN_eOG55M0UFAh4xEjIr2ErSq4yDmpNeTiN2DWLCEdtZkykVMuXweZGikxGfxdNfHr25uivJ6dDfN4Fu1XKBXkajRXzpyn5bqZfKJq_2AnD6fehlCGIpTxywd4nyHkyejY6Gb06GBlBrrtiBjml4u90RuBd2CEHivKQwGKqFh1yOqWcABm75i5xDpbOelk6a3ODtHzgmBLjteMJoxF5AYZxnyWOS0aZkj4eLRn0-ntuO_80TeNk2O2yWHGRupz6ypUq7ALLoPunfq9iS9X35OmEoVqwnwgjyZMO-QudcSYIrE-j__3aISdSf-EiYNEEjIKgesFTNiQvpWLtyoyCgPsgJK3afW8TH367iQ-7Dx__eWliNczBxPdZnJGjDIMP_vAbMO5HfTpr0sVZs7-ml5EMF4T9hCqQp8qfQrwOyQmLpdLKP-ru9frfrH_OpbN4c0P7KKEhc01CZYq5zEQ_5gHuFFMF36qkQSZ06iUuaFiQwWM7jYRkVgVVcqXSDgkiKVWVGrQME5dGUUH34UOHHIuUhUy9lJMTWIbwX_iRTOWM-884xEeHvH7dIkPxdFpIEWyeeuCCGasSzmiq-NxdFhG51M6s1Gh54utfnr_0h5ITdB0UqIgmCXl1_Hx0Gsk4XgzNYWjX4sNTkuj3qxWF5JFNAtg8ZQlUi1AXFmT7YUG2DOMWuYHix6B2plOa4peJJEKmxIczIXQss5RMOFjBx5l2dsdIuGaKBwuQSRI5Y7rcMqhIUO1gOzanPhwEv2WJW1HYPE5YQDyPC556npWwKOgQ0SEfaRxTe1jG2tJE_BwDNacRT0AlcPlNYXVhIwc_U-GzpYH4GUJYQWETQzAAPJOgX6xZlqRkDArLGwgZcFN6I-0VHq3NsNoUeLogpnZffv50uUZNtMYVZB9iyxIVqTzQLhUuTzy9sScDa1C1Fj9QesG-tzTK2EgpqRpytU5GtnFW1VZNcaJXz7fmWxeNleew0ohta-CA24HWbtAGQGvEuSETlu04uVk7pL-yZcLDGS0YRNuiF8OykpmYWIbIcSww4ZHdHdjEqRA29TDcSSv33gq3FzvOYNUlV8BepqhlJO05X5GVOFXB4IGCxTi-qenJVekyfwqth3lYKax6dTEGXNk1JcOCE3LMVwBQvJBmScKpsFo9s40ZygTktI9Jx2eQFBCZqYSXCVRWXAZQAwkBCQrVRk7Il1_-E3755ddSBiAigCYYkCY2rNDWgak91AzK-ypYck3v4IDSXHFDwXG7dN-Vq6CvyZmXNwhrwkLF2L7Y7df22AZzDW7EFJai0rnpfRT24u76wFuABMvq71AnxLi4dbUzE-aBN42MwLbJH_NsWa_WLVOyXBv3frdi857WbNz7XYqppmL9369Y3yjW_w2KoTJFfyK6-oIGzdoX36aww9S5dRxTBp0iYHTwru5W3wNbHGBvQhN4BASAsBwHACi3kDnwkANvpjpIAy8WOougT-DgkKVsUvMlTXi0aKh4WHgRGKXgPo28MdAloGCD8rigfO5yhI7WubEFqtONCz0utcBZ2LXhOyRyLt6Fb4llX9jVPppQbPva6LW981TTmOa129O40Tz3TVAwAwxaedk9g7ZiorofS1JluV8EJrVTzUwysJ6TJ-0ObO0UeQJf-vmXfi30lnsyAKICDOyApKpL21XoEBP465xsDoIUuPYGEaIvWTE5JGSMnQfG0fHCSKqaAjAfqjEbDokeAhG-j6-5zBKYVrFM06VSMKUZpToE4JhBa-JBDtYAA7N1B1n06byVNpI4d0bewholeL6_q-k7ZLGfP-RV2XTRSmn-PkH46UMGT-WkdKmQambVA_TE7IjgHirlKPMjTAWhSfHNZXC5taIfUFszOod_sUXHMNxBVemQgWu7AFOqZ9hMQXOCYZsGR6-e4X5hZbd5AwCVK6IF6WDen88dB_GRZcEDh-IUliFnUpljIiuEBgAMLxrcKs_68-Fu_8JkPpIfNujM6GDh3CL0z-HqER66EAUzgMRegE6veUWxWe6JadMZ1VA5MBUPoi6Z4bik8EYBYlej5cvpJYKKLJLkMrxsQdvTITDGMloIQJowFoMdAEnnF935z2Knv0Ie3pfc2JcMl0rFCsq3HneglmvNNNqpK1UzLISh4xr8GNZA2uvXaxpIwYbgzprioSJ_Wy0p4Z91bhLMN6fuoz1XbrUQmAq-PDUje5dcOeEdVUpVjxHQrILxKj_KuINTigcNcv-NyhjkJkxinpAwSugXdxxzCRGvloULgWT-KGFZ90ZuYGzSctrxt512rmk-WMV4Gbcg8GKFsDRiiPEHqkDy64FNYSACQJgla-zCcSNucSXMYMX2dYSLDFaBMpx43QGbOwortl2oKXns2K7Wp1oicHo6ryTuMgziWtR9-GDnSd_QBtT0v7vqDhqvtSgXoA_T0VVfZBH46S763ata64Q9Kg6uM2r9g3N-QZ48MZcoFpZdA9q73QHUW3ulpJmaWK1reeBCMDyYP7iwArs-_UNpjpbTP_bgs7VxepIJff9heuol83qXGsNcnrWVH9bDiCywTgF6V8jOhuTzpzoMwqudNSqAvyJoBGc2-cN-ZRb_6vheriN6xUsdlLEaXriaQoEBtNW-qN8VeZ-uVv00QxSYFuDRXB2hp28Y_ehN8AC13dAyM7t5hfQ3oCkBBnbk_Ba9_da7MKuoAFruUN82LtF7UiPJyiPpN45kqURxuWHEGf_mF0298nXhgszJX8x7xdMChnTNtTuwa0XwGYXsyF12LVZlrfD37VJ6q6RVvZ5b1z3bxe6Rvzhu2RCIxAqRIcM2QEAGxMC1qHWjJWmr-KI9uGUJhprUqDNlNITh1BsrOO5lNJytRMPT2tnX755_w9nrRNvpr0u15ba1FKsGAd46VRJtXZK1x49Z2yYRVSEjW3lZ2Cq1QOBwZqjeYuFryxdd7DIsdmcXXxeJEvNMN6QspUXyv8XkzzUMSlHvsQGNvR758q9_kKn-jbcPoW3_bH3-BPFceWV43t8rjCGa7g5ks_27-20PFPC30ODdPTQY1DRwnMEd2bRNPv_3wQPU5D358s9_k8zjtoYm75Ze9HAVvemQ93VHFgReqRRiXXzVIe8ae-Amei-0atGdm7X5ouRdVNVuy8ZgzfbeqlPmKEwvljit6v5aATdCVqu4yoTVvCI3-8CG5f8NlDSGZHSGIZ0rlN8UrLRuzbDTL3r3CFlYdt4zcwjTcT86y1fP8tV-6-o2CUBzGFM-MqLvInXbhmnWl0oxP-0g2gNbBKYJB6x5w_384k7_H1JukzWC3aE0nfeHBVRuLMOUhOs4LS2jWMgblF25zKmytlU-9C569nGH7NlI-n8Jp9PH&lang=sage][run the attack]]. If everything is well, then the following code should print the same tuple three times.
+
+#+BEGIN_SRC python
+def run(n, kappa):
+    params = NIKESloppy(n, kappa)
+    EU = [params.sample() for i in range(kappa+1)]
+    E = [eu[0] for eu in EU]
+    U = [eu[1] for eu in EU]
+    # fist make sure NIKE is correct, by running it twice
+    print params(E[0], U[1:])
+    print params(E[-1], U[:-1])
+    # now run the attack
+    print ggh_break(params, U)
+#+END_SRC
