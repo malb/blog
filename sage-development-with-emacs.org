@@ -1,0 +1,204 @@
+#+BLOG: wordpress
+#+POSTID: 1124
+#+DATE: [2015-02-12 Thu 14:23]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: sage, emacs
+#+TAGS: sage, emacs,
+#+DESCRIPTION:
+#+TITLE: Sage Development with Emacs
+A while back I [[https://martinralbrecht.wordpress.com/2014/11/03/c-development-with-emacs/][described]] my (then current) setup to develop C code with Emacs. The other programming language I tend to spend a lot of time with is Python, specifically [[http://sagemath.org][Sage]]’s Python. Here’s my Emacs setup for writing Sage code. For starters, it makes sense to [[https://github.com/antonj/Highlight-Indentation-for-Emacs/][highlight indentation]] in Python.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package highlight-indentation
+     :ensure t)
+#+END_SRC
+
+I use [[https://github.com/proofit404/anaconda-mode][anaconda-mode]] for auto-completion and stuff, it runs [[https://github.com/tkf/emacs-jedi][jedi]] for me. In particular it offers:
+
+- M-. Goto definition for thing at point.
+- M-, Switch to buffer of most recent marker.
+- M-? Show documentation for context at point.
+- M-r Show usage for thing at point.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package anaconda-mode
+    :ensure t
+    :diminish anaconda-mode
+    :config (bind-key "M-," #'anaconda-nav-pop-marker anaconda-mode-map))
+#+END_SRC
+
+#+HTML: <!--more-->
+
+I use [[https://github.com/stakemori/sage-shell-mode][sage-shell-mode]] for running Sage from within Emacs. It’s available on MELPA and hence easier to keep around than [[https://bitbucket.org/gvol/sage-mode/src][sage-mode]] when we switch Sage installs all the time. Unfortuantely, [[https://company-mode.github.io/][company-mode]] didn’t immediately work for =sage-shell-mode= for me, so I reverted to [[https://github.com/stakemori/auto-complete-sage][auto-complete-sage]] for now. I should look into that.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package sage-shell-mode
+    :ensure t
+    :init (progn
+            (use-package auto-complete
+              :init (progn
+                      (setq ac-delay 0.3
+                            ac-auto-start 2)))
+            
+            (eval-after-load "auto-complete"
+              '(setq ac-modes (append '(sage-shell-mode sage-shell:sage-mode) ac-modes)))
+            (add-hook 'sage-shell:sage-mode-hook 'ac-sage-setup)
+            (add-hook 'sage-shell:sage-mode-hook 'auto-complete-mode)
+            (add-hook 'sage-shell-mode-hook 'ac-sage-setup)
+            (add-hook 'sage-shell-mode-hook 'auto-complete-mode)
+            (setq ac-sage-show-quick-help t)))
+#+END_SRC
+
+My files tend to be =.py= files not =.sage=, so to edit a file in =sage-shell-mode= I could put =# -*- mode: sage-shell:sage -*-= on top. However, I usually don’t do that but use =python-mode= directly. For writing Sage code in =python-mode= my setup is as follows.
+
+In =.emacs.d= I created a directory =sage-python/bin= which contains a file called =python= with the following content:
+
+#+BEGIN_SRC bash
+#!/bin/bash
+sage -python "$@"
+#+END_SRC
+
+Then, in each project where we want to use Sage, we can add a =.dir-locals.el= file at the top level with
+
+#+BEGIN_SRC emacs-lisp  :tangle no
+;;; Directory Local Variables
+;;; See Info node `(emacs) Directory Variables' for more information.
+((python-mode . ((python-shell-virtualenv-path . "$HOME/.emacs.d/sage-devel-python/"))))
+#+END_SRC
+
+which will tell =anaconda-mode= to run Sage’s python process instead of the system-wide one. That is, =anaconda-mode= looks at =python-shell-virtualenv-path= to determine which Python to run. This way, auto completion and symbol lookup for Sage objects and functions works just as with any other Python code base.
+
+Finally, some pretty generic Python setup stuff.
+
+I use the “onetwo” style to fill docstrings in Python, i.e.:
+
+#+BEGIN_SRC python :tangle no
+"""Process foo, return bar."""
+
+"""
+Process foo, return bar.
+
+If processing fails throw ProcessingError.
+
+"""
+#+END_SRC
+
+and I use ipython if availabe.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package python-mode
+    :init (progn
+            (add-hook 'python-mode-hook 'highlight-indentation-mode)
+            (add-hook 'python-mode-hook 'anaconda-mode)
+            (add-hook 'python-mode-hook 'eldoc-mode)
+            (add-hook 'python-mode-hook 'sphinx-doc-mode))
+
+    :config (progn
+              (setq-default python-indent 4)
+              (setq python-fill-docstring-style 'onetwo)
+
+              (when (executable-find "ipython")
+                (setq
+                 python-shell-interpreter "ipython"
+                 python-shell-interpreter-args ""
+                 python-shell-prompt-regexp "In \\[[0-9]+\\]: "
+                 python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
+                 python-shell-completion-setup-code
+                 "from IPython.core.completerlib import module_completion"
+                 python-shell-completion-module-string-code
+                 "';'.join(module_completion('''%s'''))\n"
+                 python-shell-completion-string-code
+                 "';'.join(get_ipython().Completer.all_completions('''%s'''))\n"))))
+#+END_SRC
+
+I use [[https://github.com/purcell/mmm-mode][mmm-mode]] to get ReST mode in triple-quoted docstrings and Python everywhere else. It works reasonably well (but is not perfect).
+
+#+BEGIN_SRC emacs-lisp
+  (use-package mmm-mode
+    :ensure t
+    :init (progn
+            (setq mmm-global-mode 'maybe))
+    :config  (progn (mmm-add-classes
+                     '((python-rst
+                        :submode rst-mode
+                        :front "^ *[ru]?\"\"\"[^\"]*$"
+                        :back "^ *\"\"\""
+                        :include-front t
+                        :include-back t
+                        :end-not-begin t)))
+                    (mmm-add-mode-ext-class 'python-mode nil 'python-rst)
+                    (mmm-add-mode-ext-class 'sage-shell:sage-mode nil 'python-rst)
+                    ))
+#+END_SRC
+
+Finally, I use [[https://github.com/cython/cython/blob/master/Tools/cython-mode.el][cython-mode]] for Cython.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package cython-mode
+    :ensure t
+    :mode (("\\.pyx\\'"  . cython-mode)
+           ("\\.spyx\\'" . cython-mode)
+           ("\\.pxd\\'"  . cython-mode)
+           ("\\.pxi\\'"  . cython-mode)))
+#+END_SRC
+
+*PS:* Here’s my current =company-mode= config which uses the following extensions:
+
+- [[https://github.com/company-mode/company-mode/blob/master/company-semantic.el][company-semantic]] for C/C++
+- [[https://github.com/proofit404/company-anaconda][company-anaconda]] for Python
+- [[https://github.com/alexeyr/company-auctex][company-auctex]] for LaTeX
+- [[https://github.com/vspinu/company-math][company-math]] for unicode math symbols everywhere
+
+
+#+BEGIN_SRC emacs-lisp
+  (use-package company-anaconda
+    :ensure t)
+
+  (use-package company-math
+    :ensure t)
+
+  (use-package company-auctex
+    :ensure t)
+
+  (use-package company
+    :ensure t
+    :diminish company-mode
+    :init (progn
+            (setq company-minimum-prefix-length 2)
+            (setq company-global-modes '(not sage-shell:sage-mode sage-shell-mode))
+            (bind-key "C-<tab>" #'company-complete)          
+            (global-company-mode 1)
+            )
+    :config (progn
+              (setq company-tooltip-limit 20) ; bigger popup window
+              (setq company-idle-delay 0.5)    ; decrease delay before autocompletion popup shows
+              (setq company-echo-delay 0)     ; remove annoying blinking
+              (setq company-show-numbers t)   ; show numbers for easy selection
+
+              (add-to-list 'company-backends #'company-c-headers)
+              (add-to-list 'company-backends #'company-anaconda)
+              (add-to-list 'company-backends #'company-math-symbols-unicode)
+
+              (defun malb/ede-object-system-include-path ()
+                "Return the system include path for the current buffer."
+                (when ede-object
+                  (ede-system-include-path ede-object)))
+
+              (setq company-c-headers-path-system #'malb/ede-object-system-include-path)
+
+              (bind-key "C-n" #'company-select-next company-active-map)
+              (bind-key "C-p" #'company-select-previous company-active-map)
+              (bind-key "<tab>" #'company-complete company-active-map)
+              (bind-key "M-?" #'company-show-doc-buffer company-active-map)
+              (bind-key "M-." #'company-show-location company-active-map)
+              )
+    )
+#+END_SRC
+
+Use [[https://github.com/expez/company-quickhelp][company-quickhelp]] to display … quick help.
+
+#+BEGIN_SRC emacs-lisp
+(use-package company-quickhelp
+  :ensure t
+  :init (company-quickhelp-mode 1))
+#+END_SRC

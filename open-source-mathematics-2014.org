@@ -1,0 +1,120 @@
+#+BLOG: wordpress
+#+POSTID: 1099
+#+DATE: [2014-12-17 Wed 16:53]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: sage
+#+TAGS: open-source, sage, mathematics, linear-algebra, lattices, m4ri, m4rie, fplll
+#+DESCRIPTION:
+#+TITLE: Looking Back and Forward for Open-Source Mathematics Software (2014)
+
+When a year ends people make lists. I can only guess that several people are currently busy with writing “The 5 most revised papers on [[https://eprint.iacr.org][eprint]] ” and “The 8 best IACR flagship conference rump session presentations of 2014”. Since all the good lists are taken, my list has to be a little bit more personal. Alas, here is my list of stuff that happened in open-source computational mathematics in 2014 around me. That is, below I list what developments happened in 2014 and try to provide an outlook for 2015 (so that I can come back in a year to notice that nothing played out as planned). 
+
+If you are interested in any of the projects below feel invited to get involved. Also, if you are student and you are interested in working on one of the (bigger) projects listed below over the summer, get in touch: we could try to turn it into a [[https://www.google-melange.com/gsoc/homepage/google/gsoc2015][Google Summer of Code 2015]] project.
+
+#+HTML: <!--more-->
+
+* fplll: lattice reduction
+
+This year I mainly worked on lattice-based cryptography. At the heart of this line of research is the assumption that finding short vectors in discrete subgroups of $\mathbb{R}^n$ (think of a vector space, but only integer linear combinations are allowed) is hard. The main tool for finding such short vectors is lattice reduction.
+
+The first algorithm for lattice reduction was the LLL algorithm which proved to be incredibly useful for many applications in cryptography and beyond. LLL is implemented in [[http://www.shoup.net/ntl/doc/LLL.txt][NTL]], [[http://pari.math.u-bordeaux.fr/dochtml/html.stable/Vectors,_matrices,_linear_algebra_and_sets.html][Pari]], [[https://github.com/dstehle/fplll/blob/master/src/lll.h][fplll]] and – [[https://groups.google.com/d/topic/flint-devel/zdNBXow63z4/discussion][as of this summer]] – in FLINT 2; fplll typically seems to be the fastest implementation (cf. the link above for a comparison with FLINT 2).
+
+While LLL runs in polynomial time (read: fast) it only gives a “short vector” which is about $2^{n/4}$ longer than the actually shortest vector in the lattice (read: not so good). This is good enough for many applications but not good enough to, e.g. solve LWE.
+
+To produce shorter vectors we typically employ the BKZ algorithm which is parameterised by a block size. The larger the block size the better the output but the longer it takes. BKZ is implemented in [[http://www.shoup.net/ntl/doc/LLL.txt][NTL]] and [[https://github.com/dstehle/fplll/blob/master/src/bkz.h][fplll]], typically fplll is faster.
+
+At AsiaCrypt 2011 Chen and Nguyen presented their [[http://www.iacr.org/archive/asiacrypt2011/70730001/70730001.pdf][results]] of combining various known techniques for speeding up the BKZ algorithm. They call the result BKZ 2.0. They also applied BKZ 2.0 to various benchmark problems and claimed substantial improvements over the public state of the art.  However, for some reasons only known to the authors and the AsiaCrypt 2011 programme committee, their paper was accepted without them publishing their source code. Since then we’re in the somewhat strange situation that everybody believes BKZ can be made to run much faster (you might even get your paper rejected because you are not using the state of the art, i.e. BKZ 2.0) but no one has publicly reproduced these results.
+
+In autumn we took some first steps towards fixing this situation by adding [[https://github.com/dstehle/fplll/pull/6][better pre-processing]] and an [[https://github.com/dstehle/fplll/commit/df3720b8362c4464a59f2d64da5e3573da03b418][easier linear pruning interface]] to fplll. I know that others have patched fplll as well, but as far as I know they never made their changes public. In the process, we also moved fplll’s development to [[https://github.com/dstehle/fplll][Github]], so send your pull requests. 
+
+While the result is an improvement over plain BKZ, there’s still a lot of work to be done to come even close to the results of Chen and Nguyen. For example, they use [[http://www.iacr.org/archive/eurocrypt2010/66320257/66320257.pdf][extreme pruning]] instead of the simple linear pruning strategy currently implemented in fplll and it’s not clear how to pick pruning parameters for extreme pruning … however, there’s a [[http://arxiv.org/abs/1406.0342][paper on the arXiv]] which promises an answer to this question. Furthermore, currently the user has to pick pre-processing parameters by hand, something the implementation should take care off by default. Finally, a recent [[http://eprint.iacr.org/2014/980][paper on ePrint]] claims that phase-based enumeration is much faster than the Kannan-Helfrich enumeration algorithm which is implemented everywhere including fplll. I’d consider addressing any of these issues a valuable contribution.
+
+* dgs: sampling from a discrete Gaussian distribution
+
+A central step in most lattice-based cryptography is to sample from a discrete Gaussian. A discrete Gaussian distribution over the Integers is a distribution where the integer /x/ is sampled with probability proportional to $\mbox{exp}(-(x-c)^2/(2\sigma^2))$ where /σ/ is the width parameter (close to the standard deviation) and /c/ is the centre. There are several algorithms to choose from to sample from such a distribution each being better or worse in some situations. Somewhat surprisingly, though, when I got started implementing some lattice-based crypto there was no =C= library available that allows to sample from a discrete Gaussian with reasonable efficiency. Now there [[https://bitbucket.org/malb/dgs][is]]. The library is called dgs and it is included in Sage by default and also unpins our [[https://bitbucket.org/malb/gghlite-flint][GGHLite implementation]], so it has seen some usage.
+
+A few things still need to be done, though. [[https://bitbucket.org/malb/dgs/commits/9bcdaa853cb458a6ad6055c991cab74647703e40][Some]] [[https://bitbucket.org/malb/dgs/commits/0206f9dd025fb8dc6021d37c652924e39c14d423][bugs]] [[https://bitbucket.org/malb/dgs/commits/7ce070313a4de4ee61cd886c2ad82f13046233fd][were]] [[https://bitbucket.org/malb/dgs/commits/76bd4344ea26e111c619288d16fb60c24690d222][fixed]] in the stand-alone library but not ported back to Sage, yet. Also, the library would benefit from [[https://bitbucket.org/malb/dgs/issue/2/test-mp-code][more tests]] being run by =make check=. Finally, implementing the [[https://bitbucket.org/malb/dgs/issue/1/implement-discrete-ziggurat][Discrete Ziggurat]] algorithm would complete the picture.
+
+* oz: computing in some Cyclotomic number rings
+
+Most of the interesting code in our [[https://bitbucket.org/malb/gghlite-flint][GGHLite]] implementation is in the oz [[https://bitbucket.org/malb/gghlite-flint/src/0e39e3a6309ff7320985450667815abe683f78f1/oz/?at=master][submodule]] which implements arithmetic in $\mathbb{Z}[x]/(x^n+1)$, where /n/ is a power of two, and with all operations in quasi-linear time. While the code is already fairly modular, i.e. we separated crypto applications from arithmetic, it might make sense to outsource this module into a separate library so it can used more easily by other projects should they wish to. 
+
+When we are doing this, we should probably also split up the dgsl [[https://bitbucket.org/malb/gghlite-flint/src/0e39e3a6309ff7320985450667815abe683f78f1/dgsl/?at=master][module]]. This module implements sampling from a discrete Gaussian distribution over arbitrary lattices (in contrast to dgs which implements it over the integers). This module contains two essentially independent parts. One part samples from  lattices represented by a basis matrix using the [[http://www.cc.gatech.edu/~cpeikert/pubs/trap_lattice.pdf][GPV algorithm]]. Another part samples from ideal lattices represented by an ideal generator in $\mathbb{Z}[x]/(x^n+1)$ using [[http://www.cc.gatech.edu/~cpeikert/pubs/pargauss.pdf][Peikert’s algorithm]]. The latter relies heavily on oz (as well as dgs) and might as well be moved there, the former has no connection to oz and could be either included in dgs (which would entail making FLINT a dependency of dgs) or remain independent.
+
+* Linear algebra over small finite fields
+
+I didn’t work as much on linear algebra over small finite fields as I would have liked to in 2014. I doubt I’ll make it a priority of mine in 2015 either, so if anybody wants to jump in to help, that’d be much appreciated.
+
+** M4RI
+
+[[https://bitbucket.org/malb/m4ri/][M4RI]] implements dense linear algebra over $\mathbb{F}_2$, i.e. the field with two elements 0 and 1. We released one [[https://bitbucket.org/malb/m4ri/commits/tag/release-20140914][bugfix release]] of M4RI this year.
+
+If you read this blog, you probably know that [[http://www.ing.unitn.it/~bertolaz/][Enrico’s]] [[https://github.com/ebertolazzi/GF2toolkit][implementation]] of Gaussian elimination is faster than our own. As far as I can tell the advantage of GF2Toolkit over M4RI comes from avoiding a lot of management overhead. To illustrate this point, consider the following output of Google’s [[https://code.google.com/p/gperftools/][perf tools]] on running M4RI’s Gaussian elimination on a 4096 x 4096 dense full rank matrix:
+
+#+BEGIN_SRC 
+     .      . 1121:      switch(__M4RI_M4RM_NTABLES) {
+    42    131 1122:   case 8: t[7] = T[ 7]->rows[ L[7][ (a >> 7*k) & bm ] ];
+    57     79 1123:   case 7: t[6] = T[ 6]->rows[ L[6][ (a >> 6*k) & bm ] ];
+    27     47 1124:   case 6: t[5] = T[ 5]->rows[ L[5][ (a >> 5*k) & bm ] ];
+    14     25 1125:   case 5: t[4] = T[ 4]->rows[ L[4][ (a >> 4*k) & bm ] ];
+    29     52 1126:   case 4: t[3] = T[ 3]->rows[ L[3][ (a >> 3*k) & bm ] ];
+    15     34 1127:   case 3: t[2] = T[ 2]->rows[ L[2][ (a >> 2*k) & bm ] ];
+    14     27 1128:   case 2: t[1] = T[ 1]->rows[ L[1][ (a >> 1*k) & bm ] ];
+     6     17 1129:   case 1: t[0] = T[ 0]->rows[ L[0][ (a >> 0*k) & bm ] ];
+     .      . 1130:         break;
+     .      . 1131:   default:
+
+<snip>
+     .      . 1137:   switch(__M4RI_M4RM_NTABLES) {
+   970   1946 1138:     case 8: _mzd_combine_8(c, t, wide); break;
+#+END_SRC
+
+
+The numbers in the first two columns indicate how much time we spent in each line. As you can see, we’re spending between 20% and 25% of the time it takes to perform additions (=_mzd_combine_8=) with setting them up (everything else); We are performing 4096/128 · 8 = 256 XORs in =_mzd_combine_8=, which isn’t much and so our setup overhead is hurting us.
+
+** M4RIE
+
+[[https://bitbucket.org/malb/m4rie/][M4RIE]] is a library for fast arithmetic with matrices over small even characteristic fields, i.e. $\mathbb{F}_2[x]/f(x)$ where /f(x)/ is an irreducible polynomial over $\mathbb{F}_2[x]$ of degree up to 16. We released one [[https://bitbucket.org/malb/m4rie/commits/tag/release-20140914][bugfix release]] of M4RIE this year. 
+
+Last year I [[https://plus.google.com/+martinalbrecht/posts/JRyv4SXv6Z7][added]] some code to M4RIE for computing with matrices over $\mathbb{F}_2[x]$, i.e. where the entries are high(er) degree polynomials over $\mathbb{F}_2$. The strategy I implemented is some “evaluation,  pointwise-multiplication, interpolation” scheme where I use Dan Bernstein’s [[http://binary.cr.yp.to/linearmod2-20090830.pdf][“Optimizing linear maps modulo 2”]] to cut down the cost of first and last step. Unfortunately, I didn’t get around to work more on this code this year. While I still don’t know an application for this, it would be fun to see how far we can push this. But I guess to do this properly, we’d need to also take another look at the Number Theoretic Transform to realise such multiplications, at least when the dimension of the matrices is not much bigger than the degree of the polynomials.
+
+Another area for improvement is that the formulas we use to realise multiplication for degrees up to 16 are not always optional. In particular, we know that the following improvements are possible for degree 6 (18 → 15), degree 8 (27 → 24), degree 9 (31 → 30), degree 10 (36 → 33), degree 11 (40 → 39), degree 12 (45 → 42), degree 13 (49 → 38), degree 14 (55 → 51), degree 15 (60 → 54), degree 16 (64 → 60), where the numbers in brackets are the current and the best known number of multiplications over $\mathbb{F}_2$. Some of these improvements can be realised by simply dropping in known better formulas, some of them would be a bit more involved because they rely on finite field embeddings.
+
+* CryptoMiniSAT
+
+[[https://github.com/msoos/cryptominisat][CryptoMiniSAT]] is the SAT solver with the best integration into Sage. However, Sage is still using CryptoMiniSAT 2.9.6 instead the more recent 4.x series. This is partly because we can’t get our act together and partly because Máté decided to go with CMake instead of Autotools in the current CryptoMiniSat series. There’s a [[https://github.com/msoos/cryptominisat/pulls][pull request]] idling around which improves Autotools support for CryptoMiniSAT. I should probably follow up on this. Once this is taken care of (which shouldn't take more than 1-2 hours), we should [[http://trac.sagemath.org/ticket/15674][update CryptoMiniSAT in Sage]]. The interface of CryptoMiniSAT hasn't changed much, so this second step shouldn't be too hard either. Some options might have changed, so I would guess [[https://github.com/sagemath/sage/blob/master/src/sage/sat/solvers/cryptominisat/solverconf_helper.cpp][solverconf_helper.cpp]] would need to be adapted slightly.
+
+* Sage
+
+[[https://sagemath.org][Sage]] saw four major releases in 2014. [[http://boxen.math.washington.edu/home/release/sage-6.1/sage-6.1.txt][Sage 6.1]] in February, [[http://boxen.math.washington.edu/home/release/sage-6.2/sage-6.2.txt][Sage 6.2]] in May, [[http://boxen.math.washington.edu/home/release/sage-6.3/sage-6.3.txt][Sage 6.3]] in August and [[https://martinralbrecht.wordpress.com/2014/11/16/sage-6-4/][Sage 6.4]] in November.
+
+My main contributions this year were to add better support for computing with lattices: I mainly worked on the fplll interface (see above) and on sampling from discrete Gaussian distributions (also above). I also fixed the occational bug and reviewed the occational ticket, but not as much as I would have liked to. In fact, there’s just been a friendly reminder that we have way too many tickets for Sage with status [[https://groups.google.com/d/topic/sage-devel/9Jw4viVgDKc/discussion][“needs review”]] which means that someone contributed some code and that code is now waiting to be reviewed so it can be included (or revised). 
+
+As always there’s much to be done for Sage, but too little time. Here are some examples.
+
+** SAT Solvers
+
+Besides the tasks listed under the CryptoMiniSAT heading, more work should be done on Sage’s SAT solving capabilities. Currently, Sage will fail to solve any SAT problem without installing additional software because it believes that no SAT solver is included by default. Turns out, this is not correct. That is, Sage ships with GLPK and GLPK can be used as a SAT solver. That won’t break any performance records but it’s better than nothing. So we should use [[http://trac.sagemath.org/ticket/16862][GLPK as the poor person's SAT Solver]]. Indeed, adding support for this should be fairly straight forward. Here’s what [[http://www.steinertriples.fr/ncohen/][Nathann Cohen]] had to say who pointed me towards GLPK:
+
+#+BEGIN_QUOTE
+There are some sentences about it at the end of that :
+http://en.wikibooks.org/wiki/GLPK/Mixing_GLPK_with_other_solver_packages
+
+And this page says that there is a dedicated pdf in GLPK's doc:
+http://en.wikibooks.org/wiki/GLPK/Literature#Official_GLPK_documentation
+
+…
+
+But it seems that the interface is pretty basic, and may have to work through files... or though LP ! But as you can already produce DIMACS SAT instances with you code, perhaps you can just call GLPK on that?  It would be better than nothing, plus you can say that the feature is standard, and also write everywhere that users can download a "real solver" if they want to.
+#+END_QUOTE
+
+Secondly, while Sage currently is happy to write DIMACS files (the standard format for SAT problems) it does not [[http://trac.sagemath.org/ticket/16924][read DIMACS files]].
+
+** FGB
+
+For a while now I've had adding an interface to [[http://www-polsys.lip6.fr/~jcf/Software/FGb/][FGB]] on my TODO list. FGB is [[http://www-polsys.lip6.fr/~jcf/][Jean-Charles Faugère’s]] implementation of the F4 Gröbner basis algorithm. It is not open source, but it is a good implementation of F4, something which isn't exactly widely available in the open-source world. Besides, being able to easily compare with FGB surely would be useful.
+
+** SCIP
+
+When I worked on solving multivariate systems of equations with noise I added support for the SCIP constraint integer programming solver to Sage. Constrained integer programming allows to solve non-linear systems of equations and inequalities. For example, it allows to model and solve systems which contain constrains like $x \cdot y + 4x + 1 \geq 0$ and $z = x\ \mbox{OR}\ y$ which comes in handy from time to time. SCIP is open source in the sense that you can read the source code, but its license does not live up the standards of the [[http://opensource.org/][Open Source Initiative]] and we can’t ship it. Still, it is typically faster than real open-source solutions and the developers are [[https://martinralbrecht.wordpress.com/2011/03/07/constraint-integer-programming-in-sage/#comments][happy to help]]. I've not touched this code in a while because I don't work in this area at the moment, so someone who does should pick up the project. 
+

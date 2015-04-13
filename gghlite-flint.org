@@ -1,0 +1,131 @@
+#+BLOG: wordpress
+#+POSTID: 1086
+#+DATE: [2014-11-12 Wed 10:00]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography
+#+TAGS: cryptography, multilinear maps, pre-print, flint
+#+DESCRIPTION:
+#+TITLE: Improved Parameters and an Implementation of Graded Encoding Schemes from Ideal Lattices
+Our paper (with Catalin Cocis, Fabien Laguillaumie and Adeline Langlois) on picking parameters and implementing [[https://eprint.iacr.org/2014/487][GGHLite]] just hit [[http://eprint.iacr.org/2014/928][eprint]]. Here's the abstract:
+
+#+BEGIN_QUOTE
+We discuss how to set parameters for GGH-like graded encoding schemes approximating cryptographic multilinear maps from ideal lattices and propose a strategy which reduces parameter sizes for concrete instances. Secondly, we discuss a first software implementation of a graded encoding scheme based on GGHLite, an improved variant of Garg, Gentry and Halevi’s construction (GGH) due to Langlois, Stehlé and Steinfeld. Thirdly, we provide an implementation of non-interactive N-partite Diffie-Hellman key exchange. We discuss our implementation strategies and show that our implementation outperforms previous work.
+#+END_QUOTE
+
+#+HTML: <!--more-->
+
+[[http://www.cs.berkeley.edu/~sanjamg/Sanjam%20Garg_files/sanjam-thesis.pdf][Graded Encoding Schemes]] were proposed at EUROCRYPT 2013 as candidates for approximating cryptographic multi-linear maps. A way of thinking about graded encoding schemes is to see them as somewhat homomorphic encryption schemes which support additional operations such as testing if an element is an encoding of zero. If we can build secure graded encoding schemes this would allow to build many cool applications. On the "simple" end of the spectrum we have a non-interactive key exchange which allows a group of parties to agree on a joint session key with only one message per party. This seems to become the benchmark application of graded encoding schemes, which is also why we implemented and benchmarketed it.
+
+On the "involved" end of the spectrum there is — if you are happy to make more assumptions — [[https://eprint.iacr.org/2013/451][indistinguishability obfuscation]] (iO) which would enable your malware to run in encrypted form to prevent reverse engineering. Of course, that's not how it's advertised. Instead, people talk about encrypted operating system patches to prevent reverse engineering by "the bad guys", a use-case which I don't buy. Anyway, advertising aside, it is clear that efficient and secure iO would enable a lot of very interesting applications. Also, "encrypted programs that still can be executed" should not need advertising as they are exciting enough on their own.
+
+A big catch for graded encoding schemes is that all the constructions we know of are in the "common reference string model" which is a convoluted way of saying that there is a trapdoor. This might not be an issue for some applications but it certainly defeats the purpose of a non-interactive key exchange. Anyway, the first proposal is 1 year old and progress is fast …
+
+Speaking of fast progress. The first proposal of a graded encoding scheme, called [[http://www.cs.berkeley.edu/~sanjamg/Sanjam%20Garg_files/sanjam-thesis.pdf][GGH]], relied on some non-standard assumptions in  ideal lattices. As mentioned above, our implementation is based on a variant of this scheme called [[https://eprint.iacr.org/2014/487][GGHLite]] which — as the name suggests — reduces the size of the parameters. Another candidate was proposed shortly after GGH. This candidate relied on some non-standard assumptions related to the approximate GCD problem and is called [[https://eprint.iacr.org/2013/183][CLT]]. The original CLT paper also included a description of an implementation of a heuristic variant of CLT which at the time was the only publicly known implementation of a graded encoding scheme. Unfortunately, very recently CLT was [[http://perso.ens-lyon.fr/damien.stehle/CLT.html][broken]], which is a good reminder that we're only getting started (there's already a pre-print proposing to [[http://eprint.iacr.org/2014/930][fix]] CLT and another [[http://eprint.iacr.org/2014/929][extending]] the attack … things are moving fast).  Finally, a [[http://eprint.iacr.org/2014/645.pdf][third candidate]] — which we can't call GGH because that name is already taken — was proposed this year relying on some non-standard assumption related to Learning with Errors.
+
+Our pre-print does three things:
+
+1. We first discuss how to pick parameters for GGH-like graded encryption schemes such as GGHLite. By varying the notion of what fraction counts as "small" we are able to reduce parameters further compared to GGHLite.
+
+2. We provide and discuss a free software implementation of a GGHLite-style graded encoding scheme based on [[http://flintlib.org/][FLINT]]. I say GGHLite-style instead of GGHLite because we reduce parameters compared to GGHLite and we didn't implement some steps. Some steps are easy to add later (we didn't implement re-randomisation at levels greater than one, we don't run a hash function on the extracted strings), but others require more work (we do not check if $g$ generates a prime ideal). Here, the main contribution is a bunch of functions for arithmetic in the ring of integers of a Cyclotomic Number field whose order is a power of two, i.e. in $\mathbb{Z}[x]/(x^n+1)$ where $n = 2^k$. These functions might be of independent interest because those rings are quite popular in cryptography these days. All these functions are in the =oz= submodule, which I might spin off as an independent library if there's demand for that kind of thing.
+
+3. Based on our GGHLite-style implementation we then also implemented a non-interactive key exchange (NIKE) and compare the results with those reported in the CLT paper. While CLT is broken for most settings (see above), it is still a good reference to get an idea how well we are doing in terms of performance.
+
+To finish, here's a screenshot of our non-interactive key agreement in action for very small parameters:
+
+#+BEGIN_SRC
+####################################################################
+
+               ygggr _gggzjggg(wggg`.wgggngggggggr_o/           
+              jQQQQ[ mQQQ\QQQPjWQQ[_QQQP\WQQWBUBB`  .           
+             _QQQQQ[]QQQfQQQQ\WQQDwQQQ! jQQQ'                   
+             mQQQQQ<QQQ@jQQQ[mQQQQWQP` <QQQP                    
+            jQQQQQQmQQQ\QQQPjWQQQQQf   QQQQQQQ@                 
+           _QQQQQQQQQQfmQQQ\QQQQQQQL  jQQQBHBB'                 
+        .  yQQQ4WQQQQ@jQQQfdQQQ5WQQk _QQQP                _aa,!`
+       J  ]QQQF]WQQQQ\QQQ@]QQQF)WQQk mQQQ'         ._aawmD?^    
+     _m' _QQQ@ jQQQQPyQQQ\WWQ@ )WQQEjQQQQgmgg=saawQQQP?^        
+    <Q@  jQQQ'.jQQQW]QQQfjQQQ' =QQQQQQQQQQQQQQWWWD?"            
+   <QQm  ..  .  .    . . ..      =sawWQQQQQQQV?^                
+  <QQQQ,                   _awwQQQQWWWQQQ@?"                    
+ _QQQQQQ, I}        __awmQQQQQWWQQQQQU?^                        
+.QQQQQQQQmaaa_aaawQQQQQQQQQQQQQQQD?"                            
+]QQQQQQQQQQWWQQQWWWQQQQQQQQQQ8?^                                
+jQQQQQQQQQQQQQQQQQQQQQQQQD?"                                    
+]QQQQQQQQQQQQQQQQQQQQB?"                                        
+ 4QQQQQQQQQQQQQQQD?"                                            
+  "4WQQQQQQQWP?"                                                
+      "!!^                                                      
+
+ λ:  20, N:  3                              seed: 0x0000000000000000
+#############################################all logs are base two##
+
+Alice: Guys, guys! There is this thing now where we can agree on a key
+       by sending only one broadcast message each!
+  Bob: Wow, this sounds great!
+Alice: Yeah, and it is also really really efficient
+  Bob: Do tell!
+Alice: If κ = poly(log(λ)) then it is 'asymptotically close to optimal,
+       namely quasi-linear in the security parameter λ'!
+  Bob: Wow. I can't think of anything better, ever!
+Alice: It get's even better: security is defined in the
+       'common reference string model'!
+  Bob: That sounds very innocent and reassuring … hang on, what is it?
+Alice: It means that there is a *trusted setup*, so someone you really
+       really trust - like the government - gets to pick the parameters
+       for you! … and this trusted party can check out our shared key
+       to make sure we're doing it right and are not abusing
+       our civil liberties!
+  Bob: This is *so* cool! This makes me feel so much more secure already.
+Alice: Let's try it!
+
+-----------------------------------------------------
+Step 1: GCHQ runs Setup:
+-----------------------------------------------------
+        λ:        20,          k:         2
+        n:       256,        δ_0:    1.3981
+   log(q):       554,        ℓ_q:    0.0813
+   log(σ):     13.01,   log(ℓ_g):     -5.47
+  log(σ'):     39.53,   log(ℓ_b):     32.98
+ log(σ^*):     60.11,   
+    |enc|:   17.3 KB,      |par|:  103.8 KB
+
+---
+#### WARNING: GGHLITE_FLAGS_SLOPPY is set.####
+      Computing g:: !n:    0, !p:    0, !i:    0
+   Computing f^-1::  b:    6,     Δ=|f^-1·f-1|:  -67.78 <?  -53, t:     0.00s
+Computing sqrt(Σ)::  k:    0,  Δ=|sqrt(Σ)^2-Σ|:    1.88 <?  -26, t:     0.02s
+Computing sqrt(Σ)::  k:    1,  Δ=|sqrt(Σ)^2-Σ|:   -3.43 <?  -26, t:     0.05s
+Computing sqrt(Σ)::  k:    2,  Δ=|sqrt(Σ)^2-Σ|:   -7.89 <?  -26, t:     0.07s
+Computing sqrt(Σ)::  k:    3,  Δ=|sqrt(Σ)^2-Σ|:  -15.49 <?  -26, t:     0.10s
+Computing sqrt(Σ)::  k:    4,  Δ=|sqrt(Σ)^2-Σ|:  -30.27 <?  -26, t:     0.12s
+Computing sqrt(Σ)::  k:    0,  Δ=|sqrt(Σ)^2-Σ|:  -59.70 <?  -53, t:     0.02s
+#### WARNING: Not checking that `σ_n(rot(B^(k))) < ℓ_b`. ####
+ Computing B^( 1):: !i:    0, !s:    0, !n:    0
+   Computing f^-1::  b:    6,     Δ=|f^-1·f-1|:  -67.78 <?  -53, t:     0.00s
+
+wall time: 0.23 s
+
+-----------------------------------------------------
+Step 2: Publish
+-----------------------------------------------------
+   Alice samples e_0, computes u_0 and publishes it
+     Bob samples e_1, computes u_1 and publishes it
+ Charlie samples e_2, computes u_2 and publishes it
+
+wall time: 0.01 s, per party: 0.00 s
+-----------------------------------------------------
+Step 3: KeyGen
+-----------------------------------------------------
+   Alice computes: s_0 = e_0·u_1·u_2
+     Bob computes: s_1 = u_0·e_1·u_2
+ Charlie computes: s_2 = u_0·u_1·e_2
+
+wall time: 0.00 s, per party: 0.00 s
+-----------------------------------------------------
+ Check: 
+-----------------------------------------------------
+s_0 == s_1: TRUE
+s_0 == s_2: TRUE
+
+λ:  20, N:  3, n:    256, seed: 0x00000000, sloppy: 1, success: 1, time:       0.25s
+#+END_SRC

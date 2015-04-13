@@ -1,0 +1,58 @@
+#+BLOG: wordpress
+#+POSTID: 1133
+#+DATE: [2015-03-04 Wed 09:48]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: sage
+#+TAGS:fplll, gsoogle summer of code, lmonade, flint, sage, lattices
+#+DESCRIPTION:
+#+TITLE: Google Summer of Code 2015
+Both [[http://wiki.sagemath.org/GSoC][Sage]] and the [[http://wiki.lmona.de/get_involved/gsoc][Lmonade]] project were selected for Google’s Summer of Code 2015. If you are an
+eligible student, you should consider applying. If you need ideas what to work on, there are many
+fine projects/project ideas on either the Lmonade or the Sage GSoC pages. In particular, here are
+the [[https://github.com/dstehle/fplll][fplll]] project ideas, for which I could be one of the two mentors.
+
+#+HTML: <!--more-->
+
+* Add intermediate floating-point arithmetic(s), between double precision and multi-precision
+
+fplll internally relies on floating-point arithmetic for the underlying Gram-Schmidt
+orthogonalisation. It tries to perform the computations in machine floating-point numbers: doubles,
+with 53 bits of precision, or long doubles which sometimes enjoy 64 bits of precision. If that does
+not prove sufficient, it switches to multi-precision arithmetic (MPFR), and increases the precision
+progressively, until it seems numerically stable for that precision. A drawback of this approach is
+that MPFR is much slower than machine floating-point numbers, creating a huge run-time gap between
+instances that can be run on machine precision, and instances that require larger precision.
+
+The project is to add annother floating-point arithmetic type, with intermediate precision (such as
+double-double precision) and intermediate efficiency. This should then be combined with dpe and the
+so-called "fast" Gram-Schmidt approach, which aim at extending the range of exponents. And these
+arithmetics should finally be incorporated in the fplll wrapper.
+
+* Implement a test-suite
+
+Most of the code of fplll is not automatically tested. Sometimes, simple modifications result lead
+to subtle bugs in cases that are not tried by the main developers, and that are found out by users
+much later.
+
+The project would be to add unit-tests to fplll to give more assurance that a code change doesn't
+break too much of the code. The tests should be devised so that the different arithmetics, the
+different wrapper scenarios, and also the different main functions (LLL, BKZ, SVP) are tested. This
+could be extended to adding some standard-ish benchmarks which make it easier to decide if a code
+modification improves or degrades run-times (for “typical” inputs.)
+
+* Implement transformation matrix recovery and LLL on Gram matrices
+
+At the moment, fplll's LLL routines take as input a basis B of a lattice and return a reduced basis
+C of the same lattice. For some applications, it is interesting to also have access to the
+transformation matrix U such that C = B*U. One way is to compute U on the fly during the
+computations, another way is to compute U a posterio, from B and C. In theory, no method is superior
+to the other: in some contexts the first approach should be better, in others it should not.
+
+In other applications, the input basis is only given implicitely via its Gram matrix G = B^T * B.
+The LLL algorithm can still be run on such inputs, to get the gram matrix C^T * C of the reduced
+basis C. Such a variant, taking as input a Gram matrix and returning another Gram matrix, is
+currently unavailable.
+
+The project is to implement these extensions of the LLL algorithm.
+
+Get in touch on [[https://groups.google.com/forum/#!forum/fplll-devel][fplll-devel]] if any of these interest you.

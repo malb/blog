@@ -1,0 +1,10 @@
+#+BLOG: wordpress
+#+POSTID: 1138
+#+DATE: [2015-03-13 Fri 17:04]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY:cryptography
+#+TAGS: cryptography, tls, ssl, freak-attack, zmap
+#+DESCRIPTION:
+#+TITLE: Friday Afternoon Fun
+It is Friday and all teaching is done for the week. Also, it has been about 10 days since the [[https://freakattack.com/][FREAK attack]] was made public. Hence, /the/ most natural idea is to scan the Internet for hosts that are still vulnerable and [[https://factorable.net/weakkeys12.extended.pdf][mining their Ps and Qs]]. After all, the [[https://zmap.io][tools]] for the [[https://factorable.net/resources.html][job]] are readily available. Here’s [[https://martinralbrecht.files.wordpress.com/2015/03/freak-scan1.pdf][what we found]].
+

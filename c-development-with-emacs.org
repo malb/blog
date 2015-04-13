@@ -1,0 +1,252 @@
+#+BLOG: wordpress
+#+POSTID: 1074
+#+DATE: [2014-11-03 Mon 23:26]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: Emacs
+#+TAGS: emacs, c
+#+DESCRIPTION:
+#+TITLE: C Development with Emacs
+
+Recently I spent some time customising my Emacs config again. Playing around with different ways of improving your productivity by adjusting Emacs is a great way of loosing any and all productivity you might have had. It is such a fun way of wasting your time, there's even a little scene around just that activity. This can take quite elaborate forms with people posting their Emacs =init.el= configuration files in literal programming style based on [[http://orgmode.org/][org-mode]]'s [[http://orgmode.org/worg/org-contrib/babel/][org-babel]]. This is more useful than it might sound, e.g. I stole a lot from [[http://pages.sachachua.com/.emacs.d/Sacha.html][Sacha's config]].
+
+I also recently spent a bit more time again writing C99 code making many calls to [[http://flintlib.org/][FLINT - Fast Library for Number Theory]]. The FLINT coding style requires that pretty much each function should have its own file which I am sure is great for something. However, for me it means that have I have to open a lot of files all over the FLINT library when I care about implementation details and not just definitions. Also, your vanilla Emacs setup won't display those signatures when you try to write a call to those functions from your code or give you auto-completion for all functions starting with, say, =fmpz_poly_set_=.
+
+Alas, here is my current setup which rectifies most of my grievances.
+
+#+HTML: <!--more-->
+
+* Projectile
+
+Projectile adds lightweight project management to Emacs. Projects are discovered automatically - e.g. a git repository is a project - and Projectile then offers convenient functions to work with those projects such as
+
+- opening a file from your project
+- running =compile= from the root directory of your project 
+- killing all project buffers (great for cleaning up after you've opened about 40 FLINT buffers)
+- searching through all files in your project with [[http://beyondgrep.com/][ack]] or [[http://geoff.greer.fm/ag/][ag]] (or grep if that's your thing)
+- switching projects etc.
+
+Projectile also integrates well with Helm which makes opening and finding project files really fast and easy. Here's my projectile config (I use the [[https://github.com/jwiegley/use-package/][use-package]] package to keep my Emacs =init.el= readable).
+
+#+BEGIN_SRC emacs-lisp
+(use-package projectile
+  :commands (projectile-global-mode projectile-ignored-projects projectile-compile-project)
+  :init (progn
+          (projectile-global-mode)        
+          (global-set-key (kbd "<f5>") projectile-compile-project))
+  :config (progn
+            (setq projectile-completion-system 'helm)
+            (setq projectile-switch-project-action 'helm-projectile)
+            ))
+
+(global-set-key (kbd "<f6>") 'next-error)
+#+END_SRC
+
+When I started my computer science degree many years ago at Universtät Bremen, we were taught Emacs in week one. We were also encouraged to use a config of one of our tutors who happened to bind compile to =<f5>=. As you can see above, that convention stuck and whenever I want to compile something now I press =<f5>.= Also, I press =<f6>= to step through potential errors without even thinking about it … damn you muscle memory.
+
+* Helm
+
+I use [[https://github.com/fgeller/emacs-helm][helm]] for switching buffers (=C-x C-b=), opening files (=C-x C-f=) and running interactive elisp functions (=M-x=). It has a pretty great intuitive interface and can be used as a drop-in replacement for the default functions, so not much muscle memory to retrain.  Actually, for me =C-x C-b= is bound to =malb/helm-omni= which is adapted from some code I must have found on stackoverflow at some point or so. It offers me the following choices in order:
+
+1. currently open buffers from the current project
+2. all currently open buffers
+3. recent files from the current project
+4. all recent files
+5. all files in the current project
+6. all files in the current directory
+7. files found with locate (updated as they are found)
+8. bookmarks (I don't actually use that)
+9. an option to create a new buffer
+
+#+BEGIN_SRC emacs-lisp
+(use-package helm
+  :bind (("M-x"     . helm-M-x)
+         ("C-x C-b" . malb/helm-omni)
+         ("C-x C-f" . helm-find-files))
+
+  :init (progn
+          (use-package helm-config)
+          (use-package helm-misc)
+          (use-package helm-projectile)
+          (use-package helm-mode)
+          (use-package helm-match-plugin)
+          (use-package helm-buffers)
+          (use-package helm-files)
+          (use-package helm-locate)
+          (use-package helm-bookmark)
+
+          (setq helm-quick-update t
+                helm-bookmark-show-location t
+                helm-buffers-fuzzy-matching t
+                helm-input-idle-delay 0.01)
+
+          (defun malb/helm-omni (&rest arg) 
+            ;; just in case someone decides to pass an argument, helm-omni won't fail.
+            (interactive)
+            (helm-other-buffer
+             (append ;; projectile errors out if you're not in a project 
+              (if (projectile-project-p) ;; so look before you leap
+                  '(helm-source-projectile-buffers-list
+                    helm-c-source-buffers-list)
+                '(helm-c-source-buffers-list)) ;; list of all open buffers
+
+              (if (projectile-project-p)
+                  '(helm-source-projectile-recentf-list
+                    helm-c-source-recentf)
+                '(helm-c-source-recentf)) ;; all recent files
+
+              (if (projectile-project-p)
+                  '(helm-source-projectile-files-list
+                    helm-c-source-files-in-current-dir)
+                '(helm-c-source-files-in-current-dir)) ;; files in current directory
+              
+              '(helm-c-source-locate               ;; file anywhere
+                helm-c-source-bookmarks            ;; bookmarks too
+                helm-c-source-buffer-not-found     ;; ask to create a buffer otherwise
+                )) "*helm-omni*"))
+
+          (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebihnd tab to do persistent action
+          (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
+          (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
+          ))
+#+END_SRC
+
+I also use helm in the form of [[https://github.com/ShingoFukuyama/helm-swoop][helm-swoop]] for searching in my current buffer or all open buffers. The config below is an example of me trying to deal with old habbits. I'd press =C-s= way before I remember that there's also helm-swoop bound to some other keyboard shortcut. Hence, I rebound my usual shortcuts to helm-swoop. So far, it hasn't come back to bite me that [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Incremental-Search.html][isearch]] isn't around any more.
+
+#+BEGIN_SRC emacs-lisp
+(use-package helm-swoop
+  :bind (("C-c C-SPC" . helm-swoop)
+         ("C-c o" . helm-multi-swoop-all)
+         ("C-s"   . helm-swoop)
+         ("C-r"   . helm-resume)))
+#+END_SRC
+
+Also, I never used to use the Emacs kill ring, I always used only the most recent entry, severely limiting myself. [[https://github.com/emacs-helm/helm/blob/master/helm-ring.el][Helm-ring]] makes me a better Emacs user by exposing Emacs' kill ring in a way that even I can understand. Now, when I cut something I can always find it again.
+
+#+BEGIN_SRC emacs-lisp
+(use-package helm-ring
+  :bind (("M-y"     . helm-show-kill-ring)))
+#+END_SRC
+
+* CEDET
+
+[[http://cedet.sourceforge.net/][CEDET]] is Emacs' built-in collection of tools for development environments. It is a bit confusing to setup but once it's up and running it works really well. The part of CEDET we're most interested in is semantic which parses your code and figures out where which function is with which interface etc. That is, it produces the data for code completion and inline displays of signatures. It seems almost all knowledge about CEDET that most people have comes from [[http://alexott.net/en/writings/emacs-devenv/EmacsCedet.html][A Gentle introduction to CEDET]]. Mine too.
+
+To activate it we need to require =semantic=. We also require =semantic/bovine/gcc= which allows semantic to ask GCC for system include paths.
+
+#+BEGIN_SRC emacs-lisp
+(require 'semantic)
+(require 'semantic/bovine/gcc)
+#+END_SRC
+
+Let's activate some options.
+
+- We store parsing results in a database.
+- We highlight local symbols which are the same as the thing under the cursor for "where do I use this variable?" kind of situations.
+- We parse the code whenever we're idle (you really want that).
+- We display information about the current thing under the cursor when idle. This, for example, displays the definition of the function you are trying to call so you don't have to memorise it.
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'semantic-default-submodes 'global-semanticdb-minor-mode)
+(add-to-list 'semantic-default-submodes 'global-semantic-idle-local-symbol-highlight-mode)
+(add-to-list 'semantic-default-submodes 'global-semantic-idle-scheduler-mode)
+(add-to-list 'semantic-default-submodes 'global-semantic-idle-summary-mode)
+#+END_SRC
+
+Finally, we need to switch on semantic. We also switch on EDE which CEDET's project library. I do not use EDE projects for anything non-trivial but only to implicitly tell semantic where my include files and directories are. With =(ede-enable-generic-projects)= projects are created and detected automatically when I visit a file in the tree.
+
+#+BEGIN_SRC emacs-lisp
+(semantic-mode 1)
+(global-ede-mode t)
+(ede-enable-generic-projects)
+#+END_SRC
+
+Now we have set up everything except for actual tooltips which suggest completions for what we are currently typing. I use [[https://company-mode.github.io/][company-mode]] for that.
+
+* Complete Anything
+
+As the name implies "Complete Anything" completes from more sources than semantic. It contains backends for all kinds of other mechanisms for gathering possible completions such as as "=Elisp=, =Clang=, =Semantic=, =Eclim=, =Ropemacs=, =Ispell=, =CMake=, =BBDB=, =Yasnippet=, =dabbrev=, =etags=, =gtags=, =files=, =keywords=" ([[https://company-mode.github.io/][Company website]]). I use company for pretty much everything except for Python because the [[https://github.com/auto-complete/auto-complete][auto-complete]] library also displays docstrings and [[https://github.com/proofit404/anaconda-mode][anaconda-mode]] sets up auto-complete nicely.
+
+#+BEGIN_SRC emacs-lisp
+(use-package company
+  :commands global-company-mode
+  :init (progn
+          (global-company-mode)
+          (setq company-global-modes '(not python-mode cython-mode sage-mode))
+          )
+  :config (progn
+            (setq company-tooltip-limit 20) ; bigger popup window
+            (setq company-idle-delay .3)    ; decrease delay before autocompletion popup shows
+            (setq company-echo-delay 0)     ; remove annoying blinking
+            (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
+            ))
+#+END_SRC
+
+* Static Code Analysis
+
+I make a lot of mistakes and my workflow used to consist of me writing a bunch of code and then
+attempting to run it through the compiler until it would compile. Not any more. I now use [[https://github.com/flycheck/flycheck][flycheck]] to check my
+syntax … well … on the fly. I also use [[https://github.com/flycheck/flycheck-pos-tip][flycheck-pos-tip]] to display a little popup near the cursor.
+
+#+BEGIN_SRC emacs-lisp
+(use-package flycheck
+  :commands global-flycheck-mode
+  :init (global-flycheck-mode)
+  :config (progn
+            (setq flycheck-check-syntax-automatically '(save mode-enabled))
+            (setq flycheck-standard-error-navigation nil)
+            ;; flycheck errors on a tooltip (doesnt work on console)
+            (when (display-graphic-p (selected-frame))
+              (eval-after-load 'flycheck
+                '(custom-set-variables
+                  '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages)))
+              )))
+#+END_SRC
+
+You will also need a syntax checker installed. If [[http://clang.llvm.org/][clang]] is installed it is flycheck's first choice. You might want to add a =.dir-locals.el= file to your Projectile root directory a la
+
+#+BEGIN_SRC emacs-lisp
+;;; Directory Local Variables
+;;; See Info node `(emacs) Directory Variables' for more information.
+
+((c-mode .
+         ( (flycheck-clang-include-path . ("/local/include/dir/1" "/local/include/dir/2") ) )
+         ))
+#+END_SRC
+
+which tells the clang syntax checker where to find include files. Directory variables are cool.
+
+* White Space Buttler
+
+Some people care deeply about trailing whitespaces. I don't. But if it's essentially free not to add them, why not. One solution for dealing with trailing whitespaces is to delete them whenever you save a file. However, if you do that with other people's code who do not care about trailing whitespaces then all your commits will be littered with noisy whitespace changes and nobody wants to be that guy. Try getting such a patch reviewed in [[http://sagemath.org/][Sage]]. The [[https://github.com/lewang/ws-butler][ws-butler]] package takes care of whitespaces discretely by fixing up whitespaces /only/ for those lines you touched. Hence, you won't add any trailing whitespaces without littering your commits with tons of noise.
+
+#+BEGIN_SRC emacs-lisp
+(use-package ws-butler
+  :commands ws-butler-mode
+  :init (progn
+          (add-hook 'c-mode-common-hook 'ws-butler-mode)
+          (add-hook 'python-mode-hook 'ws-butler-mode)
+          (add-hook 'cython-mode-hook 'ws-butler-mode)))
+#+END_SRC
+
+* Git
+
+There is a very nice inferface to Git for Emacs called [[https://github.com/magit/magit][Magit]]. I bind it =<f7>= to it because I use it quite regularly. Using Magit definitely improved my commits in that I manage to do the "one-thing-per-commit" a lot more than I used to and I also write slightly better commit messages. I've not used any other frontends to Git except for the normal command line tools, so I can't tell if what Magit does is special or to be expected from an interface for Git. It definitely helps that it is well integrated into my editor.
+
+I also sometimes use the [[https://github.com/pidu/git-timemachine][git-timemachine]] package to step forward and backward through the history of a file. While in a buffer for a file under git revision control, you can step backward and forward in git commits by pressing =p= and =n= after activating the "time machine", it's a nice way of quickly going by to a previous version, say, with some code you since dropped but now need to look up.
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "<f7>") 'magit-status)
+(use-package git-timemachine)
+#+END_SRC
+
+The [[http://www.emacswiki.org/UndoTree][undo-tree]] package serves a similar purpose but for the undo history.
+
+#+BEGIN_SRC emacs-lisp
+(use-package undo-tree
+  :init
+  (progn
+    (global-undo-tree-mode)
+    (setq undo-tree-visualizer-timestamps t)
+    (setq undo-tree-visualizer-diff t)
+    ))
+#+END_SRC

@@ -1,0 +1,55 @@
+#+BLOG: wordpress
+#+POSTID: 1090
+#+DATE: [2014-11-16 Sun 20:46]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: sage
+#+TAGS: sage, lattice-based cryptography, linear algebra
+#+DESCRIPTION: 
+#+TITLE: Sage 6.4
+
+[[http://sagemath.org][Sage 6.4]] is out. Here are some (to me) particularly exciting changes.
+
+#+HTML: <!--more-->
+
+* [[http://trac.sagemath.org/ticket/16479][#16479: Vincent Delecroix: package for pip the Python installer]]
+
+Sage now ships with [[https://pypi.python.org/pypi/pip][pip]] which means you can use pip to install your favourite Python packages into the Sage environment, making it a lot easier to get access to the Python ecosystem. For example, say you want to use [[https://bitbucket.org/malb/batzenca][BatzenCA]] in Sage. You'd call
+
+#+BEGIN_SRC
+$ sage -pip install batzenca
+#+END_SRC
+
+and you are done.
+
+*Update:* Sorry, I mispoke: pip is an optional package at the moment, not a standard package. You'll have to =sage -i pip= it first.
+
+* [[http://trac.sagemath.org/15915][#15915: Martin Albrecht: add discrete Gaussian samplers to Sage]]
+
+I contributed code to sample from discrete Gaussian distributions to Sage. Discrete Gaussian distributions over the Integers sample integers proportionally to exp(-(x-c)²/(2σ²)), where /c/ is the center and /σ/ the Gaussian width parameter (roughly, the standard deviation). Here's an example:
+
+#+BEGIN_SRC python
+sage: from sage.stats.distributions.discrete_gaussian_integer import DiscreteGaussianDistributionIntegerSampler as DiscGauss
+sage: D = DiscGauss(3.0)
+sage: D() # output random by definition
+-3
+#+END_SRC
+
+Discrete Gaussian distributions are commonly used in lattice-based cryptography. For example, our [[https://bitbucket.org/malb/gghlite-flint][GGHLite implementation]] makes use of the same code. That is, most of the code is written in C99 and also available as the stand-alone [[https://bitbucket.org/malb/dgs][dgs]] library under a 2-clause BSD library.
+
+I also implemented discrete Gaussians over arbitrary lattices. A discrete Gaussians over a lattice /Λ/ is a distribution where point /x/ occurs with probability:
+
+    $\mbox{exp}(-|x-c|_2^2/(2\sigma^2))/(\sum_{x \in \Lambda} \mbox{exp}(-|x|_2^2/(2\sigma^2)))$
+
+However, this code not part of the dgs library but a pure Python module. A C99 implementation of the same algorithms as well as specialised algorithms for ideal lattices is part of the [[https://bitbucket.org/malb/gghlite-flint][GGHLite]] implementation as the =dgsl= module, though.
+
+* [[http://trac.sagemath.org/16803][#16803: Marc Masdeu: Reimplement matrix_integer_dense using FLINT]]
+
+Marc switched over matrices over $\mathbb{Z}$ to using FLINT as the native data type. Previously, we had our own data type (arrays of arrays of =mpz_t=), custom code and lots of conversions to other data types ([[http://www.linalg.org/][LinBox]], [[https://cs.uwaterloo.ca/~astorjoh/iml.html][IML]], …) to realise some functionality such as characteristic polynomials. FLINT is a sane default data type as it is quite fast for many operations. Conversions to LinBox et al. are still in place so functionality should not be lost. However, some decisions about defaults might be outdated now so report any issues on [[http://trac.sagemath.org][trac]].
+
+* [[http://trac.sagemath.org/16996][#16996: Volker Braun: IPython notebook with Sage Extensions]]
+
+Thanks to Volker's efforts you can now use the iPython notebook for Sage. To me the iPython notebook feels a lot more modern than the Sage notebook, partly because it is actively being developed whereas not much work is currently done on the native Sage notebook (it has seen some work done on it in the current release, though). I also like that iPython notebooks are files in your current directly which means you can keep them project local (others disagree about this design decision). To start the iPython notebook run:
+
+#+BEGIN_SRC
+$ sage -notebook=ipython
+#+END_SRC

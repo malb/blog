@@ -1,0 +1,66 @@
+#+BLOG: wordpress
+#+POSTID: 1116
+#+DATE: [2015-01-20 Tue 19:28]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography, sage
+#+TAGS: cryptography, cryptanalysis, lattice-based cryptography, lwe, paper, pre-print
+#+DESCRIPTION:
+#+TITLE: On the concrete hardness of Learning with Errors
+
+Together with Rachel Player and Sam Scott (both also from the [[https://isg.rhul.ac.uk][Information Security Group]] at Royal Holloway, University of London) we finally managed to put our [[https://eprint.iacr.org/2015/046][survey]] on solving the Learning with Errors problem out. Here’s the abstract:
+
+#+BEGIN_QUOTE
+The Learning with Errors (LWE) problem has become a central building block of modern cryptographic constructions. This work collects and presents hardness results for concrete instances of LWE. In particular, we discuss algorithms proposed in the literature and give the expected resources required to run them. We consider both generic instances of LWE as well as small secret variants. Since for several methods of solving LWE we require a lattice reduction step, we also review lattice reduction algorithms and use a refined model for estimating their running times. We also give concrete estimates for various families of LWE instances, provide a Sage module for computing these estimates and highlight gaps in the knowledge about algorithms for solving the Learning with Errors problem.
+#+END_QUOTE
+
+#+HTML: <!--more-->
+
+And here is a slightly cleaned up version of the table of contents:
+
+1. Introduction
+2. Notation & Tools
+3. Lattice Reduction Algorithms
+  1. LLL
+    1. Running Time
+    2. Quality of Output
+    3. Implementations
+  2. BKZ
+    1. BKZ 2.0
+    2. Quality of Output
+    3. Running Time
+       1. SVP Oracles
+       2. Estimating /ρ/
+       3. Asymptotic Behaviour
+       4. Existing Estimates
+       5. Estimates for /t_k/
+       6. Overall
+    4. Implementations
+  3. Choosing /m/
+4. Strategies
+  1. Short Integer Solutions (SIS)
+  2. Bounded Distance Decoding (BDD)
+  3. Solving for /s/
+5. Algorithms
+  1. Exhaustive Search
+  2. BKW
+  3. Using Lattice Reduction To Distinguish
+  4. Decoding Approach
+     1. Lindner and Peikert Nearest Planes
+     2. Solving BDD by Enumeration: an Update (Liu, Nguyen)
+     3. Runtime Analysis
+  5. Reducing BDD to uSVP
+  6. Arora-Ge and Gröbner Bases
+6. Small Secret Variants
+  1. Exhaustive Search
+  2. Modulus Switching for Lattice Reduction
+  3. Bai's and Galbraith's Embedding
+  4. Small Secret BKW
+  5. Arora-Ge and Gröbner Bases
+7. Examples
+8. Discussion
+
+From the TOC you might have guessed that we’re trying to give a reasonably complete overview of strategies and algorithms for solving the Learning with Errors problem, including its small secret variant. Though, I should mention, that We’re exclusively focusing on the scenario, though, where we have access to as many LWE samples as we want. See the brief discussion in the introduction.
+
+We also provide a [[http://sagemath.org][Sage]] module for estimating the cost of solving concrete LWE instances. The code is available on [[https://bitbucket.org/malb/lwe-estimator][bitbucket]]. You can play with it [[http://aleph.sagemath.org/?z=eJxNztEOgiAYhuFzN--BeaSbCWL8SFvX4n4Q0qVpQLnuPg9c6zt_3n3Tgn2eDTGu4UKpHqN-mbuN1eJvdMZJ02mzJxviOGNcPPW4UaUAJWd1D9q1Tp6NawEUcgOi5gaxkaJF7ST9sWr9ZEWaPEqC0zpgSZ7kSriAkrCKMaYkCOCCHSsJCNHINAk2dm_r9RJsXu--29XRtN3-K_8LFl8FmTx5&lang=sage][here]].
+
+*Update (2015-03-13)*: We updated our survey based on feedback from various people. In particular, Paul Kirchner and Steven Galbraith pointed out mistakes and where we missed relevant literature.
