@@ -1,0 +1,95 @@
+#+BLOG: wordpress
+#+POSTID: 1169
+#+DATE: [2015-04-21 Tue 11:02]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography
+#+TAGS:cryptography, coding theory, conference
+#+DESCRIPTION:
+#+TITLE: 15th IMA International Conference on Cryptography and Coding
+
+[[http://www0.cs.ucl.ac.uk/staff/j.groth/IMACC.html][IMA-CCC]] ([[https://www.facebook.com/events/820767331310476/][Facebook]]) is a crypto and coding conference biennially held in the UK. It was previously
+held in Cirencester. So you might have heard of it as the “Cirncester” conference. However, it has
+been moved to Oxford, so calling it Cirencester now is a bit confusing. Anyway, it is happening
+again this year. IMA is a small but fine conference with the added perk of being right before
+Christmas. This is great because around that time of the year Oxford is a fairly Christmas-y place
+to be. 
+
+#+HTML: <!--more-->
+
+** Call for Papers
+
+The mathematical theory and practice of cryptography and coding underpins the provision of effective
+security and reliability for data communication, processing and storage. Theoretical and practical
+advances in the fields of cryptography and coding are therefore a key factor in facilitating the
+growth of data communications and data networks of various types. Thus, this fifteenth International
+Conference in an established and successful IMA series on the theme of "Cryptography and Coding" is
+both timely and relevant. Original research papers on all technical aspects of cryptography and
+coding are solicited for submission. The proceedings will be published in Springer's Lecture Notes
+in Computer Science series, and will be available at the conference.
+
+*** Important Dates
+
+|------------------------------+-------------------------|
+| Submission Deadline:         | 26 June 2015, 22:00 UTC |
+| Author Notification:         | 28 August 2015          |
+| Proceedings Version Deadline | 14 September 2015       |
+| Conference:                  | 15 - 17 December 2015   |
+|------------------------------+-------------------------|
+
+*** Instructions for Authors
+
+Submissions must not substantially duplicate work that any of the authors has published elsewhere or
+has submitted in parallel to a journal or any other conference or workshop with proceedings.
+Accepted submissions may not appear in any other conference or workshop that has proceedings.
+Authors of accepted papers must guarantee that their paper will be presented at the conference and
+must make a full version of their paper available online.
+
+All submissions will be blind-reviewed. Papers must be anonymous, with no author names,
+affiliations, acknowledgements, or obvious references. Submissions should begin with a cover page
+containing title, a short abstract, and a list of keywords. The body of the paper should be at most
+14 pages, excluding the title page with abstract, the bibliography, and clearly marked appendices.
+Committee members are not required to review appendices, so the paper should be intelligible and
+self-contained within this length. The text should be in a single column format, in at least
+11-point fonts and have reasonable margins. Submissions not meeting these guidelines risk rejection
+without consideration of their merits.
+
+*** Program Committee
+
+- Martin Albrecht, Royal Holloway, University of London, UK
+- Marco Baldi, Università Politecnica delle Marche, Italy
+- Colin Boyd, NTNU, Norway
+- Claude Carlet, University of Paris 8, LAGA, France
+- Pascale Charpin, INRIA-Rocquencourt, France
+- Liqun Chen, HP Labs, UK
+- Nicolas Courtois, University College London, UK
+- Marten van Dijk, University of Connecticut, US
+- Pooya Farshim, Queen's University Belfast, UK
+- Sebastian Faust, Ruhr University Bochum, Germany
+- Matthieu Finiasz, CryptoExperts, France
+- Caroline Fontaine, CNRS and Télécom Bretagne, France
+- Philippe Gaborit, University of Limoges, France
+- Guang Gong, University of Waterloo, Canada
+- Jens Groth, University College London, UK (Chair)
+- Aggelos Kiayias, National and Kapodistrian University of Athens, Greece
+- Markulf Kohlweiss, Microsoft Research Cambridge, UK
+- Cong Ling, Imperial College London, UK
+- Helger Lipmaa, University of Tartu, Estonia
+- Vadim Lyubashevsky, ENS, France
+- Subhamoy Maitra, Indian Statistical Institute, India
+- Mark Manulis, University of Surrey, UK
+- Atsuko Miyaji, Japan Advanced Institute of Science and Technology, Japan
+- Rafail Ostrovsky, University of California Los Angeles, US
+- Carles Padró, Universitat Politècnica de Catalunya, Spain
+- Matthew G. Parker, University of Bergen, Norway
+- Chris Peikert, Georgia Institute of Technology, US
+- Joachim Rosenthal, University of Zurich, Switzerland
+- Rei Safavi-Naini, University of Calgary, Canada
+- Ana Sălăgean, Loughborough University, UK
+- Christian Rechberger, DTU, Denmark
+- Martijn Stam, University of Bristol, UK
+- Gilles Van Assche, STMicroelectronics, Belgium
+- Fre Vercauteren, KU Leuven, Belgium
+- Chapoing Xing, Nanyang Technological University, Singapore
+
+
+
