@@ -1,0 +1,9 @@
+#+BLOG: wordpress
+#+POSTID: 1174
+#+DATE: [2015-05-07 Thu 19:00]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography, sage
+#+TAGS: cryptography, sage
+#+DESCRIPTION:
+#+TITLE: LWE Survey Talk
+I just gave a talk at [[http://sec.cs.ucl.ac.uk/ace_csr/ace_seminars/][UCL]] about our [[https://martinralbrecht.wordpress.com/2015/01/20/on-the-concrete-hardness-of-learning-with-errors/][LWE survey]]. Here are the [[https://martinralbrecht.files.wordpress.com/2015/05/20150507-lwe-survey-london.pdf][slides]] and [[https://bitbucket.org/malb/talks/src/HEAD/20150507%20-%20LWE%20Survey%20-%20London/?at=master][LaTeX sources]] (using the beamer [[https://github.com/matze/mtheme][mtheme]]).

@@ -1,0 +1,41 @@
+#+BLOG: wordpress
+#+POSTID: 1179
+#+DATE: [2015-06-13 Sat 11:01]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: sage
+#+TAGS: sage
+#+DESCRIPTION:
+#+TITLE: PolyBoRi is dead, it needs your help
+On [[https://groups.google.com/forum/#!topic/sage-devel/9Uhnvm3wef8][the Sage development list]] a discussion is going on what to do about [[http://polybori.sourceforge.net/][PolyBoRi]]. For those who do not know PolyBoRi, for computing Gröbner bases for Boolean polynomials it is pretty much the only (open-source) game in town (as far as I know):
+
+#+BEGIN_QUOTE
+The core of PolyBoRi is a C++ library, which provides high-level data types for Boolean polynomials and monomials, exponent vectors, as well as for the underlying polynomial rings and subsets of the powerset of the Boolean variables. As a unique approach, binary decision diagrams are used as internal storage type for polynomial structures.
+
+On top of this C++-library we provide a Python interface. This allows parsing of complex polynomial systems, as well as sophisticated and extendable strategies for Gröbner base computation. PolyBoRi features a powerful reference implementation for Gröbner basis computation.
+#+END_QUOTE
+
+Boolean polynomials show up a lot in cryptography and other areas of computer science.
+
+The trouble with PolyBoRi is that both authors of PolyBoRi – Alexander Dreyer and Michael Brickenstein – left academia and have jobs now which have nothing to do with PolyBoRi. Hence, PolyBoRi is currently not maintained. This is a big problem. In particular, there are some issues with PolyBoRi which cannot be ignored forever:
+
+- PolyBoRi uses Python (yay) but only Python 2. At some point the world – i.e. Sage – will switch to Python 3 and PolyBoRi is the only obstacle to that switch except for the Sage Python library itself.
+
+- PolyBoRi uses [[http://www.scons.org/][Scons]] as a build system. Everybody would be a lot happier if it was switched to using [[https://www.gnu.org/software/automake/manual/html_node/Autotools-Introduction.html][autotools]] (which are a lot more awesome than many people realise).
+
+In the long-term the Singular team /might/ get involved and keep PolyBoRi alive, but this is not certain. Also, there is a push for a decision about what to do with PolyBoRi in Sage now. 
+
+The current proposal on the table is to drop PolyBoRi from the default Sage installation, i.e. to demote it to an optional package. In my mind, this would be very bad as Sage and PolyBoRi benefit from the tight integration that currently exists. Also, in my experience, optional packages tend to simply not work that well as they are not tested in each release.
+
+Hence, if you care about PolyBoRi you should consider to
+
+1) let us know in the relevant [[https://groups.google.com/forum/#!topic/sage-devel/9Uhnvm3wef8][thread]] on the mailing list if you use PolyBoRi in Sage.
+
+2) volunteer to help to autotool-ify PolyBoRi if you speak autotools. (If you don’t speak autotools, you should learn, they are awesome.)
+
+3) volunteer to help to port PolyBoRi from Python 2 to Python 3.
+
+I’m up for getting involved, but I don’t want to take on the responsibility alone.
+
+*Update (2015-06-13):* A fair share of work has already been done by [[https://github.com/ohanar/PolyBoRi/commits/autotools][Andrew]]. Still, anyone up for helping out?
+
+#  LocalWords:  PolyBoRi autotools wordpress powerset Brickenstein Scons

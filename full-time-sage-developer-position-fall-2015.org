@@ -1,0 +1,61 @@
+#+BLOG: wordpress
+#+POSTID: 1176
+#+DATE: [2015-06-02 Tue 08:51]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: Sage
+#+TAGS:sage
+#+DESCRIPTION:
+#+TITLE: Full-time Sage developer position opening at Université Paris-Sud for Fall 2015
+The first ever full-time developer position for working on [[http://sagemath.org][Sage]] has been [[http://opendreamkit.org/2015/05/22/developer-position-paris-sud/][announced]]. It will be at Université Paris-Sud.
+
+#+HTML: <!--more-->
+
+#+BEGIN_QUOTE
+*Mission* To support the maintenance and development of the OpenDreamKit components, and in particular of the SageMath project, by enhancing their software infrastructure, in close collaboration with the community.
+
+*Activities* According to his or her specific skills, the developer will take on, in close collaboration with the community, a selection of the software engineering tasks defined in the OpenDreamKit project. Those tasks concern:
+
+- Improvements to the build, packaging, and distribution systems;
+
+- Improvements to the portability of many of the components, in particular on the Windows+Cygwin platform;
+
+- Refactoring of the static Sphinx-based documentation system, and design and development of dynamic documentation tools;
+
+- Participation to the design and implementation of a component architecture for the SageMath ecosystem, as a fundation for Virtual Research Environments such as SageMathCloud;
+
+- Active participation to regular international development and training meetings with the other OpenDreamKit participants and the community at large.
+
+[…]
+
+*Skills and background requirements*
+
+- Fluency in C, C++, Python, …
+
+- Strong experience with development and system administration in Unix-like environments;
+
+- Experience with Windows development (Cygwin) desirable;
+
+- Strong experience with software build systems (e.g. scons, automake);
+
+- Strong experience in open-source development (collaborative development tools, interaction with the community, …);
+
+- Experience with code optimization, parallelism, etc, appreciated but not a prerequisite.
+
+- Experience with computational mathematics software, in particular SageMath, desirable but not a prerequisite;
+
+- Mathematics background appreciated but not a prerequisite;
+
+- Strong communication skills;
+
+- Perfect fluency in English;
+
+- Speaking French is appreciated but not a prerequisite.
+
+*Context* The position will be funded by OpenDreamKit, a Horizon 2020 European Research Infrastructure project that will run for four years, starting from September 2015. This project brings together the open source computational mathematics ecosystem – and in particular LinBox, MPIR, SageMath, GAP, Pari/GP, LMFDB, Singular, MathHub, and the IPython/Jupyter interactive computing environment. – toward building a flexible toolkit for Virtual Research Environments for mathematics. Lead by Université Paris Sud this project involves about 50 people spread over 15 sites in Europe, with a total budget of about 7.6 million euros.
+
+Within this ecosystem, the developer will work primarily on the free open-source mathematics software system Sagemath. Based on the Python language and many existing open-source math libraries, SageMath is developped since 10 years by a worldwide community of 300 researchers, teachers and engineers, and has reached 1.5M lines of code.
+
+The developer will work within one of the largest teams of SageMath developers, composed essentially of researchers in mathematics and computer science, at the Laboratoire de Recherche en Informatique and in nearby institutions.
+
+*Comments* This is not a postdoc position. While side research will be welcome, and a few tasks may possibly lead to some research problems in computer science, the core tasks will be pure development. Candidates wishing to pursue an academic research career in the long run should consider twice whether this opportunity is adequate for them.
+#+END_QUOTE
