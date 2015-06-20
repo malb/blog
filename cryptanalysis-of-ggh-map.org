@@ -88,7 +88,7 @@ class NIKESloppy:
         self.I = self.K.ideal([self.R(row.list()) for row in self.G.rows()])
 #+END_SRC
 
-Logarithms of Euclidean norms is useful as “small” and “not-so-small” are what distinguishes
+Logarithms of Euclidean norms are useful as “small” and “not-so-small” are what distinguishes
 between secret and not-so-secret.
 
 #+BEGIN_SRC python
@@ -212,14 +212,9 @@ shared key.
         return tuple(t.list())
 #+END_SRC
 
-Let me stress once more that the above is not a proper implementation of a GGH-like candidate
-multilinear maps. For starters, the method called ~discrete_gaussian~ does not return elements
-following a discrete Gaussian distribution. We also skipped several tests from the GGH and GGHLite
-specifications. However, this simplified variant is sufficient to explain the attack of Hu and Jia.
+Let me stress once more that the above is not a proper implementation of a GGH-like candidate multilinear maps. For starters, the method called ~discrete_gaussian~ does not return elements following a discrete Gaussian distribution. We also skipped several tests from the GGH and GGHLite specifications. However, this simplified variant is sufficient to explain the attack of Hu and Jia.
 
-The attack proceeds in two steps. The *first step* was already known as the *“weak discrete log
-attack”*. (*Update:* Hu and Jia do not present the first step of their attack this way. Instead, they give another way of computing a “kind of” level-0 encoding from a, say, level-1 encoding. Damien Stéhle was the first to point out to me that this step can be replaced by the “normal” weak discrete log attack.)  Say, we have some level-$1$ encoding $u_0 = e_0 \cdot y + \rho_{00} x_0 + \rho_{01} x_1$.
-We can compute:
+The attack proceeds in two steps. The *first step* was already known as the *“weak discrete log attack”*. (*Update:* Hu and Jia do not present the first step of their attack this way. Instead, they give another way of computing a “kind of” level-0 encoding from a, say, level-1 encoding. Damien Stéhle was the first to point out to me that this step can be replaced by the “normal” weak discrete log attack.) Say, we have some level-$1$ encoding $u_0 = e_0 \cdot y + \rho_{00} x_0 + \rho_{01} x_1$. We can compute:
 
 \[v_0 = \left(u_0 \cdot x_0 \cdot y^{\kappa-2} \cdot p_{zt}\right) \mod q = e_0\, b_0\, h + \xi_0 g\]
 
@@ -262,31 +257,24 @@ y^{\kappa} \cdot p_{zt}$ to solve the Ext-GCDH problem. However, $\eta$ is not s
 This is where Hu and Jia come in with a clever and remarkably simple *step two*. They define:
 
 - $Y   = \left(y^{\kappa-1} x_1     p_{zt}\right) \mod q = h \cdot (1+ag)^{\kappa-1}\cdot b_1$
-- $X_i = \left(y^{\kappa-2} x_i x_1 p_{zt}\right) \mod q = h \cdot (1+ag)^{\kappa-2}\cdot b_1 \cdot b_i\ cdot g$
+- $X_i = \left(y^{\kappa-2} x_i x_1 p_{zt}\right) \mod q = h \cdot (1+ag)^{\kappa-2}\cdot b_1 \cdot b_i \cdot g$
 
 Again, note that the right hand sides have no modular reductions modulo $q$ because they are “somewhat short”.
 
 Recall that $\eta = \prod_{i=0}^{\kappa} e_i + \zeta_0 g$ for some $\zeta_0 \in R$ and compute:
 
-1. $\eta' := Y \cdot \eta= Y\cdot\prod_{i=0}^\kappa e_i + \zeta_1\, b_1\, g$. Note that $Y$ is a
-   multiple of $b_1\, g$.
+1. $\eta' := Y \cdot \eta= Y\cdot\prod_{i=0}^\kappa e_i + \zeta_1\, b_1\, g$. Note that $Y$ is a multiple of $b_1\, g$.
 
-2. $\eta'' := \eta' \mod X_1 = Y\cdot\prod_{i=0}^\kappa e_i + \zeta_2\, b_1 g$ which holds because $X_1$
-   is a multiple of $b_1\,g$. Note that $\eta''$ has roughly the same size as $X_1$, which is
-   “somewhat short”.
+2. $\eta'' := \eta' \mod X_1 = Y\cdot\prod_{i=0}^\kappa e_i + \zeta_2\, b_1 g$ which holds because $X_1$ is a multiple of $b_1\,g$. Note that $\eta''$ has roughly the same size as $X_1$, which is “somewhat short”.
 
-3. $\eta''' := \eta' \cdot y \cdot (x_1)^{-1} \eta'' \mod q$ This effectively replaces the factor
-   $x_1$ in $Y$ by $y$. Consequently, we have $$\eta''' = y^\kappa\cdot p_{zt} \cdot
-   \prod_{i=0}^\kappa e_i + \zeta_2 (1+ag) \mod q$$ where the second summand is small. In other
-   words, we have computed $$h/g\cdot \prod_{i=0}^\kappa e_i + \textnormal{something small} \mod
-   q,$$ i.e. we have solved the Ext-GCDH problem.
+3. $\eta''' := \eta' \cdot y \cdot (x_1)^{-1} \eta'' \mod q$ This effectively replaces the factor $x_1$ in $Y$ by $y$. Consequently, we have $$\eta''' = y^\kappa\cdot p_{zt} \cdot \prod_{i=0}^\kappa e_i + \zeta_2 (1+ag) \mod q$$ where the second summand is small. In other words, we have computed $$h/g\cdot \prod_{i=0}^\kappa e_i + \textnormal{something small} \mod q,$$ i.e. we have solved the Ext-GCDH problem.
 
 Here’s some Sage code implementing these three steps:
 
 #+BEGIN_SRC python
 def ggh_break(params, U):
     """
-    Attack from [EPRINT:HuJia14]_
+    Attack from [EPRINT:HuJia15]_
 
     :param params: GGH parameters
     :param U: κ+1 level-1 encodings
