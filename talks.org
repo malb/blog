@@ -1,0 +1,109 @@
+#+POSTID: 22
+#+DATE: [2010-07-10 Sat 17:32]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: 
+#+TAGS: 
+#+TITLE: Talks
+
+** 2015
+
+-  *03.09.2015* - On the concrete hardness of Learning with Errors - Imperial, London, UK.
+-  *17.06.2015* - [[https://martinralbrecht.files.wordpress.com/2010/07/20150617-survey-epfl.pdf][On the concrete hardness of Learning with Errors]] - EPFL, Lausanne, Switzerland.
+-  *26.06.2015* - [[https://martinralbrecht.files.wordpress.com/2010/07/20150526-lowmc-edinburgh.pdf][Ciphers for MPC and FHE]] - Edinburgh, UK
+-  *07.05.2015* - On the concrete hardness of Learning with Errors - UCL, London, UK, [[https://bitbucket.org/malb/talks/src/HEAD/20150507%20-%20LWE%20Survey%20-%20London/][LaTeX sources]].
+
+** 2014
+
+-  *09.05.2014* - [[http://martinralbrecht.files.wordpress.com/2010/07/20140509-lwe-post-quantum-cambridge.pdf][Solving the Learning with Errors Problem]] - [[http://www.turing-gateway.cam.ac.uk/gchq_may2014.shtml][Post Quantum Research]] - Isaac Newton Institute, Cambridge, UK, [[https://bitbucket.org/malb/talks/src/c61384b17eae2017a78d639ed384bd9cb357b5a3/20140509%20-%20LWE%20-%20Cambridge/?at=default][LaTeX sources]].
+-  *23.04.2014* - [[http://martinralbrecht.files.wordpress.com/2010/07/20140423-heartbleed-isg-egham.pdf][Heartbleed]] - ISG Research Seminar, Egham, UK, [[https://bitbucket.org/malb/talks/src/c61384b17eae2017a78d639ed384bd9cb357b5a3/20140423%20-%20Heartbleed%20-%20ISG/?at=default][LaTeX sources]].
+
+** 2013
+
+-  *21.11.2013* - [[http://martinralbrecht.files.wordpress.com/2010/07/20131121_bkw-lwe_talk_lyon.pdf][Solving LWE with BKW]] - ENS Lyon, Lyon, France, [[https://bitbucket.org/malb/talks/src/tip/20131121%20-%20BKW%20-%20Lyon/?at=default][LaTeX sources]].
+-  *22.10.2013* - [[http://martinralbrecht.files.wordpress.com/2010/07/20131022_buchberger_dtu.pdf][Gröbner Bases]] - DTU Computational Discrete Mathematics course, Lyngby, Denmark, [[https://bitbucket.org/malb/talks/src/tip/20131022%20-%20Buchberger%20-%20DTU/?at=default][LaTeX sources]].
+-  *03.08.2013* - [[http://martinralbrecht.files.wordpress.com/2010/07/20130803_bkw-lwe_siamag13.pdf][Linear Algebra with Errors: On the Complexity of the Learning with Errors Problem]] - SIAM AG'13, Fort Collins, USA, [[https://bitbucket.org/malb/talks/src/tip/20130803%20-%20BKW%20-%20SIAMAG13?at=default][LaTeX sources]]
+-  *06.06.2013* - [[http://martinralbrecht.files.wordpress.com/2010/07/20130606_-_algebra.pdf][Sage & Algebraic Techniques for the Lazy Symmetric Cryptographer]] - [[http://ice.mat.dtu.dk][IceBreak]], Reykjavik, Iceland, [[https://bitbucket.org/malb/talks/src/a35f85ed2d4b820d688777aa46bab8307d9b5850/20130606%20-%20Algebra%20for%20Crypto%20-%20Reykjavik?at=default][LaTeX sources]]
+
+** 2012
+
+-  *16.08.2012* - [[http://martinralbrecht.files.wordpress.com/2010/07/20120816_-_differential_-_windsor.pdf][An All-In-One Approach to Differential Cryptanalysis for Small Block Ciphers]] - SAC 2012, Windsor, Canada, [[https://bitbucket.org/malb/talks/src/tip/20120816%20-%20Differential%20-%20Windsor][LaTeX sources]]
+-  *23.07.2012* - [[http://martinralbrecht.files.wordpress.com/2010/07/20120723_-_m4rie_-_grenoble.pdf][The M4RIE library for dense linear algebra over small fields with even characteristic]] - ISSAC 2012, Grenoble, France - [[https://bitbucket.org/malb/talks/src/8ce3378edb97/20120723%20-%20M4RIE%20-%20Grenoble][LaTeX sources]]
+-  *27.06.2012 -* [[http://martinralbrecht.files.wordpress.com/2010/07/20120627_pollycracker_bristol.pdf][Polly Cracker, revisited]] - Bristol University, UK - [[https://bitbucket.org/malb/talks/src/97c3e8284ade/20120627%20-%20PollyCracker%20-%20Bristol][LaTeX sources]]
+-  *07.06.2012* - The M4RI and M4RIE Libraries - [[http://wiki.lmona.de/events/elagb][ELAGB Workshop]], Kaiserslautern, Germany - [[https://bitbucket.org/malb/talks/src/7ae176bc6c08/20120607%20-%20M4RIE%20-%20Kaiserslautern][LaTeX sources]], [[https://www.youtube.com/watch?v=PjDVn6dOh5k&feature=youtu.be][video]]
+-  *01.06.2012* - [[https://martinralbrecht.files.wordpress.com/2010/07/20120601_-_la_-_mykonos.pdf][Algorithms & Techniques for Dense Linear Algebra over Small Finite Fields]] - ECrypt 2 School on Tools, Mykonos, Greece - [[https://bitbucket.org/malb/talks/src/tip/20120601%20-%20LA%20-%20Mykonos][LaTeX sources]]
+-  *28.05.2012* - [[https://martinralbrecht.files.wordpress.com/2010/07/20120528_-_sage_-_mykonos.pdf][Sage for Cryptographers]] - ECrypt 2 School on Tools, Mykonos, Greece - [[https://bitbucket.org/malb/talks/src/tip/20120528%20-%20Sage%20-%20Mykonos][LaTeX sources]]
+
+** 2011
+
+-  *19.12.2011* - [[http://martinralbrecht.files.wordpress.com/2010/07/20111219_-_m4ri_-_warwick.pdf][The M4RI & M4RIE libraries for linear algebra over GF(2) and small extensions]] - Sage Days 35, Warwick, UK
+-  *14.12.2011* - [[http://martinralbrecht.files.wordpress.com/2010/07/20111214_dhies_oxford.pdf][Breaking an Identity-based Encryption Scheme based on DHIES]] - IMA CCC 2011, Oxford, UK
+-  *06.12.2011* - [[http://martinralbrecht.files.wordpress.com/2010/07/20111206_pollycracker_asiacrypt.pdf][PollyCracker, Revisted]] - AsiaCrypt 2011, Seoul, South Korea
+-  *04.11.2011* - Polly Cracker, Revisited - SALSA Seminar, Paris, France
+-  *07.10.2011* -[[http://martinralbrecht.files.wordpress.com/2011/10/20111007_-_m4rie_-_raleigh.pdf][Linear algebra over dense matrices over GF(2) and small extensions]] - SIAM AG11, Raleigh, USA
+-  *28.07.2011* - [[http://martinralbrecht.files.wordpress.com/2011/07/20110728_pollycracker_bochum1.pdf][Polly Cracker, Revisted]] - MAYA Workshop, Bochum, Germany
+-  *18.07.2011* - [[http://martinralbrecht.files.wordpress.com/2011/07/20110718_coldboot_nanning.pdf][Solving Polynomial Systems with Noise using Integer Programming]] - CRC 2011, Nanning, China
+-  *07.06.2011* - [[http://martinralbrecht.files.wordpress.com/2011/06/20110607_coldboot_nerja.pdf][Coldboot Key Recovery by Solving Polynomial Systems with Noise]] -  ACNS 2011, Nerja, Spain
+-  *02.06.2011* - [[http://martinralbrecht.files.wordpress.com/2011/06/algebraic_cryptanalysis.pdf][Algebraic Techniques in Cryptanalysis]] - ECRypt II Summer School, Albena, Bulgaria
+-  *25.05.2011* - [[http://martinralbrecht.files.wordpress.com/2011/05/20110525_pollycracker_webinar.pdf][Polly Cracker Revisited]] - SCPQ Webinar, The Internets
+-  *05.04.2011* - [[http://martinralbrecht.files.wordpress.com/2010/07/20110405_coldboot_copenhagen.pdf][Cold Boot Key Recovery by Solving Polynomial Systems with Noise]] - DTU, Lyngby, Denmark
+-  *30.03.2011* - [[http://martinralbrecht.files.wordpress.com/2011/03/20110330_-_m4ri_-_nancy1.pdf][The M4RI & M4RIE libraries for linear algebra over GF(2) and small extensions]] - LORIA, Nancy, France
+-  *10.02.2011* - [[http://martinralbrecht.files.wordpress.com/2011/02/20110210_pollycracker_egham.pdf][PollyCracker Revisited]] - ISG Seminar, Egham, UK
+-  *20.01.2011* - [[http://martinralbrecht.files.wordpress.com/2011/01/20110120_mutants_darmstadt.pdf][On the relation of the Mutant strategy and the Normal Selection strategy]] - TU Darmstadt, Germany
+
+** 2010
+
+-  *08.10.2010* - [[http://martinralbrecht.files.wordpress.com/2010/10/viva.pdf][PhD defense]] - Royal Holloway, University of London, Egham, UK
+-  *23.06.2010* - [[http://sage.math.washington.edu/home/malb/talks/20100623%20-%20Coldboot%20-%20SCC%202010%20-%20Egham.pdf][Cold Boot Key Recovery using Polynomial System Solving with Noise]] - SCC 2010, Egham, UK
+-  *22.06.2010* - [[http://sage.math.washington.edu/home/malb/talks/20100622%20-%20Precomputation%20-%20Tools%20-%20Egham.pdf][Algebraic Precomputations in Differential Cryptanalysis]] - Tools for Cryptanalysis, Egham, UK
+-  *22.06.2010* - [[http://sage.math.washington.edu/home/malb/talks/20100622%20-%20Decomposition%20-%20Tools%20-%20Egham.pdf][Efficient Decomposition of Dense Matrices over GF(2)]] - Tools for Cryptanalysis, Egham, UK
+-  *22.06.2010* - [[http://sage.math.washington.edu/home/malb/talks/20100622%20-%20Algebraic%20Tools%20-%20Tools%20-%20Egham.pdf][Tools for Algebraic Cryptanalysis]] - Tools for Cryptanalysis, Egham, UK
+-  *10.05.2010* - [[http://sage.math.washington.edu/home/malb/talks/20100510%20-%20Coldboot%20-%20Berlin.pdf][Cold Boot Key Recovery using Polynomial System Solving with Noise]] - Konrad Zuse Institut, Berlin, Germany
+-  *17.03.2010* - [[http://sage.math.washington.edu/home/malb/talks/20100317%20-%20Coldboot%20-%20Egham.pdf][On Cold Boots and Noisy Polynomials]] - US Naval Academy visit, Egham, UK
+-  *18.02.2010* - [[http://sage.math.washington.edu/home/malb/talks/20100218%20-%20Coldboot%20-%20Egham.pdf][On Cold Boots and Noisy Polynomials]] - PhD Seminar, Egham, UK
+-  *14.01.2010* - [[http://sage.math.washington.edu/home/malb/talks/20100114%20-%20ATiDC2%20-%20ESC2010.pdf][Enhancing the Signal to Noise Ratio in Differential Cryptanalysis, using Algebra]] - ESC 2010, Remich, Luxembourg
+-  *13.01.2010* - [[http://sage.math.washington.edu/home/malb/talks/20100113%20-%20KTANTAN32%20-%20ESC2010%20-%20Rump.pdf][Tiny Results against Reduced KTANTAN32]] - ESC 2010 Rump Session, Remich, Luxembourg
+
+** 2009
+
+-  *22.07.2009* - [[http://sage.math.washington.edu/home/malb/talks/20090722%20-%20Sage%20-%20Kaiserslautern.pdf][Singular, PolyBoRi and Sage]] - Kaiserslautern, Germany
+-  *23.06.2009* - [[http://sage.math.washington.edu/home/malb/talks/20090623%20-%20SageDev%20-%20Barcelona.pdf][How to get started with developing Sage]] - Sage Days 16, Barcelona, Spain
+-  *24.02.2009* - [[http://sage.math.washington.edu/home/malb/talks/20090224%20-%20ATiDC%20-%20FSE2009.pdf][Algebraic Techniques in Differential Cryptanalysis]] - FSE 2009, Leuven, Belgium
+
+** 2008
+
+-  *27.11.2008* - [[http://sage.math.washington.edu/home/malb/talks/20081127%20-%20MatrixF5%20-%20Egham.pdf][Matrix F5 for the Working Cryptographer]] - PhD Seminar, Egham, UK
+-  *06.11.2008* - [[http://sage.math.washington.edu/home/malb/talks/20081106%20-%20Sage%20-%20Egham.pdf][Open Source Mathematics: Sage]] - PhD Seminar, Egham, UK
+-  *29.10.2008* - [[http://sage.math.washington.edu/home/malb/talks/20081029%20-%20Algebraic%20Attacks%20-%20Cambridge.pdf][Algebraic Attacks on Block Ciphers]] - Open Day, Cambridge, UK
+-  *10.10.2008* - [[http://sage.math.washington.edu/home/malb/talks/20081010%20-%20M4RI%20-%20Nancy.pdf][Matrix Multiplication over GF(2) in the M4RI Library]] - [[http://wiki.sagemath.org/days10][Sage Days 10]], Nancy, France
+-  *20.06.2008* - [[http://sage.math.washington.edu/home/malb/talks/20080620%20-%20XOR%20-%20Seattle.pdf][XOR for Fun and Profit]] - Sage [[http://wiki.sagemath.org/dev1][dev1]], Seattle, USA
+-  *28.04.2008* - [[http://sage.math.washington.edu/home/malb/talks/20080428%20-%20ATiDC%20-%20Beijing.pdf][Algebraic Techniques in Differential Cryptanalysis]] - [[http://www.cc4cm.org/scc2008/][SCC 2008]], Beijing, China
+-  *15.03.2008* - [[http://sage.math.washington.edu/home/malb/talks/20080315%20-%20Sage%20-%20OKCon%20-%20London.pdf][Sage: Creating a Viable Alternative to the Four Ms]] - [[http://www.okfn.org/okcon/][OKCon]], London, UK
+-  *21.02.2008* - [[http://sage.math.washington.edu/home/malb/talks/20080121%20-%20ATiDC%20-%20Egham.pdf][Algebraic Techniques in Differential Cryptanalysis]] - [[http://www.isg.rhul.ac.uk/research/ISGseminars][ISG Seminar]], Egham, UK
+
+** 2007
+
+-  *29.11.2007* - [[http://sage.math.washington.edu/home/malb/talks/20071129%20-%20Sage%20-%20Soissons.pdf][Synergy Effects - A Sage Introduction]] - [[http://www.tropheesdulibre.org/][Les Trophees due libre 2007]], Soissons, France
+-  *10.11.2007* - [[http://sage.math.washington.edu/home/malb/talks/20071110%20-%20Sage%20-%20Bristol.pdf][Sage for Mathematical and Cryptographic Research]] - [[http://wiki.sagemath.org/days6][Sage Days 6]], Bristol, UK
+-  *01.11.2007* - [[http://sage.math.washington.edu/home/malb/talks/20071101%20-%20SAGE%20-%20Egham.pdf][Not Reinventing the Wheel: A Sage Introduction]] - PhD Seminar, Egham, UK
+-  *30.09.2007* - [[http://sage.math.washington.edu/home/malb/talks/20070930%20-%20Commutative%20Algebra%20-%20Cambridge.pdf][Status Report: Commutative Algebra]] - SAGE Days 5, Cambridge, USA
+-  *04.05.2007* - [[http://sage.math.washington.edu/home/malb/talks/20070504%20-%20SAGE%20-%20Samos.pdf][SAGE]] - ECrypt PhD Summerschool, Samos, Greece
+-  *01.03.2007* - [[http://sage.math.washington.edu/home/malb/talks/20070301%20-%20Algebraic%20Attacks%20-%20Seattle.pdf][Algebraic Attacks]] - Seattle, USA
+-  *19.02.2007* - [[http://sage.math.washington.edu/home/malb/talks/20070219%20-%20Pyrex%20-%20LA.pdf][Pyrex]] - SAGE Days 3, Los Angeles, USA
+-  *14.02.2007* - [[http://sage.math.washington.edu/home/malb/talks/20070214%20-%20Pyrex%20-%20Seattle.pdf][Pyrex]] - Seattle, USA
+-  *12.02.2007* - [[http://sage.math.washington.edu/home/malb/talks/20070212%20-%20Commutative%20Algebra%20-%20Seattle.pdf][Commutative Algebra in SAGE]] - Seattle, USA
+-  *19.01.2007* - [[http://sage.math.washington.edu/home/malb/talks/20070119%20-%20CTC%20-%20Darmstadt.pdf][CTC]] - Darmstadt, Germany
+-  *18.01.2007* - [[http://sage.math.washington.edu/home/malb/talks/20070118%20-%20CTC%20-%20Kaiserslautern.pdf][CTC]] - Kaiserslautern, Germany
+-  *10.01.2007* - [[http://sage.math.washington.edu/home/malb/talks/20070110%20-%20Colloquium%20-%20Bremen.pdf][Algebraic Attacks against CTC]] - Colloquium, Bremen, Germany
+
+** 2006
+
+-  *07.10.2006* - [[http://sage.math.washington.edu/home/malb/talks/20061007%20-%20Pyrex%20-%20Seattle.pdf][Pyrex]] - SAGE Days 2, Seattle, USA
+-  *06.10.2006* - [[http://sage.math.washington.edu/home/malb/talks/20061006%20-%20Groebner%20Bases%20in%20SAGE%20-%20Seattle.pdf][Gröbner Bases in SAGE]] - SAGE Days 2, Seattle, USA
+-  *11.03.2006* - [[http://sage.math.washington.edu/home/malb/talks/20060311%20-%20RSA%20-%20Oberwiesenthal.pdf][RSA]] - Oberwiesenthal, Germany
+
+** 2005-2004
+
+-  *17.06.2005* - [[http://sage.math.washington.edu/home/malb/talks/20050617%20-%20Reflexionsgruppen%20-%20Bremen.pdf][Reflexionsgruppen]] - AlZAGK Seminar, Bremen, Germany
+-  *05.11.2004* - [[http://sage.math.washington.edu/home/malb/talks/20041105%20-%20Buchberger%20Kritierum%20-%20Bremen.pdf][Das Buchberger Kritierum]] - AlZAGK Seminar, Bremen, Germany
+-  *13.07.2004* - [[http://sage.math.washington.edu/home/malb/talks/20040713%20-%20Liouvillesche%20Saetze%20-%20Bremen.pdf][Liouvillesche Sätze]] with Georg Lippold - AlZAGK Seminar, Bremen, Germany
+
