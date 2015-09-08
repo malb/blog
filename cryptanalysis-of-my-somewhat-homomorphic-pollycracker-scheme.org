@@ -1,0 +1,92 @@
+#+POSTID: 329
+#+DATE: [2011-02-01 Tue 10:01]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography, sage
+#+TAGS: algebraic attacks, algebraic cryptanalysis, cryptography, gröbner basis, homomorphic encryption, sage
+#+TITLE: Cryptanalysis of my Somewhat Homomorphic PollyCracker Scheme
+
+About 5 months ago I [[http://martinralbrecht.wordpress.com/2010/08/19/somewhat-homomorphic-encryption/][wrote]] about a homomorphic scheme based on integers and an adaptation of this schemes to use multivariate polynomials. At the very end I wrote: ﻿﻿
+
+#+BEGIN_QUOTE
+"Of course, I assume that my adaptation above can still be broken somehow since that's what tends to happen with multivariate crypto schemes. Also, I'm *really really* not an expert on public-key cryptography. Hey, this is a blog post, not a research paper ... so break it in the comments [[http://s2.wp.com/wp-includes/images/smilies/icon_smile.gif?m=1235252994g]]"
+#+END_QUOTE
+
+Well, with some delay, here is how to break it. Recall, that the secret is some Gröbner basis $g_0,\dots,g_{n-1}$ in $\mathbb{F}[x_0,\dots,x_{n-1}]$ (assume $\mathbb{F}_2$ for simplicity) and that a ciphertext is constructed as
+
+$c = \sum_{i=0}\^{n-1} f_ig_i + m' + m$
+
+where $m'$ has constant coefficient 0 and $f_i$ are random polynomials. Now, let $\deg(f_i) = Q, \deg(g_i) = P, \deg(m') = N$ with $N < P$ to ensure correct decryption (i.e. no interference of the noise with the normal form computation).
+
+To break the scheme simply request $n\^(P+Q)$ encryptions of zero and compute the row echelon form on the linearisation of those polynomials of degree $P+Q$ *without* elimination above the pivot (i.e. *don't* compute the reduced row echelon form). Throw away any element of degree $\leq N$ and call the resulting list $S$. This list $S$ allows to decrypt any ciphertext $c$ by reducing $c$ modulo $S$.
+
+Below, the attack in Sage:
+
+#+BEGIN_SRC python
+class PolynomialHomomorphic:
+    def __init__(self, l):
+        self.l = l
+        K = GF(2) # pick some field
+        # we choose a ring with l unknowns, which
+        # should make any GB computation at least
+        # as hard as 2\^l if we pick the ideal sufficiently
+        # random.
+        R = PolynomialRing(K, l, 'x', order='degrevlex')
+        self.K = K
+        self.R = R
+        # our small ideal, defines the message space.
+        self.b = Ideal([x for x in R.gens()])
+
+        # these parameters are pretty arbitrary from a
+        # security perspective!
+        self.N = 1
+        self.P = 2
+        self.Q = 1
+        self.key_gen()
+
+    def key_gen(self):
+        b,l = self.b, self.l
+        K, R = self.K, self.R
+        # we pick a random ideal with l element of degree P
+        p = [R.gen(i)**self.P + R.random_element(degree=self.P-1)
+        for i in range(l)]
+        self.p = Ideal(p)
+
+    def encrypt(self, m):
+        # we pick some m' which encodes the
+        # same plaintext but is bigger
+        m = self.R(m)
+        mprime = self.R.random_element(degree=self.N)
+        mprime -= mprime.constant_coefficient()
+        mprime += m.constant_coefficient()
+
+        # adding a random ideal element
+        for f in self.p.gens():
+            mprime += self.R.random_element(degree=self.Q)*f
+        return mprime
+
+    def decrypt(self, c):
+        # decryption is just as in the integer case.
+        return c.reduce(self.p).reduce(self.b)
+
+def break_cpa(pc, challenge):
+    ciphertexts = [pc.encrypt(0) for _ in xrange(2*pc.l**(pc.Q+pc.P))]
+    F = Sequence(ciphertexts)
+    A,v = F.coefficient_matrix(sparse=False)
+    E = A.echelon_form(full=False)
+    s = dict([(f.lm(),f) for f in (E*v).list() if f.degree() >= pc.P])
+
+    while True:
+        print challenge
+        if challenge.lm() in s:
+            challenge = challenge - s[challenge.lm()]
+        else:
+            if challenge.degree() > pc.P:
+                raise ValueError("Ah, snap! It didn't work.")
+            else:
+                return challenge.constant_coefficient()
+#+END_SRC
+
+﻿﻿This works because the noise is constructed in such a way as to never interfere with elimination: it does not affect any leading monomial of the ideal ever. Thus, we don't need to consider it during the elimination and simply ignore the lower terms once we are done.
+
+Note that this attack does not work against the [[http://eprint.iacr.org/2009/616.pdf][integer homomorphic scheme]] by van Dijk /et al./ because there additions are not free: When we perform elimination of the higher order bits in the integer scheme also the noise accumulates; eventually it surpasses the size of the prime $p$ leaving us with no information. Put differently, we can attack schemes that are inspired by the integer-based scheme if additions are free. Thus, while it might seem tempting to replace integers by, say, univariate polynomials which are often considered essentially computationally equivalent to integers and which would provide free additions  it would break the security of the scheme.
+

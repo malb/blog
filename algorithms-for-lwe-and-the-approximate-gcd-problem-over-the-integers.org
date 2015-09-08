@@ -1,0 +1,45 @@
+#+POSTID: 413
+#+DATE: [2011-05-07 Sat 15:32]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography
+#+TAGS: commutative algebra, cryptography, gröbner basis, homomorphic encryption, linear algebra
+#+TITLE: Algorithms for LWE and the Approximate GCD Problem over the Integers
+
+Let $n$ be the number of variables in some polynomial ring $\mathbb{R}[x_1,\dots,x_n]$ (with $\mathbb{R}$ a ring) and let $d$ be the degree of a bunch of polynomials $F = [f_1,\dots,f_m]$ in $\mathbb{R}$, i.e., $\deg(f_i) = d$. Of course, we can "solve" $F$ by computing a Gröbner basis on $F$. Furthermore, it is well-known that if $n=1$ computing a GB is equivalent to computing the GCD of $F$ and that if $d=1$ computing a GB is equivalent to Gaussian elimination, i.e., finding a triangular basis for a module. In a nutshell, Gröbner bases generalise GCDs and Gaussian elimination. So far, so classical.
+
+It is no [[http://martinralbrecht.wordpress.com/2011/02/10/polly-cracker-revisited-slides/][secret]] that I spent some time looking into a problem which we call Gröbner Bases with Noise (GBN), which again can be seen -- with the appropriate choice of parameters -- as a generalisation of the LWE problem (cf. [[http://martinralbrecht.wordpress.com/2011/02/10/polly-cracker-revisited-slides/][these slides]] for some details. Sorry, the paper is still not done). Similarly, we may consider GBN as a generalisation of an approximate GCD problem over $\mathbb{R}[x]$.
+
+In our work (you know, the one which isn't done yet), we define GBN over $\mathbb{F}_q$ to keep things simple but the notion can easily be extended to for example $\mathbb{Z}$. Hence, one could say GBN over $\mathbb{Z}$ is a generalisation of GCDs over $\mathbb{Z}[x]$ and in particular over $\mathbb{Z}$ (cf. [[http://research.microsoft.com/pubs/146975/ihe.pdf][this paper]] which constructs a homomorphic encryption scheme based on the approximate GCD problem over the integers) which is just $\mathbb{Z}[x]$ restricted to constant polynomials. So, we have a connection between GBN, LWE and the approximate GCD problem.
+
+Now, as my tag cloud gives away, I like linear algebra and have the tendency to think about problems in terms of linear algebra and triangular bases. Hence, the above connection made me think about the applicability of algorithms for solving LWE to the approximate GCD problem over the integers. It turns out, they are applicable (kinda).
+
+*BKW:* The [[http://portal.acm.org/citation.cfm?doid=792538.792543][BKW algorithm]] was originally devised for the LPN problem and is essentially a strategy for avoiding additions since those quickly increase the noise. Instead of performing one addition per column, the algorithm gets enough samples such that it is reasonable to expect enough collisions in a number of columns. Perhaps, a small example is helpful to understand how the algorithm works. Let $A$ be a matrix with $n$ columns over $\mathbb{F}_2$, say:
+
+
+#+BEGIN_EXAMPLE
+1 0 1 0 1 | x x x x x x x  ... 1
+1 1 1 0 0 | x x x x x x x  ... 1
+1 0 1 0 1 | x x x x x x x  ... 1
+0 0 1 0 1 | x x x x x x x  ... 0
+0 0 0 0 1 | x x x x x x x  ... 1
+#+END_EXAMPLE
+
+In the picture above the line is roughly at $\log(n)$, x denotes an arbitrary value and the last column is noisy.  If we get about $k \cdot 2\^{\log(n)}$ samples then we expect roughly $k$ samples for each value in the first $\log(n)$ columns. For each value, we pick one row and add it to all other rows. In the example above, we'd add the first row to the third etc. Hence, we eliminate $\log(n)$ columns using only one addition. We repeat this for the next chunk of $\log(n)$ columns until we arrive in the last column. We do this a couple of times and do a majority vote on the result. We expect this vote to be more successful than after straight Gaussian elimination because we performed less additions and hence increased the noise to a lesser extend. The idea is pretty much the same actually as in the M4RM/M4RI algorithms.
+
+Now, to apply this approach to the approximate GCD problem over the integers, we think about integers in their binary representation or more generally in their p-adic expansion. Every integer can be written as $\sum a_i p\^i$ for $p$ a number and $0 \leq a_i < p$. If $2\^\gamma$ is the size of the integers we are considering, we may pick $p \approx \gamma$. We now sample integers with the same approximate GCD, i.e. these integers are of size $\approx 2\^\gamma$ and of the form $x_i = zq_i + r_i$ where $r_i$ is small and $z$ is the GCD we are looking for. Again, we put these integers in buckets according to the first $\log(\gamma)$ bits or the coefficient of $p\^d$ where $d$ is the highest degree of $p$ appearing in all samples. Just as in BKW we pick one representative for each class and subtract it from all other elements, effectively knocking down one degree (or clearing the first $\log(\gamma)$ bits). We repeat the process until we observe a sudden drop in size. This has to happen if the noise $r_i$ is small enough compared to $2\^\gamma/z$, since at some point we will compute $z+r_0 - (z+r_1)$ which should be small. Hence, we recover elements which are close to $z$. Again, we expect those elements to be closer to $z$ than by straight "Gaussian elimination" since we eliminated more than one bit per addition.
+
+However and perhaps as expected, this algorithm does not work for the parameters suggested in the [[http://crypto.stanford.edu/craig/easy-fhe.pdf][integer homomorphic paper]]. In fact, I'm not even sure it is any good ... moving on.
+
+*Arora&Ge:* Quite recently a [[http://eccc.hpi-web.de/report/2010/066/][new algorithm]] for solving LWE was proposed by Arora and Ge. The key idea here is that if $g_i = f_i + r_i$ with $r_i$ small, then
+
+$(f_i + r_i) \cdot \prod_{j=1}\^T (f_i + r_i + j)(f_i + r_i - j)$
+
+will vanish on the secret $s$ if $f_i(s) = 0$ and $T$ is big enough (so $T$ depends on the size of the noise, see the paper for details). For example, if we expect $r_i \in \{-1,0,1\}$, then one of the factors of $h_i = g_i \cdot (g_i + 1) \cdot (g_i -1)$ will vanish on $s$ and hence $h_i$ will vanish on $s$ too. Hence, solving the noise-free system $h_1,\dots,h_m$ of high degree will reveal the solution for the low degree noisy system $f_1,\dots,f_m$.
+
+Similarly, if the approximate GCD of $x_1,\dots x_l$ is $z$ for $x_i = zq_i + r_i$, then
+$Z_i = (zq_i + r_i) \cdot \prod_{j=1}\^T (zq_i + r_i + j) (zq_i + r_i - j)$ is divisible by $z$ if $T$ is large enough. Hence, the (noise-free) GCD of $Z_1,\dots,Z_m$ is also divisible by $z$. Note however that we don't immediately recover $z$ because the construction of the $Z_i$ introduces additional (but small) common factors. As for BKW this approach does not solve the approximate GCD problem for the parameters suggested in the integer homomorphic paper (the algorithm is a bit stupid for GCD problems: we could just guess the noise if it was that small).
+
+So, what to make of all this? As far as I can see, these algorithms do not improve the state of the art of solving the approximate GCD problem. However, they *do* highlight a connection between LWE and the approximate GCD problem. Just as in the noise-free setting there is a (somewhat) close connection between problems over $\mathbb{Z}$ and $\mathbb{F}_q[x]$ and more generally over $\mathbb{F}_q[x_1,\dots,x_n]$.
+
+
+

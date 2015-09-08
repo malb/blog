@@ -1,0 +1,16 @@
+#+POSTID: 45
+#+DATE: [2008-08-11 Mon 19:21]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri
+#+TAGS: gcc, m4ri
+#+TITLE: GCC 4.3 and -O3
+
+I recently upgraded an Opteron server to Debian/Lenny to get GCC 4.3 for [[http://www.openmp.org][OpenMP]] reasons. It turns out that my code, namely matrix multiplication as implemented in the [[http://m4ri.sagemath.org][M4RI]] library, ran much slower than when compiled with GCC 4.1. For instance, to multiply two $20,000 \times 20,000$ random matrices took 18.38 seconds with GCC 4.1 but 21.00 seconds with GCC 4.3.1 and to multiply two $32,000 \times 32,000$ random matrices took 70.24 seconds with GCC 4.1 but 80.00 second with GCC 4.3.1. Eventually, I checked the highlevel [[http://gcc.gnu.org/gcc-4.3/changes.html][changelog]] and found: “The -ftree-vectorize option is now on by default under -O3. In order to generate code for a SIMD extension, it has to be enabled as well: use -maltivec for PowerPC platforms and -msse/-msse2 for i?86 and x86_64.” However, we don't use SSE2 on the Opteron since it is slower than the standard instruction set for this application. Passing -no-tree-vectorize to the compiler fixed the problem. However, to my surprise -O2 didn't come with a speed penalty either, so I settled for this. The final timings on my Opteron server are:
+
+64-bit Debian/GNU Linux, 2.6Ghz Opteron (Virtualised)
+
+| Matrix Dimension | M4RI GCC 4.3 (64-bit, 4 cores) | M4RI GCC 4.3 (64-bit, 1 core) | M4RI GCC 4.1 (64-bit, 1 core) | Magma 2.14-13 (64-bit, 1 core) |
+|      20000x20000 |                           6.36 |                         17.81 |                         18.38 |                          18.35 |
+|      32000x32000 |                          26.65 |                         68.01 |                         70.24 |                          68.01 |
+
+I suppose the moral of the story is: =-O3= isn't necessarily better than =-O2= just because 3>2.

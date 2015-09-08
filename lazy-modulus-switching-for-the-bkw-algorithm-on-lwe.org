@@ -1,0 +1,18 @@
+#+POSTID: 957
+#+DATE: [2014-01-08 Wed 19:15]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography
+#+TAGS: `````````````````````````````````````````````````````, bkw, cryptanalysis, cryptography, linear algebra, lwe, paper, pre-print, sage
+#+TITLE: Lazy Modulus Switching for the BKW Algorithm on LWE
+
+our [[http://eprint.iacr.org/2014/019][paper]] (with [[http://www-polsys.lip6.fr/~jcf/][Jean-Charles Faugère]], [[http://rfcrypto.com/][Robert Fitzpatrick]] and [[http://www-polsys.lip6.fr/~perret/][Ludovic Perret]]) on solving small secret LWE faster just hit [[http://eprint.iacr.org][ePrint]] (and was [[http://www.iacr.org/workshops/pkc2014/accepted.html][accepted]] for presentation at [[http://www.iacr.org/workshops/pkc2014/][PKC 2014]])
+
+#+BEGIN_QUOTE
+*Abstract.* Some recent constructions based on LWE do not sample the secret uniformly at random but rather from some distribution which produces small entries. The most prominent of these is the binary-LWE problem where the secret vector is sampled from {0, 1}* or {-1, 0, 1}*. We present a variant of the BKW algorithm for binary-LWE and other small secret variants and show that this variant reduces the complexity for solving binary-LWE. We also give estimates for the cost of solving binary-LWE instances in this setting and demonstrate the advantage of this BKW variant over standard BKW and lattice reduction techniques applied to the SIS problem. Our variant can be seen as a combination of the BKW algorithm with a lazy variant of modulus switching which might be of independent interest.
+#+END_QUOTE
+
+
+The [[https://bitbucket.org/malb/bkw-lwe/branch/small-secret][code]] used to produce experimental data is available on [[https://bitbucket.org/][bitbucket]], [[https://bitbucket.org/malb/papers/src/3e645fe8ddbdbf769de38fc07f60260168100d83/lazy-modulus-switching-for-bkw-on-lwe/bkw-small-secret.py?at=default][source code to compute our complexity estimations]] is also available. [[https://bitbucket.org/malb/bkw-lwe/downloads/20131121_BKW-LWE_Talk_Lyon.pdf][Slides]] for a presentation discussing this work are also available on bitbucket.
+
+
+

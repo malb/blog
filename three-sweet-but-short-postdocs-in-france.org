@@ -1,0 +1,56 @@
+#+POSTID: 1022
+#+DATE: [2014-02-06 Thu 09:20]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: misc, sage
+#+TAGS: HPAC, computer algebra, exact linear algebra, gröbner basis, job, linear algebra, parallel computing, postdoc, sage
+#+TITLE: Three sweet but short postdocs in France
+
+The HPAC project has three one-year postdoc positions available:
+
+
+#+BEGIN_QUOTE
+Three research positions (postdoc or research engineer), offered by the French ANR project HPAC  (High Performance Algebraic Computation), are open.
+
+*Title:* High Performance Algebraic Computing
+
+*Keywords:* parallel computing, computer algebra, linear algebra, C/C++ programming
+
+*Locations:*
+
+  -  Grenoble, France (LIG-MOAIS, LJK-CASYS),
+  -  Lyon, France (LIP-AriC),
+  -  Paris, France (LIP6-PolSys),
+
+  
+*Starting date:* between June 2014 and January 2015
+
+Type of position: 3 postdoc or research engineer positions of 1 year each
+
+Detailed descriptions:
+
+  -  in english: [[http://hpac.gforge.inria.fr/Offres/PostdocEngineer-GrenobleLyonParis-HPAC-en.pdf]]
+  -  in french: [[http://hpac.gforge.inria.fr/Offres/PostdocEngineer-GrenobleLyonParis-HPAC-fr.pdf]]
+  -  HPAC project main web page: [[http://hpac.gforge.inria.fr/]]
+
+  
+*General Context:*
+
+The ambition of the project HPAC is to provide international reference high-performance libraries for exact linear algebra and algebraic systems on multi-processor architectures and to influence parallel programming approaches for algebraic computing. It focuses on the design of new parallel algorithms and building blocks dedicated to exact linear algebra routines. These blocks will then be used for the parallelization of the sequential code of the LinBox and FGb libraries, state of the art for exact linear algebra and polynomial systems solving, and used in many computer algebra systems. The project combines several areas of expertise: parallel runtime and language, exact,
+symbolic and symbolic/numeric algorithmic, and software engineering.
+
+*Profile of the positions:*
+
+We are seeking for candidates with solid expertise in software library design and developments (e.g. C, C++, OpenMP, Autotools, versioning,...) with preferably good background on mathematical software and computer algebra algorithmic. The main outcome of the work will depend on the type of the position (postdoc or engineer) and include code development in open-source C/C++ libraries such as LinBox, FGb, Kaapi and research publications in international journals or conferences.
+
+Each location is seeking for candidates matching with the following keywords:
+
+
+  -  Lyon: (contact: Gilles....@ens-lyon.fr) High performance/parallel computer algebra, symbolic and mixed symbolic-numeric linear algebra,  validated computation, high performance Euclidean lattice computation, lattice basis reduction.
+  -  Grenoble: (contact: Jean-Guill...@imag.fr) Library design and development, LinBox, Sage, XKaapi, parallel exact linear algebra, work-stealing and data-flow tasks.
+  -  Paris: (contact: Jean-Charl...@groebner.org) Polynomial system solving, Gröbner basis computations, parallel exact linear algebra, algebraic cryptanalysis, distributed computing.
+  
+Feel free to exchange with the contact person of each site for further information.
+#+END_QUOTE
+
+
+

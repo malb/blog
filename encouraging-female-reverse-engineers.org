@@ -1,0 +1,21 @@
+#+POSTID: 892
+#+DATE: [2013-02-04 Mon 17:46]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: misc
+#+TAGS: gender, gender gap, it security, reverse engineering
+#+TITLE: Encouraging female reverse engineers
+
+Thomas Dullien is running a [[http://addxorrol.blogspot.de/2013/01/encouraging-female-reverse-engineers.html][nice competition]] to address the gender gap in IT security or more precisely reverse engineering:
+
+#+BEGIN_QUOTE
+As a field, reverse engineering has undergone a rapid change in recent years: a rise in importance and visibility has led to a rapidly growing community of reverse engineers. More people are doing reverse engineering, better tools are developed, and it has mutated from a "dark art" to an almost-mainstream endeavor.
+
+However, as the community grows, the most visible parts  remain unchanged. While there are female reverse engineers in the field, they are still under- represented in absolute numbers and visibility of their work in conference attendance and presentations.
+
+What can we, as a growing field, do to change this? Progress can be made on the macro level by many small and decentralized contributions on the micro level. So, when I heard about the Syscan speaker's honorarium this year, I decided to put it to good use.
+
+I asked a few friends if they'd be willing to form a panel of judges for a women-only reverse engineering challenge, with the first (and only) prize being a ticket to fly to and attend Syscan Singapore 2013. Luckily for me, they agreed :-)
+#+END_QUOTE
+
+
+

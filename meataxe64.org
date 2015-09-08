@@ -1,0 +1,26 @@
+#+POSTID: 1061
+#+DATE: [2014-06-17 Tue 14:05]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri, sage
+#+TAGS: dense linear algebra, exact linear algebra, finite field, linear algebra, matrix decomposition, software
+#+TITLE: meataxe64
+
+#+BEGIN_QUOTE
+Meataxe64 is a large software development project to produce programs for working at high performance with large matrices over finite fields.
+
+At the lowest level, the aim is to work modulo primes (only), using grease (much like “four Russians”) to reduce the amount of work, to use vectorized code in x86 assembler (SSE/AVX) to do the basic operations and to have short rows and few columns so that matrices fit suitably into the various levels of cache.  The objective is to run as fast as possible with as little use of real-memory bandwidth as possible.
+
+At a middle level, the aim is to use linear functions to work with extension fields, and to chop the matrices up so that the lowest level can operate.
+
+At a higher level, the aim is to make effective use of a multi-core environment, building on the advantage that the cache-friendly lower level provides to ensure that many cores can be used effectively.  The thread-farm looks after the messy signals, locks and thread handling.
+
+It is hoped soon that a layer will be added to take a matrix that fits on disk but not in memory to extend the possible scale of operations further.
+
+Finally I dream that a fault-tolerant distributed system can be build on top of this to handle matrices of gargantuan proportions, but this lies some considerable way into the future.
+#+END_QUOTE
+
+
+Go read the [[http://meataxe64.wordpress.com/][development blog]], I certainly learned a lot from Richard Parker whenever we talked.
+
+
+

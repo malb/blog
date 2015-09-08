@@ -1,0 +1,25 @@
+#+POSTID: 517
+#+DATE: [2011-07-06 Wed 13:56]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri
+#+TAGS: linear algebra, m4ri, matrix decomposition, sparse matrix
+#+TITLE: Block-iterative PLE decomposition
+
+I guess one advantage of not finishing a [[https://bitbucket.org/cpernet/pluqm4ri/overview][paper that is "done"]] is that one can (a) change the name of the algorithm over and over again and (b) improve said algorithm.
+
+*(a)* We started out calling the decomposition implemented in the M4RI library LQUP. However, that was clearly wrong. Next try: PLUQ which was kind of accurate at some point. But, we want to avoid column swaps and hence refrain from compressing U and we moved to PLS. Yet, S isn't really S from the LSP decomposition. Thus, it's called PLE decomposition now, where E stands for echelon form. Btw. we believe it is new.
+
+*(b)* We (I should mention who that is: [[http://www-users.math.umd.edu/~bardg/][Gregory Bard]], [[http://membres-liglab.imag.fr/pernet/][Clément Pernet]] and myself) also improved the algorithm. This improvement is a result of an attempt to improve the presentation actually. Instead of presenting different algorithms which happen to produce the same thing (PLE), we opted for presenting these algorithms as different strategies for block decomposition. Hence, we know have /block-recursive/ vs. /block-iterative/. Here, block-recursive is a variant of the well known PLUQ decomposition and block-iterative is inspired by M4RI (and MMPF for those who read the old version of the paper). The cool thing about his new block-iterative PLE decomposition is that it does not suffer from a performance regression if not enough pivots were found in one step of the algorithm. Instead, the algorithm always has complexity /O(n\^3/log n)/. Essentially, if not enough pivots were found it runs M4RM multiplication, otherwise it runs a variant of M4RI (MMPF). All this is done in such a way that we touch as few rows as possible (well, as far as we know) when we are searching for a pivot to be cache friendly. Also, the tables neede for MMPF and M4RM are actually the same, only the way we index them is different.
+
+So, how much better is it. Let's look at an Opteron (redhawk, AMD Opteron 8439 SE) first.
+
+[[http://martinralbrecht.files.wordpress.com/2011/07/opteron.png][[[http://martinralbrecht.files.wordpress.com/2011/07/opteron.png?w=300]]]]In this plot red is the old implementation and green the new one.  Actually, red is a hybrid of the old and the new implementation, where the last step was not implemented yet. So the advantage compared to what is currently in Sage should be even greater.
+
+Next, my Macbook Pro (i7, Core i7 M 620 @ 2.67GHz):
+
+[[http://martinralbrecht.files.wordpress.com/2011/07/macbook-pro-i7.png][[[http://martinralbrecht.files.wordpress.com/2011/07/macbook-pro-i7.png?w=300]]]]The colour code is the same. Additionally, I plotted the times for M4RI (the algorithm) to get an idea how we are doing compared to that. There's still work to be done, but there's a clear improvement for sparse-ish matrices.
+
+I guess, now we only have to finish writing up the paper ...
+
+
+

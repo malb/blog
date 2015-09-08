@@ -1,0 +1,21 @@
+#+POSTID: 54
+#+DATE: [2009-01-03 Sat 19:27]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri
+#+TAGS: m4ri
+#+TITLE: New M4RI Release Coming Up
+
+I will probably cut a new [[http://m4ri.sagemath.org][M4RI]] release within a week or so. The main changes are:
+
+- *Asymptotically Fast PLUQ Factorisation* [=mzd_pluq()= and =_mzd_pluq_mmpf()=] due to Clément Pernet and myself:
+This enables asymptotically fast rank computation, row echelon forms and rank profiles. However, don't hold your breath yet because the code is not really optimised yet. While it is [[http://www.bitbucket.org/malb/m4ri/wiki/Timings][faster]] than M4RI for random dense matrices it is slower for sparse-ish and structured matrices (see image below).
+- *System Solving* [=mzd_solve_left()=]: Jean-Guillaume Dumas wrote a high-level wrapper around the PLUQ and TRSM routines to provide linear system solving.
+- *M4RI Performance Improvement* [=mzd_echelonize_m4ri()=]: A bug was fixed in M4RI which resulted in poor performance of M4RI for sparse-ish matrices (see [[http://www.informatik.uni-bremen.de/cgi-bin/cgiwrap/malb/blosxom.pl/2008/12/23#m4ri-density][my blog post]] for details).
+- *Refactoring*: A few functions where added, deleted and renamed. This release will break source compatibility.
+
+[[http://www.informatik.uni-bremen.de/~malb/binary/pluq-m4ri-magma-10000-r246.png]]
+
+On a related note: Marco Bodrato came up with a new [[http://marco.bodrato.it/papers/Bodrato2008-StrassenLikeMatrixMultiplicationForSquares.pdf][Strassen-like sequence]] for multiplying and squaring matrices which provides a small (linear) speed-up for squaring. He also provides a drop-in [[http://bodrato.it/software/strassen.html#M4R][strassen.c]] replacement for M4RI-20080521 which implements his new sequence.
+
+
+

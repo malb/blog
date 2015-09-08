@@ -1,0 +1,27 @@
+#+POSTID: 894
+#+DATE: [2013-03-05 Tue 13:17]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography
+#+TAGS: commutative algebra, cryptography, fhe, gröbner basis, homomorphic encryption, polly cracker
+#+TITLE: A Fully Homomorphic Cryptosystem with Approximate Perfect Secrecy
+
+At CT-RSA 2013 a [[http://link.springer.com/chapter/10.1007%2F978-3-642-36095-4_24][paper]] titled "A Fully Homomorphic Cryptosystem with Approximate Perfect Secrecy" by Michal Hojsík and Veronika Půlpánová was presented. Here is the abstract:
+
+#+BEGIN_QUOTE
+We propose a new fully homomorphic cryptosystem called Symmetric Polly Cracker (SymPC) and we prove its security in the information theoretical settings. Namely, we prove that SymPC approaches perfect secrecy in bounded CPA model as its security parameter grows (which we call approximate perfect secrecy). In our construction, we use a Gröbner basis to generate a polynomial factor ring of ciphertexts and use the underlying field as the plaintext space. The Gröbner basis equips the ciphertext factor ring with a multiplicative structure that is easily algorithmized, thus providing an environment for a fully homomorphic cryptosystem.
+#+END_QUOTE
+
+The proposal seems to have succeeded where [[http://eprint.iacr.org/2011/289][we could not]]: a fully homomorphic encryption scheme that also is information theoretic secure. Indeed, the authors reference our work and point out that they are taking a different approach (from ours) which allows them to succeed in realising these two goals.
+
+To understand the claim made, here's a quick rehash of our Symmetric Polly Cracker (SPC) for d=1 and b=2.
+
+The secret key is a Gröbner basis $G = \langle x_0 - s_0, \dots, x_{n-1} - s_{n-1} \rangle \subset P = \mathbb{F}_q[x_0,\dots,x_{n-1}]$. To encrypt we pick  $h_i \in P$ and publish $f = \sum_{i=0}\^{n-1} h_i g_i + l$ where $l \in \mathbb{F}_q$ is the message we want to encrypt. Decryption is easy if we know $G$ because it is equivalent to computing normal forms modulo $\langle G \rangle$. Indeed, it can be shown that the problem of finding $l$ under a chosen plaintext attack is as hard as finding $G$ which we assume is a hard problem. This scheme is homomorphic: we can do additions and multiplications of ciphertexts which decrypt to the sums and products of plaintexts. However, the scheme is not /fully/ homomorphic as the ciphertext size increases with each multiplication. Also, the problem of computing the Gröbner basis $G$ becomes easy once we published many encryptions, so the scheme only supports a limited number of encryptions. So far, so general.
+
+Now, let's take a look at the new approach. Despite the claim that "A Fully Homomorphic Cryptosystem with Approximate Perfect Secrecy" is a new approach, it is - as far as I can see - a tweak of this general construction (essentially going back to Koblitz and Fellows). The two tweaks are:
+
+1. $G$ is augmented with $x_0\^q - x_0, \dots, x_{n-1}\^q - x_{n-1}$ the so-called "field polynomials" as they evaluate to zero on every element of $\mathbb{F}_q$ (/Note: the actual construction is slightly different, which I ignore here for clarity of presentation/).
+2. Instead of limiting the number of encryptions to some $m$ such that the Gröbner basis problem is assumed to be hard, the number of encryptions is limited to some value $<n$.
+
+The first tweak means that after a certain number of multiplications ciphertexts do not grow in size any more. That is, the largest monomial (under some degree compatible ordering) is $\prod_{i=0}\^{n-1} x_i\^{q-1}$. This allows to call the scheme "compact" and hence allows to declare it a fully homomorphic scheme under the technical definition of compactness. Yet, this means that ciphertexts are exponentially big in $n$ (e.g., if $q=2$, we are talking about ciphertexts with $2\^n$ bits). I am not convinced these should be called "compact".
+
+The second tweak implies that a computationally unbound attacker's chance of breaking the scheme approaches zero as $n$ approaches infinity. There simply aren't enough equations to recover $G$. Hence, at the cost of making the scheme exceptionally short-lived it is information theoretic secure (asymptotically).

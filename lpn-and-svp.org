@@ -1,0 +1,33 @@
+#+POSTID: 888
+#+DATE: [2013-01-16 Wed 15:50]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography, sage
+#+TAGS: LPN, conference, cryptanalysis, cryptography, lattice, linear algebra, lwe, sage
+#+TITLE: LPN and SVP
+
+I am currently attending [[https://www.cryptolux.org/esc2013/][ESC 2013]] in Mondorf, Luxembourg. Over dinner someone mentioned that there is no known reduction from LPN to lattice reduction, i.e., it is not known that you can solve LPN with LLL and friends.  This seems rather strange to me, because the standard lattice attack on LWE seems to be carrying over as is:
+
+#+BEGIN_SRC python
+sage: n = 100 # number of variables
+sage: m = 400 # number of samples
+sage: A = random_matrix(GF(2), m, n)
+sage: s = random_vector(GF(2), n) # our secret
+sage: p = 0.25 # our error rate
+
+sage:  v = A*s + vector(GF(2),[1 if random() < p else 0 for _ in range(m)])
+
+# we are searching for a short vector in the dual lattice
+sage: B = A.kernel().matrix()
+sage: L = B.change_ring(ZZ).LLL()
+
+# because a short vector there, means few additions which means a higher bias in the sum
+sage: Av = A.augment(v)
+sage: sum(map(lambda x: abs(x) % 2,L[0])), (L[0]*Av)[-1]
+#+END_SRC
+
+Of course, this means running lattice reduction many times, but still: what am I missing?
+
+*PS:* Obligatory, Sage cell [[http://aleph.sagemath.org/?z=eJxVj0FrwzAMhe_6Fe8ykLrMpIFdRndID9vFv6AhBLd1s7DYCXYa8vPnhI4xXd7jfZKQPN5R5OQ2yalMGoy_Dq5xZgrdwp8fXEgGl8ELxT8828s0hF-c2JhYropXojm5chfxjH9N1R7d7THOggNG2D5a5LgNAQ06v8LWspNaiJCKym2XMvfWWT_xLHTcgm8bvO1Z1ONKIZ3yo7p8rRua0PmWTydRWuvE4t2xMyP3xp2vBssbzDnyInhCkekqryW9wKvZlbNUL_v6B_qYTbc=&lang=sage][here]].
+
+
+

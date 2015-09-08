@@ -1,0 +1,20 @@
+#+POSTID: 506
+#+DATE: [2011-06-02 Thu 13:54]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography
+#+TAGS: algebraic attacks, algebraic cryptanalysis, commutative algebra, conference, cryptanalysis, cryptography, f4, gröbner basis, mixed integer programming, posso, sat
+#+TITLE: Slides: Introduction to Algebraic Techniques in Block Cipher Cryptanalysis
+
+This morning I delivered my talk titled "[[http://martinralbrecht.files.wordpress.com/2011/06/algebraic_cryptanalysis.pdf][Algebraic Techniques in Cryptanlysis (of block ciphers with a bias towards Gröbner bases)]]" at the ECrypt PhD Summerschool here in Albena, Bulgaria. I covered:
+
+1. Why bother
+2. Setting up equation systems
+3. Solving (GBs, SAT solvers, MIP, Cube Testers)
+4. "Advanced" Techniques
+
+Well, [[http://martinralbrecht.files.wordpress.com/2011/06/algebraic_cryptanalysis.pdf][here]] are the slides, which perhaps spend too much time explaining F4.
+
+*PS:* This is as good as any opportunity to point to the paper "Algebraic Techniques in Differential Cryptanalysis Revisited" by Meiqin Wang, Yue Sun, Nicky Mouha and Bart Preneel accepted at [[http://user.gs.rmit.edu.au/infosec/ACISP2011/accept.htm][ACISP 2011]]. I don't agree with every statement in the paper - which revisits techniques Carlos and I proposed in 2009 - but our FSE 2009 paper does deserve a good whipping, i.e., we were way too optimistic about our attack.
+
+
+

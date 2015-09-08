@@ -1,0 +1,21 @@
+#+POSTID: 692
+#+DATE: [2011-12-02 Fri 10:53]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography, sage
+#+TAGS: algebraic attacks, algebraic cryptanalysis, bitbucket, cold boot attacks, cryptanalysis, cryptography, mixed integer programming, sage, scip
+#+TITLE: Coldboot Code Available
+
+After receiving two inquiries about the coldboot attack paper which were best answered by looking at the code or by comparing with our code, I figured it was about time I put it online. So here it is:
+
+[[//bitbucket.org/malb/algebraic_attacks/src/1af75effcc7d/coldboot][https://bitbucket.org/malb/algebraic_attacks/src/1af75effcc7d/coldboot]]
+
+For this code to run you'll need to apply this patch to[[http://www.sagemath.org][Sage]]:
+
+[[http://trac.sagemath.org/sage_trac/ticket/10879]]
+
+which adds an interface to [[http://scip.zib.de/][SCIP]]. Unfortunately, this patch crashes on OSX and I didn't figure out yet why. Anybody willing to help, please step forward :)
+
+Also, I assume the code on bitbucket needs some patching to work with the most recent version of Sage. Patches very welcome!
+
+
+

@@ -1,0 +1,17 @@
+#+POSTID: 356
+#+DATE: [2011-02-14 Mon 11:34]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography
+#+TAGS: blockcipher, cryptanalysis, cryptography, ideal-cipher model, related-key attack
+#+TITLE: On Cipher-Dependent Related-Key Attacks in the Ideal-Cipher Model
+
+I'm at [[http://fse2011.mat.dtu.dk/][FSE 2011]] right now which reminded me to post our paper titled "[[http://eprint.iacr.org/2011/213][On Cipher-Dependent Related-Key Attacks in the Ideal-Cipher Model]]". Here's the abstract:
+
+#+BEGIN_QUOTE
+Bellare and Kohno introduced a formal framework for the study of related-key attacks against blockciphers. They established sufﬁcient conditions (output-unpredictability and collision-resistance) on the set of related-key-deriving (RKD) functions under which an ideal cipher is secure against related-key attacks, and suggested this could be used to derive security goals for real blockciphers. However, to do so requires the reinterpretation ofresults proven in the ideal-cipher model for the standard model (in which a blockcipher is modelled as, say, a pseudorandom permutation family). As we show here, this is a fraught activity. In particular, building on a recentidea of Bernstein, we ﬁrst demonstrate a related-key attack that applies generically to a large class of blockciphers.The attack exploits the existence of a short description of the blockcipher, and so does not apply in the ideal-ciphermodel. However, the speciﬁc RKD functions used in the attack are provably output-unpredictable and collision-resistant. In this sense, the attack can be seen as a separation between the ideal-cipher model and the standard model. Second, we investigate how the related-key attack model of Bellare and Kohno can be extended to include sets of RKD functions that themselves access the ideal cipher. Precisely such related-key functions underlie thegeneric attack, so our extended modelling allows us to capture a larger universe of related-key attacks in the ideal-cipher model. We establish a new set of conditions on related-key functions that is sufﬁcient to prove a theorem analogous to the main result of Bellare and Kohno, but for our extended model. We then exhibit non-trivial classesof practically relevant RKD functions meeting the new conditions. We go on to discuss standard model interpre-tations of this theorem, explaining why, although separations between the ideal-cipher model and the standardmodel still exist for this setting, they can be seen as being much less natural than our previous separation. In this manner, we argue that our extension of the Bellare--Kohno model represents a useful advance in the modelling ofrelated-key attacks. Third, we consider the topic of key-recovering related-key attacks and its relationship to the Bellare--Kohno formalism. In particular, we address the question of whether lowering the security goal by requiring the adversary to perform key-recovery excludes separations of the type exhibited by us in the Bellare--Kohnomodel.
+#+END_QUOTE
+
+Pooya Farshim (who will present our work at FSE) kindly allowed me to post his [[http://martinralbrecht.files.wordpress.com/2011/02/rka_farshim.pdf][slides]] here as well.
+
+
+

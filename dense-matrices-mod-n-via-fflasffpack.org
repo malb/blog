@@ -1,0 +1,110 @@
+#+POSTID: 545
+#+DATE: [2011-08-30 Tue 15:44]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: sage
+#+TAGS: fflas, ffpack, linbox, linear algebra, sage, sage days
+#+TITLE: Dense matrices mod n via FFLAS/FFPACK
+
+During last weeks [[http://wiki.sagemath.org/days32][Sage Days 32]] I worked on finishing a [[http://trac.sagemath.org/sage_trac/ticket/4260][patch]] by Clément Pernet and Burcin Eröcal which switches Sage's native matrices mod /n/ (for $n<2\^{23}$) to [[http://ljk.imag.fr/membres/Jean-Guillaume.Dumas/FFLAS/][FFLAS/FFPACK]]. The purpose of this exercise was to make operations with dense matrices mod /n/ both faster and more memory efficient (currently, Sage does a lot of copying around when calling any [[http://www.linalg.org/][LinBox]] function). Well, we almost succeeded.
+
+*Without #4260* on my 2.6Ghz i7:
+
+#+BEGIN_SRC python
+sage: A = random_matrix(GF(97),2000,2000)
+sage: %time A*A
+CPU times: user 9.66 s, sys: 0.12 s, total: 9.77 s
+Wall time: 9.82 s
+#+END_SRC
+
+*With #4260* on my 2.6Ghz i7:
+
+#+BEGIN_SRC python
+sage: A = random_matrix(GF(97),2000,2000)
+sage: %time A*A
+CPU times: user 1.32 s, sys: 0.00 s, total: 1.32 s
+Wall time: 1.35 s
+#+END_SRC
+
+*Magma* on my 2.6Ghz i7:
+
+#+BEGIN_SRC
+> A:=RandomMatrix(GF(97),2000,2000);
+> time C:=A*A;
+Time: 1.560
+#+END_SRC
+
+So far, so good. Also, currently /all/ doctests pass in Sage with the new patch applied. However, before it can go in, we'll have to take care of a performance regression introduced with #4260:
+
+*Without patch:*
+
+#+BEGIN_SRC python
+sage: MS = MatrixSpace(GF(101),2000,2000)
+sage: %time A = MS.random_element()
+CPU times: user 0.17 s, sys: 0.03 s, total: 0.20 s
+Wall time: 0.20 s
+sage: %time A.echelonize()
+CPU times: user 1.22 s, sys: 0.06 s, total: 1.28 s
+Wall time: 1.38 s
+#+END_SRC
+
+*With patch:*
+
+#+BEGIN_SRC python
+sage: MS = MatrixSpace(GF(101),2000,2000)
+sage: %time A = MS.random_element()
+CPU times: user 0.19 s, sys: 0.03 s, total: 0.22 s
+Wall time: 0.22 s
+sage: %time A.echelonize()
+CPU times: user 1.87 s, sys: 0.00 s, total: 1.87 s
+Wall time: 1.92 s
+#+END_SRC
+
+That is, echelon forms actually got slower! In other words, this code:
+
+#+BEGIN_SRC cpp
+Modular<Element> F(modulus);
+
+size_t * P=new size_t[nrows];
+size_t * Q=new size_t[ncols];
+size_t r = FFPACK::ReducedRowEchelonForm(F, nrows, ncols, matrix, ncols, P,Q);
+
+for (size_t i=0; i<nrows;++i){
+ for (size_t j=0; j<r; ++j){
+ *(matrix+i*ncols+j) = 0;
+ }
+ if (i<r)
+ *(matrix + i*(ncols+1)) = 1;
+}
+FFPACK::applyP (F, FFLAS::FflasRight, FFLAS::FflasNoTrans, nrows, 0,r, matrix, ncols, Q);
+delete[] P;
+delete[] Q;
+return r;
+#+END_SRC
+
+is slower than this code:
+
+#+BEGIN_SRC cpp
+ModInt F((double)modulus);
+EchelonFormDomain<ModInt> EF(F);
+BlasMatrix A( nrows, ncols);
+BlasMatrix E( nrows, ncols);
+
+mod_int* row;
+for (size_t i=0; i &lt; nrows; i++) {
+ row = matrix[i];
+ for (size_t j=0; j &lt; ncols; j++)
+ A.setEntry(i, j, (double)row[j]);
+}
+int rank = EF.rowReducedEchelon(E, A);
+for (size_t i=0; i &lt; nrows; i++) {
+ row = matrix[i];
+ for (size_t j=0; j &lt; ncols; j++)
+ row[j] = (mod_int)E.getEntry(i, j);
+}
+return rank;
+#+END_SRC
+
+... so close.
+
+
+

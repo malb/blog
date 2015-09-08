@@ -1,0 +1,64 @@
+#+POSTID: 1044
+#+DATE: [2014-04-22 Tue 10:15]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: misc, sage
+#+TAGS: google summer of code, gsoc2014, lmonade, m1ri, sage
+#+TITLE: LMonade GSoC 2014 Accepted Projects
+The list of accepted projects of this year's [[https://www.google-melange.com/gsoc/homepage/google/gsoc2014][Google Summer of Code]] is out. For the list of accepted projects for [[http://sagemath.org][Sage]] see [[http://blog.harald.schil.ly/2014/04/sage-gsoc-2014-projects.html][here]], for the [[http://www.lmona.de/][LMonade]] project see below, for all other accepted projects see Google's [[https://www.google-melange.com/gsoc/projects/list/google/gsoc2014][site]]. I am going to mentor William's M1RI project together with Clément Pernet. It's going to be a blast.
+** Implementing the LLL algorithm in FLINT
+
+*** Abhinav Baid
+
+*Assigned mentors:* Fredrik Johansson, William Hart
+*Short description:* The project is to implement a basic LLL in FLINT allowing for parameters to be supplied governing the strength of reduction, followed by a couple of the more interesting modern versions, including the LLL with removals and ULLL, a version of LLL with better complexity in terms of the size of the entries. mentors: Bill Hart, Fredrik Johansson
+
+** [[http://alexanderjbest.wordpress.com/2014/03/28/google-summer-of-code-2014-flint/][Implementing methods to find the Hermite normal form in FLINT]]
+
+*** Alex
+
+*Assigned mentors:* William Hart, Curtis Bright
+*Short description:* I will implement highly efficient algorithms to compute the Hermite normal form of a matrix of integers within the FLINT library.
+
+The Hermite normal form is a special form that a matrix can take which is used in many areas of mathematics. Being able to compute the matrix in Hermite normal form obtainable from a given matrix is quickly is helpful as this process forms the basis of many other operations. For this project I will implement various efficient methods to find the Hermite normal form as part of the Flint library.
+
+** [[http://astachnik-linbox.blogspot.be/][Parallel Computation of Matrix Invariant Factors in Linbox]]
+
+*** Alexander Stachnik
+
+*Assigned mentors:* Brice Boyer, David Saunders
+*Short description:* Linbox currently possesses an implementation of the Block-Wiedemann algorithm for solving black box matrices. I propose extending this capability so that users can compute the invariant factors of a matrix, using OpenMP to allow for parallel computing on multicore machines.
+
+** [[http://cvsdr.blogspot.com.es/][Image features for machine learning in VIGRA]]
+
+*** Esteban
+
+*Assigned mentors:* Ullrich Koethe, Burcin Erocal
+*Short description:* For a wide range of scientific applications algorithms that analize texture, pixel distribution or shape are key components. I propose providing VIGRA an implementation, documentation and testing of this key components using as reference libraries shuch as the CellCognition project.
+
+** Improved type checker for FriCAS
+
+*** Krystian Bacławski
+
+*Assigned mentors:* Waldek Hebisch, Pippijn van Steenhoven
+*Short description:* Project aims at partial reimplementation of type checker in Spad compiler of FriCAS. Main goals include: better type inference, stricter type system, understandable diagnostic messages.
+
+** [[http://burgerdev.de/lazy-connected-components/][Lazy Connected Components]]
+
+*** Markus Doering
+
+*Assigned mentors:* Anna Kreshuk, Ullrich Koethe
+*Short description:* I am a graduate student at the university of Heidelberg, Germany, studying Scientific Computing and programming for fun and for a living. My proposal is about integrating a truely lazy operator for connected components into ilastik, lazyflow and vigra. This new operator would make use of both the graph/operator framework for ease of use and the vigra library for efficient computation.
+
+** Parallelization of the VIGRA library
+
+*** minh bui
+
+*Assigned mentors:* Ullrich Koethe, Christoph Garbe, Burcin Erocal
+*Short description:* In this project, I will apply different parallelism techniques to parallelize VIGRA library. I expect to deliver the source code, document on each technique I use.
+
+** [[http://m1ri.blogspot.co.uk/][M1RI]]
+
+*** William Alumbaugh
+
+*Assigned mentors:* Clément Pernet, Martin Albrecht
+*Short description:* The goal of this project is to implement a matrix library with bitslicing techniques described by Tom Boothby and Robert Bradshaw here [[http://arxiv.org/abs/0901.1413]]. This takes the “Method of Four Russians”, an algorithm made for efficient logical matrix algorithms, and using bitslicing to extend that to matrices over finite fields. GF(3), GF(5), and GF(7) matrices will be the scope of this project.

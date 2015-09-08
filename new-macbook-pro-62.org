@@ -1,0 +1,17 @@
+#+POSTID: 124
+#+DATE: [2010-07-26 Mon 09:17]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: linux
+#+TAGS: debian, linux, macbook pro
+#+TITLE: New Macbook Pro 6,2
+
+I received my new Macbook Pro (i7, 4GB Ram, 256GB SSD, yay!) on Friday and succeeded in installing Linux on it by now. After some initial troubles the whole installation was far less difficult than last time (Macbook Pro 2,2). All in all the various Wikis ([[http://wiki.debian.org/MacBookPro][Debian]], [[https://help.ubuntu.com/community/MacBookPro6-2/Lucid][Ubuntu]], [[http://wiki.archlinux.org/index.php/MacBookPro][Arch]], [[http://en.gentoo-wiki.com/wiki/Apple_Macbook_Pro][Gentoo]]) on the matter paint a good picture. Two caveats though:
+
+-  I struggled most of the time getting Linux to boot. From past experience (and from documentation on the net) I "knew" that one shouldn't install the bootloader to /dev/sda but to /dev/sda3. However, I couldn't get this setup to boot. The trick is to use GRUB2 (default by now in most distributions) which supports EFI and install into /dev/sda.
+-  Another stumbling block was the touchpad. After editing hal config files for several hours I eventually figured out that hal is ignored by Debian's X server. After realising this and using the  xorg.conf from the[[http://wiki.debian.org/MacBookPro][Debian Wiki]] it worked eventually.
+
+There are some issues remaining though:
+
+-  So far I didn't manage to get the microphone to work.
+-  Battery life (at least what's reported) is much worse under Linux (4h) than under OSX (9-10h). Part of the reason is that I'm using the NVIDIA card under Linux and OSX can switch to the embedded Intel card. I haven't figured out how to switch under Linux yet.
+-  [[http://math-atlas.sourceforge.net/][ATLAS]] (as shipped with Sage) doesn't know the i7, thus building Sage takes ages. For some reason even with SAGE_FAT_BINARY="yes" set.

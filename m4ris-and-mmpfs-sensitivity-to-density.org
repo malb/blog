@@ -1,0 +1,15 @@
+#+POSTID: 49
+#+DATE: [2008-12-23 Tue 19:23]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri
+#+TAGS: 
+#+TITLE: M4RI's and MMPF's Sensitivity to Density
+
+The last couple of days I've been working on improving libM4RI for sparse-ish matrices. The matrices I am talking about here are still represented as dense matrices but have non-uniformly distributed entries. While PLUQ factorisation is still very very (very very) slow for e.g. half rank matrices, things are getting better for M4RI matrix elimination.
+
+http://martinralbrecht.files.wordpress.com/2008/12/m4ri-r219-vs-r221.png
+
+The [[http://www.bitbucket.org/malb/m4ri/src/221/src/brilliantrussian.c][updated]] sources are available on bitbucket. I will probably cut a new release very early next year.
+
+
+

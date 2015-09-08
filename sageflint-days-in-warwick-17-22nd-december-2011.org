@@ -1,0 +1,17 @@
+#+POSTID: 629
+#+DATE: [2011-11-02 Wed 08:27]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri, sage
+#+TAGS: conference, flint, linear algebra, m4ri, m4rie, number theory, sage, sage days
+#+TITLE: Sage/FLINT Days in Warwick 17 - 22nd December 2011
+
+"A Sage Days workshop around the theme of Algorithms in Number Theory and FLINT."
+
+[[http://martinralbrecht.files.wordpress.com/2011/11/poster.png][[[http://martinralbrecht.files.wordpress.com/2011/11/poster.png]]]]
+
+See [[http://wiki.sagemath.org/SageFlintDays]] for more information and registration.
+
+*PS:* I'll be talking about M4RI(E) ... big surprise.
+
+
+

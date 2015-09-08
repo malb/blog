@@ -1,0 +1,112 @@
+#+POSTID: 98
+#+DATE: [2009-06-03 Wed 12:47]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography, sage
+#+TAGS: commutative algebra, cryptography, posso, sage
+#+TITLE: Geometric XL
+
+The [[http://www.isg.rhul.ac.uk/~sean/JMC-220-Final-LNCS.pdf][paper]] by Sean Murphy and Maura Paterson has been around for quite some time now (same for my toy implementation). Gröbner basis algorithms and related methods like XL are algebraic in nature. In particular, their complexity is not invariant under a linear change of coordinates. For example consider Cyclic-6
+
+#+BEGIN_SRC python
+sage: P.<a,b,c,d,e,f,h> = PolynomialRing(GF(32003))
+sage: I = sage.rings.ideal.Cyclic(P,6).homogenize(h)
+sage: J = Ideal(I.groebner_basis())
+#+END_SRC
+
+The generators of *J* are a Gröbner basis and we can use this property to find a common root for these generators. Now, consider the same equations but permute the variables in the ring.
+
+#+BEGIN_SRC python
+sage: P.<a,b,c,d,e,f,h> = PolynomialRing(GF(32003),order='lex')
+sage: I = sage.rings.ideal.Cyclic(P,6).homogenize(h)
+sage: J = Ideal(I.groebner_basis())
+sage: R = PolynomialRing(GF(32003),P.ngens(),list(reversed(P.variable_names())),order='lex')
+sage: H = Ideal([R(str(f)) for f in J.gens()])
+#+END_SRC
+
+The generators of *H* do not form a Gröbner basis in *R* which is just *P* with its variables reversed. If we are only trying to solve a system of equations choosing the right permutation of variables might have a significant impact on the performance of our Gröbner basis algorithm:
+
+#+BEGIN_SRC python
+sage: t = cputime()
+sage: gb = H.groebner_basis('libsingular:std')
+sage: gb[-1].degree()
+19
+sage: cputime(t) # output random-ish
+25.36...
+#+END_SRC
+
+
+While in this example it is easy to see which variable permutation is the cheapest one, this is not necessarily the case in general. The GeometricXL algorithm is invariant under any linear change of coordinates and has the following property:
+
+/Let *D* be the degree reached by the XL algorithm to solve a given system of equations under the optimal linear change of coordinates. Then GeometricXL will also solve this system of equations for the degree *D*, without applying this optimal linear change of coordinates first./
+
+The above behaviour holds under two assumptions:
+
+-  the characteristic of the base field *K* is bigger than *D* and
+-  the system of equations has one over “very few” solution.
+
+To demonstrate this behaviour, consider the synthetic benchmark available [[http://bitbucket.org/malb/algebraic_attacks/src/tip/geometricxl.py][here]] which is a Gröbner basis under a linear change of coordinates:
+
+#+BEGIN_SRC python
+sage: e,h = random_example(n=6)
+#+END_SRC
+
+
+*e* is the original easy system while *h* is the “rotated” system
+
+#+BEGIN_SRC python
+sage: e.basis_is_groebner()
+True
+
+sage: max([f.total_degree() for f in e.gens()])
+2
+
+sage: h.basis_is_groebner()
+False
+
+sage: max([f.total_degree() for f in h.gens()])
+2
+#+END_SRC
+
+[[http://bitbucket.org/malb/algebraic_attacks/src/tip/geometricxl.py][GeometricXL]] recovers linear factors and thus candidates for common roots at *D=2*:
+
+#+BEGIN_SRC python
+sage: hH = h.homogenize()
+sage: f = GeometricXL(hH, D=2); f.factor(False)
+0.0...s -- 1. D: 2
+...
+(-2684)
+* (-1056*x5 - 2964*x4 - 177*x3 + 6206*x2 + 376*x1 + 6257*x0 + h)
+* (2957*x5 - 792*x4 - 4323*x3 - 14408*x2 - 2750*x1 - 8823*x0 + h)
+#+END_SRC
+
+While any Gröbner basis algorithm would have to reach at least degree 64:
+
+#+BEGIN_SRC python
+sage: gb = h.groebner_basis('libsingular:slimgb')
+sage: gb[-1].degree()
+64
+#+END_SRC
+
+While my toy implementation is neither robust not efficient, the following table (using the same synthetic benchmark as above) should give some indication that for some problems GeometricXL is a good choice:
+
+Synthetic Benchmark for GeometricXL Algorithm over GF(32003)
+
+|  n | GeometricXL degree | GeometricXL time in seconds | Singular 3-0-4 time in seconds | Magma 2.14 time in seconds | Gröbner basis degree |
+|----+--------------------+-----------------------------+--------------------------------+----------------------------+----------------------|
+|  2 |                  2 |                        0.01 |                           0.00 |                       0.00 |                    4 |
+|  3 |                  2 |                        0.07 |                           0.00 |                       0.00 |                    8 |
+|  4 |                  2 |                        0.18 |                            0.0 |                       0.00 |                   16 |
+|  5 |                  2 |                        0.37 |                           0.02 |                       0.01 |                   32 |
+|  6 |                  2 |                        0.73 |                           0.12 |                       0.04 |                   64 |
+|  7 |                  2 |                        1.36 |                           0.94 |                       0.09 |                  128 |
+|  8 |                  2 |                        2.35 |                           9.59 |                       0.56 |                  256 |
+|  9 |                  2 |                        4.24 |                         117.43 |                       3.79 |                  512 |
+| 10 |                  2 |                        7.34 |                            --- |                      28.68 |                 1024 |
+| 11 |                  2 |                       12.08 |                            --- |                     205.05 |                 2048 |
+| 12 |                  2 |                       20.03 |                            --- |                        --- |                  --- |
+| 13 |                  2 |                       35.53 |                            --- |                        --- |                  --- |
+| 14 |                  2 |                       53.98 |                            --- |                        --- |                  --- |
+| 15 |                  2 |                       88.36 |                            --- |                        --- |                  --- |
+| 16 |                  2 |                      143.16 |                            --- |                        --- |                  --- |
+
+While the benchmark is synthetical and unrealistic, there are a few problems in multivariate quadratic public key cryptography which might be tackled using an idea similar to the GeometricXL algorithm. Also, note that constructing a GeometricMatrixF5 algorithm is straight forward by replacing the first step of the algorithm.

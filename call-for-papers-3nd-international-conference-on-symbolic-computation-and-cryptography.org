@@ -1,0 +1,77 @@
+#+POSTID: 760
+#+DATE: [2012-03-22 Thu 17:03]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography
+#+TAGS: SCC2012, algebraic attacks, algebraic cryptanalysis, commutative algebra, conference, cryptography, gröbner basis, posso
+#+TITLE: Call for Papers: 3nd International Conference on Symbolic Computation and Cryptography
+
+CIEM - Castro Urdiales, Spain, 11-13 July 2012, [[http://scc2012.unican.es/]]
+
+** CALL FOR PAPERS
+
+
+*** IMPORTANT DATES
+
+-  Deadline for submission: April 28, 2012
+-  Notification of acceptance or rejection: May 18, 2012
+-  Deadline for final version: May 30, 2012
+-  Deadline for registration: June 12, 2012
+-  Deadline for special issue JSC: September 30, 2012
+
+SCC 2012 is the third edition of a new series of conferences where  research and development in symbolic computation and cryptography may be presented and discussed. It is organized in response to the growing  interest in applying and developing methods, techniques, and software  tools of symbolic computation for cryptography. The use of Lattice  Reduction algorithms in cryptology and the application of Groebner  bases in the context of algebraic attacks are typical examples of  explored applications. The SCC 2012 conference is co-located with  third Workshop on Mathematical Cryptology (WMC 2012, [[http://wmc2012.unican.es/]]) , an event also organized by research group Algorithmic Mathematics  And Cryptography (AMAC), which will be held on 9-11 July 2012.
+
+SCC 2012 aims at providing an interactive forum for interested  researchers to exchange ideas and views, to present research results and progress, and to learn and discuss recent developments and emerging problems on:
+
+-  the design, modelling, and analysis of cryptographic systems and protocols for which symbolic computation may be used or needed;
+-  the design, implementation, and analysis of algorithms and software tools of symbolic computation that may have potential applications in cryptography.
+
+*** TOPICS
+
+Specific topics for SCC 2012 include, but are not limited to:
+
+-  Multivariate cryptography, braid group cryptography, non -commutative cryptography, and quantum cryptography.
+-  Code-based, factorization-based, and lattice-based cryptography.
+-  Algebraic attacks for block ciphers, stream ciphers, and hash functions.
+-  Design and analysis of algebraic, elliptic, and embedded cryptographic systems and protocols.
+-  Gröbner basis techniques in cryptology, algebraic number theory, and coding theory.
+-  Triangular sets and new techniques for solving algebraic systems over finite fields.
+-  Algorithms and software for symbolic computation in cryptography.
+
+*** SUBMISSION
+
+Potential participants of SCC 2012 are invited to submit extended abstracts of 3-5 pages or full papers (with at most 14 pages) describing their work to be presented at the conference. The submitted extended abstracts and full papers will be reviewed by members of the program committee (PC) for soundness and relevance to the conference.
+
+Submission of original research papers is encouraged, while published material and work in progress will also be considered for presentation at the conference. We note that there will be no formal proceedings for the SCC 2012 conference; in particular, a paper submitted to SCC 2012 may also be submitted elsewhere after the conference.
+
+Extended abstracts and full papers should be prepared using Springer's LNCS LaTeX style file available on the SCC 2010 webpage and according to the instructions given therein. Submissions must be done preferably electronically via EasyChair at [[https://www.easychair.org/conferences/?conf=scc2012]].
+
+There will be no formal proceedings for SCC 2012 conference. However all accepted extended abstracts and full papers will be printed on the  conference records for distribution during the event.
+
+*** SPECIAL ISSUE -- JOURNAL OF SYMBOLIC COMPUTATION
+
+We are pleased to announce that a special issue of Journal of Symbolic Computation ([[http://www.journals.elsevier.com/journal-of-symbolic-computation/]]) will be jointly organized with the conference. We are pleased to  announce that a special issue of Journal of Symbolic Computation ([[http://www.journals.elsevier.com/journal-of-symbolic-computation/]]) will be jointly organized with the conference. Whilst the submission to this special issue is widely open, authors of the extended  abstracts and full papers accepted for presentation at the conference will be encouraged to submit their full and/or revised papers for  publication in a special issue of the Journal of Symbolic Computation ([[http://www.journals.elsevier.com/journal-of-symbolic-computation/]]).
+
+*** PROGRAMME CHAIRS
+
+Jean-Charles Faugère, UPMC-INRIA, France
+Jaime Gutierrez, Universidad de Cantabria, Santander, Spain
+
+*** PROGRAMME COMMITTEE (To be completed)
+
+-  /Stanislav Bulygin/ (Center for Advanced Security Research Darmstadt,  Germany)
+-  /Carlos Cid/ (Royal Holloway, University of London, UK)
+-  /Danilo Gligoroski/ (Norwegian University of Science and Technology, Norway)
+-  /Martin Kreuzer/ (Universität Passau, Germany)
+-  /Dongdai Lin/ (Institute of Software of Chinese Academy of Sciences, China)
+-  /Vadim Lyubashevsky/ (INRIA, France)
+-  /Gregor Leander/ (Technical University of Denmark, Denmark)
+-  /Ayoub Otmani/ (GREYC-Ensicaen & University of Caen & INRIA, France)
+-  /Ludovic Perret/ (LIP6-UPMC Univ Paris 6 & INRIA, France)
+-  /Vladimir Shpilrain/ (The City College New York, US)
+-  /Boaz Tsaban/ (Bar-Ilan University, Israel)
+
+*** LOCAL ORGANISATION
+
+Algorithmic Mathematics And Cryptography
+Universidad de Cantabria, Santander
+scc2012@unican.es

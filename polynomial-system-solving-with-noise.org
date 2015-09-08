@@ -1,0 +1,19 @@
+#+POSTID: 82
+#+DATE: [2010-04-01 Thu 12:33]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography
+#+TAGS: max-posso, mixed integer programming, optimization, paper, posso
+#+TITLE: Polynomial System Solving with Noise
+
+The reason I became somewhat interested in mixed integer programming is that it is one way of solving polynomial systems which are noisy. These kind of polynomial systems pop up in crypto all over the place but so far --- to my knowledge --- they have not been studied extensively. In order to clarify what is meant by “polynomial system solving with noise”, we can define a familiy of /Max-PoSSo/ problems similar to the [[http://en.wikipedia.org/wiki/Maximum_satisfiability_problem][Max-SAT]] family of problems (in fact, you can reduce /Max-PoSSo/ to /Max-SAT/).
+
+Polynomial system solving (/PoSSo/) is the problem of finding a solution to a system of polynomial equations over some field $\mathbb{F}$. We consider the set $F=\{f_0,...,f_{m-1}\}$, where each $latex f_i \in \mathbb{F}[x_0,\dots,x_{n-1}]$. A solution to $latex F$ is any point $x \in \mathbb{F}\^n$ such that $latex \forall f \in F$, we have $latex f(x) = 0$. Note that we restrict ourselves to solutions in the base field in this context.
+
+Then by /Max-PoSSo/ we denote the problem of finding any $x \in \mathbb{F}\^n$ which satisfies the maximum number of polynomials in $F$. Likewise, by /Partial Max-PoSSo/ we denote the problem to return a point $x \in \mathbb{F}\^n$ such that for two sets of polynomials $\mathcal{H}$ and $\mathcal{S}$ in $\mathbb{F}[x_0, \dots, x_{n-1}]$, we have $f(x) = 0$ for all $f \in \mathcal{H}$, and the number of polynomials $f \in \mathcal{S}$ with $f(x) = 0$ is maximised. Max-PoSSo is Partial Max-PoSSo with $\mathcal{H} = \varnothing$.
+
+Finally, by /Partial Weighted Max-PoSSo/ we denote the problem to return a point $x \in \mathbb{F}\^n$ such that $\forall f \in \mathcal{H}: f(x) = 0$ and $\sum_{f \in \mathcal{S}} \mathcal{C}(f,x)$ is minimized where $\mathcal{C}: f \in \mathcal{S},x \in \mathbb{F}\^n \rightarrow \mathbb{R}_{\geq 0}$ is a cost function which returns $0$ if $f(x) = 0$ and some value $> 0$ if $f(x) \neq 0$. Partial Max-PoSSo is Weighted Partial Max-PoSSo where $\mathcal{C}(f,x)$ returns 1 if $f(x) \neq 0$ for all $f$.
+
+It turns out one can solve Partial Weighted Max-PoSSo over $\mathbb{F}_2$ using mixed integer programming. Recently, Carlos and I have been busy applying these ideas to the [[http://en.wikipedia.org/wiki/Cold_boot_attack][cold boot]] problem, with reasonable success. An extended abstract of our work is available [[http://www.informatik.uni-bremen.de/~malb/papers/cold_boot_key_recovery_using_max-posso_-_extended_abstract.pdf][here]]. Two sets of slides discussing our techniques are also available [[http://www.informatik.uni-bremen.de/~malb/talks/20100218%20-%20Coldboot%20-%20Egham.pdf][here]] and [[http://www.informatik.uni-bremen.de/~malb/talks/20100317%20-%20Coldboot%20-%20Egham.pdf][here]].
+
+
+

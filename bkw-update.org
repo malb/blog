@@ -1,0 +1,17 @@
+#+POSTID: 911
+#+DATE: [2013-05-08 Wed 14:51]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography, sage
+#+TAGS: bkw, bkz, cryptanalysis, lattice-based cryptography, lwe, pre-print, sage
+#+TITLE: BKW: Update
+
+We have updated our [[http://eprint.iacr.org/2012/636][pre-print]] titled "On the Complexity of the BKW Algorithm on LWE" on ePrint.
+
+There are two main changes and the reasons why I am mentioning this update here.
+
+1. We included a more thorough comparison with other approaches, in particular, with lattice reduction (reducing LWE to SIS). To our surprise, BKW is quite competitive even in relatively modest dimensions. For Regev's and Lindner-Peikert's parameter sets (as interpreted [[https://bitbucket.org/malb/lwe-generator/wiki/Home][here]]) we get that BKW is at least as fast as BKZ starting in dimension $n \approx 250$, which I find very low (see Table 4 on page 19).
+
+2. We also provide an alternative approximating for the running time of BKZ. The standard estimate due to Lindner-Peikert is $\log_2 T_{sec} = \log_2 1.8/\delta_0 - 110$ where $\delta_0$ is the targeted root hermit factor. Interpolating estimates from the BKZ 2.0 simulator and reflecting on the doubly exponential running time of BKZ in the blocksize $\beta$ we found: $\log_2 T_{sec} = \log_2 0.009/\delta\^2_0 - 27$. However, since this might be controversial, we include estimates for both models.
+
+
+

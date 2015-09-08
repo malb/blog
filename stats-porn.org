@@ -1,0 +1,22 @@
+#+POSTID: 88
+#+DATE: [2010-02-02 Tue 12:39]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography
+#+TAGS: conference, cryptography
+#+TITLE: Stats Porn
+
+I just scanned the website of Lars Knudsen (who is visiting Royal Holloway right now) and came across this gem.
+
+| *Year*      | 2007         | 2008         | 2009        |
+| *Crypto*    | 186 33 0.18  | 184 32 0.17  | 213 39 0.18 |
+| *Eurocrypt* | 173 33 0.19  | 163 31 0.19  | 148 33 0.22 |
+| *Asiacrypt* | 223 33 0.15  | 196 33 0.17  | 300 ?? ?.?? |
+| *FSE*       | 104 28 0.27  | 72 30 0.42   | 76 24 0.31  |
+| *PKC*       | 118 29 0.25  | 71 21 0.30   | 112 28 0.25 |
+| *CHES*      | 99 31 0.31   | 107 27 0.25  | 109 33 0.30 |
+| *TCC*       | *118* 31 0.26| 81 33 0.41   |             |
+
+The triples in the table indicate for the particular conference, the number of submissions, the number of accepted papers (or papers printed in the proceedings) and the ratio between the two first numbers. Bold face numbers are the record high number of submissions, The [[http://www2.mat.dtu.dk/people/Lars.R.Knudsen/accrates.html][original table]] goes back further. Also, [[http://www.iacr.org/cryptodb/]] has more stats about crypto publications.
+
+
+

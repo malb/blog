@@ -1,0 +1,53 @@
+#+POSTID: 488
+#+DATE: [2011-05-26 Thu 13:13]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography, sage
+#+TAGS: algebraic attacks, algebraic cryptanalysis, commutative algebra, cryptography, gröbner basis, job, optimization, postdoc
+#+TITLE: Postdoc Position at LIP6
+
+My team is hiring:
+
+
+#+BEGIN_QUOTE
+  /*One-year post-doctoral position announcement*/
+
+A 12-month postdoctoral position is available at the INRIA/LIP6/UPMC SALSA team on Campus Jussieu (located in the "Quartier Latin" of Paris, France). We are seeking candidates to apply for this position. The postdoc will work in the joint ANR/NSFC EXACTA project on polynomial system solving and its applications in cryptography, computational geometry, and biology.
+
+*Scientific context*
+
+The joint ANR/NSFC EXACTA Project aims at developing algorithms for solving polynomial systems with a focus on applications in computational geometry, algebraic cryptanalysis, global optimization and algebraic biology using exact symbolic computation and/or certifies numeric computation. Among the topics adressed in this project, one can mention Grobner bases, triangular sets, cylindrical algebraic decomposition, sums of squares, etc.
+
+Outstanding candidates within any field of Computer Algebra related to polynomial system solving will be considered.
+
+In algebraic cryptanalysis, topics of interests include: multivariate cryptography, symmetric primitives, error-correcting codes, small roots of algebraic systems. The list is not exhaustive. In computational geometry, topics of interests include: topology determination of curves and surfaces, dynamic geometric constraint solving, Voronoi diagrams of 3d-objects. The list is not exhaustive.
+
+Some detailed (but not restrictive) topics of interest are described
+at the following URL:
+[[http://www-salsa.lip6.fr/~wang/exacta/postdoc]]
+
+*Requirements*
+
+The applicants should hold a PhD. We are especially interested in candidates with background in one or several of the following fields:
+- polynomial system solving
+- algebraic techniques in computational geometry
+- algebraic techniques in cryptanalysis
+- certfied numeric computations
+
+*Application Procedure*
+
+Application deadline: *June, 13 2011*.
+Applications should be sent exclusively by email, to the addresses /Dongming.Wang@lip6.fr/ and /Mohab.Safey@lip6.fr/ preferably with the subject containing the words "EXACTA Postdoc
+Application".
+
+The application must include:
+1. a detailed resume;
+2. a short research project (1 or 2 pages);
+3. contact information of two possible references.
+
+Applications are currently open. Potentially interested candidates are invited to contact us as soon as possible.
+
+The starting date of the postdoc will be preferably October, 1st but can be delayed.
+#+END_QUOTE
+
+
+

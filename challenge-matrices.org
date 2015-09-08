@@ -1,0 +1,26 @@
+#+POSTID: 621
+#+DATE: [2011-10-19 Wed 20:00]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri
+#+TAGS: algebraic attacks, algebraic cryptanalysis, commutative algebra, cryptography, f4, gröbner basis, linear algebra, m4ri, mutantxl
+#+TITLE: Challenge matrices
+
+Now, that we have a decent PNG reader/writer in M4RI, it's much easier to get some challenge matrices out of the library. Below, I list and link a few such matrices as they appear during Gröbner basis computations.
+
+| *file*                                  | *matrix dimensions* | *density* |  *PLE* | *M4RI* |   *GB* |
+| [[http://m4ri.sagemath.org/benchmarketing/hfe25_5.png][HFE 25 matrix 5]] (5.1M)                  | 12307 x 13508       |   0.07600 |   1.03 |   0.59 |   0.81 |
+| [[http://m4ri.sagemath.org/benchmarketing/hfe30_5.png][HFE 30 matrix 5]] (16M)                   | 19907 x 29323       |   0.06731 |   4.79 |   2.70 |   4.76 |
+| [[http://m4ri.sagemath.org/benchmarketing/hfe35_5.png][HFE 35 matrix 5]] (37M)                   | 29969 x 55800       |   0.05949 |  19.33 |   9.28 |  19.51 |
+| [[http://m4ri.sagemath.org/benchmarketing/mutant_matrix.png][Mutant matrix]] (39M)                     | 26075 x 26407       |   0.18497 |   5.71 |   3.98 |   2.10 |
+| [[http://m4ri.sagemath.org/benchmarketing/random_24_26_matrix_003.png][random n=24, m=26 matrix 3]] (30M)        | 37587 x 38483       |   0.03832 |  20.69 |  21.08 |  19.36 |
+| [[http://m4ri.sagemath.org/benchmarketing/random_24_26_matrix_004.png][random n=24_ m=26 matrix 4]] (24M)        | 37576 x 32288       |   0.04073 |  18.65 |  28.44 |  17.05 |
+| [[http://m4ri.sagemath.org/benchmarketing/sr_2_2_2_4_compressed_matrix_002.png][SR(2,2,2,4) compressed, matrix 2]] (328K) | 5640 x 14297        |   0.00333 |   0.40 |   0.29 |   0.18 |
+| [[http://m4ri.sagemath.org/benchmarketing/sr_2_2_2_4_compressed_matrix_004.png][SR(2,2,2,4) compressed, matrix 4]] (2.4M) | 13665 x 17394       |   0.01376 |   2.18 |   3.04 |   2.04 |
+| [[http://m4ri.sagemath.org/benchmarketing/sr_2_2_2_4_compressed_matrix_005.png][SR(2,2,2,4) compressed, matrix 5]] (2.8M) | 11606 x 16282       |   0.03532 |   1.94 |   4.46 |   1.59 |
+| [[http://m4ri.sagemath.org/benchmarketing/sr_2_2_2_4_matrix_006.png][SR(2,2,2,4) matrix 6]] (1.4M)             | 13067 x 17511       |   0.00892 |   1.90 |   2.09 |   1.38 |
+| [[http://m4ri.sagemath.org/benchmarketing/sr_2_2_2_4_matrix_007.png][SR(2,2,2,4) matrix 7]] (1.7M)             | 12058 x 16662       |   0.01536 |   1.53 |   1.93 |   1.66 |
+| [[http://m4ri.sagemath.org/benchmarketing/sr_2_2_2_4_matrix_009.png][SR(2,2,2,4) matrix 9]] (36M)              | 115834 x 118589     |   0.00376 | 528.21 | 578.54 | 522.98 |
+
+The first three rows are from GB computations for the hidden field equations cryptosystem (those matrices were provided by Michael Brickenstein). The "mutant" row is a matrix as it appears during a run of the MXL2 algorithm on a random system (I believe). It was contributed by Wael Said. The rows "random n=25,m=26" are matrices as they appear during a GB computation with PolyBoRi for a random system of equations in 24 variables and 26 equations. The remaining rows are matrices from PolyBoRi computations on small scale AES instances. Those rows which have "compressed" in their description correspond to systems where "linear variables" were eliminate before running the Gröbner basis algorithm.
+
+The last three columns give running times (quite rough ones!) for computing an echelon form (not reduced) using (a) the M4RI algorithm, (b) PLE decomposition and (c) a first implementation of the [[http://www-salsa.lip6.fr/~jcf/Papers/PASCO2010.pdf][TRSM for trivial pivots trick]]. As you can see, currently it's not straight-forward to pick which strategy to use to eliminate matrices appearing during Gröbner basis computations: the best algorithm to pick varies between different problems and the differences can be dramatic.

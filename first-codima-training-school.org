@@ -1,0 +1,17 @@
+#+BLOG: wordpress
+#+POSTID: 1191
+#+DATE: [2015-09-08 Tue 21:05]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: Sage
+#+TAGS: sage, gap 
+#+DESCRIPTION:
+#+TITLE: First CoDiMa Training School in Computational Discrete Mathematics
+
+This [[http://www.codima.ac.uk/2015/09/06/first-codima-training-school-in-computational-discrete-mathematics/][winter school]] sounds excellent:
+
+#+BEGIN_QUOTE
+We have just finalised the date and location for the First CoDiMa Training School in Computational Discrete Mathematics which will take place at the University of Manchester on November 16th-20th, 2015. This school is intended for post-graduate students and researchers from UK institutions. It will start with the 2-days hands-on [[http://software-carpentry.org/][Software Carpentry]] workshop covering basic concepts and tools, including working with the command line, version control and task automation, continued with introductions to GAP and SageMath systems, and followed by the series of lectures and exercise classes on a selection of topics in computational discrete mathematics. 
+
+The School’s website and the registration details will be announced shortly. In the meantime, if you’re interested in attending, please keep the dates in your diary and check for updates on our website and on our Twitter [[https://twitter.com/codima_project][@codima_project]], or tell us about your interest writing to contact at codima.ac.uk so that we will be able to notify you when the registration will begin.
+#+END_QUOTE
+

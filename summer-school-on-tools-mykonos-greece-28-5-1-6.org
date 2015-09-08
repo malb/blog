@@ -1,0 +1,81 @@
+#+POSTID: 750
+#+DATE: [2012-03-01 Thu 13:55]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography, sage
+#+TAGS: algebraic attacks, algebraic cryptanalysis, block cipher, commutative algebra, conference, cryptanalysis, cryptography, gröbner basis, hash function, linear algebra, mixed integer programming, sage, sat
+#+TITLE: Summer School on Tools :: Mykonos, Greece :: 28.5 - 1.6.
+
+Slightly redacted announcement for the [[https://www.cosic.esat.kuleuven.be/ecrypt/courses/mykonos12/index.shtml][2012 Summer School on Tools]] below.
+
+#+BEGIN_QUOTE
+Following the success of the ECRYPT Workshop on Tools for Cryptanalysis 2010,the ECRYPT II Symmetric Techniques Virtual Lab (SymLab) is pleased to announce the 2012 Summer School on Tools. Covering selected topics in both symmetric and asymmetric cryptography, this summer school will provide a thorough overview of some of the most important cryptographic tools that emerged in recent years. While the summer school is aimed primarily at postgraduate students, attendance is open to all.
+
+The summer school will cover the following topics :
+
+
+  -  Polynomial System Solving techniques in Cryptography (Gröbner Bases, Mixed Integer Programming, SAT)
+  -  Linear Algebra
+  -  Cryptanalysis of Hash Functions
+  -  Cryptanalysis of Block Ciphers
+  -  Software/Hardware Tools
+  
+*KEY DATES:*
+
+Early registration deadline: 11 May, 2012.
+
+Summer school: Monday-Friday, 28 May-01 June, 2012.
+
+*List of confirmed speakers:*
+
+  -  [[http://martinralbrecht.wordpress.com/about/][Martin Albrecht]], Université Pierre et Marie Curie, France
+  -  [[http://homes.esat.kuleuven.be/~abogdano/][Andrey Bogdanov]], KU Leuven, Belgium
+  -  [[http://www2.mat.dtu.dk/people/J.Borghoff/][Julia Borghoff]], Danmarks Tekniske Universitet, Denmark
+  -  Joan Daemen, STMicroelectronics, Belgium
+  -  [[http://www-calfor.lip6.fr/~jcf/][Jean-Charles Faugère]], INRIA, France
+  -  [[http://www.mat.dtu.dk/English/Medarbejdere/MAT_VIP.aspx?lg=showcommon&type=person&id=50475][Gregor Leander]], Danmarks Tekniske Universitet, Denmark
+  -  [[http://www.cits.rub.de/personen/meurer.html][Alexander Meurer]], Ruhr-Universität Bochum, Germany
+  -  [[http://www.emsec.rub.de/chair/_staff/amir-moradi/][Amir Moradi]], Ruhr-Universität Bochum, Germany
+  -  [[http://www.esat.kuleuven.be/scd/person.php?persid=372][Nicky Mouha]], KU Leuven, Belgium
+  -  [[http://membres-liglab.imag.fr/pernet/][Clément Pernet]], INRIA, Laboratoire LIG, Université Joseph Fourier, France
+  -  [[http://homes.esat.kuleuven.be/~preneel/][Bart Preneel]], KU Leuven, Belgium
+  -  [[http://www.groestl.info/rechberger/][Christian Rechberger]], Danmarks Tekniske Universitet, Denmark
+  -  [[http://www-polsys.lip6.fr/~renault/][Guénaël Renault]], Université Pierre et Marie Curie, France
+  -  [[http://www.iaik.tugraz.at/content/about_iaik/people/schlaeffer_martin][Martin Schläffer]], IAIK, Graz University of Technology, Austria
+  -  [[http://www.lri.fr/~simon/][Laurent Simon]], LRI/CNRS/INRIA & Université Paris 11, France
+  -  [[http://www.emsec.rub.de/chair/_staff/ralf-zimmermann/][Ralf Zimmermann]], Ruhr-Universität Bochum, Germany
+  
+*PROGRAM:*
+
+The detailed program of the summer school will be published at the beginning of April.
+However, the timetable is [[https://www.cosic.esat.kuleuven.be/ecrypt/courses/mykonos12/program.shtml][available]].
+
+*LOCATION & TRAVEL:*
+
+The summer school will take place in:
+[[http://www.saintjohn.gr/][Saint John Mykonos]], Agios Ioannis Beach 84600, Mykonos, Greece
+
+Saint John Mykonos Hotel has a capacity of 136 hotel rooms, 9 exclusive and private suites and 3 villas. Your hotel stay is not included in the registration fee. You should book your own stay and you are encouraged to do so in the conference hotel,
+where participants to the summer school can book a room at a special  rate.
+
+Note that rooms are only guaranteed until end of April. We emphasize that the period of the summer school is a touristic period. So, please do your best to reserve your hotel as soon as possible.
+
+*STIPENDS*
+
+A limited number of stipends will be available for students from non- ECRYPT institutions. Note that these stipends should only cover the registration fee.
+Please let us know before 2 April, 2012 if you are interested, by sending an email with a short
+CV and a few lines describing your motivations for attending the summer school to ecrypt2-stipendsmykonos@esat.kuleuven.be
+
+We look forward to seeing you in Mykonos.
+
+The Organizers:
+
+  -  Carlos Cid, Royal Holloway, University of London
+  -  Jean-Charles Faugère, INRIA/UPMC Univ Paris 06/CNRS/PolSys
+  -  Ludovic Perret, INRIA/UPMC Univ Paris 06/CNRS/PolSys
+
+#+END_QUOTE
+
+I'll be giving a talk on Sage on Monday and a talk on linear algebra on Friday. See you there :)
+
+
+

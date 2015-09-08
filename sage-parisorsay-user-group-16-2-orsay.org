@@ -1,0 +1,27 @@
+#+POSTID: 737
+#+DATE: [2012-02-07 Tue 12:49]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: sage
+#+TAGS: sage, sage paris-orsay user group
+#+TITLE: Sage Paris/Orsay User Group - 16.2. Orsay
+
+So, the second meeting of the Sage Paris/Orsay User Group (SPOUG or shall we call it a Sage Halfday?) is on the 16th in Orsay. Here's the official announcement.
+
+#+BEGIN_QUOTE
+La prochaine séance du groupe d'utilisateurs de Sage aura lieu le /Jeudi 16 février/, en salle de conference Lederer, au rez-de-chaussée du bâtiment 430 du Laboratoire de Maths d'Orsay.
+
+Au programme:
+
+/13h30:/ Installation de Sage
+/14h:/ Présentation rapide de Sage et mini tutoriel
+/15h:/ Introduction à Python Scientifique (Fabio Grazioso, ENS Cachan)
+/16h:/ Tutoriels
+
+Pour plus d'information: [[http://wiki.sagemath.org/GroupeUtilisateursParis]]
+Pour venir: [[http://www.math.u-psud.fr/acces.php]]
+
+N'hésitez pas à faire circuler autour de vous!
+#+END_QUOTE
+
+
+

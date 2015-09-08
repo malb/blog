@@ -1,0 +1,57 @@
+#+POSTID: 730
+#+DATE: [2012-02-01 Wed 23:51]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: sage
+#+TAGS: commutative algebra, gröbner basis, optional package, sage, symbolic data
+#+TITLE: SymbolicData
+
+Sage has many optional packages, about 50 actually. However, it is not necessarily well known what some of these do. For example, recently William asked me to fix some issue in the optional /database_symbolic_data/ (still [[http://trac.sagemath.org/sage_trac/ticket/12336][needing review]] btw. hint hint) package which bought it back to my attention. Shortly after, Burcin mentioned to me that he spent considerable time copy'n'pasting some standard ideals from some package to Sage's input format. Time which he probably wouldn't have spent if he'd known about the [[http://www.symbolicdata.org][SymbolicData.org]] database and it's Sage interface. Here's in it action:
+
+#+BEGIN_SRC python
+sage: install_package('database_symbolic_data-20070206')
+sage: sd = SymbolicData()
+sage: sd.Cyclic_4
+Ideal (w + x + y + z, w*x + x*y + w*z + y*z, w*x*y + w*x*z + w*y*z + x*y*z, w*x*y*z - 1) of Multivariate Polynomial Ring in w, x, y, z over Rational Field
+#+END_SRC
+
+And another example:
+
+#+BEGIN_SRC python
+sage: sd.ZeroDim__example_20
+Ideal (4*t2^2*t3^2 + 2*t2^2 + 5*t2*t3 + 3*t3^2 + 1, 4*t1^2*t3^2 + 3*t1^2 + 5*t1*t3 + 2*t3^2 + 1, 4*t1^2*t2^2 + 2*t1^2 + 5*t1*t2 + 3*t2^2 + 1) of Multivariate Polynomial Ring in t1, t2, t3 over Rational Field
+#+END_SRC
+
+The database contains 372 ideals. But what if you don't like the term order or base field? You can either use
+
+#+BEGIN_SRC python
+sage: I = sd.Cyclic_4
+sage: I.change_ring(I.ring().change_ring(base_ring=GF(127),order="lex"))
+Ideal (w + x + y + z, w*x + w*z + x*y + y*z, w*x*y + w*x*z + w*y*z + x*y*z, w*x*y*z - 1) of Multivariate Polynomial Ring in w, x, y, z over Finite Field of size 127
+#+END_SRC
+
+Or use the function get_ideal:
+
+#+BEGIN_SRC python
+sage: sd.get_ideal("Cyclic_4",base_ring=GF(127),term_order="lex")
+Ideal (w + x + y + z, w*x + x*y + w*z + y*z, w*x*y + w*x*z + w*y*z + x*y*z, w*x*y*z - 1) of Multivariate Polynomial Ring in w, x, y, z over Finite Field of size 127
+#+END_SRC
+
+Finally, since Sage has interfaces to many other systems this also means that it converts from SymbolicData format to these formats as well:
+
+#+BEGIN_SRC python
+sage: I = sd.Cyclic_4
+sage: magma(I)
+Ideal of Polynomial ring of rank 4 over Rational Field
+Order: Graded Reverse Lexicographical
+Variables: w, x, y, z
+Basis:
+[
+w + x + y + z,
+w*x + x*y + w*z + y*z,
+w*x*y + w*x*z + w*y*z + x*y*z,
+w*x*y*z - 1
+]
+#+END_SRC
+
+
+

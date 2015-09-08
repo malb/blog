@@ -1,0 +1,51 @@
+#+POSTID: 479
+#+DATE: [2011-05-31 Tue 13:00]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri, sage
+#+TAGS: linear algebra, m4ri, release, sage
+#+TITLE: M4RI-20110601
+
+I just just pressed the button and release M4RI version [[https://bitbucket.org/malb/m4ri/wiki/M4RI-20110601][20110601]]. This version contains quite a significant number of changes both internally (for developers) and for end users. For example, we changed the internal matrix layout (including the bit order per word). Furthermore, we greatly improved our testing and benchmarking code such that it will be easier to write fast code in the future: it gives much more accurate and fine grained timing information (cycles, cache hits/misses, etc.), with confidence interval for the returned times and all bells and whistles. It's pretty neat. Finally, making use of these new features we improved performance especially for small operations. Details are given in the [[https://bitbucket.org/malb/m4ri/wiki/M4RI-20110601][release note]].
+
+Below, I give a comparison the  M4RI version currently shipped with Sage and the new version 20110601 for various operations . As you can see, we got quite a bit faster for almost all operations (I think these timings are mainly due to improved cache size detection).
+
+#+BEGIN_EXAMPLE
+Comparing 2010-07-01 00:00 and 2011-05-23 16:43
+
+('elim', 10000, 10000, 'm4ri'): 1.132 / 1.008 = 1.123 (-11%)
+('elim', 10000, 10000, 'pluq'): 0.788 / 0.588 = 1.340 (-25%)
+('elim', 10000, 20000, 'm4ri'): 2.388 / 2.368 = 1.008 ( -1%)
+('elim', 10000, 20000, 'pluq'): 2.460 / 2.268 = 1.085 ( -8%)
+('elim', 16384, 16384, 'm4ri'): 4.356 / 4.268 = 1.021 ( -2%)
+('elim', 16384, 16384, 'pluq'): 3.232 / 2.828 = 1.143 (-12%)
+('elim', 16384, 32768, 'm4ri'):12.597 /10.909 = 1.155 (-13%)
+('elim', 16384, 32768, 'pluq'): 9.709 / 9.169 = 1.059 ( -6%)
+('elim', 20000, 20000, 'm4ri'): 8.029 / 7.328 = 1.096 ( -9%)
+('elim', 20000, 20000, 'pluq'): 5.564 / 4.268 = 1.304 (-23%)
+('elim-sparse', 10000, 0.0002, 'm4ri'): 0.684 / 0.824 = 0.830 ( 20%)
+('elim-sparse', 10000, 0.0002, 'pluq'): 1.496 / 1.372 = 1.090 ( -8%)
+('elim-sparse', 10000, 0.0004, 'm4ri'): 0.480 / 0.520 = 0.923 (  8%)
+('elim-sparse', 10000, 0.0004, 'pluq'): 1.444 / 1.156 = 1.249 (-20%)
+('elim-sparse', 10000, 0.0006, 'm4ri'): 0.728 / 0.652 = 1.117 (-10%)
+('elim-sparse', 10000, 0.0006, 'pluq'): 1.356 / 0.968 = 1.401 (-29%)
+('elim-sparse', 10000, 0.0008, 'm4ri'): 0.820 / 0.752 = 1.090 ( -8%)
+('elim-sparse', 10000, 0.0008, 'pluq'): 1.160 / 0.884 = 1.312 (-24%)
+('elim-sparse', 10000, 0.0010, 'm4ri'): 0.884 / 0.844 = 1.047 ( -5%)
+('elim-sparse', 10000, 0.0010, 'pluq'): 0.832 / 0.724 = 1.149 (-13%)
+('mul', 10000):   1.404 /   1.224 = 1.147 (  -13%)
+('mul', 16384):   5.716 /   4.460 = 1.282 (  -22%)
+('mul', 20000):  10.237 /  10.081 = 1.015 (   -2%)
+#+END_EXAMPLE
+
+However, the speed ups in the release notes for small matrices -- which are much more dramatic -- are due to considerable effort that went into improving the code. Actually, when I wrote "we" above I mainly meant [[http://www.xs4all.nl/~carlo17/][Carlo Wood]] who contributed an /enormous amount of high quality code/.
+
+To showcase Carlos' benchmartketing and transpose code, below is a plot which shows the cycles per bit for transposing for random matrices of dimension $n \times n$.
+
+[[http://martinralbrecht.files.wordpress.com/2011/05/mzd_transpose-20110601.png][[[http://martinralbrecht.files.wordpress.com/2011/05/mzd_transpose-20110601.png?w=300]]]]Next, the cycles per bit for addition are shown which was also improved in 20110601 and now achieves peak performance at about 128 x 128. That is, smaller matrices are handled much more efficiently now.
+
+[[http://martinralbrecht.files.wordpress.com/2011/05/mzd_add-20110601.png][[[http://martinralbrecht.files.wordpress.com/2011/05/mzd_add-20110601.png?w=300]]]]Finally, the number of cycles divided by $n\^{2.807}$. The absolute values are not that terribly important - since I ignore the constant - but the relative values indicate that we have some work to do for $n \times n$ matrices up $n=2000$.
+
+[[http://martinralbrecht.files.wordpress.com/2011/05/mzd_mul.png][[[http://martinralbrecht.files.wordpress.com/2011/05/mzd_mul.png?w=300]]]]
+
+
+

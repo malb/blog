@@ -1,0 +1,11 @@
+#+POSTID: 405
+#+DATE: [2011-04-11 Mon 15:03]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri
+#+TAGS: linear algebra, m4ri
+#+TITLE: Clément Pernet's talk on Gaussian elimination
+
+The various matrix decompositions (LSP, PLUQ, LQUP, PLE, CUP ...) and their relation to Gaussian elimination can be a bit confusing. [[http://membres-liglab.imag.fr/pernet/][Clément]] recently gave a nice talk about these, their relation, their complexities, parallelisation and our implementation of PLE decomposition in the M4RI library. I didn't attend the talk but the [[http://membres-liglab.imag.fr/pernet/Publications/ECCAD11_pernet.pdf][slides]] surely are interesting.
+
+
+

@@ -1,0 +1,32 @@
+#+POSTID: 875
+#+DATE: [2012-12-21 Fri 20:30]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri, sage
+#+TAGS: linear algebra, m4ri, ple, pre-print, sage
+#+TITLE: M4RI 20121224
+
+I have just pushed the button to release [[https://bitbucket.org/malb/m4ri/wiki/M4RI-20121224][M4RI 20121224]]. The main feature of this release is a considerable performance improvement. It all started with /Fast matrix decomposition in F2/ by Enrico Bertolazzi and Anna Rimoldi showing up on the [[http://arxiv.org/abs/1209.5198][arXiv]]. Here's the abstract
+
+#+BEGIN_QUOTE
+In this work an efficient algorithm to perform a block decomposition (and so to compute the rank) of large dense rectangular matrices with entries in F2 is presented. Depending on the way the matrix is stored, the operations acting on rows or block of consecutive columns (stored as one integer) should be preferred. In this paper, an algorithm that completely avoids the column permutations is given. In particular, a block decomposition is presented and its running times are compared with the ones adopted into SAGE.
+#+END_QUOTE
+
+... and that comparison made [[http://m4ri.sagemath.org][M4RI]] (which realises this functionality in[[http://www.sagemath.org][Sage]]) look pretty bad. I did't (and still don't) share the implicit assumption that avoiding column swaps was the key ingredient in making this code so much faster than ours. I assume the *impressive* timings are due to a very efficient base case implementation. Anyway, we sat down  and looked for performance bottlenecks the result of which is 20121224. I actually have no idea whether we caught up to the code described in Enrico's and Anna's pre-print as they did not publish their sources.
+
+Still, the performance improvements over 20120613 were worth the trouble. Below two plots of the (normalised) leading constants giving the leading constants for multiplication and elimination respectively (more plots on [[http://imgur.com/a/dKZAy][imgur]]) That is, it plots the running time divided by $n\^{2.807} \cdot 10\^9$. In theory these plots should all have slope 0.
+
+http://i.imgur.com/olEfb.png
+
+[[http://i.imgur.com/EoL1e.png]]
+
+Finally, here's the plot for /Fast matrix decomposition in F2/ which starts very small but has a rather large slope. That's why I concluded that the performance stems from a very efficient base case. I should get in touch with Enrio and Anna about this.
+
+[[http://martinralbrecht.wordpress.com/2012/12/21/m4ri-20121224/arxiv-elimination/#main][[[http://martinralbrecht.files.wordpress.com/2012/12/arxiv-elimination.png]]]]
+
+
+
+
+
+
+
+

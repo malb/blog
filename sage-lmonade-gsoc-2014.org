@@ -1,0 +1,17 @@
+#+POSTID: 1041
+#+DATE: [2014-03-06 Thu 15:39]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: sage
+#+TAGS: google summer of code, gsoc, gsoc2014, linbox, lmonade, open-source, sage
+#+TITLE: Sage & LMonade GSOC 2014
+
+This year [[http://www.google-melange.com/gsoc/org2/google/gsoc2014/sagemath][Sage]] and [[http://www.google-melange.com/gsoc/org2/google/gsoc2014/lmonade][lmonade]] are mentoring organizations for the [[http://www.google-melange.com/gsoc/homepage/google/gsoc2014][Google Summer of Code]] again. We have many exciting projects for students to work (from home) over the summer, get mentored by experts in the field and get paid by Google.
+
+-  [[https://docs.google.com/document/d/15v7lXZR1U4H2pT21d2fyPduYGb74JAFjkXJ6CWYmYfw/pub][Sage projects]]
+
+-  [[http://wiki.lmona.de/get_involved/projects][lmonade projects]]
+
+Note that projects are not limited to the ideas presented on these pages. That is, if you have a nice project you'd like to propose, by all means do so! The application deadline for students is March 21st. These days they should be talking to potential mentors and forming an applications. If you know any student who might be interested or have access to any forum such students might read, please forward this announcement.
+
+
+

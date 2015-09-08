@@ -1,0 +1,31 @@
+#+POSTID: 37
+#+DATE: [2010-04-14 Wed 19:14]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri
+#+TAGS: m4ri
+#+TITLE: M4RI and Structured Matrices
+
+I have blogged [[http://www.informatik.uni-bremen.de/cgi-bin/cgiwrap/malb/blosxom.pl/2009/11/04#m4ri-20091101][before]] about the issues we face in M4RI if the matrices we work with are relatively sparse. In a nutshell, computing the, say, row echelon form of these matrices may take /longer/ than for random matrices. In particular, all the nice work we've done for making matrix elimination fast M4RI might not pay off for the kind of matrices I care about such as matrices as they appear when computing Gröbner bases for relatively dense systems of polynomials in [[http://polybori.sourceforge.net/][PolyBoRi]]. A few examples of such matrices can be downloaded from the M4RI [[http://m4ri.sagemath.org/performance.html][performance site]]. Since I am writing up my thesis (and [[http://membres-liglab.imag.fr/pernet/][Clément]] and I are working on a [[http://bitbucket.org/cpernet/pluqm4ri/][joint paper]]) I played around with a simple hybrid algorithm today. The idea is simple: M4RI is faster for sparse-ish matrices than PLS decomposition mainly due to the lack of column swaps. Thus, run M4RI until the density of the remaining matrix is above a certain threshold and then switch to the PLS-based approach. It turns out this works reasonably well for the benchmark matrices.
+
+#+CAPTION: 64-bit Debian/GNU Linux, 2.6Ghz Opteron (VMWare Virtualised)
+| Problem (Filesize) | Matrix Dimension | Density | Magma 2.14-13 | M4RI 20100324 | PLS 20100324 | M+P 0.15 20100414 | M+P 0.20 20100414 |
+| HFE 25 (5.6 MB)    | 12,307 x 13,508  |   0.076 | 4.57s         | 3.28s         | 3.45s        | 3.44s             |              3.08 |
+| HFE 30 (16 MB)     | 19,907 x 29,323  |   0.067 | 33.21s        | 23.72s        | 25.42s       | 22.79s            |             20.71 |
+| HFE 35 (40 MB)     | 29,969 x 55,800  |   0.059 | 278.58s       | 126.08s       | 159.72s      | 121.03s           |            123.75 |
+| MXL2 (39MB)        | 26,075 x 26,407  |   0.185 | 76.81s        | 23.03s        | 19.04s       | 18.31s            |             17.15 |
+
+#+CAPTION:  64-bit Fedora Linux, 2.33Ghz Xeon (=eno=)
+| Problem (Filesize) | Matrix Dimension | Density | Magma 2.14-13 | M4RI 20100324 | PLS 20100324 | M+P 0.15 20100414 | M+P 0.20 20100414 |
+| HFE 25 (5.6 MB)    | 12,307 x 13,508  |   0.076 | 3.68s         | 1.94s         | 2.09s        | 2.16s             |              1.92 |
+| HFE 30 (16 MB)     | 19,907 x 29,323  |   0.067 | 23.39s        | 11.46s        | 13.34s       | 11.37s            |             10.60 |
+| HFE 35 (40 MB)     | 29,969 x 55,800  |   0.059 | ---           | 49.19s        | 68.85s       | 53.17s            |             47.90 |
+| MXL2 (39MB)        | 26,075 x 26,407  |   0.185 | 55.15         | 12.25s        | 9.22s        | 9.09s             |              9.25 |
+
+#+CAPTION: 64-bit Ubuntu Linux, 2.66Ghz Xeon (=sage.math=)
+| Problem (Filesize) | Matrix Dimension | Density | Magma 2.14-13 | M4RI 20100324 | PLS 20100324 | M+P 0.15 20100414 | M+P 0.20 20100414 |
+| HFE 25 (5.6 MB)    | 12,307 x 13,508  |   0.076 | 2.24s         | 2.00s         | 2.25s        |              2.04 |                   |
+| HFE 30 (16 MB)     | 19,907 x 29,323  |   0.067 | 27.52s        | 13.29s        | 11.75s       |             13.39 |                   |
+| HFE 35 (40 MB)     | 29,969 x 55,800  |   0.059 | 115.35s       | 72.70s        | 54.97s       |            111.27 |                   |
+| MXL2 (39MB)        | 26,075 x 26,407  |   0.185 | 26.61s        | 8.73s         | 8.82s        |             10.32 |                   |
+
+In the above /M+P/ denotes the hybrid hack and the number following M+P is the switch-over density. Clearly, this simple strategy does not always give optimal results, but it does indeed look promising at least for some (relevant) applications. I did not commit the patch however, since it is too much of a hack. We will have think whether and how to incorporate it properly. Btw. I don't have access to Magma on sage.math.

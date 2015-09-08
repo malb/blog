@@ -1,0 +1,17 @@
+#+POSTID: 743
+#+DATE: [2012-02-08 Wed 20:04]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: misc
+#+TAGS: academic license, bitbucket, revision control
+#+TITLE: Bitbucket Academic License
+
+So, I use [[https://www.bitbucket.org][bitbucket]] a lot. Mainly to host open-source code but I also try to use revision control for most of my papers and research collaborations. Problem was, though, that you can only have 5 people you can work on a private repositories with in total with the free plan. So you can have at most 5 other researchers you can work on stuff in parallel with. Whoever checked the length of author lists on recent crypto papers might know that five suffices for like one paper but you cannot work on two papers in parallel like that.
+
+But the next plan up which gives you 10 people costs $10 a month which is a bit steep for someone like me. Also, 10 is probably still a bit low during a productive year.
+
+Enter [[http://www.atlassian.com/software/views/bitbucket-academic-license.jsp][Bitbucket Academic License]]: unlimited private users, i.e., people you can work with, if you are an academic.
+
+Sales pitch end :)
+
+
+

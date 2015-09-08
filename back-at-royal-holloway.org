@@ -1,0 +1,29 @@
+#+POSTID: 764
+#+DATE: [2014-01-16 Thu 19:00]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography
+#+TAGS: cryptography, gchq, job, multilinear maps, nsa
+#+TITLE: Back at Royal Holloway
+
+Since the beginning of this month I am back at the Information Security Group (which is now its own department) at Royal Holloway, University of London. In particular, I have a three year postdoc position on a [[http://gow.epsrc.ac.uk/NGBOViewGrant.aspx?GrantRef=EP/L018543/1][project]] looking into [[http://eprint.iacr.org/2012/610][multilinear maps]]. The project is with [[http://www.isg.rhul.ac.uk/~kp/][Kenny Paterson]].
+
+It seems the Information Security Group has grown considerably since 2010 (when I left), but maybe only more people attend the [[http://www.rhul.ac.uk/isg/research/researchseminars.aspx][research seminar]] now. Speaking of which, they are open to all and here is this term's schedule:
+
+-  16 Jan 2014 (Thu): *Corrado Leita* (Symantec Research Labs, EU), "/[[http://www.rhul.ac.uk/isg/events/eventsarticles/isgresearchseminar16jan2014.aspx][Who switched off the lights? Detecting targeted attacks against the power grid]]/",  *room ABLT3*
+-   21 Jan 2014 (Tue): *Viktor Mayer-Schönberger* (University of Oxford, UK), TBD, *room MLT*
+-  **30 Jan 2014 (Thu): *Martin Albrecht* (Royal Holloway University of London, UK), "/[[http://www.rhul.ac.uk/isg/events/eventsarticles/isgresearchseminar30jan2014.aspx][Lazy Modulus Switching for the BKW Algorithm on LWE]]/", *room ABLT3*
+-  **05 Feb 2014 (Wed): *Elisabeth Oswald* (University of Bristol, UK), TBD, *room ABLT2*
+-  **13 Feb 2014 (Thu): *Andreas Schaad* (SAP, GE), TBD, *room ABLT3*
+-  **20 Feb 2014 (Thu): TBA, *room ABLT3*
+-  **27 Feb 2014 (Thu): *Frederik Mennes* (Vasco, UK), "/Leveraging Trustworthy Computing Mechanisms to Enhance DIGIPASS Strong Authentication Technology/", *room * *ABLT3*
+-  **05 Mar 2014 (Wed): *Emiliano De Cristofaro* (University College London, UK), TBD, *room ABLT3*
+-  **13 Mar 2014 (Thu): *Leyla Bilge*, (Symantec Research Labs, EU), TBD, *room ABLT3 *
+-  **20 Mar 2014 (Thu): *Andrew S. Tanenbaum* (Vrije Universiteit Amsterdam, NL), TBD, *room ABLT3*
+-  **27 Mar 2014 (Thu): *Juan Caballero* (IMDEA Software, ES), TBD, *room ABLT3*
+
+Best check the official [[http://www.rhul.ac.uk/isg/research/researchseminars.aspx][seminar website]] for updates to talk titles etc.
+
+*PS:* In related old news for those who missed it: a few UK researchers got together and [[http://bristolcrypto.blogspot.co.uk/2013/09/open-letter-from-uk-security-researchers.html][expressed their criticism]] of NSA's and GCHQ's undermining of cryptography. It's a bit tame and to get a newline one needs a professor title apparently, but it's a start.
+
+
+

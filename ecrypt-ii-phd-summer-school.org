@@ -1,0 +1,48 @@
+#+POSTID: 466
+#+DATE: [2011-05-18 Wed 10:10]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography
+#+TAGS: conference, cryptanalysis, cryptography, ecrypt, phd summer school
+#+TITLE: ECrypt II PhD Summer School
+
+The ECrypt network is hosting a PhD summer school in Albena in a few weeks. Every time I try to look up something on its website it turns out to be not easy to find, which is a pitty. Well, now I can find it easily :)
+
+#+BEGIN_QUOTE
+  
+  * Welcome
+
+ 
+Welcome to the home page of the ECRYPT II summer school on *Design and Security of Cryptographic Algorithms and Devices*. It will take place in *Albena* (Bulgaria) from* 29 May - 3rd of June 2011*.
+The summer school is jointly organized by two ECRYPT II virtual labs, namely SYMLAB and VAMPIRE. For SYMLAB there will be five days of school.
+In paralel for VAMPIRE there will be 3 days of school followed by a 2 day workshop on Practical Implementation Security.
+
+SYMLAB
+
+  -  5 days of lectures of which 1.5 days common sessions
+  -  2 last days are more advanced lectures
+
+ 
+VAMPIRE
+
+  -  3 days of lectures with 1.5 days common sessions
+  -  2 days of workshop on Practical Implementation Security with invited talks
+
+  
+The event aims at bringing together PhD students and security experts from industry interested in the following topics:
+
+  -  Block ciphers
+  -  Hash functions
+  -  Differential and linear cryptanalysis
+  -  Implementation attacks
+  -  Fault injection attacks
+  -  Countermeasures
+  -  Leakage-resilient cryptography
+  -  White-box cryptography
+
+  
+
+#+END_QUOTE
+
+More information is here: [[https://www.cosic.esat.kuleuven.be/ecrypt/courses/albena11/index.shtml]]
+
+*PS:* I will be talking about algebraic cryptanalysis of block ciphers there.

@@ -1,0 +1,91 @@
+#+POSTID: 1048
+#+DATE: [2014-05-03 Sat 12:02]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: linux
+#+TAGS: Macbook, NVIDIA, debian, linux, macbook pro
+#+TITLE: Debian/testing on Macbook Pro 11,3
+
+I have used Debian/testing on my new Macbook Pro for a few months now. Here is what works, what doesn't and what tweaks I applied.
+
+Generally speaking, the best resource is the [[https://wiki.archlinux.org/index.php/MacBookPro11,x][Arch Wiki]] so below I'll only cover what isn't covered there.
+
+** Hardware
+
+Install kernel ≥ 3.13 and most things just work™. I run NVIDIA's proprietary drivers.
+
+*** Switching between X and console when using NVIDIA's driver
+
+NVIDIA's proprietary drivers do not support changing the backlight and switching back to the console, this sucks. (*Update*: =setpci -v -H1 -s 00:01.00 BRIDGE_CONTROL=0= does the trick)
+
+The consoles run at native resultion using efifb. While NVIDIA did add initial support for switching between efifb and X in 319, this does not support displays yet which are connected via Display Port. Well, that's how my Macbook Pro [[http://forums.debian.net/viewtopic.php?f=7&t=111288][connects the display to the graphics card]].
+
+With the Nouveau drivers it works, but won't resume from suspend properly. Nouveau is also quite slow as it does not support frequency switching yet.
+
+*** Screen Backlight
+
+Doesn't work with the NVIDIA driver. People [[https://bbs.archlinux.org/viewtopic.php?pid=1317585][made the same card work]] but I had no luck so far. Using Nouvea works. (Update:
+
+*** Intel GFX
+
+To get the Intel card to work you need to patch grub and run gfxCardStatus under OSX which disables the NVIDIA card. See the ArchWiki for [[https://wiki.archlinux.org/index.php/MacBookPro11,x#Getting_the_integrated_intel_card_to_work_on_11.2C3][details]]. I can confirm this works, but you'll loose your external monitor if you run the Intel chip as the display port connectors only connect to the NVIDIA card. Also, I don't seem to be able to actually disable the NVIDIA card, so power consumption was still bad (4h maybe).
+
+To locally patch grub under Debian see Raphael Hertzog's [[http://raphaelhertzog.com/2011/07/04/how-to-prepare-patches-for-debian-packages/][intro to patching]] Debian packages.
+
+*** Webcam
+
+No driver yet, apparently.
+
+*** Suspend
+
+If your computer suspends but wakes up after a few seconds it seems some device sends a rouge wakeup signal. Disabling wakeup from USB via
+
+#+BEGIN_SRC shell
+echo XHC1 > /proc/acpi/wakeup
+#+END_SRC
+
+fixes the issue for me.
+
+** HiDPI
+
+The main issue with setting up Debian/testing or any GNU Linux on Retina Macbook Pros is dealing with that gourgeous hidpi screen.
+
+*** KDE
+
+I really liked my Helvetica bitmap unscaled menu fonts on my old device. This is a no-go for Retina displays. For now I'm using "Arial 6.5" but it's a tad bit too fat for my liking. Anyway, I spent too much time playing with fonts already, so "Arial 6.5" it is.
+
+*** Emacs
+
+To set the in buffer fonts for emacs, add
+
+#+BEGIN_SRC elisp
+(add-to-list 'default-frame-alist
+                '(font . "DejaVu Sans Mono-6"))
+#+END_SRC
+
+
+to your =~/.emacs=. To set menu and tooltip fonts edit =~/.config/gtk-3.0/settings.ini= with something like:
+
+
+#+BEGIN_EXAMPLE
+[Settings]
+gtk-font-name=Arial 7
+#+END_EXAMPLE
+
+*** Firefox
+
+The standard recommendation is to set
+
+#+BEGIN_EXAMPLE
+layout.css.devPixelsPerPx=1.5
+#+END_EXAMPLE
+
+in =about:config=. This will also increase the size of tabs and other UI elements, including ugly scaled icons. You can install a theme like [[https://addons.mozilla.org/en-US/firefox/addon/ft-graphiteglow/][FT GraphiteGlow]] theme to deal with that.
+
+Alternatively, and this is what I do, you can use the [[https://addons.mozilla.org/en-US/firefox/addon/nosquint/][NoSquint]] add-on to set the default zoom level to something like 150% or 200%. This way, UI elements are unaffected.
+
+*** Chrome
+
+Chrome hardcodes the size of tabs. You can make it scale websites (they look beautiful) but you cannot scale the tabs. Very annoying, M35 might provide a fix.
+
+
+

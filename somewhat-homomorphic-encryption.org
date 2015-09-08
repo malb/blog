@@ -1,0 +1,140 @@
+#+POSTID: 177
+#+DATE: [2010-08-19 Thu 17:59]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography, sage
+#+TAGS: commutative algebra, cryptography, homomorphic encryption, sage
+#+TITLE: Somewhat Homomorphic Encryption
+
+Today I read the paper "[[http://crypto.stanford.edu/craig/easy-fhe.pdf][Computing Arbitrary Functions of Encrypted Data]]" by Craig Gentry in which he explains the basic ideas behind his work on fully homomorphic encryption. If you don't know what homomorphic encryption is: it means that one can evaluate a function on ciphertexts which has the same result as evaluating that function on the plaintexts. Thus, one can compute with data without getting to see it. The canonical example Gentry uses in his papers is a search engine that searches through sensitive data without seeing the actual content. It is similar to secure multi-party computation except that it is not interactive at all, i.e. you send your query and get the result back without any interaction in between. In the above mentioned paper Gentry gives a simplified version of a recent integer based fully homomorphic scheme. This simplified version is symmetric and only somewhat homomorphic (more on this below). Since the basic idea of the scheme is so simple, it is quickly implemented. The code below is actually some slight generalisation such that b isn't always forced to be two.
+
+#+BEGIN_SRC python
+class IntegerHomomorphic:
+ def __init__(self, l, b=2):
+ self.b = b
+ self.l = l # lambda is out security parameter
+ # these parameters determine the size
+ # of various numbers and are chosen such that
+ # the approximate GCD is assumed to be hard.
+ self.N, self.P, self.Q = 2**(l), 2**(l**2), 2**(l**5)
+ self.key_gen()
+
+ def key_gen(self):
+ # the secret key is simply an odd number of P bits.
+ p = ZZ.random_element(0,self.P-1)
+ if p%self.b == 0:
+ p += ZZ.random_element(1,self.b)
+ self.p = p
+
+ def encrypt(self, m):
+ # we want to encrypt 0 &lt;= m &lt; b, thus we pick some m'
+ # for which m' % b == m % b holds to avoid having
+ # known bits (== 0) in the computation below.
+ mprime = ZZ.random_element(0,self.N-1)
+ mprime = mprime - mprime%self.b + m%self.b
+ # the ciphertext is this m' with some multiple of p
+ # added to mask it.
+ q = ZZ.random_element(0,self.Q-1)
+ return mprime + self.p*q
+
+ def decrypt(self, c):
+ # if we now p decryption is easy since we can simply
+ # mod out p and then recover the value mod b
+ return ZZ((c % self.p) % self.b)
+#+END_SRC
+
+To see that this scheme is somewhat homomorphic observe that as long as the *noise is small enough* such that things don't wrap around we have $c_1 + c_2 = m_1 + m_2 + p(q_1 + q_2)$ and $c_1c_2 = m_1 m_2 + pq'$ for some number $q'$.
+
+Here is a toy example:
+
+#+BEGIN_SRC python
+sage: IH = IntegerHomomorphic(3,)
+sage: IH.encrypt(0)
+1269419566719153208598601566220616500605965999\
+730518673686683244436179224382
+sage: IH.encrypt(0) + IH.encrypt(1)
+61002356472659294938919367702545237501719846898\
+35782651710838758570047089506
+sage: IH.decrypt(IH.encrypt(0) + IH.encrypt(1))
+1
+sage: IH.decrypt(IH.encrypt(0) + IH.encrypt(1)*IH.encrypt(1))
+1
+#+END_SRC
+
+However, there is only a limited number of operations we can perform before we overflow, hence the "somewhat homomorphic" in the title:
+
+#+BEGIN_SRC python
+sage: IH.decrypt(prod(IH.encrypt(1) for _ in range(1000)))
+0
+sage: IH.decrypt(prod(IH.encrypt(1) for _ in range(1000)))
+1
+#+END_SRC
+
+The security of this construction can be reduced (according to the paper, I didn't check it) to the approximate GCD problem, that is: given $x_1$ and $x_2$, compute $p, s_1$ or $s_2$ in $x_1 = s_1 + pq_1$ and $x_2 = s_2 + pq_2$. The problem hasn't received much attention so far. Currently it is assumed to be hard if $s_1$ and $s_2$ have $\lambda$ bits, $p$ has $\lambda\^2$ bits and $q$ has $\lambda\^5$ bits.
+
+Thus, the size of the scheme is both bounded by the gap between $N$ and $P$ which dictates how much computations one can fit before wrapping around and the sizes $P, N, Q$ required for the approximate GCD to be hard. Of course, if you spent more than three years starring at multivariate polynomial ideals you will have noticed by now that this whole scheme can be instantiated using multivariate polynomial ideals as well:
+
+#+BEGIN_SRC python
+class PolynomialHomomorphic:
+ def __init__(self, l, b=2):
+ self.l = l
+ K = GF(127) # pick some field
+ # we choose a ring with l unknowns, which
+ # should make any GB computation at least
+ # as hard as 2\^l if we pick the ideal sufficiently
+ # random.
+ R = PolynomialRing(K, l, 'x', order='degrevlex')
+ self.K = K
+ self.R = R
+ # our small ideal, defines the message space.
+ self.b = Ideal([x for x in R.gens()])
+
+ # these parameters are pretty arbitrary from a
+ # security perspective!
+ self.N = 1
+ self.P = 2
+ self.Q = 5
+ self.key_gen()
+
+ def key_gen(self):
+ b,l = self.b, self.l
+ K, R = self.K, self.R
+ # we pick a random ideal with l element of degree P
+ p = [R.random_element(degree=self.P)
+ for _ in range(l)]
+ self.p = Ideal(p)
+
+ def encrypt(self, m):
+ # we pick some m' which encodes the
+ # same plaintext but is bigger
+ m = self.R(m)
+ mprime = self.R.random_element(degree=self.N)
+ mprime -= mprime - mprime.reduce(self.b)
+ mprime += m.reduce(self.b)
+
+ # adding a random ideal element
+ for f in self.p.gens():
+ mprime += self.R.random_element(degree=self.Q)*f
+ return mprime
+
+ def decrypt(self, c):
+ # decryption is just as in the integer case.
+ return c.reduce(self.p).reduce(self.b)
+#+END_SRC
+
+This scheme looks a bit similar to PolyCracker where the security was also related to normal form computations. PolyCracker was broken because normal forms are simpler than Gröbner bases, that is you don't necessarily need a Gröbner basis to compute them. However, in this scheme you must find the ideal $p$ first, before you can start thinking about whether you need a Gröbner basis of it or not. Of course, I assume that my adaptation above can still be broken somehow since that's what tends to happen with multivariate crypto schemes. Also, I'm *really really* not an expert on public-key cryptography. Hey, this is a blog post, not a research paper ... so break it in the comments :)
+
+Anyway, here's a toy example:
+
+#+BEGIN_SRC python
+sage: PH = PolynomialHomomorphic(2)
+sage: f = PH.encrypt(3) * PH.encrypt(2) * PH.encrypt(1) + PH.encrypt(2)
+sage: PH.decrypt(f)
+8
+#+END_SRC
+
+Of course, this is just the first step. The really cool stuff happens after this simple step. Gentry constructs a fully homomorphic scheme from such a somewhat homomorphic scheme ... if you want to know how, go read the [[http://crypto.stanford.edu/craig/easy-fhe.pdf][paper]] :)
+
+*Update:* See [[http://martinralbrecht.wordpress.com/2011/02/01/cryptanalysis-of-my-somewhat-homomorphic-pollycracker-scheme/][this post]] for a break of this scheme and corrected Sage code.
+
+
+

@@ -1,0 +1,26 @@
+#+POSTID: 510
+#+DATE: [2011-06-03 Fri 17:52]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography, sage
+#+TAGS: commutative algebra, cryptography, design, gröbner basis, homomorphic encryption, learning with errors, paper, polly cracker, sage
+#+TITLE: Polly Cracker, Revisited
+
+I've been mentioning [[http://eprint.iacr.org/2011/289][this work]] a few times; well, finally a pre-print is ready (by myself, Pooya Farshim, Jean-Charles Faugère and Ludovic Perret).
+
+#+BEGIN_QUOTE
+In [[http://eprint.iacr.org/2011/289][this paper]] we initiate the formal treatment of cryptographic constructions - commonly known as "Polly Cracker" -- based on the hardness of computing remainders modulo an ideal over multivariate polynomial rings. This work is motivated by the observation that the Ideal Remainder (IR) problem is one of the most natural candidates to build homomorphic encryption schemes. To this end, we start by formalising and studying the relation between the ideal remainder problem and the problem of computing a Gröbner basis.
+
+We show both positive and negative results.
+
+On the negative side, we define a symmetric Polly Cracker encryption scheme and prove that this scheme only achieves bounded CPA security under the hardness of the IR problem. Furthermore, using results from computational commutative algebra we show that a large class of algebraic transformations cannot convert this scheme to a fully secure Polly Cracker-type scheme.
+
+On the positive side, we formalise noisy variants of the ideal membership, ideal remainder, and Gröbner basis problems. These problems can be seen as natural generalisations of the LWE problem and the approximate GCD problem over polynomial rings. After formalising and justifying the hardness of the noisy assumptions we show -- following the recent progress on homomorphic encryption -- that noisy encoding of messages results in a fully IND-CPA secure somewhat homomorphic encryption scheme. Together with a standard symmetric-to-asymmetric transformation for additively homomorphic schemes, we provide a positive answer to the long standing open problem proposed by Barkee et al. (and later also by Gentry) of constructing a secure Polly Cracker-type cryptosystem reducible to the hardness of solving a random system of equations. Indeed, our results go beyond that by also providing a new family of somewhat homomorphic encryption schemes based on new, but natural, hard problems.
+
+Our results also imply that Regev's LWE-based public-key encryption scheme is (somewhat) multiplicatively homomorphic for appropriate choices of parameters. Finally, we estimate the parameters which define our cryptosystem and give a proof-of-concept implementation.
+#+END_QUOTE
+
+
+Sage source code included, have fun.
+
+
+

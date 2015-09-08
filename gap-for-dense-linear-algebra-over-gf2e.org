@@ -1,0 +1,15 @@
+#+POSTID: 591
+#+DATE: [2011-10-04 Tue 18:57]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri, sage
+#+TAGS: gap, linear algebra, m4rie, magma, ntl, sage
+#+TITLE: GAP for dense linear algebra over GF(2^e)
+
+For some strange reason it hardly every occurs to me to benchmark GAP when it comes to linear algebra over GF(2\^e). Turns out, that's a really bad idea as it seems to be the best open-source implementation for such things. For example, computing the reduced row echelon form of a 4,000 x 4,000 random matrix over $\mathbb{F}_{16}$ takes 16.94s in GAP 4.4.12 but 3267s in Sage and 1005s in NTL 5.4.2. So much much faster than other established open-source projects out there.
+
+I hope [[http://trac.sagemath.org/sage_trac/ticket/6391][libgap]] becomes a reality at some point in the future.
+
+PS: For comparison, Magma does the same task in in 4.67s and [[http://m4ri.sagemath.org][M4RIE]] in 0.71s.
+
+
+

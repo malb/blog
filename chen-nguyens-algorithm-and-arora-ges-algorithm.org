@@ -1,0 +1,39 @@
+#+POSTID: 561
+#+DATE: [2011-08-31 Wed 12:02]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography
+#+TAGS: algebraic cryptanalysis, aproximate gcd, commutative algebra, cryptanalysis, cryptography, gröbner basis, homomorphic encryption, lwe, posso
+#+TITLE: Chen & Nguyen's algorithm and Arora & Ge's algorithm
+
+In /Faster Algorithms for Approximate Common Divisors: Breaking Fully-Homomorphic-Encryption Challenges over the Integers/ Yuanmi Chen and Phong Q. Nguyen ([[http://eprint.iacr.org/2011/436][preprint here]]) propose a new algorithm for solving the approximate GCD problem. It drops the complexity from $2\^{2\rho}$ to $2\^{3/2\rho}$ in the general case and from $2\^{\rho}$ to $2\^{\rho/2}$ in the partial case (one multiple of $p$ is given noise-free) which is a pretty big deal.
+
+The algorithm is based on two key ideas (explained using the partial approximate GCD problem):
+
+*1. Noisy solving reduced to noise-free solving*
+
+Similar to Arora & Ge's algorithm for solving LWE Chen and Nguyen reduce the approximate solving problem to a noise-free solving problem. In fact, the strategy is exactly the same (cf. also [[http://martinralbrecht.wordpress.com/2011/05/07/algorithms-for-lwe-and-the-approximate-gcd-problem-over-the-integers/][this post]]). Given noisy ideal elements $f_i = \sum h_i g_i + r_i$ where $g_i$ are generators of the ideal, $h_i$ are ring elements and $r_i$ are small noise terms, then
+
+
+$F_i = f_i \cdot \prod (f_i + j)(f_i - j)$
+
+will be elements of the ideal $I$ spanned by $g_i$ if $j$ is big enough (depending on the exact setup we may drop the $-j$ part). In the approximate GCD case $g_0$ is simply a small odd integer (often denoted $p$). Additionally, if we are given some sufficient "description" of some sufficiently big ideal $\langle G_1,\dots,G_s \rangle = J \supset I$ (i.e., all elements of $I$ are in $J$ but not vice versa and $J$ is considerably bigger than $I$) then we can compute
+
+$F_i = f_i \cdot \prod (f_i + j)(f_i - j) \mod J$
+
+which keeps the size of $F_i$ small-ish. This is the role of $x_0$, the noise free multiple of $p$ in the partial approximate GCD problem. Now, one simply solves the noise free system $F_1,\dots,F_m$. In the PAGCD case this means to compute a single GCD, in the multivariate polynomial case (including LWE) this means to compute a Gröbner basis (or linearise, which is the same thing for the cases we are concerned with). Hence, so far Arora&Ge and Chen&Nguyen are really the same thing (it should be mentioned that this ideal due to Nguyen was already mentioned in [[http://eprint.iacr.org/2011/441][this paper]]) applied to different rings.
+
+However, this is not really why the Chen & Nguyen algorithm is efficient (although this already provides a speed-up by a factor of 5).
+
+*2. Efficient multiplication*
+
+The key idea to drop the exponent from $2\^{\rho}$ to $2\^{\rho/2}$ is as follows. Instead of computing with integers we compute univariate polynomials mod $x_0$, i.e. one defines
+
+$f_j(x) = \prod_{j=0}\^{j-1} (x_1 - (x + i)) \in \mathbb{F}_{x_0}[x]$
+
+and notices that for $\rho' = \lfloor \rho/2 \rfloor$:
+
+$\prod_{i=0}\^{2\^\rho-1} (x_1 - i) = \prod_{k=0}\^{2\^{\rho - \rho'} -1} f_{2\^{\rho'}}(2\^{\rho'}k)$
+
+i.e., we can reduce $2\^\rho -1$ multiplications to $2\^{\rho - \rho'} - 1$ multiplications and $2\^{\rho - \rho'} - 1$  polynomial evaluations. It turns out, this can be done in $\mathcal{O}(2\^{\rho'})$. For the details read [[http://eprint.iacr.org/2011/436][the paper]].
+
+But to get back to my previous point: It turns out the Arora&Ge perspective on noisy system solving is also useful for approximate GCDs. Which provides further evidence that it is useful to generalise LWE and AGCD to ideal theoretic problems in multivariate polynomial rings.

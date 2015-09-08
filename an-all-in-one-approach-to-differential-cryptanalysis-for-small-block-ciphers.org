@@ -1,0 +1,18 @@
+#+POSTID: 848
+#+DATE: [2012-08-05 Sun 13:54]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography
+#+TAGS: conference, cryptanalysis, cryptography, differential cryptanalysis, katan cipher, paper
+#+TITLE: An All-In-One Approach to Differential Cryptanalysis for Small Block Ciphers
+
+a paper that I wrote with Gregor Leander is finally done, out and accepted for presentation at SAC.
+
+#+BEGIN_QUOTE
+We [[http://eprint.iacr.org/2012/401][present]] a framework that unifies several standard differential techniques. This unified view allows us to consider many, potentially all, output differences for a given input difference and to combine the information derived from them in an optimal way. We then propose a new attack that implicitly mounts several standard, truncated, impossible, improbable and possible future variants of differential attacks in parallel and hence allows to significantly improve upon known differential attacks using the same input difference. To demonstrate the viability of our techniques, we apply them to KATAN-32. In particular, our attack allows us to break 115 rounds of KATAN-32, which is 37 rounds more than previous work. For this, our attack exploits the non-uniformity of the difference distribution after 91 rounds which is 20 rounds more than the previously best known differential characteristic. Since our results still cover less than 1/2 of the cipher, they further strengthen our confidence in KATAN-32's resistance against differential attacks.
+#+END_QUOTE
+
+
+ 
+
+
+

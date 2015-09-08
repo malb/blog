@@ -1,0 +1,44 @@
+#+POSTID: 632
+#+DATE: [2011-11-16 Wed 23:04]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography, sage
+#+TAGS: commutative algebra, cryptography, gröbner basis, homomorphic encryption, lwe, posso, ring-lwe
+#+TITLE: Ring-LWE and the GB(N) Problem
+
+Over at the [[http://bristolcrypto.blogspot.com/2011/11/study-group-polly-cracker-revisited.html][Bristol Cryptography Blog]] Martijn Stam writes about our "Polly Cracker, Revisted" paper:
+
+#+BEGIN_QUOTE
+We did not discuss the paper in great detail, but Jake did mention one interesting avenue for continued research. Given that this new approach allows one to cast both LWE and approximate GCD in the same framework, can one also capture ring-LWE. If so, this might enable a better comparison of the various fully homomorphic encryption (FHE) schemes out there. The hope expressed by Jake was that this might allow a reduction to standard LWE (for the current batch of ring-LWE schemes), which would boost our confidence in those schemes.
+#+END_QUOTE
+
+This motivated me to express the Ring-LWE problem in a language of Gröbner bases, here's what I could come up with so far.
+
+But let's recall the computational Ring-LWE problem first: Given a prime $q$ and an ideal $I = \langle x\^n + 1\rangle$ where $n$ is a power of two and $q \equiv 1 \mod 2n$, we consider the quotient ring $P = \mathbb{F}_q[x]/I$. We pick a random element $s \in P$ which is our secret. We sample tuples $(a_i, a_i \cdot s + e_i) \in P \times P$ where $a_i \in P$ are random and $e_i$ are sampled according to some noise distribution. The computational Ring-LWE problem is to compute $s$ given $(a_i, a_i \cdot s + e_i)$.
+
+Assume $e_i = 0$ for all $i$, so that we can discuss the algebraic structure directly. Clearly, all $a_i \cdot s$ are in the ideal spanned by $s$ in $P/I$. Furthermore, there is a direct correspondence between ideals $J$ in the quotient ring $P/I$ and $I \cup J$ in $P$. Hence, to recover the Gröbner basis for the ideal spanned by $a_1 \cdot s,\dots, a_m \cdot s$, we simply compute the Gröbner basis of $a_1 \cdot s,\dots,a_m \cdot s,x\^n+1$, easy right? Except that the Gröbner basis will be ... wait for it ... 1 with very high probability. This might reduce the search space slightly (since it tells us that $x\^n + 1$ and $s$ have no common factors over $\mathbb{F}_q[x]$) and is correct (since one is the smallest representative of the ideal spanned by $s$ in $P/I$) this is not terribly useful. But we did ignore $a_i$ so far.
+
+Namely, the problem actually is to compute $(a_i \cdot s)/ a_i$ or $a_i\^{-1} \cdot a_i \cdot s = s$. Now, in order to compute $a_i\^{-1}$ in $P = \mathbb{F}_q[x] / I$ - which is defined if $gcd(a_i,x\^n+1) = 1$ - we may run an extended GCD algorithm which returns $(g,v,w)$ for inputs $a,b$ such that $g = v \cdot a + w \cdot a$. Hence, for our inputs it will compute $1= v\cdot a_i + w \cdot (x\^n + 1)$ and thus $v \equiv a_i\^{-1} \mod x\^n + 1$.
+
+In the language of Gröbner bases the extended GCD equivalent is often called "lifting": Given an ideal $I = (f_1,...,f_r)$ and some $g \in I$, find $s_1,\dots,s_r$ such that $g = s_1 f_1 + \dots + s_r f_r$.  The problem is easy given a Gröbner basis $g_1,\dots,g_r$ (in our case $x\^n + 1$), since every element $h \in \langle g_1,\dots,g_r\rangle$ can be written as $h = \sum h_i \cdot g_i$ where $\textrm{LM}(h_ig_i) \leq \textrm{LM}(h)$.  In general, it might be hard because the /a priori/ bound on the degree of the output may be large. In any case, instead of solving a(n approximate) GCD (or GB(N)), we are now solving an extended GCD (or lifting with GB(N)), i.e., we keep track of our computation. Well, here's an example in Sage:
+
+#+BEGIN_SRC python
+sage: n = 2\^3
+sage: q = 17
+sage: R. = GF(q)[]
+sage: Q. = R.quotient(Xbar\^n + 1)
+sage: s = Q.random_element()
+sage: s
+8*X\^7 + 4*X\^6 + 11*X\^5 + 6*X\^4 + 15*X\^3 + 12*X\^2 + 14*X + 12
+sage: a = Q.random_element()
+sage: P. = PolynomialRing(GF(q),1)
+sage: A = sage_eval(str(a),{'X':x})
+sage: S = sage_eval(str(s),{'X':x})
+sage: Ainv = P(1).lift( (A,x\^n + 1) )[0]
+sage: Ainv*(A*S) % (x\^n + 1)
+8*x\^7 + 4*x\^6 - 6*x\^5 + 6*x\^4 - 2*x\^3 - 5*x\^2 - 3*x - 5
+#+END_SRC
+
+Alternatively, we may "lift" $a_i \cdot s$ with respect to $(a_i,X\^n+1)$ directly. Well, I don't know if any of the above is actually useful, as I said that's how far I got after reading Martijn's blog post.
+
+
+

@@ -1,0 +1,17 @@
+#+POSTID: 858
+#+DATE: [2012-11-11 Sun 16:22]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography
+#+TAGS: algorithm, bkw, cryptanalysis, cryptography, lwe
+#+TITLE: On the Complexity of the BKW Algorithm on LWE
+
+We (with [[http://www.isg.rhul.ac.uk/~ccid/][Carlos Cid]], [[http://www-calfor.lip6.fr/~jcf/][Jean-Charles Faugère]], [[http://rfcrypto.com/][Robert Fitzpatrick]] and [[http://www-polsys.lip6.fr/~perret/][Ludovic Perret]]) have finally managed to put our work on BKW [[http://eprint.iacr.org/2012/636][on ePrint]].
+
+#+BEGIN_QUOTE
+*Abstract:* In this paper we present a study of the complexity of the Blum-Kalai-Wasserman (BKW) algorithm when applied to the Learning with Errors (LWE) problem, by providing refined estimates for the data and computational effort requirements for solving /concrete/ instances of the LWE problem. We apply this refined analysis to suggested parameters for various LWE-based cryptographic schemes from the literature and, as a result,  provide new upper bounds for the concrete hardness of these LWE-based schemes.
+#+END_QUOTE
+
+The source code of our (not very efficient!) implementation of BKW is available on [[https://bitbucket.org/malb/bkw-lwe][bitbucket]].
+
+
+

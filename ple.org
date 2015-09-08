@@ -1,0 +1,11 @@
+#+POSTID: 676
+#+DATE: [2011-11-23 Wed 14:31]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: 
+#+TAGS: 
+#+TITLE: Efficient dense Gaussian elimination over the field with two elements
+
+In this work we describe an efficient implementation of a hierarchy of algorithms for Gaussian elimination upon dense matrices over the field with two elements (GF(2)). We discuss both well-known and new algorithms as well as our implementations in the M4RI library, which has been adopted into SAGE. The focus of our discussion is a block iterative algorithm for PLE decomposition which is inspired by the M4RI algorithm. The implementation presented in this work provides considerable performance gains in practice when compared to the previously fastest implementation. We provide performance figures on x86_64 CPUs to demonstrate the alacrity of our approach.
+
+
+

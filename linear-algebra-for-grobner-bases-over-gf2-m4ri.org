@@ -1,0 +1,102 @@
+#+POSTID: 827
+#+DATE: [2012-06-24 Sun 14:40]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri, sage
+#+TAGS: commutative algebra, f4, gröbner basis, lela, linear algebra, m4ri, matrix decomposition, sage
+#+TITLE: Linear Algebra for Gröbner Bases over GF(2): M4RI
+
+Two days ago I wrote about LELA's implementation of Gaussian elimination for Gröbner basis computations over $\mathbb{F}_2$. Yesterday, I [[https://bitbucket.org/malb/m4ri-groebner][implemented]] LELA's algorithm (which is from Faugere & Lachartre [[https://dl.acm.org/citation.cfm?doid=1837210.1837225][paper]]) in M4RI.
+
+The key technical difficulty of making this work efficiently is to handle "gaps". Consider the following input matrix /M/.
+
+#+BEGIN_EXAMPLE
+|---------+-------|
+| 1xxxxxx | xxxxx |
+|  1xxxxx | xxxxx |
+|    1xxx | xxxxx |
+|     1xx | xxxxx |
+|      1x | xxxxx |
+|       1 | xxxxx |
+|---------+-------| r0
+| xxxxxxx | xxxxx |
+| xxxxxxx | xxxxx |
+|---------+-------|
+#+END_EXAMPLE
+
+where /r0/ is the number of trivial pivots in /M/. In my previous, naive, attempt to implement this algorithm I stopped after row/column 2 (I start counting at zero). However, this means that we can only use a small subset of the trivial pivots, i.e., those before the first non-pivot column. A better strategy is to re-arrange the columns of /M/ such that column 3 is moved to the right of all trivial pivots. Note, that we may re-order columns in such a way even if we are interested in the column rank profile - which we are during a Gröbner basis computation - because we are only moving columns right of trivial pivots which does not affect the column rank profile. However, this re-arrangement has a considerable cost attached to because moving columns is prohibitively expensive in our matrix representation.
+
+To solve this problem in my current implementation I introduce dummy pivots. To continue the above example, I construct
+
+#+BEGIN_EXAMPLE
+<-   A  -><-     B   ->
+g
+|---------+---+-------|
+| 1x xxxx | x | xxxxx |
+|  1 xxxx | x | xxxxx |
+|   1     |   |       |
+|    1xxx |   | xxxxx |
+|     1xx |   | xxxxx |
+|      1x |   | xxxxx |
+|       1 |   | xxxxx |
+|---------+-----------| l
+| xx xxxx | x | xxxxx |
+| xx xxxx | x | xxxxx |
+|---------+---+-------|
+<-   C  -><-     D   ->
+#+END_EXAMPLE
+
+where /l/ is the sum of trivial pivots and gaps /g/ needed to make the upper-left submatrix /A/ upper triangular. I also reserve space for /g/ gap columns at the beginning of /B/ to store the extracted gap columns. I store /A/ in-place but allocate new memory for /B/, /C/ and /D/. The matrices /B/ and /D/ are newly allocated to make room for the gap columns, /C/ is newly allocated because the non-pivot rows of /M/ are used to store dummy pivots. The idea behind this strategy is that /B/, /C/, /D/ should be small compared to /A/.
+
+Now, everything is in the right shape to apply our generic algorithms to the problem, i.e., we compute
+
+1. /B = A^{-1} · B/,
+2. /D = D + C · B/ and
+3. /D = EchelonForm(D)/
+
+using the standard M4RI machinery /... well, almost./ The step /B = A^{-1}·B/ usually involves a very sparse /A/ so it is often beneficial to do a naive TRSM instead of reducing it to asymptotically fast matrix multiplication. Hence, depending on the density of /A/, I use a specialised sparse or the generic dense strategy.
+
+Overall, the performance isn't bad. Below, the same table as yesterday, i.e., row echelon form computations for various [[https://martinralbrecht.wordpress.com/2011/10/19/challenge-matrices/][benchmark matrices]]. Note that I do /not/ compute reduced row echelon forms. The column GB_{new} contains my new implementation.
+
+| *problem*     |    *m* |    *n* | *density* | *PLE* | *M4RI* |  *GB* | *LELA* | *GB_{new}* |
+|---------------+--------+--------+-----------+-------+--------+-------+--------+------------|
+| HFE 25        |  12307 |  13508 |     0.076 |   1.0 |  *0.5* |   0.8 | 0.5    |  0.8       |
+| HFE 30        |  19907 |  29323 |     0.067 |   4.7 |  *2.7* |   4.7 | 3.4    |  5.9       |
+| HFE 35        |  29969 |  55800 |     0.059 |  19.3 |  *9.2* |  19.5 | 13.9   |  26.7      |
+| Mutant        |  26075 |  26407 |     0.184 |   5.7 |    3.9 | *2.1* | 12.0   |  2.2       |
+| n=24, m=26    |  37587 |  38483 |     0.038 |  20.6 |   21.0 |  19.3 | *7.7*  |  15.4      |
+| n=24, m=26    |  37576 |  32288 |     0.040 |  18.6 |   28.4 |  17.0 | 4.1    |  *3.7*     |
+| SR(2,2,2,4) c |   5640 |  14297 |     0.003 |   0.4 |    0.2 | *0.1* | 0.4    |  0.6       |
+| SR(2,2,2,4) c |  13665 |  17394 |     0.013 |   2.1 |    3.0 |   2.0 | *1.8*  |  1.9       |
+| SR(2,2,2,4) c |  11606 |  16282 |     0.035 |   1.9 |    4.4 |   1.5 | *0.8*  |  0.9       |
+| SR(2,2,2,4)   |  13067 |  17511 |     0.008 |   1.9 |    2.0 |   1.3 | *1.4*  |  1.6       |
+| SR(2,2,2,4)   |  12058 |  16662 |     0.015 |   1.5 |    1.9 |   1.6 | *1.0*  |  *1.0*     |
+| SR(2,2,2,4)   | 115834 | 118589 |     0.003 | 528.2 |  578.5 | 522.9 | *48.4* |  58.0      |
+
+The table shows quite clearly that it is often beneficial run the specialised algorithm instead of M4RI's general algorithms. In particular, when the overall running time is non-trivial as in the last row or in the two rows labelled "n=24, m=26" the advantage over both M4RI and PLE is quite clear. However, for the HFE examples, this strategy performs remarkably bad, neither LELA nor my GB implementations can beat M4RI. The row "Mutant" shows the benefit of deciding which TRSM to use depending on the density of the matrix /A/. LELA was timed with a sparse representation for /A/ while I use a TRSM based on matrix multiplication here. Finally, for almost all remaining examples LELA beats my implementation. I suspect this is really down to sparse vs. dense data structures, but I'll have to investigate this more closely. Still, both LELA and my implementation provide a speed-up of about factor 10 for the largest computation. Since this is the most interesting case, here is how the time of 58 seconds breaks down
+
+#+BEGIN_EXAMPLE shell
+$./groebner -v 1 -e groebner Examples/sr_2_2_2_4_matrix_009.png
+GB:: pivots: 104791, gaps: 10921, total: 115712
+GB:: step 0: ellapsed wall time: 0.14761 (analysis)
+GB:: step 1: ellapsed wall time: 7.89941 (splicing)
+GB:: step 2: ellapsed wall time: 27.51932 (TRSM)
+GB:: step 3: ellapsed wall time: 17.38485 (Schurr)
+GB:: step 4: ellapsed wall time: 1.08136 (PLE)
+GB:: step 5: ellapsed wall time: 2.98244 (splicing)
+GB:: step 6: ellapsed wall time: 0.68587 (sorting)
+GB:: rank: 113480, in echelon form: 1
+
+Total wall time: 58.00567, in (reduced) echelon form: 1
+#+END_EXAMPLE
+
+-  Step 0 analysed the matrix and found 104791 trivial pivots; 10921 gap rows must be added.
+-  Step 1 splits the matrix into /A/,/B/,/C/ and /D/. Evidently, this is quite expensive and is a good target for improvements (see PS below).
+-  Step 2 runs the sparse TRSM. It is possible that this could be improved, it is quite naive at the moment.
+-  Step 3 updates /D/, as this is just a dense multiplication I doubt this will be much faster soon.
+-  Step 4 performs asymptotically fast Gaussian elimination, I doubt we will see huge speed-ups here.
+-  Step 5 combines /A/,/B/,/C/ and /D/ again.
+-  Step 6 sorts the row of the whole matrix to produce the echelon form. Perhaps by combining 5 and 6 there is something we can gain.
+
+Well, the code is on [[https://bitbucket.org/malb/m4ri-groebner][bitbucket]], enjoy.
+
+*PS:* An alternative approach, which I haven't explored yet is to skip the introduction of dummy rows and to pass information to the TRSM algorithm which columns to consider. This would save space - we could store $C$ in-place and perhaps a few memory moves.

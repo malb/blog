@@ -1,0 +1,17 @@
+#+POSTID: 964
+#+DATE: [2014-01-10 Fri 10:45]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography
+#+TAGS: cryptography, gnupg, openpgp, pgp, pyme, python, sqlalchemy
+#+TITLE: BatzenCA - OpenPGP Key Management for Mailing Lists
+
+Lately, I have been writing a little Python library which is aimed at managing [[https://en.wikipedia.org/wiki/Pretty_Good_Privacy][OpenPGP]] encrypted mailing lists easier. In particular, it addresses the following scenario. A group of users setup a normal mailing list - say a Google group. To realise encryption all users encrypt to all users, say, by relying on Thunderbird's/Enigmail's "Per-Recipient Rules". This is annoying, but doable for groups sufficiently small. However, doing all the mutual key authentications for all users would be a lot more annoying. Our users could rely on the [[https://en.wikipedia.org/wiki/Pretty_Good_Privacy][web of trust]], but many people who use encryption seem to be reluctant to publish a social graph [[http://pgp.mit.edu/][on the Internet]], so they'd rely on exchanging this information somewhat privately, e.g. on the list itself.
+
+Hence, to make matters simpler, our mailing list might nominate a certification authority - one user they all trust who takes care of key verification and publishes signatures to those keys she verified. In the scenario I am concerned with this happens by irregular e-mails to the mailing list itself. [[https://bitbucket.org/malb/batzenca/][BatzenCA]] is a set of Python tools to make the CA's job easier. In particular, it helps to organise such irregular e-mails which inform users about added/removed keys - called "releases" in the package. It relies on [[http://www.sqlalchemy.org/][SQLAlchemy]] and a patched version of [[http://pyme.sourceforge.net/][PyME]]. I've been using it for a little while now and it seems to do what I want it to do. I wonder if anybody else has similar requirements where this set of tools could be useful?
+
+*Warning:* While I know a little bit about cryptography and have quite a bit experience writing Python code, I am not an expert on security engineering and most software I write is rather mathematical, i.e. not aimed at practical security.
+
+http://www.youtube.com/watch?v=bvf5E-X3yGw
+
+
+

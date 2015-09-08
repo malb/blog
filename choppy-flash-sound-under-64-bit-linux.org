@@ -1,0 +1,38 @@
+#+POSTID: 471
+#+DATE: [2011-05-22 Sun 12:40]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: linux
+#+TAGS: debian, flash, glibc, linux
+#+TITLE: Choppy Flash Sound under 64-bit Linux
+
+This took me some time to figure out and the culprit is quite unusual, hence I decided to reproduce the [[https://bugzilla.redhat.com/show_bug.cgi?id=638477#c31][solution]] here. If you get choppy sound and a weird beat of beeps when you play (low sound quality) flash videos under 64-bit Linux, then it is because of a change in memcpy provided by glibc. Linux Torwalds suggested the following fix which works for me:
+
+#+BEGIN_SRC sh
+prompt$ cat > mymemcpy.c
+    #include 
+
+    void *memcpy(void *dst, const void *src, size_t size)
+    {
+ void *orig = dst;
+ asm volatile("rep ; movsq"
+  :"=D" (dst), "=S" (src)
+  :"0" (dst), "1" (src), "c" (size >> 3)
+  :"memory");
+ asm volatile("rep ; movsb"
+  :"=D" (dst), "=S" (src)
+  :"0" (dst), "1" (src), "c" (size & 7)
+  :"memory");
+  return orig;
+  }
+  ^D
+prompt$ gcc -O2 -c mymemcpy.c
+prompt$ ld -G mymemcpy.o -o mymemcpy.so
+prompt$ LD_PRELOAD=$(pwd)/mymemcpy.so /opt/google/chrome/google-chrome &
+#+END_SRC
+
+The full [[https://bugzilla.redhat.com/show_bug.cgi?id=638477][thread]] is worth a read.
+
+*Update:* [[http://martinralbrecht.wordpress.com/2011/05/22/choppy-flash-sound-under-64-bit-linux/#comment-131][This]] is better.
+
+
+

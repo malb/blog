@@ -1,0 +1,13 @@
+#+POSTID: 616
+#+DATE: [2011-10-17 Mon 18:00]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri, sage
+#+TAGS: linear algebra, m4rie, paper
+#+TITLE: M4RIE Paper
+
+I've [[https://bitbucket.org/malb/m4rie-paper][been writing up]] the ideas that went into the M4RIE library for dense linear algebra over small extensions of $\mathbb{F}_2$. I think it is now in a state to be readable enough to up a PDF of  the current draft online. Hence, [[http://martinralbrecht.files.wordpress.com/2011/10/m4rie-paper.pdf][here]] it is. While the paper does explain what we mean by "Travolta tables" it doesn't explain why we call them that way ... but the image below does:
+
+[[http://martinralbrecht.files.wordpress.com/2011/10/grease.jpg][[[http://martinralbrecht.files.wordpress.com/2011/10/grease.jpg?w=219]]]]
+
+
+

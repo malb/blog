@@ -1,0 +1,19 @@
+#+POSTID: 273
+#+DATE: [2010-12-07 Tue 15:28]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: sage
+#+TAGS: commutative algebra, f4, gröbner basis, linear algebra, sage
+#+TITLE: An MSc thesis on implementing F4
+
+Daniel Cabarcas' [[http://www.google.com/url?sa=t&source=web&cd=3&ved=0CBsQFjAC&url=http%3A%2F%2Fetd.ohiolink.edu%2Fsend-pdf.cgi%2FCabarcas%2520Daniel.pdf%3Fucin1277120935&ei=BlH-TM6WJYO38gO1-J2NCw&usg=AFQjCNHY_8IujAEIAcCfyZHZbj5ylF7QJQ][Msc thesis]] has the title /An Implementation of Faugère's F4 Algorithm for Computing Gröbner Bases/ and the following abstract:
+
+#+BEGIN_QUOTE
+"Gröbner bases are an important tool for analyzing systems of polynomial equations. They allow the system of equations to be solved exactly and therefore have gained popularity in many areas of science and technology. However, finding Gröbner bases is  computationally intensive task, thus, several algorithms have been developed for this goal. Faugère invented an elaborate algorithm to compute Gröbner bases in 1999 called F4 , which has become a benchmark due to its efficiency. We have implemented F4 from scratch in C++. In this thesis we revisit the theoretical foundation of the algorithm, provide details of our implementation, and compare it with other software that computes Gröbner bases."
+#+END_QUOTE
+
+I probably know about 10 people who tried to implement the algorithm in such a way that it's performance is reasonable, most didn't succeed. It's nice to see that somebody has succeeded to some extend (see Experimental Results p.46ff) and wrote about it.
+
+*PS:* Daniel [[http://www.mail-archive.com/sage-devel@googlegroups.com/msg22742.html][posted]] about F4 on [sage-devel] before which sparked a short discussion about F4.
+
+
+

@@ -1,0 +1,15 @@
+#+POSTID: 229
+#+DATE: [2010-10-11 Mon 13:16]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: 
+#+TAGS: 
+#+TITLE: Algorithmic Algebraic Techniques and their Application to Block Cipher Cryptanalysis
+
+In Part I we present and discuss implementations of both well-known and novel algorithms for fundamental problems of linear algebra over the field with two elements. In particular, we present the best known implementations for matrix-matrix multiplication and matrix decomposition for dense matrices over F2. These implementations are based on novel variants of the "M4RM" multiplication algorithm and the M4RI elimination algorithm.
+
+In Part 2 we discuss Gröbner basis algorithms. No algorithm discussed in this part is new. However, we are not aware of any other treatment of either the matrix-F5 or the F4-style F5 in the English speaking literature which covers these algorithms in such detail. Furthermore, we provide reference implementations for all algorithms discussed in this part. 
+
+In Part 3 we apply algebraic techniques to the cryptanalysis of block ciphers. The key contributions of this part are novel ways of utilising algebraic techniques in cryptanalysis. In particular, we combine algebraic techniques with linear, differential and higher-order differential cryptanalysis. These hybrid approaches allow us to push the respective cryptanalytical technique further in most cases. We also explicitly shift the focus from solving polynomial systems of equations to computing features about block ciphers which can then be used in other attacks. Finally, we propose a new family of problems which model polynomial system solving with noise. We also propose an algorithm for solving these problems, based on Integer Programming, and apply this algorithm to the so-called "Cold Boot" problem.
+
+
+

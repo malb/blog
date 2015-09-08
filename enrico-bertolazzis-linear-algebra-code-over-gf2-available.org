@@ -1,0 +1,20 @@
+#+POSTID: 940
+#+DATE: [2013-08-17 Sat 12:22]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri, sage
+#+TAGS: GF2toolkit, linear algebra, m4ri, matrix decomposition, paper, ple
+#+TITLE: Enrico Bertolazzi's linear algebra code over GF(2) available
+
+[[http://www.ing.unitn.it/~bertolaz/][Enrico]] made the [[https://www.researchgate.net/publication/233927317_GF2toolkit_software_used_in_the_manuscript_Fast_matrix_decomposition_in_F2?ev=prf_pub][code]] (if the link doesn't work search for his name on Research Gate) for his LU factorisation code over GF(2) available online under the GPL. This is an implement of the algorithm described by Anna and him in [[http://arxiv.org/abs/1209.5198][Fast matrix decomposition in F2]] and for which they give timings in that paper (discussed a bit [[http://martinralbrecht.wordpress.com/2012/12/21/m4ri-20121224/][here]]). I had to fix some includes to make it compile on my box, but nothing major. I can also confirm the impressive performance of their software (I ran =testRankComputation=).
+
+*PS:* I managed to catch up in terms of performance up to dimension 4096 x 4096 with M4RI. However, 8192 x 8192 is still slower - at least on my machine - than Enrico's code. I would suspect that this is down to us not using the cache as effectively as Enrico, possibly because of the different matrix representation (row major) .
+
+|     n | M4RI      | PLE Base  | PLE       | Enrico   |
+|   128 | 0.019 ms  | 0.070 ms  | 0.067 ms  | 0.137ms  |
+|   256 | 0.146 ms  | 0.185 ms  | 0.200 ms  | 0.287ms  |
+|   512 | 0.388 ms  | 0.571 ms  | 0.580 ms  | 0.558ms  |
+|  1024 | 1.143 ms  | 2.176 ms  | 2.198 ms  | 1.470ms  |
+|  2048 | 4.787 ms  | 6.205 ms  | 7.073 ms  | 5.277ms  |
+|  4096 | 0.02619 s | 0.02848 s | 0.03076 s | 0.0288 s |
+|  8192 | 0.26933 s | 0.25350 s | 0.24995 s | 0.1915 s |
+| 16384 | 2.04408 s | 3.17302 s | 1.80076 s | 1.3815 s |

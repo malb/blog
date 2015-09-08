@@ -1,0 +1,172 @@
+#+POSTID: 793
+#+DATE: [2012-06-15 Fri 21:19]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography, sage
+#+TAGS: algebraic attacks, algebraic cryptanalysis, cryptanalysis, cryptography, cryptominisat, glucose, posso, rsat, sage, sat
+#+TITLE: SAT Solvers for Sage
+
+One of the most efficient techniques for solving polynomial systems over $\mathbb{F}_2$ is to convert the problem to a satisfiability problem and to use a standard SAT solver. In the past, I have used CryptoMiniSat and either my own ANF to CNF converter [[https://bitbucket.org/malb/algebraic_attacks/src/5d8dafeef675/anf2cnf.py][scripts]] based on Gregory Bard's ideas or PolyBoRi's [[https://bitbucket.org/malb/algebraic_attacks/src/5d8dafeef675/polybori-cnf-converter.py][script]].
+
+However, this setup leaves much to be desired:
+
+1. It's all based on string parsing which has some overhead.
+2. Usually the instances produced using PolyBoRi's conversion method are faster to solve. However, as the number of variables per equation increase this method becomes essentially exponentially more expensive. Hence, a compromise between the two techniques is needed.
+3. We don't have access to learnt clauses and conflict clauses.
+4. It all feels a bit duct taped and fragile, partly because the code is not shipped with Sage.
+
+At [[http://trac.sagemath.org/418][#418]] I just finished a much nicer interface to various SAT solvers. Here are some features.
+
+*** a proper C++ interface to CryptoMiniSat
+
+The interface supports XOR clauses, an interface to various config options, conflict clause and learnt clause extraction. Here is an example run:
+
+#+BEGIN_SRC python
+sage: from sage.sat.solvers import CryptoMiniSat
+sage: cms = CryptoMiniSat(verbosity=3)
+sage: cms.add_clause( (1,2,-3) )
+sage: cms()
+c N st 0 0 3 1 0 0 0 3 0 no data no data --
+c Consolidated memory. Time: 0
+c Flit: 0 Blit: 0 bXBeca: 0 bXProp: 0 Bins: 0 BRemL: 0 BRemN: 0 P: 0.0M T: 0.00
+c Finding binary XORs T: 0.00 s found: 0
+c Finding non-binary XORs: 0.00 s (found: 0, avg size: -nan)
+c watched sorting time: 0.00
+c calculated reachability. Time: 0.00
+c Calc default polars - time: 0.00 s pos: 2 undec: 0 neg: 1
+c ===============================================================
+c types(t): F = full restart, N = normal restart
+c types(t): S = simplification begin/end, E = solution found
+c restart types(rt): st = static, dy = dynamic
+c t rt Rest Confl Vars NormCls XorCls BinCls Learnts ClLits LtLits LGlueHist SGlueHist
+c B st 0 0 3 1 0 0 0 3 0 no data no data --
+c E st 1 0 0 1 0 0 0 3 0 no data no data --
+c Verified 1 clauses.
+c Verified 1 clauses.
+(None, True, True, False)
+#+END_SRC
+
+Note that the first entry of the returned tuple is always None, because our SAT solver interface is one-based, i.e., the first variable is at index 1.
+
+*** a generic interface for various SAT solvers based on the DIMACS file format
+
+... and instantiations of this for [[http://www.lri.fr/~simon/?page=glucose][Glucose]] and [[http://reasoning.cs.ucla.edu/rsat/][RSat]]. Here is the code for the Glucose solver, to highlight how little thereof is needed to add new solvers.
+
+#+BEGIN_SRC python
+class Glucose(DIMACS):
+ command = "glucose_static -verb=2 {input} {output}"
+
+ def __call__(self, **kwds):
+ DIMACS.__call__(self)
+
+ for line in self._output:
+ if line.startswith("c"):
+ continue
+ if line.startswith("s"):
+ if "UNSAT" in line:
+ return False
+ try:
+ s = map(int, line[:-2].strip().split(" "))
+ s = (None,) + tuple(e>0 for e in s)
+ return s
+ except ValueError:
+ pass
+ return False
+#+END_SRC
+
+Of course, these solvers have the same interface as the CryptoMiniSat solver and hence one should be able to switch between these freely in highlevel code.
+
+
+*** a converter for Boolean Polynomials
+
+
+The converter combines PolyBoRi's ideas with Gregory's. It's not perfect, but a lot cleaner than what I used before. For polynomials with very few variables PolyBoRi's conversion is used, for the rest we convert monomials first and then use XOR clauses (if available) to convert the linearised polynomials.
+
+To give an example, below, various conversion strategies are compared for a small-scale AES instance.
+
+#+BEGIN_SRC python
+sage: F,s = mq.SR(1,2,4,4,gf2=True,polybori=True).polynomial_system()
+sage: from sage.sat.solvers import CryptoMiniSat
+sage: solver = CryptoMiniSat()
+
+sage: from sage.sat.converters.polybori import CNFEncoder
+sage: conv = CNFEncoder(solver, F.ring()) # the default strategy mixes
+sage: %time _ = conv(F)
+CPU times: user 0.10 s, sys: 0.00 s, total: 0.10 s
+Wall time: 0.10 s
+sage: %time _ = solver()
+CPU times: user 0.60 s, sys: 0.00 s, total: 0.60 s
+Wall time: 0.61 s
+
+sage: solver = CryptoMiniSat()
+sage: conv = CNFEncoder(solver, F.ring(), max_vars_sparse=0) # we can use only Greg's strategy by setting the cut-off to zero
+sage: %time _ = conv(F)
+CPU times: user 0.03 s, sys: 0.00 s, total: 0.03 s
+Wall time: 0.03 s
+sage: %time _ = solver()
+CPU times: user 0.14 s, sys: 0.00 s, total: 0.14 s
+Wall time: 0.14 s
+
+sage: solver = CryptoMiniSat()
+sage: conv = CNFEncoder(solver, F.ring(), max_vars_sparse=infinity) # or PolyBoRi all the way
+sage: %time _ = conv(F)
+CPU times: user 0.68 s, sys: 0.00 s, total: 0.68 s
+Wall time: 0.68 s
+sage: %time _ = solver()
+CPU times: user 0.04 s, sys: 0.00 s, total: 0.04 s
+Wall time: 0.04 s
+#+END_SRC
+
+Clearly, some tuning seems in order. Oh, I should also mention that the code is reasonably modular, so one can plug one's own converter easily in higher level functions.
+
+*** Highlevel functions for Boolean polynomial systems
+
+Firstly, there is a high-level solve command for Boolean polynomial systems. Continuing the above example:
+
+#+BEGIN_SRC python
+sage: from sage.sat.boolean_polynomials import solve as solve_sat
+sage: solve_sat(F)
+[{w121: 0, k100: 0, w161: 0, k062: 0, w141: 1, k021: 0, x120: 1, k141: 1, k041: 1, s001: 0, w101: 0, x160: 1, k101: 0, k001: 1, w122: 1, w102: 1, w162: 0, k061: 1, w142: 1, x100: 1, k022: 0, x113: 0, k160: 0, x133: 1, k042: 0, s002: 1, x153: 1, k140: 1, x173: 0, k002: 0, k120: 1, w123: 0, w103: 0, w163: 0, k150: 1, w143: 0, k173: 1, x112: 0, k023: 0, k153: 0, k043: 1, x132: 0, x152: 0, s003: 1, k133: 0, k003: 1, x172: 1, k113: 0, w130: 0, w110: 1, x110: 0, w170: 1, k063: 0, w150: 1, k172: 0, k161: 0, k030: 1, k152: 0, k050: 1, x131: 0, x151: 1, s010: 1, k132: 1, x130: 0, k010: 1, x171: 0, k112: 1, w131: 0, x140: 0, w111: 1, w171: 0, w151: 0, k072: 0, k031: 0, k171: 1, k151: 0, k051: 1, k121: 0, s011: 0, k131: 1, x170: 0, k011: 1, w132: 0, x150: 0, w112: 0, w100: 0, w172: 0, w152: 1, k071: 1, x111: 1, k032: 0, x103: 1, k170: 1, x123: 1, k052: 1, k111: 1, k130: 0, s012: 1, x143: 1, k110: 1, x163: 1, k012: 0, w133: 1, w113: 1, w173: 1, w153: 1, x102: 0, k033: 0, k163: 1, k053: 0, x122: 0, k143: 1, k123: 0, x142: 1, s013: 0, k103: 0, k013: 1, x162: 1, w140: 0, w120: 0, s000: 1, w160: 1, k073: 1, x101: 0, k040: 0, k070: 0, k162: 1, k060: 1, x121: 0, k142: 1, k122: 1, x141: 1, k000: 1, k102: 1, k020: 1, x161: 1}]
+#+END_SRC
+
+We can pass parameters to the solver and the converter by prefixing them with "s_" and "c_" respectively:
+
+#+BEGIN_SRC python
+sage: solve_sat(F, c_max_vars_sparse=0)
+[{w121: 0, k100: 0, w161: 0, k062: 0, w141: 1, k021: 0, x120: 1, k141: 1, k041: 1, s001: 0, w101: 0, x160: 1, k101: 0, k001: 1, w122: 1, w102: 1, w162: 0, k061: 1, w142: 1, x100: 1, k022: 0, x113: 0, k160: 0, x133: 1, k042: 0, s002: 1, x153: 1, k140: 1, x173: 0, k002: 0, k120: 1, w123: 0, w103: 0, w163: 0, k150: 1, w143: 0, k173: 1, x112: 0, k023: 0, k153: 0, k043: 1, x132: 0, x152: 0, s003: 1, k133: 0, k003: 1, x172: 1, k113: 0, w130: 0, w110: 1, x110: 0, w170: 1, k063: 0, w150: 1, k172: 0, k161: 0, k030: 1, k152: 0, k050: 1, x131: 0, x151: 1, s010: 1, k132: 1, x130: 0, k010: 1, x171: 0, k112: 1, w131: 0, x140: 0, w111: 1, w171: 0, w151: 0, k072: 0, k031: 0, k171: 1, k151: 0, k051: 1, k121: 0, s011: 0, k131: 1, x170: 0, k011: 1, w132: 0, x150: 0, w112: 0, w100: 0, w172: 0, w152: 1, k071: 1, x111: 1, k032: 0, x103: 1, k170: 1, x123: 1, k052: 1, k111: 1, k130: 0, s012: 1, x143: 1, k110: 1, x163: 1, k012: 0, w133: 1, w113: 1, w173: 1, w153: 1, x102: 0, k033: 0, k163: 1, k053: 0, x122: 0, k143: 1, k123: 0, x142: 1, s013: 0, k103: 0, k013: 1, x162: 1, w140: 0, w120: 0, s000: 1, w160: 1, k073: 1, x101: 0, k040: 0, k070: 0, k162: 1, k060: 1, x121: 0, k142: 1, k122: 1, x141: 1, k000: 1, k102: 1, k020: 1, x161: 1}]
+#+END_SRC
+
+Let's see if there are more than one solutions:
+
+#+BEGIN_SRC python
+sage: solve_sat(F, c_max_vars_sparse=0, n=infinity)
+[{w121: 0, k100: 0, w161: 0, k062: 0, w141: 1, k021: 0, x120: 1, k141: 1, k041: 1, s001: 0, w101: 0, x160: 1, k101: 0, k001: 1, w122: 1, w102: 1, w162: 0, k061: 1, w142: 1, x100: 1, k022: 0, x113: 0, k160: 0, x133: 1, k042: 0, s002: 1, x153: 1, k140: 1, x173: 0, k002: 0, k120: 1, w123: 0, w103: 0, w163: 0, k150: 1, w143: 0, k173: 1, x112: 0, k023: 0, k153: 0, k043: 1, x132: 0, x152: 0, s003: 1, k133: 0, k003: 1, x172: 1, k113: 0, w130: 0, w110: 1, x110: 0, w170: 1, k063: 0, w150: 1, k172: 0, k161: 0, k030: 1, k152: 0, k050: 1, x131: 0, x151: 1, s010: 1, k132: 1, x130: 0, k010: 1, x171: 0, k112: 1, w131: 0, x140: 0, w111: 1, w171: 0, w151: 0, k072: 0, k031: 0, k171: 1, k151: 0, k051: 1, k121: 0, s011: 0, k131: 1, x170: 0, k011: 1, w132: 0, x150: 0, w112: 0, w100: 0, w172: 0, w152: 1, k071: 1, x111: 1, k032: 0, x103: 1, k170: 1, x123: 1, k052: 1, k111: 1, k130: 0, s012: 1, x143: 1, k110: 1, x163: 1, k012: 0, w133: 1, w113: 1, w173: 1, w153: 1, x102: 0, k033: 0, k163: 1, k053: 0, x122: 0, k143: 1, k123: 0, x142: 1, s013: 0, k103: 0, k013: 1, x162: 1, w140: 0, w120: 0, s000: 1, w160: 1, k073: 1, x101: 0, k040: 0, k070: 0, k162: 1, k060: 1, x121: 0, k142: 1, k122: 1, x141: 1, k000: 1, k102: 1, k020: 1, x161: 1}, {w121: 0, k100: 0, w161: 0, k062: 1, w141: 1, k021: 0, x120: 1, k141: 1, k041: 1, s001: 0, w101: 0, x160: 0, k101: 0, k001: 1, w122: 1, w102: 1, w162: 1, k061: 1, w142: 1, x100: 1, k022: 0, x113: 1, k160: 0, x133: 1, k042: 0, s002: 1, x153: 1, k140: 1, x173: 0, k002: 0, k120: 1, w123: 0, w103: 0, w163: 1, k150: 1, w143: 0, k173: 1, x112: 1, k023: 0, k153: 0, k043: 1, x132: 0, x152: 0, s003: 1, k133: 0, k003: 1, x172: 1, k113: 0, w130: 0, w110: 0, x110: 0, w170: 1, k063: 1, w150: 1, k172: 0, k161: 0, k030: 1, k152: 0, k050: 1, x131: 0, x151: 1, s010: 1, k132: 1, x130: 0, k010: 0, x171: 0, k112: 1, w131: 0, x140: 0, w111: 1, w171: 0, w151: 0, k072: 0, k031: 0, k171: 1, k151: 0, k051: 1, k121: 0, s011: 0, k131: 1, x170: 0, k011: 1, w132: 0, x150: 0, w112: 1, w100: 0, w172: 0, w152: 1, k071: 1, x111: 1, k032: 0, x103: 1, k170: 1, x123: 1, k052: 1, k111: 1, k130: 0, s012: 0, x143: 1, k110: 1, x163: 1, k012: 1, w133: 1, w113: 0, w173: 1, w153: 1, x102: 0, k033: 0, k163: 0, k053: 0, x122: 0, k143: 1, k123: 0, x142: 1, s013: 0, k103: 0, k013: 0, x162: 0, w140: 0, w120: 0, s000: 1, w160: 1, k073: 1, x101: 0, k040: 0, k070: 0, k162: 0, k060: 1, x121: 0, k142: 1, k122: 1, x141: 1, k000: 1, k102: 1, k020: 1, x161: 1}]
+#+END_SRC
+
+We can also swap the SAT solver:
+
+#+BEGIN_SRC python
+sage: solve_sat(F, solver=sage.sat.solvers.Glucose, n=infinity)
+[{w121: 0, k100: 0, w161: 0, k062: 1, w141: 1, k021: 0, x120: 1, k141: 1, k041: 1, s001: 0, w101: 0, x160: 0, k101: 0, k001: 1, w122: 1, w102: 1, w162: 1, k061: 1, w142: 1, x100: 1, k022: 0, x113: 1, k160: 0, x133: 1, k042: 0, s002: 1, x153: 1, k140: 1, x173: 0, k002: 0, k120: 1, w123: 0, w103: 0, w163: 1, k150: 1, w143: 0, k173: 1, x112: 1, k023: 0, k153: 0, k043: 1, x132: 0, x152: 0, s003: 1, k133: 0, k003: 1, x172: 1, k113: 0, w130: 0, w110: 0, x110: 0, w170: 1, k063: 1, w150: 1, k172: 0, k161: 0, k030: 1, k152: 0, k050: 1, x131: 0, x151: 1, s010: 1, k132: 1, x130: 0, k010: 0, x171: 0, k112: 1, w131: 0, x140: 0, w111: 1, w171: 0, w151: 0, k072: 0, k031: 0, k171: 1, k151: 0, k051: 1, k121: 0, s011: 0, k131: 1, x170: 0, k011: 1, w132: 0, x150: 0, w112: 1, w100: 0, w172: 0, w152: 1, k071: 1, x111: 1, k032: 0, x103: 1, k170: 1, x123: 1, k052: 1, k111: 1, k130: 0, s012: 0, x143: 1, k110: 1, x163: 1, k012: 1, w133: 1, w113: 0, w173: 1, w153: 1, x102: 0, k033: 0, k163: 0, k053: 0, x122: 0, k143: 1, k123: 0, x142: 1, s013: 0, k103: 0, k013: 0, x162: 0, w140: 0, w120: 0, s000: 1, w160: 1, k073: 1, x101: 0, k040: 0, k070: 0, k162: 0, k060: 1, x121: 0, k142: 1, k122: 1, x141: 1, k000: 1, k102: 1, k020: 1, x161: 1}, {w121: 0, k100: 0, w161: 0, k062: 0, w141: 1, k021: 0, x120: 1, k141: 1, k041: 1, s001: 0, w101: 0, x160: 1, k101: 0, k001: 1, w122: 1, w102: 1, w162: 0, k061: 1, w142: 1, x100: 1, k022: 0, x113: 0, k160: 0, x133: 1, k042: 0, s002: 1, x153: 1, k140: 1, x173: 0, k002: 0, k120: 1, w123: 0, w103: 0, w163: 0, k150: 1, w143: 0, k173: 1, x112: 0, k023: 0, k153: 0, k043: 1, x132: 0, x152: 0, s003: 1, k133: 0, k003: 1, x172: 1, k113: 0, w130: 0, w110: 1, x110: 0, w170: 1, k063: 0, w150: 1, k172: 0, k161: 0, k030: 1, k152: 0, k050: 1, x131: 0, x151: 1, s010: 1, k132: 1, x130: 0, k010: 1, x171: 0, k112: 1, w131: 0, x140: 0, w111: 1, w171: 0, w151: 0, k072: 0, k031: 0, k171: 1, k151: 0, k051: 1, k121: 0, s011: 0, k131: 1, x170: 0, k011: 1, w132: 0, x150: 0, w112: 0, w100: 0, w172: 0, w152: 1, k071: 1, x111: 1, k032: 0, x103: 1, k170: 1, x123: 1, k052: 1, k111: 1, k130: 0, s012: 1, x143: 1, k110: 1, x163: 1, k012: 0, w133: 1, w113: 1, w173: 1, w153: 1, x102: 0, k033: 0, k163: 1, k053: 0, x122: 0, k143: 1, k123: 0, x142: 1, s013: 0, k103: 0, k013: 1, x162: 1, w140: 0, w120: 0, s000: 1, w160: 1, k073: 1, x101: 0, k040: 0, k070: 0, k162: 1, k060: 1, x121: 0, k142: 1, k122: 1, x141: 1, k000: 1, k102: 1, k020: 1, x161: 1}]
+#+END_SRC
+
+A second function allows to learn new polynomials using a SAT solver (only CryptoMiniSat for now). To vary the example, let's do a higher order differential attack on seven rounds of PRESENT. Currently, we cannot solve this system within our patience span. However, we can learn some information about the equation system by interrupting the SAT solver after a while, similar to bounding the degree during a Gröbner basis computation.
+
+#+BEGIN_SRC python
+sage: attach present.py
+sage: F,s = present_ia(PRESENT(80,7))
+sage: F2 = F.eliminate_linear_variables(maxlength=1); F2
+Polynomial Sequence with 30680 Polynomials in 7776 Variables
+sage: from sage.sat.boolean_polynomials import learn as learn_sat
+sage: H = learn_sat(F2, s_verbosity=3, s_maxrestarts=500, c_max_vars_sparse=4, c_cutting_number=6, max_length=5)
+sage: H.ideal().interreduced_basis()[-1]
+X00763 + X60763 + Y130760
+#+END_SRC
+
+The code [[http://trac.sagemath.org/418][needs review]] to get accepted into Sage and to spot bugs, perhaps improve the interface, documentation ...
+
+*Update:* fixed sourcecode to reflect interface changes.
+
+*Update2:* fixed sourcecode.
+
+
+

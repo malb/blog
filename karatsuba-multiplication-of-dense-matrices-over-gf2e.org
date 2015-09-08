@@ -1,0 +1,102 @@
+#+POSTID: 139
+#+DATE: [2010-08-15 Sun 18:24]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: Uncategorized, m4ri, sage
+#+TAGS: karatsuba, linear algebra, m4ri, m4rie
+#+TITLE: Karatsuba Multiplication of Dense Matrices over GF(2^e)
+
+Elements in $GF(2\^e)$ can be represented as $c_0 a\^0 + c_1 a\^1 + \dots + c_{e-1} a\^{e-1}$ where $a$ is a root of the primitive polynomial of $GF(2\^e)$ and $c_i$ are elements in $GF(2)$. Thus, we can rewrite a matrix over $GF(2\^e)$ as a list of $e$ matrices over $GF(2)$ which contain the coefficients for each degree of $a$. To put it in another way: we can turn the matrix with polynomial entries into a polynomial with matrix coefficients. In [[http://arxiv.org/abs/0901.1413][Bitslicing and the Method of Four Russians Over Larger Finite Fields]] Tomas J. Boothby and Robert Bradshaw (both Sage developers from Seattle by the way) proposed to use this representation to perform matrix multiplication.
+
+As an example consider $GF(2\^2)$ with the primitive polynomial $x\^2 + x + 1$. Suppose we want to compute $C = AB$. The matrix $A$ can be represented as $A_0x + A_1$ and the matrix $B$ can be represented as $B_0x + B_1$. Their product is $C = A_0B_0x\^2 + (A_0B_1 + A_1B_0)x + A_1B_1.$
+
+Finally, reduction modulo $x\^2 + x + 1$ gives
+
+
+$(A_0B_0 + A_0B_1 + A_1B_0)x + A_1B_1 + A_0B_0$.
+
+
+This product thus costs 4 multiplications over $GF(2)$ and three additions over $GF(2)$.
+
+Optionally, this last expression can be rewritten as
+
+
+$((A_0 + A_1)(B_0 + B_1) + A_1B_1)x + A_1B_1 + A_0B_0$
+
+
+using the [[http://en.wikipedia.org/wiki/Karatsuba_algorithm][divide and conquer trick]] Karatsuba introduced in the 60s. Thus this multiplication costs 3 matrix multiplications over  $GF(2)$ and 4 matrix additions over $GF(2)$.
+
+To see why this strategy for matrix multiplication might be efficient, consider the following table which shows
+
+
+1. the CPU time for multiplying dense 4,000 x 4,000 matrices over $GF(2\^e)$,
+2. to how many matrix multiplications over $GF(2)$ this corresponds,
+3. how many GF(2) multiplications naive polynomial multiplication would need and
+4. how many Karatsuba needs.
+
+| *e* | *CPU time* | *GF(2) factor* | *naive* | *Karatsuba* |
+|   2 |      0.664 |          9.222 |       4 |           3 |
+|   3 |      1.084 |         16.937 |       9 |             |
+|   4 |      1.288 |         17.889 |      16 |           9 |
+|   5 |      3.456 |         50.824 |      25 |             |
+|   6 |      4.396 |         64.647 |      36 |             |
+|   7 |      6.080 |         84.444 |      49 |             |
+|   8 |     11.117 |        163.471 |      64 |          27 |
+|   9 |     37.842 |        556.473 |      81 |             |
+|  10 |     47.143 |        620.261 |     100 |             |
+
+All times were taken on my /Intel i7/ powering my Macbook Pro using the M4RI and M4RIE libraries for $GF(2)$ and $GF(2\^e)$ respectively.
+
+So much for the theoretical complexity. Yesterday, I implemented this multiplication routine in [[http://bitbucket.org/malb/m4rie][M4RIE]] for $GF(2\^2)$. The tables below give the CPU time for multiplication of dense $n \times n$ matrices over $GF(2\^2)$
+1. for the old M4RIE Travolta + Strassen code,
+2. the new Karatsuba based code and
+3. how long three matrix multiplications over $GF(2)$ take.
+
+The second column includes the time needed for converting back and forth between the M4RIE matrix layout and the bitsliced representation needed for Karatsuba. The first table is again for my Macbook Pro's Intel i7 clocked at 2.6Ghz:
+
+|   *n* | *Strassen + Travolta* | *Karatsuba* | *3 * GF(2) CPU time* |
+|  1000 |                 0.012 |       0.012 |                0.012 |
+|  2000 |                 0.068 |       0.052 |                0.024 |
+|  3000 |                 0.224 |       0.136 |                0.096 |
+|  4000 |                 0.648 |       0.280 |                0.336 |
+|  5000 |                 1.144 |       0.520 |                0.432 |
+|  6000 |                 1.952 |       0.984 |                1.008 |
+|  7000 |                 3.272 |       1.444 |                1.632 |
+|  8000 |                 4.976 |       2.076 |                2.484 |
+|  9000 |                 6.444 |       2.784 |                2.628 |
+| 10000 |                 8.761 |       3.668 |                3.528 |
+
+The second table is for an old AMD Opteron 885 clocked at 2.6Ghz :
+
+|   *n* | *Strassen + Travolta* | *Karatsuba* | *3 * GF(2) CPU time* |  
+|  1000 |                 0.100 |       0.036 |                0.024 |  
+|  2000 |                 0.724 |       0.108 |                0.084 |  
+|  3000 |                 2.076 |       0.336 |                0.264 |  
+|  4000 |                 4.996 |       0.736 |                0.636 |  
+|  5000 |                 9.509 |       1.360 |                1.116 |  
+|  6000 |                14.989 |       2.416 |                2.340 |  
+|  7000 |                22.985 |       3.276 |                3.204 |  
+|  8000 |                35.302 |       4.788 |                4.692 |  
+|  9000 |                47.695 |       6.304 |                5.892 |  
+| 10000 |                64.712 |       9.101 |                7.980 | 
+
+A third table for a new Opteron 8439 SE (redhaw):
+
+|   *n* | *Strassen + Travolta* | *Karatsuba* | *3 * GF(2) CPU time* |  
+|  1000 |                 0.020 |       0.020 |                0.060 |  
+|  2000 |                 0.140 |       0.070 |                0.030 |  
+|  3000 |                 0.470 |       0.200 |                0.150 |  
+|  4000 |                 1.120 |       0.480 |                0.390 |  
+|  5000 |                 2.090 |       0.870 |                0.690 |  
+|  6000 |                 3.490 |       1.500 |                1.260 |  
+|  7000 |                 5.440 |       2.270 |                1.950 |  
+|  8000 |                 8.050 |       3.230 |                2.850 |  
+|  9000 |                10.710 |       4.560 |                4.140 |  
+| 10000 |                14.580 |       5.770 |                5.190 | 
+
+Ignoring measurement imprecisions (especially in the first table) it is clear that this new approach is much faster than the old one implemented in M4RIE especially on the Opteron. However, it seems on the Opteron our conversion between M4RIE and Karatsuba has a considerable cost, input how to improve that would be very welcome since I'm out of ideas for now. To compare with Magma: for the $10,000 \times 10,000$ case Magma takes 9.18 seconds on the i7 and 11.8 seconds on the Opteron 858. I didn't compare with Tom and Robert's implementation but I expect them to essentially be at 3 matrix multiplications over $GF(2)$ since they have no conversion overhead.
+
+I should point out though that the code for $GF(2\^2)$ is the least efficient in M4RIE since I only implemented 8 parallel Travolta table which means that over $GF(2\^2)$ only $8 \cdot 2 = 16$ bits are dealt with at each step in the inner loop. We could use more tables to fill up L1 and we could also implement Kronrod's method aka M4RM for $GF(2\^2)$.
+
+While I expect that we could catch up to Karatsuba at least on Intel CPUs over $GF(2\^2)$, I assume that the Karatsuba timings are close to optimal since matrix multiplication in M4RI seems to be close to optimal at least without further tricks being discovered and 3 matrix multiplications seems to be the best one can do for degree two polynomials.
+
+I guess I'll implement Karatsuba for $GF(2\^3)$ and $GF(2\^4)$, but I'm not sure I can be asked to do it for bigger fields if I don't figure out a nice generic way of implementing it where I don't have to write code for each minimal polynomial etc.

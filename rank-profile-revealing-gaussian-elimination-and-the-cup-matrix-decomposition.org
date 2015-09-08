@@ -1,0 +1,17 @@
+#+POSTID: 711
+#+DATE: [2012-01-07 Sat 12:19]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri, sage
+#+TAGS: exact linear algebra, linear algebra, m4ri, m4rie, matrix decomposition, paper, ple, pre-print
+#+TITLE: Rank-profile revealing Gaussian elimination and the CUP matrix decomposition
+
+by Claude-Pierre Jeannerod, Clément Pernet, Arne Storjohann is now available on the archive. I like this paper a lot and we also referenced it in both the [[http://arxiv.org/abs/1111.6549][M4RI elimination paper]] and the [[http://arxiv.org/abs/1111.6900][M4RIE paper]] so three cheers that it's now available.
+
+#+BEGIN_QUOTE
+*Abstract:* Transforming a matrix over a field to echelon form, or decomposing the matrix as a product of structured matrices that reveal the rank profile, is a fundamental building block of computational exact linear algebra. This paper surveys the well known variations of such decompositions and transformations that have been proposed in the literature. We present an algorithm to compute the CUP decomposition of a matrix, adapted from the LSP algorithm of Ibarra, Moran and Hui (1982), and show reductions from the other most common Gaussian elimination based matrix transformations and decompositions to the CUP decomposition. We discuss the advantages of the CUP algorithm over other existing algorithms by studying time and space complexities: the asymptotic time complexity is rank sensitive, and comparing the constants of the leading terms, the algorithms for computing matrix invariants based on the CUP decomposition are always at least as good except in one case. We also show that the CUP algorithm, as well as the computation of other invariants such as transformation to reduced column echelon form using the CUP algorithm, all work in place, allowing for example to compute the inverse of a matrix on the same storage as the input matrix.
+#+END_QUOTE
+
+[[http://arxiv.org/abs/1112.5717]]
+
+
+

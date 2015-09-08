@@ -1,0 +1,34 @@
+#+POSTID: 311
+#+DATE: [2011-01-21 Fri 15:59]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography, sage
+#+TAGS: algebraic attacks, algebraic cryptanalysis, cold boot attacks, commutative algebra, cryptography, max-posso, mixed integer programming, optimization, posso, sage
+#+TITLE: Cold Boot Key Recovery by Solving Polynomial Systems with Noise
+
+Carlos and I finally managed to put our [[http://eprint.iacr.org/2011/038][paper]] on polynomial system solving with noise and its application to the [[http://en.wikipedia.org/wiki/Cold_boot_attack][cold boot problem]] out.
+
+
+#+BEGIN_QUOTE
+  *Abstract:* A method for extracting cryptographic key material from DRAM used in modern computers has been recently proposed in [9]; the technique was called Cold Boot attacks. When considering block ciphers, such as the AES and DES, simple algorithms were also proposed in [9] to recover the cryptographic key from the observed set of round subkeys in memory (computed via the cipher's key schedule operation), which were however subject to errors due to memory bits decay. In this work we extend this analysis to consider key recovery for other ciphers used in Full Disk Encryption (FDE) products. Our algorithms are also based on closest code word decoding methods, however apply a novel method for solving a set of non-linear algebraic equations with noise based on Integer Programming. This method should have further applications in cryptology, and is likely to be of independent interest. We demonstrate the viability of the Integer Programming method by applying it against the Serpent block cipher, which has a much more complex key schedule than AES. Furthermore, we also consider the Twofish key schedule, to which we apply a dedicated method of recovery.
+#+END_QUOTE
+
+
+Btw. an older version of our code for Sage for solving polynomial systems with errors is available on [[https://bitbucket.org/malb/algebraic_attacks/src/5f24951ce087/anf2mip.py][bitbucket.org]] (... yes, I should update it to the most recent version). Here's an example from my [[http://sage.math.washington.edu/home/malb/talks/20100622%20-%20Algebraic%20Tools%20-%20Tools%20-%20Egham.pdf][talk]] at the Tools for cryptanalysis workshop 2010:
+
+#+BEGIN_SRC python
+sage: p = PRESENT(Nr=1,sbox_representation='lex')
+sage: F = present_dc(,r=1,return_system=True,characteristic=True)
+sage: H = F.gens()[:-64]
+sage: S = F.gens()[-64:]
+sage: S[:9]
+(Y00100 + Y10100, Y00101 + Y10101, Y00102 + Y10102,  Y00103 + Y10103, Y00104 + Y10104, Y00105 + Y10105,  Y00106 + Y10106, Y00107 + Y10107 + 1, Y00108 + Y10108)
+
+sage: F_prob = ProbabilisticMPolynomialSystem(F.ring(),H,S)
+sage: s,t = F_prob.solve_mip(solver='SCIP')
+Writing problem data to '/home/malb/.sage//temp/road/16007//tmp_1.mps'6605 records were writtenCPU Time: 0.20  Wall time: 25.95, Obj:  3.00
+#+END_SRC
+
+Not that this was a good way of attacking a blockcipher, but you get the idea.
+
+
+

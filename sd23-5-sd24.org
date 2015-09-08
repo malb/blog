@@ -1,0 +1,11 @@
+#+POSTID: 80
+#+DATE: [2010-07-13 Tue 12:25]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: sage
+#+TAGS: sage, sage days
+#+TITLE: SD23.5 & SD24
+
+I'm en route to Kaiserslautern where [[http://www.singular.uni-kl.de/index.php/events/sage-days-235.html][Sage Days 23.5]] will start tomorrow morning. If you have any suggestions what you want to see improved in the Sage <-> Singular interface, let me know. Afterwards I'm moving on to [[http://wiki.sagemath.org/days24/][Sage Days 24]] at RISC. Not that I know a lot about "Symbolic Computation in Differential Algebra and Special Functions".
+
+
+

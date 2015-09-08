@@ -1,0 +1,19 @@
+#+POSTID: 303
+#+DATE: [2011-01-23 Sun 17:14]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography
+#+TAGS: algebraic attacks, algebraic cryptanalysis, commutative algebra, cryptography, f4, gröbner basis, mutantxl, mxl, posso
+#+TITLE: Mutants are people too
+
+Despite being proven to be a [[http://eprint.iacr.org/2004/112.pdf][redundant variant]] of the [[http://en.wikipedia.org/wiki/Faugère's_F4_and_F5_algorithms][F4]] algorithm, the [[http://en.wikipedia.org/wiki/XSL_attack][XL]] algorithm still receives a lot of attention from the cryptographic community. This is partly because XL is considered to be conceptually much simpler than Gröbner basis algorithms. However, in doing so the wealth of theory available to understand algorithms for polynomial system solving is largely ignored.
+
+The most recent and perhaps promising variant of the XL algorithm  is the family of [[http://www.cdc.informatik.tu-darmstadt.de/reports/reports/MutantXL_Algorithm.pdf][MXL]] algorithms which are based around the concept of Mutants. Assume in some iteration the XL algorithm finds elements of degree /k/ while considering degree /D > k./ In a nutshell, the idea of the MutantXL algorithm is to continue the XL algorithm at the degree /k+1/ instead of /D+1/ which is what the XL algorithm would do. The natural question to ask is thus what Mutants are in terms of Gröbner basis theory; are they something new or are they a concept which is already known in the symbolic computing world under a different name?
+
+I was in Darmstadt this week visiting the group which mainly drives the effort behind the MXL family of algorithms. As part of my visit I gave a [[http://martinralbrecht.files.wordpress.com/2011/01/20110120_mutants_darmstadt.pdf][talk]] about the relation of the Mutant strategy and the normal strategy used in Gröbner basis algorithms for selecting critical pairs called ... the /Normal Selection Strategy/. In the talk we show that the Mutant strategy is a redundant variant of the Normal Selection Strategy. Also, I talked quite a bit about S-polynomials and how they can be used to account for every single reduction that happens in XL-style algorithms. Finally, I briefly touched on the "partial enlargement strategy" which was introduced with MXL2 showing that it is equivalent to selecting a subset of S-polynomials in each iteration of F4.
+
+Unfortunately, there's no full paper yet, so the presentation has to suffice for now.
+
+*Update:* It was pointed out to me that a better way of phrasing the relationship is to state that the Mutant selection strategy can be understood as a redundant variant of the Normal selection strategy when used in F4. This way is better because our statement is strictly about an algorithmic relation and not about why did what first knowing what ... which is how one could read the original phrasing.
+
+
+

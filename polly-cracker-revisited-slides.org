@@ -1,0 +1,17 @@
+#+POSTID: 348
+#+DATE: [2011-02-10 Thu 17:27]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography
+#+TAGS: commutative algebra, cryptography, gröbner basis, homomorphic encryption, max-posso, posso
+#+TITLE: Polly Cracker Revisited - Slides
+
+I just gave a talk in the [[http://isg.rhul.ac.uk][ISG]] seminar at Royal Holloway, University of London about this Polly Cracker business I've been thinking about lately. I've also decided to publish the [[http://martinralbrecht.files.wordpress.com/2011/02/20110210_pollycracker_egham.pdf][slides]]. However, I'd like to stress that everything in there is preliminary, i.e. this is yet another of those presentations presenting work in progress (which I personally think is a good thing to do). Anyway, here's the abstract:
+
+#+BEGIN_QUOTE
+"Since Gentry's seminal work on homomorphic encryption, this area has received considerable attention from the cryptographic community. Perhaps one of the most natural homomorphic schemes conceivable is Polly Cracker which is naturally homomorphic. However, almost all Polly Cracker inspired schemes that have been proposed so far have been badly broken. In fact, it was conjectured about 15 years ago in "Why you cannot even hope to use Gröbner Bases in Public Key Cryptography: an open letter to a scientist who failed and a challenge to those who have not yet failed."that it was impossible to construct a secure Polly Cracker-style scheme.
+
+In this [[http://martinralbrecht.files.wordpress.com/2011/02/20110210_pollycracker_egham.pdf][work]] we initiate a formal treatment of cryptosystems based on the hardness of Gröbner basis computations for random systems of equations, discuss their limitations, why standard techniques from homomorphic encryption research fail in this area, and propose a Polly Cracker variant based on polynomial system solving with noise which is a first step towards a provably secure Polly Cracker public-key scheme."
+#+END_QUOTE
+
+
+

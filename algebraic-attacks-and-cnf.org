@@ -1,0 +1,20 @@
+#+POSTID: 100
+#+DATE: [2009-07-09 Thu 12:48]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography, sage
+#+TAGS: algebraic attacks, algebraic cryptanalysis, cryptography, sage, sat
+#+TITLE: Algebraic Attacks and CNF
+
+Since the seminal papers [[http://eprint.iacr.org/2006/402][[1]]] and [[http://eprint.iacr.org/2007/024][[2]]] by Bard, Courtois and Jefferson it seems accepted wisdom that the right thing to do for constructing a CNF representation of a block cipher is to construct an algebraic system of equations first (cf. [[http://eprint.iacr.org/2009/279][[3]]]). This system of equations is then converted to CNF using some ANF to CNF converted (e.g. [[http://bitbucket.org/malb/algebraic_attacks/src/tip/anf2cnf.py][[4]]]) which deals with the negative impact of the XORs just introduced via the ANF. On the other hand, it is straight forward to compute some CNF for a given S-Box directly by considering its truth table. Sage now contains [[http://trac.sagemath.org/sage_trac/ticket/6185][code]] which does this for you:
+
+#+BEGIN_EXAMPLE
+sage: sr = mq.SR(1,1,1,4,gf2=True,polybori=True)
+sage: S = sr.sbox()
+sage: print S.cnf()
+[(1, 2, 3, 4, -5), (1, 2, 3, 4, 6), (1, 2, 3, 4, 7), (1, 2, 3, 4, -8), (1, 2, 3, -4, 5), (1, 2, 3, -4, -6), (1, 2, 3, -4, 7), (1, 2, 3, -4, 8), (1, 2, -3, 4, -5), (1, 2, -3, 4, 6), (1, 2, -3, 4, -7),(1, 2, -3, 4, 8), (1, 2, -3, -4, -5), (1, 2, -3, -4, 6), (1, 2, -3, -4, -7), (1, 2, -3, -4, -8), (1, -2, 3, 4, -5), (1, -2, 3, 4, -6), (1, -2, 3, 4, 7), (1, -2, 3, 4, -8), (1, -2, 3, -4, 5), (1, -2, 3, -4, 6), (1, -2, 3, -4, 7), (1, -2, 3, -4, -8), (1, -2, -3, 4, -5), (1, -2, -3, 4, 6), (1, -2, -3,4, 7), (1, -2, -3, 4, 8), (1, -2, -3, -4, 5), (1, -2, -3, -4, -6), (1, -2, -3, -4, 7), (1, -2, -3, -4, -8), (-1, 2, 3, 4, 5), (-1, 2, 3, 4, -6), (-1, 2, 3, 4, -7), (-1, 2, 3, 4, 8), (-1, 2, 3, -4, 5), (-1, 2, 3, -4, 6), (-1, 2, 3, -4, -7), (-1, 2, 3, -4, 8), (-1, 2, -3, 4, 5), (-1, 2, -3, 4, 6), (-1, 2, -3, 4, 7), (-1, 2, -3, 4, 8), (-1, 2, -3, -4, 5), (-1, 2, -3, -4, 6), (-1, 2, -3, -4, -7), (-1, 2, -3, -4, -8), (-1, -2, 3, 4, -5), (-1, -2, 3, 4, -6), (-1, -2, 3, 4, 7), (-1, -2, 3, 4, 8), (-1,-2, 3, -4, -5), (-1, -2, 3, -4, -6), (-1, -2, 3, -4, -7), (-1, -2, 3, -4, 8), (-1, -2, -3, 4, -5), (-1, -2, -3, 4, -6), (-1, -2, -3, 4, -7), (-1, -2, -3, 4, -8), (-1, -2, -3, -4, 5), (-1, -2, -3, -4,-6), (-1, -2, -3, -4, -7), (-1, -2, -3, -4, -8)]
+#+END_EXAMPLE
+
+I am not claiming that this naive approach produces an optimal representation, it seems more compact than what ANF to CNF converters produce, though.
+
+
+

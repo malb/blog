@@ -1,0 +1,29 @@
+#+POSTID: 822
+#+DATE: [2012-06-22 Fri 10:48]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri, sage
+#+TAGS: commutative algebra, f4, gröbner basis, lela, linear algebra, m4ri
+#+TITLE: Linear Algebra for Gröbner Bases over GF(2): LELA
+
+The [[http://wiki.lmona.de/events/elagb][Efficient Linear Algebra for Gröbner Basis Computations]] workshop in Kaiserslautern two weeks ago was a welcome opportunity to finally test out [[http://www.singular.uni-kl.de/lela/][LELA]], a library specifically written for linear algebra for Gröbner basis computations including for GF(2). The library implements the "Faugère-Lachartre" [[https://dl.acm.org/citation.cfm?doid=1837210.1837225][algorithm]] (a similar trick, though less developed, appeared before in PolyBoRi) and uses M4RI for dense parts over GF(2).
+
+So, I ran my benchmark matrices through LELA, discovered a bug in the process, then Bradford returned the favour and discovered a bug in M4RI ... Finally, below are the timings. The column PLE is the PLE algorithm as implemented in [[http://m4ri.sagemath.org][M4RI]], M4RI is the M4RI algorithm as implemented in M4RI, GB is a very naive variant of the algorithm LELA uses and LELA is, well, LELA.
+
+| *problem*     |    *m* |    *n* | *density* | *PLE* | *M4RI* |  *GB* | *LELA*  |
+|---------------+--------+--------+-----------+-------+--------+-------+---------|
+| HFE 25        |  12307 |  13508 |     0.076 |   1.0 |  *0.5* |   0.8 | 0.56    |
+| HFE 30        |  19907 |  29323 |     0.067 |   4.7 |  *2.7* |   4.7 | 3.42    |
+| HFE 35        |  29969 |  55800 |     0.059 |  19.3 |  *9.2* |  19.5 | 13.92   |
+| Mutant        |  26075 |  26407 |     0.184 |   5.7 |    3.9 | *2.1* | 12.07   |
+| n=24, m=26    |  37587 |  38483 |     0.038 |  20.6 |   21.0 |  19.3 | *7.72*  |
+| n=24, m=26    |  37576 |  32288 |     0.040 |  18.6 |   28.4 |  17.0 | *4.09*  |
+| SR(2,2,2,4) c |   5640 |  14297 |     0.003 |   0.4 |    0.2 | *0.1* | 0.40    |
+| SR(2,2,2,4) c |  13665 |  17394 |     0.013 |   2.1 |    3.0 |   2.0 | *1.78*  |
+| SR(2,2,2,4) c |  11606 |  16282 |     0.035 |   1.9 |    4.4 |   1.5 | *0.81*  |
+| SR(2,2,2,4)   |  13067 |  17511 |     0.008 |   1.9 |    2.0 |   1.3 | *1.45*  |
+| SR(2,2,2,4)   |  12058 |  16662 |     0.015 |   1.5 |    1.9 |   1.6 | *1.01*  |
+| SR(2,2,2,4)   | 115834 | 118589 |     0.003 | 528.2 |  578.5 | 522.9 | *48.39* |
+
+What this table means is that one can expect more than an *order of magnitude* of speed-up when using LELA - which is dedicated to these computations - instead of M4RI - which does not have the specialised algorithm implemented yet. For very small matrices sometimes M4RI/PLE win, but then not by a large margin. The only row where LELA doesn't do so good is Mutant, which - btw. - is not an F4 matrix but comes from the MXL2 algorithm.  It is possible that LELA's sparse data structures are not that well equipped to deal with this rather dense matrix.
+
+I am in the process of implementing the algorithm LELA uses in M4RI and will report updated timings here.

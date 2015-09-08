@@ -1,0 +1,23 @@
+#+POSTID: 39
+#+DATE: [2008-05-13 Tue 19:15]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri
+#+TAGS: m4ri
+#+TITLE: M4RI Website
+
+I finally put together the [[http://sage.math.washington.edu/home/malb/m4ri][website for the M4RI library]]. For those who don't know M4RI:
+
+“M4RI is a library for fast arithmetic with dense matrices over $\mathbb{F}_2$. It was started by Gregory Bard and is now maintained by Martin Albrecht and Gregory Bard. The name M4RI comes from the first implemented algorithm: The “Method of the Four Russians” inversion algorithm published by Gregory Bard. This algorithm in turn is named after the “Method of the Four Russians” multiplication algorithm which is probably better referred to as Kronrod's method. M4RI is used by the [[http://www.sagemath.org][Sage]] mathematics software and the [[http://polybori.sourceforge.net][PolyBoRi]] library. M4RI is available under the General Public License Version 2 or later (GPLv2+).
+
+Features of the M4RI library include:
+
+-  basic arithmetic with dense matrices over $\mathbb{F}_2$ (addition, equality testing, stacking, augmenting, sub-matrices, randomisation)
+-  asymptotically fast $O(n\^{log_27})$ matrix multiplication via the “Method of the Four Russians” (M4RM) & Strassen-Winograd algorithm,
+-  asymptotically fast $O(n\^{3}/log_2(n))$ row echelon form computation and matrix inversion via the “Method of the Four Russians” (M4RI), and
+-  support for the x86/x86_64 SSE2 instruction set where available.
+-  support for Linux and OS X ([[http://gcc.gnu.org][GCC]]), support for Solaris ([[http://developers.sun.com/sunstudio/downloads/express/][Sun Studio Express]]) and support for Windows ([[http://www.microsoft.com/express/][Visual Studio 2008 Express]]).”
+
+Performance-wise it is doing okay but not great. On Intel's Core2Duo it seems to compare favourably to Magma 2.13. Though, I don't have access to Magma 2.14 yet which improves dense linear algebra over $\mathbb{F}_2$. However, on AMD's Opteron it is way behind Magma 2.13. This is possibly due to the 1MB L2 cache of the Opteron vs. 4MB L2 cache of the Core2Duo.
+
+
+

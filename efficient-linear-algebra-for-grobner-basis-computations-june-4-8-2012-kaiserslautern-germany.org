@@ -1,0 +1,39 @@
+#+POSTID: 765
+#+DATE: [2012-05-10 Thu 17:46]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri, misc, sage
+#+TAGS: conference, gröbner basis, linear algebra
+#+TITLE: Efficient Linear Algebra for Gröbner Basis Computations - June 4-8, 2012 - Kaiserslautern, Germany
+
+Linear algebra plays an important role in modern efficient implementations of Gröbner basis algorithms. Consequently, a number of groups aim at developing linear algebra packages for these computations: we mention the HPAC project, LELA by the Singular team, the FGB package by Jean-Charles Faugère, the M4RI libraries, specialised linear algebra routines in PolyBoRi as well as non-public projects. In this workshop we want to bring researchers interested in this problem and developers of these packages together to discuss and develop solutions. The format of this workshop will be a mixture of talks, coding sprints and design discussions.
+
+*Topics* will include but are not limited to:
+
+-  presentation of existing software packages and solutions for linear algebra suitable for Gröbner basis computations
+-  presentation of scientific results on linear algebra for Gröbner basis computations
+-  modular approaches to Gröbner basis computations which allow to swap linear algebra packages
+-  approaches to parallelization of linear algebra routines on multicore machines, multiple machines and GPUs.
+-  suitable benchmark and test matrices, ideals and their format.
+
+*Invited Speakers*
+
+-  Brice Boyer (Grenoble, France)
+-  Michael Brickenstein (Oberwolfach, Germany)
+-  Daniel Cabarcas (Darmstadt, Germany)
+-  Jean-Charles Faugère (Paris, France)
+-  Bradford Hovinen (Munich, Germany)
+-  Sylvain Lachartre (Paris, France)
+-  Emmanuel Thomé (Nancy, France)
+
+The workshop will feature mathematical talks, presentations on software and coding sprints.
+
+*Registration*
+
+There is no registration fee for the workshop. Please email the organizers beforehand if you intend to participate.
+
+It is strongly recommended that participants bring their own laptop for use during the coding sprints.
+
+More information regarding this event is available at [[http://wiki.lmona.de/events/elagb]]
+
+
+

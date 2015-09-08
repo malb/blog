@@ -1,0 +1,77 @@
+#+POSTID: 362
+#+DATE: [2011-03-07 Mon 18:09]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography, sage
+#+TAGS: cryptography, mixed integer programming, optimization, posso, sage, scip
+#+TITLE: Constraint Integer Programming in Sage
+
+Now that version [[http://groups.google.com/group/sage-announce/browse_thread/thread/527fb8fe7e00c3bc][4.6.2]] of [[http://www.sagemath.org][Sage]] is out which contains the new [[http://www.sagemath.org/doc/thematic_tutorials/linear_programming.html][Mixed Integer Programming]] [[http://trac.sagemath.org/sage_trac/ticket/10341][interface]] that Nathann (mainly) and I (a little bit) wrote, I took the time to get my [[http://scip.zib.de][SCIP]] interface enough into shape to open a [[http://trac.sagemath.org/sage_trac/ticket/10879][ticket]] on Sage's bugtracker for it.For those who don't know SCIP, here's how its developers describe it:
+
+#+BEGIN_QUOTE
+  "SCIP is currently one of the fastest non-commercial /mixed integer programming (MIP) solvers/. It is also a framework for /Constraint Integer Programming/ and/branch-cut-and-price/. It allows total control of the solution process and the access of detailed information down to the guts of the solver."
+#+END_QUOTE
+
+The new interface to SCIP is on the C-level and thus supports some of the advanced features SCIP has. For example, it supports the following constraints:
+
+-  linear constraints,
+-  quadratic constraints,
+-  set covering, packing and partitioning,
+-  AND, XOR and OR constraints, and
+-  logical OR constraints.
+
+There is no reason that this list isn't complete other than that I was too lazy to write e.g. the knapsack constraint. However, adding this is pretty straight forward (/hint/, /hint/). I also added support for setting/getting/reading/writing SCIP parameters:
+
+#+BEGIN_SRC python
+sage: from sage.libs.scip.scip import SCIP
+sage: scip = SCIP()
+sage: scip['display/verblevel'] = 0
+sage: scip['display/verblevel']
+0
+sage: scip.write_parameters("foo.cfg")
+#+END_SRC
+
+Of course, the interface is also compatible with Sage's highlevel MixedIntegerProgramming class, such that it can be used as a backend for all functions that make use of Mixed Integer Programming in Sage already (such as Graph theoretic questions). Finally, the interface also has an interface for reading and solving polynomial systems of equations /mod p/ (I wouldn't hold my breath for solving mod $p$ with $p > 2$ though, this is very inefficient).
+
+#+BEGIN_SRC python
+sage: sr = mq.SR(1,1,1,4,gf2=True,polybori=True)
+sage: F,s = sr.polynomial_system()
+sage: scip = SCIP()
+sage: m1 = scip.read_polynomial_system_mod2(F)
+sage: scip.solve()
+0
+sage: for x in F.ring().gens():
+....: print x,scip.get_variable_value(m1.down(x))
+....:
+k100 1.0
+k101 1.0
+k102 1.0
+k103 0.0
+x100 1.0
+x101 0.0
+x102 0.0
+x103 0.0
+w100 1.0
+w101 1.0
+w102 1.0
+w103 1.0
+s000 1.0
+s001 1.0
+s002 0.0
+s003 0.0
+k000 1.0
+k001 0.0
+k002 1.0
+k003 0.0
+sage: F.groebner_basis()
+[k100 + 1, k101 + k003 + 1, k102 + k003 + 1, k103 + k003,
+x100 + 1, x101 + k003, x102, x103, w100 + 1, w101 + k003 + 1,
+w102 + 1, w103 + k003 + 1, s000 + 1, s001 + k003 + 1, s002, s003,
+k000 + 1, k001 + k003, k002 + 1]
+#+END_SRC
+
+There are some issues with this interface though:
+
+-  some stuff simply isn't done yet, e.g. printing of quadratic constraints
+-  it crashes horribly under OSX (help by someone who runs & cares about OSX would be highly appreciated)
+
+Btw. this interface was also used in our paper ﻿ [[http://eprint.iacr.org/2011/038.pdf][/Cold Boot Key Recoveryby Solving Polynomial Systems with Noise/]].

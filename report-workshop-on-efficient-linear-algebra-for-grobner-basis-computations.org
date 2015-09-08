@@ -1,0 +1,36 @@
+#+POSTID: 771
+#+DATE: [2012-06-08 Fri 09:42]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri, sage
+#+TAGS: conference, f4, f5, gröbner basis, linbox, linear algebra, m4ri, m4rie, matrix decomposition, sage, sage days
+#+TITLE: Report: Workshop on Efficient Linear Algebra for Gröbner Basis Computations
+
+As you may know, today is the last day of the wokshop on [[http://wiki.lmona.de/events/elagb][Efficient Linear Algebra for Gröbner Basis Computations]] that [[https://github.com/ederc][Christian Eder]], [[https://github.com/burcin][Burcin]] [[https://bitbucket.org/burcin][Eröcal]], [[https://github.com/alexanderdreyer][Alexander]] [[https://bitbucket.org/alexanderdreyer][Dreyer]] and I organised.
+
+I have to say that I am quite pleased with how the workshop played out. We planned the whole thing to be hands on: people were strongly encouraged to work on [[http://wiki.lmona.de/events/elagb/projects][projects]], i.e., to write code preferably together, in addition to attending talks. Those who attended a Sage Days workshop in the past, will know what workshop format I am referring to.
+
+In the beginning adoption was a bit slow. The idea of simply ordering pizza to write code till late seemed rather alien. However, in the end, it worked out I think and, looking back, the workshop reminded me of[[http://wiki.sagemath.org/days2][Sage Days 2]] which was  my first Sage workshop and which left a considerable impression on me. Sage Days 2 in October 2006 - which was my first Sage Days - was this "magical" workshop where people found each other who were equally obsessed with fast open-source mathematics software. Attendees had a lot to say to each other and many projects (and friendships) got started at these early Sage workshops. For example, I got hold of Gregory Bard's [[http://m4ri.sagemath.org][M4RI]] code at [[http://wiki.sagemath.org/days3][Sage Days 3]]. My involvement in Sage has fundamentally shaped me as a researcher and Sage Days 2 set the bar very high for what I consider a good workshop. One could say that Sage Days 2 shaped me as a workshop organiser. Thank you William!
+
+Anyway, I haven't felt the same buzz about Sage workshops in a while, I guess thing become routine. Or it's just that the "bureaucracy" - most of which is necessary - doesn't work so well with that pioneering spirit thing. However, something similar to early Sage Days - in my mind - happened at this workshop.
+
+Many people attended who had their own open-source implementation of[[https://en.wikipedia.org/wiki/Faug%C3%A8re_F4_algorithm][F4]] or linear algebra routines suitable for the algorithm. So people had a lot to say to each other: "How do you deal with this ..." type of things. For example, we had Severin ([[https://github.com/svrnm/parallelGBC][parallelGBC]]), Daniel ([[https://bitbucket.org/cabarcas/f4v6][F4v6]]), Bradford ([[http://www.singular.uni-kl.de/lela/][LELA]]), Alexander and Michael ([[https://bitbucket.org/brickenstein/polybori][PolyBoRi]]), Fayssal ([[https://github.com/martani/LELA/][LELA stuff]]), Christian ([[https://github.com/ederc/Sources][C++ F5]]), Brice ([[http://www.linalg.org/][LinBox]]), ... Also, Jean-Charles attended which provided a good opportunity inquire about his implementation. Overall, this provided an atmosphere which - for me - was a lot more engaging than the usual conference/workshop where you listen to a bunch of talks and then talk about anything but research over dinner.
+
+On a meta point, it also seems there is a general movement towards much more open development models. Most of the developers at the workshop maintained [[http://bitbucket.org][bitbucket]] or [[http://github.com][github]] pages with their code which actively encourage collaboration. It's quite a step forward from the old days when the best you could hope for was for a rather closed research groups to dump a source tarball every once in a while.
+
+Okay, buzz or no buzz, what got done?
+
+-  First of all, Alexander uploaded all videos for all talks and linked them on our [[http://wiki.lmona.de/events/elagb/schedule][wiki page]]. Also, slides for all talks should be available or become available soon, if they are missing in 2-3 days please bug me about it.
+-  Burcin and Oleksandr worked on turning Severin's code into a generic framework to test linear algebra implementations. Burcin promised to finish it over the weekend.
+-  Oleksandre started the same with [[https://bitbucket.org/cabarcas/f4v6][Daniel's code]]. So hopefully, we'll have some "frameworks" soon to test our linear algebra ideas.
+-  Brice implemented multiplication of finite extension field matrices using [[http://trac.sagemath.org/sage_trac/ticket/12177][prime-slicing]] in LinBox and fixed a bunch of bugs in LinBox 1.3.x. As a result, we are very close to upgrading LinBox in Sage to a more recent version.
+-  Alexander and Michael worked on[[https://bitbucket.org/brickenstein/polybori/][PolyBoRi's interface to M4RI]] so that conversion is cheaper. Also, PolyBori will use M4RI's PNG writer to export matrices in the future which uses less memory and is faster.
+-  Emmanuel worked on CADO-NFS' Wiedemann such that it (again) supports primes > 2. He's close I believe to get it working.
+-  Bradford worked on improving splicing in LELA (converting a matrix to the internal format) over GF(2).
+-  Jakob got sucked into decrypting g++ template error messages and
+-  I played a bit with LELA (see projects page) and worked on upgrading LinBox in Sage (see [[http://trac.sagemath.org/sage_trac/ticket/12883][#12883]]).
+
+
+Thanks everyone involved.
+
+
+

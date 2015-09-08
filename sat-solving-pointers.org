@@ -1,0 +1,16 @@
+#+POSTID: 104
+#+DATE: [2009-08-17 Mon 12:51]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: sage
+#+TAGS: algebraic attacks, algebraic cryptanalysis, cryptography, sage, sat
+#+TITLE: SAT Solving Pointers
+
+This is just a quick note to point out two SAT-solving sources relevant for cryptography.
+
+-  Michael Brickenstein provides an [[http://bitbucket.org/brickenstein/polybori-scripts/src/tip/cnf.py][alternative]] approach for [[http://bitbucket.org/malb/algebraic_attacks/src/tip/anf2cnf.py][ANF to CNF conversion]] in his [[http://polybori.sourceforge.net/][PolyBoRi]] scripts [[http://bitbucket.org/brickenstein/polybori-scripts/][collection]].
+-  Mate Soos makes his changes to [[http://minisat.se/][MiniSat]] available on his [[http://planete.inrialpes.fr/~soos/CryptoMiniSat/index.html][website]]. Those changes are meant to make it more suitable for cryptographic applications, hence the name [[http://planete.inrialpes.fr/~soos/CryptoMiniSat/index.html][CryptoMiniSat]].
+
+Have fun.
+
+
+

@@ -1,0 +1,15 @@
+#+POSTID: 43
+#+DATE: [2009-06-27 Sat 19:19]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri
+#+TAGS: m4ri
+#+TITLE: LQUP vs. PLUQ
+
+At SD16 Clément Pernet and myself have been working on improving the asymptotically fast PLUQ factorisation over GF(2) in M4RI. As mentioned earlier, one of the main problems is that column swaps are pretty expensive compared to many other operations we do. Eventually, we settled for LQUP over PLUQ since it has fewer column swaps overall since it does not compress U. We also improved the base case both w.r.t. to sparse matrices and in general (more Gray code tables are used now) and the column swap performance overall (cf. [[http://wiki.sagemath.org/days16/projects][SD 16 Wiki]]). The result is noticeable, but we are not quite there yet:
+
+[[http://www.informatik.uni-bremen.de/~malb/binary/m4ri-lqup-sparse-ish-2-14.png]]
+
+There are still some places which could be improved so this should get better eventually. Also, we might have another strategy to deal with these sparse-ish/structured matrices. Anyway, the new PLUQ code is at least as fast as M4RI for the structured HFE examples on the M4RI website on my Core2Duo 2.33Ghz notebook (and of course much faster on random examples and on other platforms) The new code is available on [[http://www.bitbucket.org/malb/m4ri][BitBucket]].
+
+
+

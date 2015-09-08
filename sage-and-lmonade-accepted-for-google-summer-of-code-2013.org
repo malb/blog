@@ -1,0 +1,11 @@
+#+POSTID: 904
+#+DATE: [2013-04-09 Tue 09:14]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: misc, sage
+#+TAGS: gsoc, gsoc2013, lmonade, sage
+#+TITLE: Sage and Lmonade Accepted for Google Summer of Code 2013
+
+Both the [[http://www.google-melange.com/gsoc/org/google/gsoc2013/sage][Sage]] and the [[http://www.google-melange.com/gsoc/org/google/gsoc2013/lmonade][lmonade]] project were successful in applying to Google Summer of Code 2013. If you are a student head over to their respective GSOC pages and get in touch. If you want to do a project related the stuff I write about on this blog, i.e., with me as a mentor, get in touch as well.
+
+
+

@@ -1,0 +1,15 @@
+#+POSTID: 1017
+#+DATE: [2014-01-20 Mon 15:27]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: misc
+#+TAGS: 
+#+TITLE: How to print at the ISG at Royal Holloway
+
+It seems all the information on printing from proper operating systems at the Information Security Group at Royal Holloway, University of London available online is a bit outdated. So here's what you should do when using CUPS:
+
+1. The URL for printing is *lpd://USERNAME@isg-uniprint.isg.rhul.ac.uk/MA-Follow-Me* where USERNAME is your college username (it's a random looking combination of letters and numbers). The trick I was missing for a long time was that you need to add your username. Thanks, [[http://pure.rhul.ac.uk/portal/en/persons/jacob-schuldt(54a3a5e3-edb2-41d4-b5aa-96517240f8d1).html][Jacob]].
+2. Download the right PPD for *KONICA MINOLTA bizhub C452* from the [[http://www.konicaminolta.eu/en/business-solutions/support/download-center.html][Konica website]].
+3. Now print to MA-Follow-Me, go to, say, the postroom, swipe your card and retrieve your sweet, sweet print outs.
+
+
+

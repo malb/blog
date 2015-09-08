@@ -1,0 +1,11 @@
+#+POSTID: 758
+#+DATE: [2012-03-18 Sun 11:35]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: sage
+#+TAGS: gsoc, gsoc2012, sage
+#+TITLE: Sage accepted to Google Summer of Code
+
+For the first time, Sage was accepted as a mentoring organisation for the Google Summer of Code. We are now in the "Would-be student participants discuss application ideas with mentoring organizations" stage so get in [[https://www.google-melange.com/gsoc/org/google/gsoc2012/sage][touc]]h if you want to work on Sage this summer as part of the Google Summer of Code. Finally, here's a [[https://docs.google.com/document/pub?id=1v91UmkDvgEInzPFT_g0osid5g69oKKmyx0NclwcyqI4][list of ideas]] by Sage developers / prospective mentors (me included for SAT and M1RI).
+
+
+

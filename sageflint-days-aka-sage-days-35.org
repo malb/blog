@@ -1,0 +1,17 @@
+#+POSTID: 699
+#+DATE: [2011-12-22 Thu 13:20]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri, sage
+#+TAGS: conference, flint, linear algebra, m4rie, polynomial multiplication, sage, sage days
+#+TITLE: Sage/FLINT Days aka Sage Days 35
+
+I am writing this while waiting for my taxi to leave[[http://wiki.sagemath.org/SageFlintDays][ Sage Days 35]]. Although, I didn't get much actual coding done, it was great fun and very useful. I met a lot of old friend, new faces and managed to put faces to e-mail addresses.
+
+In terms of coding projects, first, I tried to speed up linear algebra mod p where p is a 32 or 64 bit prime. But it turns out that any trick I could think of could not improve on [[http://fredrik-j.blogspot.com/][Frederik's]] code. So that didn't lead anywhere but I allowed me to read some code of [[http://selmer.warwick.ac.uk/gitweb/flint2.git][FLINT2]] (very readable) and admire how carefully it is written.
+
+My other two projects both involved evaluate--pointwise-multiply--interpolate algorithms for fast matrix-matrix products over finite extension fields or for matrices with polynomial coefficients (over prime fields).  After my [[http://martinralbrecht.files.wordpress.com/2010/07/20111219_-_m4ri_-_warwick.pdf][talk on M4RI(E)]] [[http://web.maths.unsw.edu.au/~davidharvey/][David Harvey]] worked out how to improve multiplication over $\mathbb{F}_{2\^6}$ from 17 multiplications over $\mathbb{F}_2$ to 15, which then lead to a general approach for $\mathbb{F}_{2\^m}$ with composite $m$. Much of it remains to be implemented (efficiently), but the $\mathbb{F}_{2\^6}$ example indeed shows a 10% speed-up as expected. The code is not clean yet, uses way too much memory and doesn't deal with the more advanced finite field stuff appropriately. It should end up in M4RIE eventually though.
+
+I also contributed a bit to [[http://trac.sagemath.org/sage_trac/ticket/12177][12177]] which is about a "prime slice" implementation of matrices over $\mathbb{F}_{p\^k}$. The idea is essentially to represent  these matrices as polynomials with matrix coefficients and to use fast polynomial multiplication algorithms for these polynomials. It turns out, this works very well even for small finite fields. Burcin Eröcal did all the coding, I only helped with some discussions. We need to polish the code a lot to be usable, so if you like matrices over $\mathbb{F}_{p\^k}$ head over to [[http://trac.sagemath.org/sage_trac/ticket/12177][#12177]] and help out.
+
+
+

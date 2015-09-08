@@ -1,0 +1,13 @@
+#+POSTID: 86
+#+DATE: [2010-03-09 Tue 12:38]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography
+#+TAGS: cryptography, nsa
+#+TITLE: NSA’s Crypto Advantage
+
+[[http://news.slashdot.org/story/10/03/09/0158205/NSA-Still-Ahead-In-Crypto-But-Not-By-Much][Slashdot]]: “Network World summarizes an RSA Conference panel discussion in which former NSA technical director Brian Snow said that [[http://www.networkworld.com/news/2010/030410-rsa-cloud-security-warning.html][cryptographers for the NSA have been losing ground to their counterparts]] in universities and commercial security vendors for 20 years, but still maintain the upper hand in the sophistication of their crypto schemes and in their ability to decrypt. ‘I do believe NSA is still ahead, but not by much â€” a handful of years,' says Snow. ‘I think we've got the edge still.' Snow added that that in the 1980s there was a huge gap between what the NSA could do and what commercial encryption technology was capable of. ‘Now we are very close together and moving very slowly forward in a mature field.' The NSA has one key advantage (besides their deep staff of Ph.D. mathematicians and other cryptographic experts who work on securing traffic and breaking codes): ‘We cheat. We get to read what [academics] publish. We do not publish what we research,' he said. Snow's claim of NSA superiority seemed to rankle some members on the panel. Adi Shamir, the “S” in the RSA encryption algorithm. said that when the titles of papers in NSA technical journals were declassified up to 1983, none of them included public key encryption; ‘That demonstrates that NSA was behind,' said Shamir. Snow replied that when technologies are developed separately in parallel, the developers don't necessarily use the same terms for them.”
+
+The titles Shamir is talking about are [[http://www.thememoryhole.org/nsa/bibs.htm][here]].
+
+
+

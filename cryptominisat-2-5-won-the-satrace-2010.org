@@ -1,0 +1,11 @@
+#+POSTID: 113
+#+DATE: [2010-07-16 Fri 09:40]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography
+#+TAGS: cryptography, sat
+#+TITLE: CryptoMiniSat 2.5 won the SATRace 2010
+
+Mate Soos' [[http://planete.inrialpes.fr/~soos/CryptoMiniSat2/index.php][CryptoMiniSat]] won the [[http://baldur.iti.uka.de/sat-race-2010/results.html][SATRace 2010]]. Congratulations Mate! For those who don't know CryptoMiniSat, it is a fork of MiniSat which supports XOR clauses (Gaussian elimination!) among other things. This makes it particularly suitable for cryptographic problems.  I'll try to make an optional Sage Package for CryptoMiniSat soon-ish.
+
+
+

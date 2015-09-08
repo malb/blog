@@ -1,0 +1,67 @@
+#+POSTID: 973
+#+DATE: [2014-02-18 Tue 12:08]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography, sage
+#+TAGS: agcd, approximate gcd, cryptanalysis, cryptography, fhe, homomorphic encryption, lattice reduction, multilinear maps, sage
+#+TITLE: Cryptanalysis of the FHE based on GACD?
+
+Jintai Ding and Chengdong Tao published a [[http://eprint.iacr.org/2014/042][new preprint]] on the IACR's ePrint titled /A New Algorithm for Solving the Approximate Common Divisor Problem and Cryptanalysis of the FHE based on GACD./
+
+#+BEGIN_QUOTE
+*Abstract. *In this paper, we propose a new algorithm for solving the approximate common divisors problems, which is based on LLL reduction algorithm of certain special lattice and linear equation solving algorithm over integers. Through both theoretical argument and experimental data, we show that our new algorithm is a polynomial time algorithm under reasonable assumptions on the parameters. We use our algorithm to solve concrete problems that no other algorithm could solve before. Further more, we show that our algorithm can break the fully homomorphic encryption schemes, which are based on the approximate common divisors problem, in polynomial time in terms of the system parameter λ.
+#+END_QUOTE
+
+It is worth emphasising that the Approximate GCD problem not only underpins[[http://eprint.iacr.org/2009/616.pdf][one of the few fully homomorphic encryption schemes]] we have but it is also somewhat related to [[http://eprint.iacr.org/2013/183][one of two candidates for multilinear maps]]. So if it could be shown to be easy then this would be somewhat sad as the choice of problems for building fancy crypto schemes would have gotten a lot smaller. So what is the Approxmiate GCD problem?
+
+*Approximate Greatest Common Divisions Problem*: Given polynomially many samples x_{i} = q_{i}· p + r_{i} where x_{i} = O(2^{γ}), r_{i} = O(2^{ρ}) and p = O(2^{η}), recover p.
+
+The algorithm proceeds by using the LLL algorithm to find relations $\sum_{j=1}\^t a_{ij} r_j = \sum_{j=1}\^t a_{ij} x_j$.
+
+Note that if enough such relations can be found then this gives a linear system of equations in the r_{j} which we'd only need to solve. So how does the algorithm use LLL to recover the a_{ij}? It sets up a lattice basis of dimension (t+1) × (t+1) as follows:
+
+$B = \left(\begin{array}{ccccc}
+1 & 0 & \dots & 0 & x_{1}\\
+0 & 1 & \dots & 0 & x_{2}\\
+\vdots & \vdots & \ddots & \vdots & \vdots\\
+0 & 0 & \dots & 1 & x_{t}\\
+0 & 0 & \dots & 0 & N\\
+\end{array}\right)$
+
+Here, N is simply a random integer O(2^{γ}). Now, the authors claim that running LLL on the lattice spanned by B returns about t-2 of the desired relations. They are unable to rigorously argue why this should happen but offer the following intuition. Any  vector  in the lattice spanned by B has the form $(\mu_1, \dots, \mu_t, \sum_{i=1}\^{t} \mu_ix_i - \mu_{t+1}N)$. Considering the last component $\sum_{i=1}\^{t} \mu_i x_i - \mu_{t+1}N$ = $\sum_{i=1}\^{t} \mu_i (q_i p + r_i) - \mu_{t+1}N$ = $p\sum_{i=1}\^{t} \mu_iq_i - \mu_{t+1}N + \sum_{i=1}\^{t} \mu_i r_i)$ they speculate that that LLL would focus on the left hand side of this expression as the right hand side would be rather small anyway. Making $p\sum_{i=1}\^{t} \mu_iq_i - \mu_{t+1}N = 0$ implies $N|p\sum_{i=1}\^{t} \mu_iq_i$ which in turn implies $\sum_{j=1}\^t a_{ij} r_j = \sum_{j=1}\^t a_{ij} x_j \bmod N$, if I understood correctly.
+
+An implementation of the first step of this algorithm for Sage is given [[http://aleph.sagemath.org/?z=eJyFU23L2jAU_S74H0JBSB5rXxRlyPpFGGzg_AGKj8Qm2rAmKWm6df9-N0m71X3YWhpvTk7OSe691poyHFXWNu0-Te_C3rvyG7eJNs9U0vqeGt5yaspq1SrRNNy2qaE_UiuaVCjLn9zcKi3hNU0lyqT5GZH5jPEHMp0SFtcx4pYWJ614jJ5UyjE2lfYR2c9nCB5goQLV72skHn4iWuTWEa9b7oBA8xKeuHXEMH2heiiQwcNRHdGFLzQA5rNAs0CStMePWmuDsyTLNtvd7i1oLxEAHzbb9e7NaazQJiNxnpGwVVQcNn_5_AnXRR0uBZ8PGiMkDzOXAfjGBPgxRpZ2hR10wtiDFigm_WVvr8MVALo4TGqGexH79YaghzaoF0go1F-nEgfgf6XWiB6fz-CxzP0w2Jxg9XxODFVMyxuvueTK4vU7dqr-WKucxGgKkJcTOlvvChJPju1YPW99EbG4gkP-iq1yB_YXMRz0cFnlA3iaah8BOCTH4xGTsTKl7pSrTvZ_d6jxESwSpY3EBH18uUSKXQ6m9MkWl-yEaXtrjGZdafF3XlpoBEMIlPtfjB4YBZzuL90_J1_-TgZ0A8yjUyfv3CANDclraoVWLdyqU8zfLbTHgoVGcr-ucxZsjxYsWuChb8aWioPJUB_DbWdUgFz6bpC24S9YROIJaeEsCoJ5lmVjL25d7Ny2rqWnm3bkF3lVJvc=&lang=sage][here]] (in a Sage cell). Indeed, if you plug in the parameters from the authors' table on page 9, we do get our desired relations out.
+
+Finally, let's look at the application to parameters as they are used in cryptography. The authors consider [[http://eprint.iacr.org/2009/616.pdf][the fully homomorphic encryption scheme]] due to Marten van Dijkm Craig Gentry, Shai Halevi, Vinod Vaikuntanathan which sets γ = λ^{5}, η = λ^{2} and ρ = λ for a security level of λ, i.e. 2^{λ} operations should be needed to break it. Here is what the authors write:
+
+#+BEGIN_QUOTE
+We apply our algorithm to the parameters in [6] and we could break all the cases where their parameter γ < 2^{20}.
+#+END_QUOTE
+
+It is not really clear to me if the authors actually ran their attack or not. On the one hand, we have that a choice of parameters where γ < 2^{20} would correspond to  λ=16 as (2^{20})^{(1/5)} = 2^{4}. Hence, attacking such dimensions would not mean much. On the other hand, the estimates by the authors about LLL would mean their attack would cost 2^{135} operations.
+
+However, as far as I can tell, it does not work for these kind of parameters. That is, LLL fails to find the desired relations once we choose parameters as they are suggested in the cryptographic literature (cf. the example in the Sage cell above).
+
+There are two reasons why the algorithm might fail:
+
+1. The target vectors might not be among the shortest vectors in the lattice. For the parameters on page 9 it seems this condition holds. It is not clear that the condition holds in general. While on page 7 the authors argue for the existence of target vectors within the approximation radius of LLL, the algorithm on page 8 expects vectors which are smaller than suggested by the Gaussian heuristic, which seems to be what is needed to me.
+2. The target vectors are the shortest vectors in the lattice. However, LLL cannot find them. In such a case it seems the situation is somewhat similar to the situation discussed in this comment from [[http://eprint.iacr.org/2009/616.pdf][[6]]]:
+
+
+#+BEGIN_QUOTE
+  On the other hand, when t is large, ~v likely is the shortest vector in L, but known lattice reductions algorithms will not be able to find it efficiently. Specifically, as a rule of thumb, they require time roughly 2^{(t/k)} to output a 2^{k} approximation of the shortest vector. Since clearly there are exponentially (in t) many vectors in L of length at most |x_{0}|√(t + 1) < 2^{γ}√(t + 1), which is about 2^{(η−ρ)} times longer than ~v, we need better than a 2^{(η−ρ)} approximation. For t ≥ γ/η, the time needed to guarantee a 2^{η} approximation (which is not even good enough to recover ~v) is roughly 2γ/η^{2}.  Thus setting γ/η^{2} = ω(log λ) foils this attack.
+#+END_QUOTE
+
++So if I understand this correctly, they should have a condition on t which implies that the target vectors are smaller than what the Gaussian heuristic suggests by the appropriate LLL Unique SVP factor. In particular, they ask if there are target vectors with+
+
++|μ_i| < 1/√(t +1) 2^{(γ/(t+1) + t/4)}+
+
++but it should be more like+
+
++|μ_i| < τ/√(t +1) 2^{(γ/(t+1) - t/4)}+
+
++i.e. within the LLL approximation radius there shouldn't be any other vectors (where τ is the Unique-SVP factor ~0.5).+ 
+
+*Update:* Since the authors show that if a short vector exists it must satisfy their conditions, this argument is invalid. Still, the authors did not show that they are able to find short enough vectors for parameters as they are found in the literature.
+
+Of course, I might have missed something.
+

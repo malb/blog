@@ -1,0 +1,24 @@
+#+POSTID: 608
+#+DATE: [2011-10-15 Sat 18:33]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri
+#+TAGS: file format, linear algebra, m4ri, matrix, png
+#+TITLE: PNG Images FTW
+
+I had the pleasure to attend a meeting of the [[http://www.linalg.org][LinBox]] developers this week in Raleigh, NC. One of the question that came up was how to exchange and store matrices. For example, matrices for whose "class" one wants to find/implement dedicated algorithms. To give a more concrete example: matrices appearing during Gröbner basis computations have a special structure which allows to reduce them faster than random matrices (cf. this [[http://www-salsa.lip6.fr/~jcf/Papers/PASCO2010.pdf][paper]] or [[https://bitbucket.org/brickenstein/polybori/src/f2ae1a754b3e/groebner/include/polybori/groebner/linear_algebra_step.h#cl-248][this code]]). Hence, we'd like to have some sort of format to store such matrices such that we can work on these dedicated algorithms. Of course, such a format should be flexible, human readable (preferably writable as well) and reasonably simple. I'm not sure how the LinBox crew would think about me blogging about details of their meeting, hence I'll only use this opportunity to plug my own proposal (at least for reasonably dense matrices): /PNG images/.
+
+The PNG file format definitely is readable, since there exists many viewers for it (you are probably using one right now). The format can also be edited thanks to GIMP and friends. That is, we can draw matrices! Furthermore, PNG allows to use lossless compression, i.e., it can compress the actual image data using GZIP. Finally, it is pretty flexible: it supports between one (grayscale) and four (RGB + alpha) channels and various bit depths per channel (1,2,4,8,16). Hence, it can store between 1 bit and 64 bits per pixel. Thus, for finite fields up cardinality $2\^{64}$ we can store each entry simply as a pixel. If we pick our colour assignment right, the pictures even make sense (using the convention that darker is larger as an integer for example).
+
+Of course, the whole format is fundamentally biased towards dense matrices. In fact, we've been using 1-bit PNG images as data storage for M4RI matrices for a while [[http://m4ri.sagemath.org/performance.html][now]]: both [[http://www.sagemath.org][Sage]] and [[http://polybori.sourceforge.net/][PolyBoRi]] use the [[https://bitbucket.org/pierrejoye/gd-libgd/overview][GD library]] to write M4RI matrices to disk. However, using GD has some shortcomings such as high memory requirements (the whole image is constructed in RAM before being written to disk). This week, I [[https://bitbucket.org/malb/m4ri/src/fc38e0db20cc/src/io.c#cl-81][implemented]] reading/writing of PNG 1-bit images feature directly in the M4RI library using [[http://www.libpng.org/pub/png/libpng.html][libpng]] directly. This allows to save a lot of memory and for some cool other features such as control over the GZIP compression level, custom comments, "unknown chunks" as attachments, etc.
+I've also conducted some experiments to get an impression how well this format works in terms of storage space and loading time:
+
+| file size | matrix dimension | density | loading time on 2.6Ghz i7 |
+| 2.8M      | 11606 x 16282    | 0.03532 | 0.190s                    |
+| 5.1M      | 12307 x 13508    | 0.07600 | 0.205s                    |
+| 16M       | 19907 x 29323    | 0.06731 | 0.619s                    |
+| 30M       | 37587 x 38483    | 0.03832 | 1.565s                    |
+| 36M       | 115834 x 118589  | 0.00376 | 12.132s                   |
+| 37M       | 29969 x 55800    | 0.05949 | 1.685s                    |
+| 39M       | 26075 x 26407    | 0.18497 | 0.847s                    |
+
+To me, the above table - which lists some matrices from Gröbner basis computations over GF(2) - suggests that the format is reasonably efficient. However, I don't really have anything to compare with, so my sense might be off. Still, compared to some ASCII based formats out there, it's pretty competitive, as far as I can tell. Note, however, that the above file sizes were produced using GZIP compression level 9 which takes pretty long to write. Using a lower level (such as the default) produces slightly larger files (about 10%-20% depending on the structure). Finally, wouldn't it be very awesome if we could use these pictures when debugging our code? So who speaks GDB's macro language?

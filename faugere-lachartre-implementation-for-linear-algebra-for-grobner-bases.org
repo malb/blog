@@ -1,0 +1,13 @@
+#+POSTID: 908
+#+DATE: [2013-04-30 Tue 12:22]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography, sage
+#+TAGS: commutative algebra, f4, gröbner basis, linear algebra, posso, sage
+#+TITLE: Faugère-Lachartre implementation for linear algebra for Gröbner bases
+
+Fayssal's code which implements the Faugère-Lachartre approach to linear algebra for Gröbner bases is available[[https://github.com/martani/LELA][on Github]] now. [[http://www.martani.net/][Fayssal]] did a Master's project on linear algebra for Gröbner bases in the team of [[http://www-calfor.lip6.fr/~jcf/][Jean-Charles Faugère]].
+
+ 
+
+
+

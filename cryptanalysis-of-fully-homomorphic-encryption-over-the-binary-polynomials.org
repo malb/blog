@@ -1,0 +1,92 @@
+#+POSTID: 371
+#+DATE: [2011-03-08 Tue 21:07]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography, sage
+#+TAGS: algebraic attacks, algebraic cryptanalysis, homomorphic encryption, linear algebra, sage
+#+TITLE: Cryptanalysis of "Fully Homomorphic Encryption over the Binary Polynomials"
+
+Turns out, I'm not he only one who was inspired to adapt the /Fully Homomorphic Encryption over the Integers/ [[http://eprint.iacr.org/2009/616.pdf][scheme]] by van Dijk, Gentry, Halevi and Vaikuntanathan to polynomials. ﻿﻿﻿ Gu Chunsheng posted a [[http://eprint.iacr.org/2011/110][pre-print]] on the [[http://eprint.iacr.org][IACR eprint server]] this week which essentially instantiates the integer scheme over univariate polynomials over $\mathbb{F}_2$.  Below is my implementation (in [[http://www.sagemath.org][Sage]]) of his somewhat homomorphic scheme:
+
+#+BEGIN_SRC python
+class BinPolySHE:
+    def __init__(self, n):
+        n = n
+        tau = n # choice here
+        P = PolynomialRing(GF(2),'x')
+
+        x = P.gen()
+
+        s = P.random_element(degree=2*n+1)
+        while not (s.is_irreducible() and s.degree()==2*n+1):
+            s = P.random_element(degree=2*n+1)
+
+        b = []
+
+        a0 = P.random_element(2*n+1)
+        if a0.degree() < 2*n+1:
+            a0 += x**(2*n+1)
+            e0 = P.random_element(degree=n-1)
+            b0 = a0*s + x*e0 # deg: 4*n+2
+
+        b.append(b0)
+
+        for i in range(1,tau):
+            ai = P.random_element(degree=n) # choice here
+            ei = P.random_element(degree=n-1)
+            bi = ai*s + x*ei # deg 3*n+1
+            bi = bi % b0
+            b.append(bi)
+
+        self.n = n
+        self.pk = b
+        self.sk = s
+        self.P = P
+    
+    def encrypt(self, m):
+        T = []
+    
+        for i in range(1, len(self.pk)):
+            if random() <= 0.5: # choice here
+                T.append(i)
+    
+        c = self.P(m%2)
+        x = self.P.gen()
+
+        for i in T:
+            e = self.P.random_element(degree=self.n-1)
+            c += self.pk[i] + x*e
+    
+        return c % self.pk[0]
+    
+    def decrypt(self, c):
+        x = self.P.gen()
+        return (c % self.sk) % x
+#+END_SRC
+
+Regular readers of this blog might have noticed that the scheme looks like a bit like a univariate specialisation of[[http://martinralbrecht.wordpress.com/2010/08/19/somewhat-homomorphic-encryption/][this]] PollyCracker scheme. Indeed, just like this first PollyCracker scheme, Gu's scheme is badly broken. Below, the source code of my attack:
+
+#+BEGIN_SRC python
+ def attack(self, c):
+     A = Matrix(GF(2),len(self.pk),4*self.n+2)
+
+     x = self.P.gen()
+
+     for i,b in enumerate(self.pk):
+     for j in b.exponents():
+     A[i,A.ncols()-j-1] = 1
+     E = A.echelon_form(reduced=False)
+
+     pk2 = []
+     for i,r in enumerate(A.rows()):
+         b = 0
+         for j in range(A.ncols()):
+             b += E[i,A.ncols()-j-1]*x**j
+             pk2.append(b)
+
+     for b in pk2:
+         if c[b.degree()]:
+             c -= b
+     return c % x
+#+END_SRC
+
+The attack proceeds pretty much as discussed [[http://martinralbrecht.wordpress.com/2011/02/01/cryptanalysis-of-my-somewhat-homomorphic-pollycracker-scheme/][here]]: we can compute a triangular basis for the span of the public key and use that to perform all eliminations. Since the noise does not grow with each addition and does not affect the constant coefficient (which holds the message), we can essentially ignore it.

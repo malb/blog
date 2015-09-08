@@ -1,0 +1,19 @@
+#+POSTID: 1055
+#+DATE: [2014-05-15 Thu 10:01]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography
+#+TAGS: cryptography, iacr
+#+TITLE: IACR Statement
+
+The IACR membership meeting at Eurocrypt produced a s[[https://www.iacr.org/news/index.php?p=detail&id=3675#3675][tatement on mass surveillance]]:
+
+#+BEGIN_QUOTE
+*Statement of Principle from the IACR Membership on Mass Surveillance and the Subversion of Cryptography*
+
+The membership of the IACR repudiates mass surveillance and the undermining of cryptographic solutions and standards. Population-wide surveillance threatens democracy and human dignity. We call for expediting research and deployment of effective techniques to protect personal privacy against governmental and corporate overreach.
+#+END_QUOTE
+
+I could think of stronger words, but then, I'm not trying to speak for all cryptographers.
+
+
+

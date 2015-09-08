@@ -1,0 +1,19 @@
+#+POSTID: 853
+#+DATE: [2012-08-23 Thu 17:16]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri, sage
+#+TAGS: givaro, linear algebra, m4rie, polynomials
+#+TITLE: M4RIE: support for finite fields up to degree 16 added
+
+I committed support for finite fields up to degree 16 to M4RIE a few days ago. Furthermore, the dependency on [[http://givaro.forge.imag.fr/][Givaro]] for constructing finite fields was dropped.
+
+Don't get me wrong. Givaro is a fine library, much better than what I wrote for M4RIE. However, it is a C++ library while [[http://m4ri.sagemath.org][M4RIE]] is a C library and the little functionality of finite field arithmetic needed in M4RIE was not that hard to add natively. In the past M4RIE relied on Givaro for running tests and benchmarks, the core library was always free of C++. However, as we plan to add support for high-degree polynomials over matrices over$\mathbb{F}_2$, we need the ability to create finite extensions of $\mathbb{F}_2$ on the fly in the core library.
+
+That said, although M4RIE now supports $\mathbb{F}_{2\^e}$ for $2 \leq e \leq 16$, you should not expect stelar performance for $e > 8$. I did not implement asymptotically fast polynomial multiplication for higher degrees which means the library falls back to the naive quadratic algorithm. The performance of which is not great, as the follow plot of CPU times (/y/ axis) for various degrees (/x/ axis) shows.
+
+[[http://martinralbrecht.files.wordpress.com/2012/08/multiplication.png][[[http://martinralbrecht.files.wordpress.com/2012/08/multiplication.png]]]]
+
+Hence, the next steps are to improve performance for degrees up to 16 and to implement support for polynomials of reasonably high degrees ($\approx 2\^{16}$). There won't be support for finite fields of this dimension though, only polynomials will be supported.
+
+
+

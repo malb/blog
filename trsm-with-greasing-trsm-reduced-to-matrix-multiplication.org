@@ -1,0 +1,28 @@
+#+POSTID: 261
+#+DATE: [2010-11-19 Fri 01:47]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri
+#+TAGS: linear algebra, m4ri, trsm
+#+TITLE: TRSM with Greasing == TRSM reduced to Matrix Multiplication
+
+Recently, I met Sylvain Lachartre (one of the authors of "[[http://www-salsa.lip6.fr/~jcf/Papers/PASCO2010.pdf][Parallel Gaussian elimination for Gröbner bases computations in finite fields]]") who mentioned to me that his thesis contains a description of Triangular System Solving with Matrices (TRSM) using Greasing or the M4RM caching trick. Since TRSM is a step in asymptotically fast echelon form computations, I figured I should implement it as well in M4RI (note, I haven't actually read his thesis, so he might have a much more clever idea than I did). That's what I did today.[[http://martinralbrecht.files.wordpress.com/2010/11/benchmarketing-trsm-normal-m4ri.png][[[http://martinralbrecht.files.wordpress.com/2010/11/benchmarketing-trsm-normal-m4ri.png?w=300]]]]
+
+As one can easily see the speed improvement - while noticeable - is not that overwhelming (red is the old code, blue is the new code, which doesn't use the reduction to matrix multiplication). I think the reason for this is that we implicitly had this algorithm implemented already. [[http://membres-liglab.imag.fr/pernet/][Clément Pernet]], who implemented all the [[http://bitbucket.org/malb/m4ri/src/38cf7faf5958/src/trsm.c][TRSM code]] in M4RI, implemented TRSM recursively by reducing to matrix multiplication (in order to make use of our asymptotically fast matrix multiplication routines) using the following scheme:
+
+#+BEGIN_EXAMPLE
+         __________   ______
+     \ U00|    | |      |
+      \   |U01 | |      |
+       \  |    | |  B0  |
+        \ |    | |      |
+         \|____| |______|
+          \    | |      |
+           \U11| |      |
+            \  | |  B1  |
+             \ | |      |
+              \| |______|
+#+END_EXAMPLE
+
+Using this cutting up of the matrix, one can compute the "Upper Left" TRSM of U and B as follows: First compute TRSM on U11 and B1. Then multiply U10 times B1 and add it to B0 and finally compute TRSM on U00 and B0. Then, B will contain X such that U*X = B.
+
+Now, if the matrix multiply is implemented using M4RM (which it is in the M4RI library for small dimensions), then the multiplication avoids exactly the same redundant additions of rows from B as a straight-forward TRSM with Greasing would. Of course, one isn't limited to two blocks for B, but can cut it up into finer stripes. I assume that the actual performance improvements we see with the new code are due to better choices for cutting up B.

@@ -1,0 +1,52 @@
+#+POSTID: 946
+#+DATE: [2013-10-02 Wed 14:34]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography, misc
+#+TAGS: cryptography, dtu, job
+#+TITLE: Postdoc Positions in DTU Crypto Group
+
+I can highly recommend working [[http://www.dtu.dk/english/career/9dd9890a-07a7-4d88-8ceb-79c59636d4b2.aspx][here]]!
+
+#+BEGIN_QUOTE
+Department of Applied Mathematics and Computer Science, Technical University of Denmark, [[http://www.compute.dtu.dk/english][www.compute.dtu.dk/english]] would like to invite applications for two Postdoc positions of each 18 months, both starting 1 January 2014 or soon thereafter. The topic of the project is lightweight cryptology, which regards scenarios involving strongly resource-constrained devices.
+
+*Qualifications*
+
+Candidates for the first postdoc position should have a strong cryptanalytic and mathematical background and be able to analyze the security of ciphers to be designed. Candidates for the second postdoc should have a solid background in hardware design and automation and be able to work on the physical constraints and optimization of the hardware implementations.
+
+All candidates must have a PhD degree in applied mathematics, computer science, or engineering or academic qualifications equivalent to the PhD degree in engineering and they should have demonstrated qualifications in cryptology. The candidate must be well versed in written and spoken English.
+
+*We offer*
+
+We offer an interesting and challenging job in an international environment focusing on education, research, public-sector consultancy and innovation, which contribute to enhancing the economy and improving social welfare. We strive for academic excellence, collegial respect and freedom tempered by responsibility. The Technical University of Denmark (DTU) is a leading technical university in northern Europe and benchmarks with the best universities in the world.
+
+*Salary and terms of appointment*
+
+The Danish Research Council finances the positions. The appointment will be based on the collective agreement with the Confederation of Professional Associations. The allowance will be agreed with the relevant union.
+
+*Further Information*
+
+Further information can be obtained from Professor Lars R. Knudsen, DTU Compute, e-mail: lrkn (at) dtu.dk.
+
+You can read more about DTU Compute on [[http://www.compute.dtu.dk/english][www.compute.dtu.dk/english]].
+
+*Application procedure*
+
+Please submit your online application no later than 15 November 2013. Applications must be submitted as one PDF file containing all materials to be given consideration. To apply, please open the link "Apply online," fill in the online application form, and attach all your materials in English in one PDF file. The file must include:
+
+  -  Application (cover letter)
+  -  CV
+  -  Diploma
+  -  List of publications
+  
+Applications and enclosures received after the deadline will not be considered.
+
+All interested candidates irrespective of age, gender, disability, race, religion or ethnic background are encouraged to apply.
+
+DTU Compute conducts research and education in the fields of mathematical modeling and computer science. The expanding mass of information and the increasingly complex use of advanced technology in society demand development of advanced computer based mathematical models and calculations. The unique competences of the institute are in demand in IT innovation and production.
+
+DTU is a technical university providing internationally leading research, education, innovation and public service. Our staff of 5,000 advance science and technology to create innovative solutions that meet the demands of society; and our 9,000 students are educated to address the technological challenges of the future. DTU is an independent academic university collaborating globally with business, industry, government, and public agencies
+#+END_QUOTE
+
+
+

@@ -1,0 +1,13 @@
+#+POSTID: 90
+#+DATE: [2010-01-14 Thu 12:40]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography
+#+TAGS: cryptography
+#+TITLE: ESC 2010: My Rump Session Talk on KTANTAN32
+
+Yesterday we had the [[https://cryptolux.org/ESC/Rump_Session][Rump Session]] here at the [[https://cryptolux.org/ESC/ESC_2010][Early Symmetric Cryptography]] Seminar of 2010. I gave [[http://www.informatik.uni-bremen.de/~malb/talks/20100113%20-%20KTANTAN32%20-%20ESC2010%20-%20Rump.pdf][a brief update]] about some experiments we ran against [[http://www.cs.technion.ac.il/~orrd/KATAN/][KTANTAN32]]. KTANTAN32 is a 32-bit blocksize block cipher which takes an 80-bit key. Its structure is quite simple, only two bits are updated in the internal state per round. The cipher has 254 rounds in total. We can break up to 65 rounds using 32 chosen plaintexts by applying the “correlated message” [[http://eprint.iacr.org/2008/402][technique]] by Jean-Charles Faugère and Ludovic Perret with a SAT solver. We can break up to 113 rounds uing $\approx 2\^{31}$ chosen plaintext-ciphertext pairs by applying [[http://eprint.iacr.org/2008/177][Attack-A]] with a SAT solver. All this is not very exciting since we don't even break half the number of rounds. Well, it's a rump session presentation.
+
+*Update:* I should add, what makes these attacks slightly interesting. The KTANTAN32 designers point out in their proposal that after 32 rounds every state bit has degree at least two. After another 16 rounds we can expect at least degree four. Yet, we are able to solve 62 rounds with a degree bound of two by using 32 plaintexts, i.e. we add pairs and reduce the degree (using a SAT solver we can go up to 65 rounds). For the differential-style attack, the interesting figure is not 113 but the fact that we use a 71 round characteristic, i.e. we mount a 113-71 = 42R attack. Of course, roughly speaking 16 rounds of KTANTAN32 are equivalent to one “traditional” block cipher round.
+
+
+

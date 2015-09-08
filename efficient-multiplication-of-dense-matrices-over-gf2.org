@@ -1,0 +1,17 @@
+#+POSTID: 47
+#+DATE: [2008-11-12 Wed 19:22]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri
+#+TAGS: m4ri, pre-print
+#+TITLE: Efficient Multiplication of Dense Matrices over GF(2)
+
+#+BEGIN_QUOTE
+[[http://arxiv.org/abs/0811.1714][We describe]] an efficient implementation of a hierarchy of algorithms for multiplication of dense matrices over the field with two elements (GF(2)). In particular we present our implementation - in the M4RI library - of Strassen-Winograd matrix multiplication and the “Method of the Four Russians” multiplication (M4RM) and compare it against other available implementations. Good performance is demonstrated on on AMD's Opteron and particulary good performance on Intel's Core 2 Duo. The open-source M4RI library is available stand-alone as well as part of the Sage mathematics software.
+
+In machine terms, addition in GF(2) is logical-XOR, and multiplication is logical-AND, thus a machine word of 64-bits allows one to operate on 64 elements of GF(2) in parallel: at most one CPU cycle for 64 parallel additions or multiplications. As such, element-wise operations over GF(2) are relatively cheap. In fact, in this paper, we conclude that the actual bottlenecks are memory reads and writes and issues of data locality. We present our empirical findings in relation to minimizing these and give an analysis thereof.
+#+END_QUOTE
+
+*Related News:* My shiny new version of Magma 2.14-17 seems to perform better than Magma 2.14-14 for matrix multiplication over *F_2* on the Core 2 Duo. So I updated the [[http://m4ri.sagemath.org/performance.html][performance data]] on the M4RI website. However, the [[https://magma.maths.usyd.edu.au/magma/export/changelog.shtml][changelog]] doesn't mention any improvements in this area. Btw. [[http://www.google.com/search?q=Magma+2.14][searching for “Magma 2.14”]] returns the M4RI website first for me, which feels wrong on so many levels. Finally, M4RI is [[https://bugzilla.redhat.com/show_bug.cgi?id=470173][being packaged]] for Fedora Core.
+
+
+

@@ -1,0 +1,18 @@
+#+POSTID: 96
+#+DATE: [2009-03-10 Tue 12:45]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography
+#+TAGS: cryptography, present cipher
+#+TITLE: A Simple Bitslice Implementation of PRESENT
+
+I had a hunch the other day which required $2\^{36}$ plaintext---ciphertext pairs to be tested. While the hunch turned out to be wrong, at least I got a simple
+[[http://en.wikipedia.org/wiki/Bit_slicing][bitslice]] implementation of [[http://www.ist-ubisecsens.org/publications/present_ches2007.pdf][PRESENT]] (in pure C99) [[http://bitbucket.org/malb/algebraic_attacks/src/tip/present_bitslice.c][out of it]]. The implementation is far from optimal:
+
+-  it is pure C but critical paths should be pushed down to assembly,
+-  it doesn't use SSE2's 128-bit instructions but it should, and
+-  the S-Box is hardly optimised (it is simply ANF).
+
+Still, it is better than what I found on the web via a quick Google search. On my 2.33 Ghz Core2Duo Macbook Pro it seems to run at 28 cycles per byte for long messages (not counting the key schedule). For comparison, I think the current speed of AES in bit slice mode is like 10 cycles per byte on the Core2. If I need some performance in the future, I might sit down and improve the implementation (such that it doesn't totally suck) but for now I have to attend to other projects.
+
+
+

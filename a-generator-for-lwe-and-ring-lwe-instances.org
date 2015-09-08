@@ -1,0 +1,17 @@
+#+POSTID: 906
+#+DATE: [2013-04-29 Mon 15:59]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography, sage
+#+TAGS: cryptography, lwe, ring-lwe, sage
+#+TITLE: A Generator for LWE and Ring-LWE Instances
+
+We're ready to announce our [[http://en.wikipedia.org/wiki/Learning_with_errors][LWE]]/Ring-LWE [[https://bitbucket.org/malb/lwe-generator/wiki/Home][generators]] for[[http://trac.sagemath.org/sage_trac/ticket/14478][Sage]]:
+
+#+BEGIN_QUOTE
+We introduce software for the generation of instances of the LWE and Ring-LWE problems, allowing both the generation of generic instances and also particular instances closely-related to those arising from cryptomania proposals in the literature. Our goal is to allow researchers to attack different instances in order to assess the practical hardness of LWE and Ring-LWE. This will in turn give insight to the practical security of cryptographic systems based on both problems.
+#+END_QUOTE
+
+[[https://www.iacr.org/news/index.php?p=detail&id=2321#2321][IACR Announcement]], [[http://aleph.sagemath.org/?z=eJzLyU9M0VDKKCkpKLbS10_KLEkqTc5OLdHLL0rXz03MSdLPKU_VTU_NSy1KLMkv0i9KLNcvySwAieoVVCpp8nIBWQq2CkGp6allGnm2xgZAoYKizLwSBaAEWFZDEwD2OyF9&lang=sage][interactive demo]].
+
+
+

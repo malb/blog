@@ -1,0 +1,156 @@
+#+POSTID: 944
+#+DATE: [2013-10-02 Wed 09:18]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography
+#+TAGS: call for papers, cfp, confer, cryptography, fse
+#+TITLE: FSE 2014 - Call for Papers
+
+The [[http://fse2014.isg.rhul.ac.uk/index.php?p=cfp][Call for Papers]] for 21st International Workshop on Fast Software Encryption (aka FSE) is out. FSE will be great for at least three reasons:
+
+1. It is FSE.
+2. It is in London's [[http://www.nhm.ac.uk/][Natural History Museum]].
+3. The call for paper explicitly asks for "analysis and evaluation tools" to be submitted.
+
+Happy submitting.
+
+#+BEGIN_QUOTE
+    * Call for Papers
+
+The Call for Papers for FSE 2014 is also available in [[http://fse2014.isg.rhul.ac.uk/pdf/fse2014-cfp.pdf][PDF]] format.
+
+Important Dates
+  Submission deadline:
+
+  12 November 2013 (23:59 UTC)
+  Notification to authors:
+
+  18 January 2014
+  Preproceedings version deadline:
+
+  13 February 2014
+  Workshop:
+
+  3-5 March 2014
+  Proceedings version deadline:
+
+  30 April 2014
+
+  *** General Information
+
+FSE 2014 is the 21st edition of Fast Software Encryption workshop, and one of the International Association for Cryptologic Research (IACR) flagship annual events. FSE 2014 will take place in London, on March 3-5, 2014. Original research papers on symmetric cryptology are invited for submission to FSE 2014. The workshop concentrates on fast and secure primitives for symmetric cryptography, including the design and analysis of block ciphers, stream ciphers, encryption schemes, hash functions, and message authentication codes, (cryptographic) permutations, authenticated encryption schemes, and analysis and evaluation tools.
+
+  *** Instruction for Authors
+
+Submissions must not substantially duplicate work that any of the authors has published in a journal or a conference/workshop with proceedings, or has submitted/is planning to submit before the author notification deadline to a journal or other conferences/workshops that have proceedings. Accepted submissions may not appear in any other conference or workshop that has proceedings. IACR reserves the right to share information about submissions with other program committees to detect parallel submissions and the [[http://www.iacr.org/docs/irregular.pdf][IACR policy on irregular submissions]] will be strictly enforced.
+
+The submission must be written in English and be anonymous, with no author names, affiliations, acknowledgments, or obvious references. It should begin with a title, a short abstract, and a list of keywords. The final version of accepted papers will have to follow the [[http://www.springer.com/computer/lncs?SGWID=0-164-12-73062-0][LNCS guidelines]] using Springer's standard fonts, font sizes, and margins with a total page limit of 20 pages including references and appendices. Submissions to FSE 2014 should follow the same format.
+
+A submission may include additional supporting information beyond the 20-page LNCS limit. If authors believe that more details are essential to substantiate the claims of their paper, they are encouraged to use this space to include proofs, source code, and other information allowing verification of results; unverifiable papers risk rejection. However, committee members will read any additional supporting information provided at their discretion, so the submission should be intelligible and self-contained within 20 pages.
+
+The introduction should summarize the contributions of the paper at a level appropriate for a non-specialist reader. Committee members are not required to read appendices; the paper should be intelligible without them. Submissions not meeting these guidelines risk rejection without consideration of their merits.
+
+Submissions to FSE 2014 should be submitted electronically in PDF format. A detailed description of the electronic submission procedure will be available on [[http://fse2014.isg.rhul.ac.uk/index.php?p=submission][this page]]. The authors of submitted papers guarantee that their paper will be presented at the workshop if it is accepted. A preliminary list of accepted papers, not including conditional accepts, will be published immediately after the decision finalized, with the information supplied by the authors at submission time.
+
+  *** Proceedings
+
+Preproceedings will be available at the workshop in electronic form. Proceedings will be published in [[http://www.springer.com/computer/lncs/][Springer-Verlag's Lecture Notes in Computer Science]] series. Authors of accepted papers will be required to complete the [[http://www.iacr.org/docs/copyright_form.pdf][IACR copyright assignment form]] for their work to be published in the workshop final proceedings.
+
+  *** Program Committee
+
+  Martin Albrecht
+
+  Technical University of Denmark, Denmark
+  Elena Andreeva
+
+  KU Leuven, Belgium
+  Kazumaro Aoki
+
+  NTT, Japan
+  Frederik Armknecht
+
+  University of Mannheim, Germany
+  Daniel J. Bernstein
+
+  University of Illinois at Chicago, USA, and
+  Technische Universiteit Eindhoven, Netherlands
+  John Black
+
+  University of Colorado at Boulder, USA
+  Anne Canteaut
+
+  Inria Paris-Rocquencourt, France
+  Carlos Cid (Co-chair)
+
+  Royal Holloway University of London, UK
+  Joan Daemen
+
+  STMicroelectronics, Belgium
+  Christophe De Cannière
+
+  Google, Switzerland
+  Orr Dunkelman
+
+  University of Haifa, Israel
+  Martin Hell
+
+  Lund University, Sweden
+  Dmitry Khovratovich
+
+  University of Luxembourg, Luxembourg
+  Gregor Leander
+
+  RU Bochum, Germany
+  Subhamoy Maitra
+
+  ISI Kolkata, India
+  Mitsuru Matsui
+
+  Mitsubishi Electric, Japan
+  Florian Mendel
+
+  TU Graz, Austria
+  Svetla Nikova
+
+  KU Leuven, Belgium
+  Elisabeth Oswald
+
+  University of Bristol, United Kingdom
+  Thomas Peyrin
+
+  Nanyang Technological University, Singapore
+  Josef Pieprzyk
+
+  Macquarie University, Australia
+  Christian Rechberger (Co-chair)
+
+  Technical University of Denmark, Denmark
+  Martijn Stam
+
+  University of Bristol, United Kingdom
+  François-Xavier Standaert
+
+  Université catholique de Louvain, Belgium
+  Serge Vaudenay
+
+  EPFL, Switzerland
+  Hongbo Yu
+
+  Tsinghua Univeristy, China
+
+  *** Workshop Information and Stipends
+
+The primary source of information for FSE 2014 is the [[http://fse2014.isg.rhul.ac.uk/][workshop website]]. A limited number of stipends are available to those unable to obtain funding to attend the workshop. Students whose papers are accepted and who will present the paper themselves, are encouraged to apply if such assistance is needed. Requests for stipends should be sent to the [[mailto:fse2014@rhul.ac.uk][general chairs]].
+  Carlos Cid
+
+  Christian Rechberger
+  Royal Holloway, University of London
+
+  DTU - Technical University of Denmark
+  Egham, TW20 0EX
+
+  DK-2800 Lyngby
+  United Kingdon
+
+  Denmark
+
+#+END_QUOTE

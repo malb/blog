@@ -1,0 +1,22 @@
+#+POSTID: 592
+#+DATE: [2011-09-22 Thu 15:42]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri, sage
+#+TAGS: linear algebra, m4rie, ple
+#+TITLE: Asymptotically fast Gaussian elimination for M4RIE
+
+I guess one perk of being on vacation is that one can get more work done. Hence, I finished implementing PLE decomposition (formerly known as PLS decomposition) and hence asymptotically fast Gaussian elimination. The implementation uses two matrix representations: =mzd_slice_t= and =mzed_t=. The former is optimised for implementing Karatsuba multiplication (cf., [[http://martinralbrecht.wordpress.com/2010/08/15/karatsuba-multiplication-of-dense-matrices-over-gf2e/][here]]) and the latter is optimised for using Travolta tables (cf., [[http://martinralbrecht.wordpress.com/2010/07/21/m4rie/][here]]). That is, multiplication is based on Karatsuba while the PLE base case is based on Travolta tables. The same applies to TRSM where the base case is also implemented using Travolta tables.
+
+There is still a lot to be done:
+
+- Both TRSM and PLE base cases use only one Travolta table while Gaussian elimination and multiplication use 6 and 8 in parallel respectively.
+- There way too much copying going on. For example, I was lazy and implemented TRSM upper left with respect to matrices which do not start at offset 0 with respect to a machine word by simply copying the whole matrix out. Hence, we're wasting memory where we shouldn't.
+- PLE isn't cache efficient yet and I assume that the code isn't very good for sparse-ish matrices (cf. the journey in M4RI improving this)
+
+Still, the results are quite nice already. Below, the left hand side plots the wall time of computing the reduced row echelon form of $m \times (m + 1000)$ random matrices over $\mathbb{F}_{2\^e}$. The right hand side expresses efficiency by dividing the running time by $2mnr\^{\omega-2}$, i.e., the number of operations (fingers crossed I didn't screw up the constant).[[http://martinralbrecht.files.wordpress.com/2011/09/travolta-vs-ple.png][[[http://martinralbrecht.files.wordpress.com/2011/09/travolta-vs-ple.png]]]]The fact, that we're not /there/ yet, is clearly expressed by the poor performance of the asymptotically fast code ("PLE") for small dimensions ($< 3,000$).
+
+Finally, it should be mentioned, that the green plot ("Travolta") already is considerably faster than Magma, which - as far as I know - is the fastest other implementation of this kind of operation over these fields. Below, Travolta based elimination is compared with Magma's implementation, where /blue/ness $b$ expresses a speed-up factor of $2\^b$ (/red/ness the other way around).[[http://martinralbrecht.files.wordpress.com/2011/09/benchmarketing2d-elimination-magma-sage.png][[[http://martinralbrecht.files.wordpress.com/2011/09/benchmarketing2d-elimination-magma-sage.png]]]]The code is on [[http://bitbucket.org/malb/m4rie][bitbucket]].
+
+
+
+

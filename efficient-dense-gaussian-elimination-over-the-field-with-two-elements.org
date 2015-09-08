@@ -1,0 +1,19 @@
+#+POSTID: 675
+#+DATE: [2011-11-23 Wed 14:32]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri, sage
+#+TAGS: linear algebra, m4ri, matrix decomposition, paper, pre-print, sage
+#+TITLE: Efficient dense Gaussian elimination over the field with two elements
+
+Finally, we finished our paper about Gaussian elimination in the M4RI library.
+
+#+BEGIN_QUOTE
+*Abstract:* In this work we describe an efficient implementation of a hierarchy of algorithms for Gaussian elimination upon dense matrices over the field with two elements ($\mathbb{F}_2$). We discuss both well-known and new algorithms as well as our implementations in the M4RI library, which has been adopted into Sage. The focus of our discussion is a block iterative algorithm for PLE decomposition which is inspired by the M4RI algorithm. The implementation presented in this work provides considerable performance gains in practice when compared to the previously fastest implementation. We provide performance figures on x86_64 CPUs to demonstrate the alacrity of our approach.
+#+END_QUOTE
+
+The sources of this document are available [[https://bitbucket.org/cpernet/pluqm4ri/overview][on bitbucket]]. But I also compiled a [[http://martinralbrecht.files.wordpress.com/2011/11/ple.pdf][PDF]].
+
+*Update:* [[http://arxiv.org/abs/1111.6549][arXiv link]].
+
+
+

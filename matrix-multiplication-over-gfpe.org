@@ -1,0 +1,15 @@
+#+POSTID: 884
+#+DATE: [2013-01-16 Wed 13:41]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography, m4ri, sage
+#+TAGS: complexity, linear algebra, m4ri, m4rie, matrix multiplication, mixed integer programming, sage
+#+TITLE: Matrix Multiplication over GF(p^e)
+
+After my [[http://martinralbrecht.files.wordpress.com/2010/07/20111219_-_m4ri_-_warwick.pdf][talk]] at Sage Days 35 in Warwick (that was in winter 2011) David Harvey had an idea on how to speed up matrix multiplication over $\mathbb{F}_{p\^n}$. We spend some time on this in Warwick and developed this idea further (adding fun stuff like Mixed Integer Programming in the process) but did not get around to do much on this project in the mean time (I have explained the idea at the end of my [[https://martinralbrecht.files.wordpress.com/2010/07/20120601_-_la_-_mykonos.pdf][talk]] in Mykonos, though).
+
+Just now, in a conversation with Richard Parker I was reminded of this dormant project, i.e., the question of how many multiplications i $\mathbb{F}_p$ it takes to do a multiplication in $\mathbb{F}_{p\^n}$. In particular, I recalled to have written [[https://bitbucket.org/malb/research-snippets/src/a1121270ef6dbac83eefaeb280e05a10e26e9d67/matrix-multiplication-gfq.py?at=default][some code for Sage]] which gives some upper bound to this answer which is better than Karatsuba.
+
+Well, here's an [[http://aleph.sagemath.org/?z=eJwNjUtuwjAUAPc5RXbYUoI_bQNFisRNIn-ewxNObOxHgdvXs5zFTEzGs8ONKNeLEBbJPt0d6JjKKjYTrShQwRR3G-uOOQNVUcxLGKW00icJYfLWuPMXQDBg9VmC_DFKgp7g10-n1qCC73F7RsIc0RnCtI9reBzz58C7CrT8QbGpAlO8u-JOUIyjzkPoF5bniJVYLrhBZXpQUnI-7HON6KEw1YT-HhTnl65vtFkbLS5tOcIb6bOsgT3mPPQe1nnn_6u-TvM=&lang=sage][interactive demo]] ... gosh, I /love/ the Sage cell server.
+
+
+

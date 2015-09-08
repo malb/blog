@@ -1,0 +1,35 @@
+#+POSTID: 116
+#+DATE: [2010-07-21 Wed 11:54]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri, sage
+#+TAGS: linear algebra, m4ri, m4rie
+#+TITLE: M4RIE
+
+My coding spring project here at [[http://wiki.sagemath.org/days24][Sage Days 24]] was/is to write a [[http://bitbucket.org/malb/m4rie/][new library]] for dense linear algebra over small extensions of GF(2).
+
+The main idea is to represent matrices over GF(2\^e) internally as [[http://bitbucket.org/malb/m4ri/][M4RI]] matrices over GF(2) in a row major flat representation. This allows to  [[http://bitbucket.org/malb/m4rie/src/tip/src/gf2e_matrix.h][re-use]] many of the M4RI functions such as addition of rows and matrices, stacking, augmenting etc.
+
+For the elimination and multiplication base  cases we use a simple trick inspired by M4RI: Assume we found a pivot, now we need to rescale it and then add the right multiple of it to every row with a nonzero entry in the same column. If we have an n x n matrix we expect to perform n\^2 multiplications and n\^2 additions per pivot. However, if the field is small then we can precompute all possible multiplies of our pivot row and store them in a table. Then, we use this table as a lookup to perform the elimination of other rows. This costs 2\^k * n multiplications and  n\^2 additions per pivot. Note that M4RI has efficient functions to perform the look-up + elimination part.
+
+We haven't implemented any asymptotically fast methods yet but I hope to finish with Strassen multiplication this week. Asymptotically fast elimination requires slightly more infrastructure (TRSM, taking care of  offsets which are not zero % 64 etc.) If anybody is interested in helping out that would be  greatly appreciated. Also, I guess one should also try M4RI (the algorithm) for GF(2\^2).
+
+*Some first results*
+
+In these plots red means that Magma is faster by a factor of e\^abs(red) and blue means that our code is faster by a factor of e\^abs(blue). More details can be found on the [[http://wiki.sagemath.org/days24/projects/gf2e][SD24 wiki]] page.
+
+To get a sense for absolute numbers,  here are some preliminary benchmarks for row echelon forms of dense  random n x n matrices over GF(2\^4)
+
+#+BEGIN_EXAMPLE
+|| n    || Sage 4.5 || NTL/2 || Magma || M4RIE (old)|| M4RIE (new) ||
+|| 1000 ||    49.49 || 18.84 || 0.090 || 0.097      || 0.046       ||
+|| 2000 ||   429.05 || 149.11|| 0.510 || 0.529      || 0.28        ||
+|| 3000 ||  1494.33 ||526.57 || 1.640 || 2.315      || 1.00        ||
+#+END_EXAMPLE
+
+
+Bottom line it is much much faster (> 1,000x) than what we have in Sage right now (which is the generic implementation). Also note that switching to NTL would not improve things much.
+
+I should point out that the strategy for multiplication in Tom and  Robert's paper Bitslicing and the [[http://arxiv.org/abs/0901.1413][Method of Four Russians Over Larger Finite Fields]] is likely to be better.  Judging from the timings in that paper we are about a factor of two  behind them. I plan to implement/port their very cool trick for finite  extension fields at some point in the future. The trick is limited to  multiplication as far as I understand it thus it might make still sense to consider my representation for the elimination base case etc.
+
+
+

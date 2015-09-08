@@ -1,0 +1,11 @@
+#+POSTID: 217
+#+DATE: [2010-10-03 Sun 14:03]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: m4ri, sage
+#+TAGS: 
+#+TITLE: Helping out with M4RI and M4RIE
+
+[[http://m4ri.sagemath.org/index.html][M4RI]] and [[http://m4ri.sagemath.org/index.html][M4RIE]] are two libraries I maintain for fast operations on matrices over $\mathbb{F}_2$ and $\mathbb{F}_{2\^e}$ respectively. I was just asked by a fellow Sage developer whether I could provide some ideas for how to contribute. Thus, I created some enhancement tickets for [[http://bitbucket.org/malb/m4rie/issues?status=new&status=open][M4RIE]] and updated some tickets for [[http://bitbucket.org/malb/m4ri/issues?status=new&status=open][M4RI]]. Let me know if anything is unclear, if you can think of other projects and if you want to help out which would be greatly appreciated.
+
+
+

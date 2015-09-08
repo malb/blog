@@ -1,0 +1,11 @@
+#+POSTID: 300
+#+DATE: [2011-01-12 Wed 11:00]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: linux, misc
+#+TAGS: autotools, programming
+#+TITLE: Recommended Reading
+
+[[http://www.lrde.epita.fr/~adl/dl/autotools.pdf][Using GNU Autotools]] is a long presentation on Autotools, their features and how to use them. Don't hate them before you know them :)
+
+
+

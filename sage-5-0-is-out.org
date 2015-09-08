@@ -1,0 +1,29 @@
+#+POSTID: 768
+#+DATE: [2012-05-16 Wed 21:35]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: sage
+#+TAGS: sage
+#+TITLE: Sage 5.0 is out
+
+It took a while but it's finally out: Sage 5.ooohhhhh. Official announcement (edited):
+
+#+BEGIN_QUOTE
+Sage 5.0 was released on 14 May 2012. It is available in source and binary form from:  [[http://www.google.com/url?sa=D&q=http://www.sagemath.org/download.html&usg=AFQjCNFh3HeAp4QnlZe_2M0ge7wWrEdeXA][http://www.sagemath.org/download.html]]Sage ([[http://www.google.com/url?sa=D&q=http://www.sagemath.org/&usg=AFQjCNE2ZJY1XQ7LSDVZzYGrqp_Dkp2bIQ][http://www.sagemath.org/]]) is developed by volunteers and combines  over 90 open source packages. For instructions about installing Sage, see [[http://www.google.com/url?sa=D&q=http://www.sagemath.org/doc/installation&usg=AFQjCNHgI3xtv9kgi1sFir5oAHUFCMptJg][http://www.sagemath.org/doc/installation]]
+
+The following page lists the platforms on which Sage should work: [[http://www.google.com/url?sa=D&q=http://wiki.sagemath.org/SupportedPlatforms&usg=AFQjCNFEEepIc_eXCoNu9sTBL4AOKUjtew][http://wiki.sagemath.org/SupportedPlatforms]]
+
+If you have any questions and/or problems, please report them to any of these Google groups:
+
+  -  sage-support: [[http://www.google.com/url?sa=D&q=http://groups.google.com/group/sage-support&usg=AFQjCNH6orY-nbUStTgkjBcwhVOTJGw9Ug][http://groups.google.com/group/sage-support]]
+  -  sage-devel: [[http://www.google.com/url?sa=D&q=http://groups.google.com/group/sage-devel&usg=AFQjCNGTPa0bdeOM9_O6xI_87C6JWXMaew][http://groups.google.com/group/sage-devel]]
+  
+You can also drop by in /#sagemath/ on freenode or post your questions at [[http://www.google.com/url?sa=D&q=http://ask.sagemath.org/&usg=AFQjCNGrjD99ev7V6rXCqNbzmsc9QGhg8A][http://ask.sagemath.org/]]
+
+The following 126 people contributed to this release. Of those, 22 made their first contribution to Sage:
+
+Alex Ghitza, Alexander Dreyer , Aly Deines, *Anders Buch*, Andrey Novoseltsev, André Apitzsch, Anne Schilling, *Aran Carmon*, Benjamin Jones, *Benjamin Lundell*, Burcin Erocal, *Cassie Williams*, Chris Wuthrich, Christian Stump, *Christopher Swenson*, Craig Citro, Dan Drake, Daniel Krenn, David Coudert, David Eklund, David Kirkby, David Kohel, David Loeffler, David Roe, Dmitrii Pasechnik, Douglas McNeil, *Ege Sertçetin*, Emil Widmann, Fidel Barrera-Cruz, Florent Hivert, Francis Clarke, Franco Saliola, François Bissey, *Frederic Han*, Fredrik Johansson, *Fredrik Stromberg*, Frithjof Schulze, Frédéric Chapoton, Georg S. Weber, Harald Schilly, *Hartmut Monien*, Hugh Thomas, *Itai Bar-Natan*, Ivan Andrus, Ivo Hedtke, Jaap Spies, *Jan Vonk*, Jason Grout, Javier López Peña, Jean-Pierre Flori, Jennifer Balakrishnan, Jeroen Demeyer, *Jim Stark*, *Joal Heagney*, Johan Bosman, *Johannes Klaus Fichte* , John Cremona, John Palmieri, John Perry, Jonathan Bober, Julian Rueth, Julien Puydt, Justin Walker, *Karen T. Kohl*, Karl-Dieter Crisman, Kelvin Li, Kenneth Smith, Keshav Kini, Kiran Kedlaya, Kwankyu Lee, Leif Leonhardy, Luca De Feo, Luis Felipe Tabera Alonso, Lukáš Lánský, Maarten Derickx, *Marc Masdeu*, Marc Mezzarobba, Marco Streng, Mariah Lenox, Mario Pernici, *Mark Shimozono*, Marshall Hampton, Martin Albrecht, Martin Raum, *Michael Boratko*, Michael Brickenstein, Michael Orlitzky, Michiel Kosters, Mike Hansen, Minh Van Nguyen, Moritz Minzlaff, Nathan Carter, Nathann Cohen, Nicolas Borie, Nicolas M. Thiéry, Niels Ranosch, Niles Johnson, Nils Bruin, Oleksandr Motsak, Paul Zimmermann, Peter Story, Punarbasu Purkayastha, R. Andrew Ohana, Rob Beezer, Robert Bradshaw, Robert Miller, Ron Evans, Ryan Grout, Sebastian Pancratz, Simon King, *Sonseeahray Rucker*, Stepan Starosta, Steven Trogdon, Sébastien Labbé, Thierry Monteil, Timo Jolivet, Tom Boothby, *Travis Scrimshaw*, Valentin Féray, Vincent Delecroix, Viviane Pons, Volker Braun, Wilfried Huss, William Stein, *Xavier Caruso*, *Özge Çelik*
+
+*Release manager:* Jeroen Demeyer.
+
+*We closed 506 tickets in this release.* For details, see   [[http://www.google.com/url?sa=D&q=http://boxen.math.washington.edu/home/release/sage-5.0/tickets.html&usg=AFQjCNFbtaldGJ60yTLNcioKmeJz2iljnA][http://boxen.math.washington.edu/home/release/sage-5.0/tickets.html]]
+#+END_QUOTE

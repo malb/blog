@@ -1,0 +1,351 @@
+#+POSTID: 291
+#+DATE: [2011-01-10 Mon 10:58]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: Uncategorized, sage
+#+TAGS: commutative algebra, f5, gröbner basis, magma, posso, sage, singular
+#+TITLE: Sage, Degrees and Gröbner Bases
+
+For one reason on [[http://martinralbrecht.wordpress.com/2010/12/15/breaking-an-identity-based-encryption-scheme-based-on-dhies/][another]] I found myself computing Gröbner bases over fields which are not $\mathbb{F}_2$.  Thus, my interest in Sage's interface to [[http://www.singular.uni-kl.de/][Singular]] and [[http://magma.maths.usyd.edu.au/magma/][Magma]] increased quite a bit again recently (before I was mainly using [[http://polybori.sourceforge.net/][PolyBoRi]]). Hence I wrote two patches which need review (hint, hint):
+
+*[[http://trac.sagemath.org/sage_trac/ticket/10331][#10331]]*
+
+A natural question when it comes to Gröbner basis computations is of course how much resources a particular input system is going to require. For many systems (in fact it is conjectured that it holds for /most/ systems) it turns out one can estimate the degree which will be reached during the computation by computing the degree of semi-regularity of the homogenisation of the system, i.e. one computes the first non-zero coefficient of the following power series:
+
+$\sum_{k\geq 0} c_k z\^k = \frac{\prod_{i=0}\^{m-1} (1-z\^{d_i})}{(1-z)\^n}$
+
+where $d_i$ are the respective degrees of the input polynomials. While there is a Magma script readily available for computing the degree of semi-regularity (by [[http://www-salsa.lip6.fr/~bettale/][Luk Bettale]]) we didn't have it for Sage.
+
+#+BEGIN_SRC python
+
+sage: sr = mq.SR(1,2,1,4)
+sage: F,s = sr.polynomial_system()
+sage: I = F.ideal()
+sage: I.degree_of_semi_regularity()
+3
+
+#+END_SRC
+
+Thus, we expect to only reach degree three to compute a Gröbner basis  for $I$:
+
+#+BEGIN_SRC pythonsage: I = F.ideal()
+sage: _ = I.groebner_basis('singular:slimgb',prot='sage')
+Leading term degree: 1.
+Leading term degree: 1. Critical pairs: 56.
+Leading term degree: 2.
+Leading term degree: 2. Critical pairs: 69.
+Leading term degree: 3.
+Leading term degree: 3. Critical pairs: 461.
+Leading term degree: 3.
+Leading term degree: 3. Critical pairs: 535.
+Leading term degree: 2.
+Leading term degree: 2. Critical pairs: 423.
+Leading term degree: 2.
+Leading term degree: 2. Critical pairs: 367.
+Leading term degree: 3.
+Leading term degree: 3. Critical pairs: 0.
+Leading term degree: 1.
+Leading term degree: 1. Critical pairs: 39.
+Leading term degree: 1. Critical pairs: 38.
+Leading term degree: 1. Critical pairs: 37.
+Leading term degree: 1. Critical pairs: 36.
+Leading term degree: 1. Critical pairs: 35.
+Leading term degree: 1. Critical pairs: 34.
+Leading term degree: 1. Critical pairs: 33.
+Leading term degree: 1. Critical pairs: 32.
+Leading term degree: 1. Critical pairs: 31.
+Leading term degree: 1. Critical pairs: 30.
+Leading term degree: 1. Critical pairs: 29.
+Leading term degree: 1. Critical pairs: 28.
+Leading term degree: 1. Critical pairs: 27.
+Leading term degree: 1. Critical pairs: 26.
+Leading term degree: 1. Critical pairs: 25.
+Leading term degree: 1. Critical pairs: 24.
+Leading term degree: 1. Critical pairs: 23.
+Leading term degree: 1. Critical pairs: 22.
+Leading term degree: 1. Critical pairs: 21.
+Leading term degree: 1. Critical pairs: 20.
+Leading term degree: 1. Critical pairs: 19.
+Leading term degree: 1. Critical pairs: 18.
+Leading term degree: 1. Critical pairs: 17.
+Leading term degree: 1. Critical pairs: 16.
+Leading term degree: 1. Critical pairs: 15.
+Leading term degree: 1. Critical pairs: 14.
+Leading term degree: 1. Critical pairs: 13.
+Leading term degree: 1. Critical pairs: 12.
+Leading term degree: 1. Critical pairs: 11.
+Leading term degree: 1. Critical pairs: 10.
+Leading term degree: 1. Critical pairs: 9.
+Leading term degree: 1. Critical pairs: 8.
+Leading term degree: 1. Critical pairs: 7.
+Leading term degree: 1. Critical pairs: 6.
+Leading term degree: 1. Critical pairs: 5.
+Leading term degree: 1. Critical pairs: 4.
+Leading term degree: 1. Critical pairs: 3.
+Leading term degree: 1. Critical pairs: 2.
+
+Highest degree reached during computation: 3.
+#+END_SRC
+
+Which leads me to my next point.
+[[http://trac.sagemath.org/sage_trac/ticket/10571][**]]
+
+[[http://trac.sagemath.org/sage_trac/ticket/10571][*#10571*]]
+
+It's nice to see how far a particular computation is progressed and to get some summary information about the  computation in the end. Hence, a new patch which enables live logs from Singular and Magma in Sage.
+
+#+BEGIN_SRC python
+sage: _ = I.groebner_basis('singular:slimgb',prot=True) # Singular native
+1461888602
+> def sage584=slimgb(sage581);
+def sage584=slimgb(sage581);
+1M[23,23](56)2M[56,eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeebbbbb32](69)3M[69,bbb69](461)3M[100,bbbbbb74](535)2M[100,beebbbbbb3](423)2M[23,eeeebbbbbb0](367)3M[28,eeeeebb0](0)
+NF:399 product criterion:16403, ext_product criterion:0
+[7:3]1(39)s(38)s(37)s(36)s(35)s(34)s(33)s(32)s(31)s(30)s(29)s(28)s(27)s(26)s(25)s(24)s(23)s(22)s(21)s(20)s(19)s(18)s(17)s(16)s(15)s(14)s(13)s(12)s(11)s(10)s(9)s(8)s(7)s(6)s(5)s(4)s(3)s(2)sss
+(S:39)---------------------------------------
+>
+
+sage: _ = I.groebner_basis('magma', prot=True) # Magma native
+Append(~_sage_, 0);
+Append(~_sage_, 0);
+>>>_sage_[126]:=_sage_[128];
+_sage_[126]:=_sage_[128];
+>>>Append(~_sage_, 0);
+Append(~_sage_, 0);
+>>>_sage_[86]:=GroebnerBasis(_sage_[126]);
+_sage_[86]:=GroebnerBasis(_sage_[126]);
+Homogeneous weights search
+Number of variables: 40, nullity: 0
+Exact search time: 0.000
+********************
+FAUGERE F4 ALGORITHM
+********************
+Coefficient ring: GF(2\^4)
+Rank: 40
+Order: Graded Reverse Lexicographical
+NEW hash table
+Matrix kind: Zech short
+Datum size: 2
+No queue sort
+Initial length: 80
+Inhomogeneous
+
+Initial queue setup time: 0.009
+Initial queue length: 48
+
+*******
+STEP 1
+Basis length: 80, queue length: 48, step degree: 1, num pairs: 8
+Basis total mons: 264, average length: 3.300
+Number of pair polynomials: 8, at 25 column(s), 0.000
+Average length for reductees: 6.00 [8], reductors: 10.00 [8]
+Symbolic reduction time: 0.000, column sort time: 0.000
+8 + 8 = 16 rows / 25 columns, 32% / 37.641% (8/r)
+Before ech memory: 7.9MB
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [8]
+Delete 1 memory chunk(s); time: 0.000
+After ech memory: 7.9MB
+Queue insertion time: 0.000
+Step 1 time: 0.000, [0.001], mat/total: 0.000/0.009 [0.005], mem: 7.9MB
+
+*******
+STEP 2
+Basis length: 88, queue length: 48, step degree: 2, num pairs: 32
+Basis total mons: 340, average length: 3.864
+Number of pair polynomials: 32, at 169 column(s), 0.000
+Average length for reductees: 3.88 [32], reductors: 7.12 [192]
+Symbolic reduction time: 0.000, column sort time: 0.000
+32 + 192 = 224 rows / 293 columns, 2.2733% / 5.8884% (6.6607/r)
+Before ech memory: 7.9MB
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [8]
+Delete 1 memory chunk(s); time: 0.000
+After ech memory: 7.9MB
+Queue insertion time: 0.000
+Step 2 time: 0.000, [0.003], mat/total: 0.000/0.009 [0.008], mem: 7.9MB
+
+*******
+STEP 3
+Basis length: 96, queue length: 69, step degree: 3, num pairs: 69
+Basis total mons: 472, average length: 4.917
+Number of pair polynomials: 69, at 540 column(s), 0.000
+Average length for reductees: 13.20 [69], reductors: 5.50 [343]
+Symbolic reduction time: 0.000, column sort time: 0.000
+69 + 343 = 412 rows / 719 columns, 0.94387% / 2.4223% (6.7864/r), bv
+Before ech memory: 7.9MB
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [69]
+Delete 1 memory chunk(s); time: 0.000
+After ech memory: 7.9MB
+Queue insertion time: 0.010
+Step 3 time: 0.010, [0.015], mat/total: 0.000/0.019 [0.023], mem: 7.9MB
+
+*******
+STEP 4
+Basis length: 165, queue length: 736, step degree: 3, num pairs: 461
+Basis total mons: 1368, average length: 8.291
+Number of pair polynomials: 461, at 802 column(s), 0.000
+Average length for reductees: 10.35 [461], reductors: 7.49 [654]
+Symbolic reduction time: 0.000, column sort time: 0.000
+461 + 654 = 1115 rows / 804 columns, 1.0789% / 2.7301% (8.6744/r)
+Before ech memory: 7.9MB
+Row sort time: 0.000
+0.010 + 0.000 = 0.010 [129]
+Delete 1 memory chunk(s); time: 0.000
+Number of unused reductors: 2
+After ech memory: 7.9MB
+Queue insertion time: 0.020
+Step 4 time: 0.030, [0.022], mat/total: 0.010/0.049 [0.045], mem: 7.9MB
+
+*******
+STEP 5
+Basis length: 294, queue length: 2094, step degree: 2, num pairs: 132
+Basis total mons: 1669, average length: 5.677
+Number of pair polynomials: 132, at 149 column(s), 0.000
+Average length for reductees: 2.00 [132], reductors: 5.22 [148]
+Symbolic reduction time: 0.000, column sort time: 0.000
+132 + 148 = 280 rows / 149 columns, 2.4856% / 7.1242% (3.7036/r)
+Before ech memory: 7.9MB
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [0]
+Delete 1 memory chunk(s); time: 0.000
+After ech memory: 7.9MB
+Queue insertion time: 0.000
+Step 5 time: 0.000, [0.001], mat/total: 0.010/0.049 [0.046], mem: 7.9MB
+
+*******
+STEP 6
+Basis length: 294, queue length: 1962, step degree: 3, num pairs: 848
+Basis total mons: 1669, average length: 5.677
+Number of pair polynomials: 57, at 85 column(s), 0.000
+Average length for reductees: 2.00 [57], reductors: 2.51 [84]
+Symbolic reduction time: 0.000, column sort time: 0.000
+57 + 84 = 141 rows / 85 columns, 2.7117% / 8.4127% (2.305/r)
+Before ech memory: 7.9MB
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [0]
+Delete 1 memory chunk(s); time: 0.000
+After ech memory: 7.9MB
+Queue insertion time: 0.000
+Step 6 time: 0.000, [0.000], mat/total: 0.010/0.049 [0.046], mem: 7.9MB
+
+*******
+STEP 7
+Basis length: 294, queue length: 1114, step degree: 4, num pairs: 1098
+Basis total mons: 1669, average length: 5.677
+Number of pair polynomials: 0, at 0 column(s), 0.000
+Symbolic reduction time: 0.000, column sort time: 0.000
+0 + 0 = 0 rows / 0 columns, 0% / 0% (0/r), bv
+Before ech memory: 7.9MB
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [0]
+After ech memory: 7.9MB
+Queue insertion time: 0.000
+Step 7 time: 0.000, [0.000], mat/total: 0.010/0.049 [0.046], mem: 7.9MB
+
+*******
+STEP 8
+Basis length: 294, queue length: 16, step degree: 5, num pairs: 16
+Basis total mons: 1669, average length: 5.677
+Number of pair polynomials: 0, at 0 column(s), 0.000
+Symbolic reduction time: 0.000, column sort time: 0.000
+0 + 0 = 0 rows / 0 columns, 0% / 0% (0/r), bv
+Before ech memory: 7.9MB
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [0]
+After ech memory: 7.9MB
+Queue insertion time: 0.000
+Step 8 time: 0.000, [0.000], mat/total: 0.010/0.049 [0.046], mem: 7.9MB
+
+Reduce 294 final polynomial(s) by 294
+16 redundant polynomial(s) removed; time: 0.000
+Interreduce 40 (out of 294) polynomial(s)
+Symbolic reduction time: 0.000
+Column sort time: 0.000
+40 + 0 = 40 rows / 41 columns, 10.976% / 24.736% (4.5/r)
+Row sort time: 0.000
+0.000 + 0.000 = 0.000 [40]
+Delete 1 memory chunk(s); time: 0.000
+Total reduction time: 0.000
+Reduction time: 0.000
+Final number of polynomials: 278
+
+Number of pairs: 759
+Total pair setup time: 0.000
+Max num entries matrix: 1115 by 804
+Max num rows matrix: 1115 by 804
+Total symbolic reduction time: 0.000
+Total column sort time: 0.000
+Total row sort time: 0.000
+Total matrix time: 0.010
+Total new polys time: 0.000
+Total queue update time: 0.030
+Total Faugere F4 time: 0.049, real time: 0.046
+>>>_sage_[126]:=0;
+_sage_[126]:=0;
+>>>
+
+sage: _ = I.groebner_basis('singular:slimgb',prot='sage') # Singular parsed
+Leading term degree: 1.
+Leading term degree: 1. Critical pairs: 56.
+Leading term degree: 2.
+Leading term degree: 2. Critical pairs: 69.
+Leading term degree: 3.
+Leading term degree: 3. Critical pairs: 461.
+Leading term degree: 3.
+Leading term degree: 3. Critical pairs: 535.
+Leading term degree: 2.
+Leading term degree: 2. Critical pairs: 423.
+Leading term degree: 2.
+Leading term degree: 2. Critical pairs: 367.
+Leading term degree: 3.
+Leading term degree: 3. Critical pairs: 0.
+Leading term degree: 1.
+Leading term degree: 1. Critical pairs: 39.
+Leading term degree: 1. Critical pairs: 38.
+Leading term degree: 1. Critical pairs: 37.
+Leading term degree: 1. Critical pairs: 36.
+Leading term degree: 1. Critical pairs: 35.
+Leading term degree: 1. Critical pairs: 34.
+Leading term degree: 1. Critical pairs: 33.
+Leading term degree: 1. Critical pairs: 32.
+Leading term degree: 1. Critical pairs: 31.
+Leading term degree: 1. Critical pairs: 30.
+Leading term degree: 1. Critical pairs: 29.
+Leading term degree: 1. Critical pairs: 28.
+Leading term degree: 1. Critical pairs: 27.
+Leading term degree: 1. Critical pairs: 26.
+Leading term degree: 1. Critical pairs: 25.
+Leading term degree: 1. Critical pairs: 24.
+Leading term degree: 1. Critical pairs: 23.
+Leading term degree: 1. Critical pairs: 22.
+Leading term degree: 1. Critical pairs: 21.
+Leading term degree: 1. Critical pairs: 20.
+Leading term degree: 1. Critical pairs: 19.
+Leading term degree: 1. Critical pairs: 18.
+Leading term degree: 1. Critical pairs: 17.
+Leading term degree: 1. Critical pairs: 16.
+Leading term degree: 1. Critical pairs: 15.
+Leading term degree: 1. Critical pairs: 14.
+Leading term degree: 1. Critical pairs: 13.
+Leading term degree: 1. Critical pairs: 12.
+Leading term degree: 1. Critical pairs: 11.
+Leading term degree: 1. Critical pairs: 10.
+Leading term degree: 1. Critical pairs: 9.
+Leading term degree: 1. Critical pairs: 8.
+Leading term degree: 1. Critical pairs: 7.
+Leading term degree: 1. Critical pairs: 6.
+Leading term degree: 1. Critical pairs: 5.
+Leading term degree: 1. Critical pairs: 4.
+Leading term degree: 1. Critical pairs: 3.
+Leading term degree: 1. Critical pairs: 2.
+
+Highest degree reached during computation: 3.
+#+END_SRC
+
+Note, that these logs are all live, i.e. the are displayed during the computation as soon as the respective system makes them available.
+
+Both patches are up for review on Sage's [[http://trac.sagemath.org][trac server]].
+
+
+

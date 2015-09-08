@@ -1,0 +1,19 @@
+#+POSTID: 881
+#+DATE: [2013-01-15 Tue 14:21]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
+#+CATEGORY: cryptography
+#+TAGS: dtu, job
+#+TITLE: DTU Crypto Group is hiring
+
+the group I am in is [[http://www.job.dtu.dk/English.aspx?guid=23fcca99-3bd7-47ea-be88-406d4d5d8bec][hiring]] an assistant/associate professor.
+
+#+BEGIN_QUOTE
+DTU Compute at the Technical University of Denmark calls for applications for a position as associate or assistant professor. The department is looking for a dynamic faculty member to participate in research and teaching in computer science and mathematics. The position is available from 1 May 2013.
+
+DTU Compute conducts research and provides teaching in the fields of mathematics, modeling and computer science. The expanding mass of information and the increasingly complex use of advanced technology in society demand development of advanced computer based mathematical models and calculations. The unique skills of the department are in high demand in IT innovation and production.
+
+Through the position the University seeks to strengthen the research within cryptology. The cryptology group at DTU has experts in design and analysis of ciphers and hash functions and in side-channel analysis. Experience with implementing cryptography in software and/or hardware is regarded as a plus. Interest and skills in pedagogical work and dissemination of mathematical sciences will play an important role.
+#+END_QUOTE
+
+
+
