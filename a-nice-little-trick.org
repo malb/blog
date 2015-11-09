@@ -1,7 +1,7 @@
 #+POSTID: 244
 #+DATE: [2010-11-05 Fri 14:42]
-#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
-#+CATEGORY: Uncategorized, cryptography
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:t
+#+CATEGORY: cryptography
 #+TAGS: algebraic attacks, algebraic cryptanalysis, cryptography, sage
 #+TITLE: A nice little trick
 

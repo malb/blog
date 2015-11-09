@@ -1,15 +1,17 @@
 #+POSTID: 139
 #+DATE: [2010-08-15 Sun 18:24]
-#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
-#+CATEGORY: Uncategorized, m4ri, sage
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:t
+#+CATEGORY: m4ri, sage
 #+TAGS: karatsuba, linear algebra, m4ri, m4rie
 #+TITLE: Karatsuba Multiplication of Dense Matrices over GF(2^e)
 
-Elements in $GF(2\^e)$ can be represented as $c_0 a\^0 + c_1 a\^1 + \dots + c_{e-1} a\^{e-1}$ where $a$ is a root of the primitive polynomial of $GF(2\^e)$ and $c_i$ are elements in $GF(2)$. Thus, we can rewrite a matrix over $GF(2\^e)$ as a list of $e$ matrices over $GF(2)$ which contain the coefficients for each degree of $a$. To put it in another way: we can turn the matrix with polynomial entries into a polynomial with matrix coefficients. In [[http://arxiv.org/abs/0901.1413][Bitslicing and the Method of Four Russians Over Larger Finite Fields]] Tomas J. Boothby and Robert Bradshaw (both Sage developers from Seattle by the way) proposed to use this representation to perform matrix multiplication.
+Elements in $GF(2^e)$ can be represented as $c_0 a^0 + c_1 a^1 + \dots + c_{e-1} a^{e-1}$ where $a$ is a root of the primitive polynomial of $GF(2^e)$ and $c_i$ are elements in $GF(2)$. Thus, we can rewrite a matrix over $GF(2^e)$ as a list of $e$ matrices over $GF(2)$ which contain the coefficients for each degree of $a$. To put it in another way: we can turn the matrix with polynomial entries into a polynomial with matrix coefficients. In [[http://arxiv.org/abs/0901.1413][Bitslicing and the Method of Four Russians Over Larger Finite Fields]] Tomas J. Boothby and Robert Bradshaw (both Sage developers from Seattle by the way) proposed to use this representation to perform matrix multiplication.
 
-As an example consider $GF(2\^2)$ with the primitive polynomial $x\^2 + x + 1$. Suppose we want to compute $C = AB$. The matrix $A$ can be represented as $A_0x + A_1$ and the matrix $B$ can be represented as $B_0x + B_1$. Their product is $C = A_0B_0x\^2 + (A_0B_1 + A_1B_0)x + A_1B_1.$
+#+HTML <!--more-->
 
-Finally, reduction modulo $x\^2 + x + 1$ gives
+As an example consider $GF(2^2)$ with the primitive polynomial $x^2 + x + 1$. Suppose we want to compute $C = AB$. The matrix $A$ can be represented as $A_0x + A_1$ and the matrix $B$ can be represented as $B_0x + B_1$. Their product is $C = A_0B_0x^2 + (A_0B_1 + A_1B_0)x + A_1B_1.$
+
+Finally, reduction modulo $x^2 + x + 1$ gives
 
 
 $(A_0B_0 + A_0B_1 + A_1B_0)x + A_1B_1 + A_0B_0$.
@@ -28,7 +30,7 @@ using the [[http://en.wikipedia.org/wiki/Karatsuba_algorithm][divide and conquer
 To see why this strategy for matrix multiplication might be efficient, consider the following table which shows
 
 
-1. the CPU time for multiplying dense 4,000 x 4,000 matrices over $GF(2\^e)$,
+1. the CPU time for multiplying dense 4,000 x 4,000 matrices over $GF(2^e)$,
 2. to how many matrix multiplications over $GF(2)$ this corresponds,
 3. how many GF(2) multiplications naive polynomial multiplication would need and
 4. how many Karatsuba needs.
@@ -44,9 +46,9 @@ To see why this strategy for matrix multiplication might be efficient, consider 
 |   9 |     37.842 |        556.473 |      81 |             |
 |  10 |     47.143 |        620.261 |     100 |             |
 
-All times were taken on my /Intel i7/ powering my Macbook Pro using the M4RI and M4RIE libraries for $GF(2)$ and $GF(2\^e)$ respectively.
+All times were taken on my /Intel i7/ powering my Macbook Pro using the M4RI and M4RIE libraries for $GF(2)$ and $GF(2^e)$ respectively.
 
-So much for the theoretical complexity. Yesterday, I implemented this multiplication routine in [[http://bitbucket.org/malb/m4rie][M4RIE]] for $GF(2\^2)$. The tables below give the CPU time for multiplication of dense $n \times n$ matrices over $GF(2\^2)$
+So much for the theoretical complexity. Yesterday, I implemented this multiplication routine in [[http://bitbucket.org/malb/m4rie][M4RIE]] for $GF(2^2)$. The tables below give the CPU time for multiplication of dense $n \times n$ matrices over $GF(2^2)$
 1. for the old M4RIE Travolta + Strassen code,
 2. the new Karatsuba based code and
 3. how long three matrix multiplications over $GF(2)$ take.
@@ -95,8 +97,8 @@ A third table for a new Opteron 8439 SE (redhaw):
 
 Ignoring measurement imprecisions (especially in the first table) it is clear that this new approach is much faster than the old one implemented in M4RIE especially on the Opteron. However, it seems on the Opteron our conversion between M4RIE and Karatsuba has a considerable cost, input how to improve that would be very welcome since I'm out of ideas for now. To compare with Magma: for the $10,000 \times 10,000$ case Magma takes 9.18 seconds on the i7 and 11.8 seconds on the Opteron 858. I didn't compare with Tom and Robert's implementation but I expect them to essentially be at 3 matrix multiplications over $GF(2)$ since they have no conversion overhead.
 
-I should point out though that the code for $GF(2\^2)$ is the least efficient in M4RIE since I only implemented 8 parallel Travolta table which means that over $GF(2\^2)$ only $8 \cdot 2 = 16$ bits are dealt with at each step in the inner loop. We could use more tables to fill up L1 and we could also implement Kronrod's method aka M4RM for $GF(2\^2)$.
+I should point out though that the code for $GF(2^2)$ is the least efficient in M4RIE since I only implemented 8 parallel Travolta table which means that over $GF(2^2)$ only $8 \cdot 2 = 16$ bits are dealt with at each step in the inner loop. We could use more tables to fill up L1 and we could also implement Kronrod's method aka M4RM for $GF(2^2)$.
 
-While I expect that we could catch up to Karatsuba at least on Intel CPUs over $GF(2\^2)$, I assume that the Karatsuba timings are close to optimal since matrix multiplication in M4RI seems to be close to optimal at least without further tricks being discovered and 3 matrix multiplications seems to be the best one can do for degree two polynomials.
+While I expect that we could catch up to Karatsuba at least on Intel CPUs over $GF(2^2)$, I assume that the Karatsuba timings are close to optimal since matrix multiplication in M4RI seems to be close to optimal at least without further tricks being discovered and 3 matrix multiplications seems to be the best one can do for degree two polynomials.
 
-I guess I'll implement Karatsuba for $GF(2\^3)$ and $GF(2\^4)$, but I'm not sure I can be asked to do it for bigger fields if I don't figure out a nice generic way of implementing it where I don't have to write code for each minimal polynomial etc.
+I guess I'll implement Karatsuba for $GF(2^3)$ and $GF(2^4)$, but I'm not sure I can be asked to do it for bigger fields if I don't figure out a nice generic way of implementing it where I don't have to write code for each minimal polynomial etc.

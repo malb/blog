@@ -5,28 +5,29 @@
 #+TAGS: 
 #+TITLE: About Me
 
-I am postdoc in the [[http://www.rhul.ac.uk/isg/home.aspx][Information Security Group]] at Royal Holloway, University of London, working on multilinear maps. Previously, I was a postdoc at [[http://dtu.dk][DTU]] in Copenhagen, Denmark and at the [[http://www-polsys.lip6.fr/][POLSYS]] team of LIP6 at Université Pierre et Marie Curie (UPMC) in Paris. I earned my PhD in the [[http://isg.rhul.ac.uk][Information Security Group]] at [[http://www.rhul.ac.uk][Royal Holloway, University of London]] under the supervision of [[http://isg.rhul.ac.uk/~ccid][Carlos Cid]]. Before, I studied computer science at [[http://www.uni-bremen.de][Universität Bremen]] where I wrote my Diplomarbeit in the [[http://sepharden.math.uni-bremen.de/][AlZAGK]] group under the supervision of [[http://www.informatik.uni-bremen.de/~michaelh/][Michael Hortmann]].
+I am a lecturer in the [[http://www.rhul.ac.uk/isg/home.aspx][Information Security Group]] at [[https://royalholloway.ac.uk][Royal Holloway, University of London]]. Previously, I was a postdoc in the same group working on multilinear maps, a postdoc at [[http://dtu.dk][DTU]] in Copenhagen, Denmark and a postdoc in the [[http://www-polsys.lip6.fr/][POLSYS]] team of LIP6 at Université Pierre et Marie Curie (UPMC) in Paris. I earned my PhD in the [[http://isg.rhul.ac.uk][Information Security Group]] at [[http://www.rhul.ac.uk][Royal Holloway, University of London]] under the supervision of [[http://isg.rhul.ac.uk/~ccid][Carlos Cid]]. Before, I studied computer science at [[http://www.uni-bremen.de][Universität Bremen]] where I wrote my Diplomarbeit in the [[http://sepharden.math.uni-bremen.de/][AℓZAGK]] group under the supervision of [[http://www.informatik.uni-bremen.de/~michaelh/][Michael Hortmann]].
 
 ** Contact Information
 
--  My e-mail address is =martinralbrecht__AT__googlemail.com=.
--  On Twitter I am [[https://twitter.com/martinralbrecht][@martinralbrecht]].
--  On Bitbucket I am [[https://bitbucket.org/malb][malb]].
--  On Github I am [[https://github.com/malb][@malb]].
--  I am on [[http://uk.linkedin.com/pub/martin-albrecht/95/74b/42a][LinkedIn]].
--  On Google+ I am [[https://www.google.com/+MartinAlbrecht][+MartinAlbrecht]].
+- My e-mail address is =martin.albrecht__AT__royalholloway.ac.uk=.
+- On Twitter I am [[https://twitter.com/martinralbrecht][@martinralbrecht]].
+- On Bitbucket I am [[https://bitbucket.org/malb][malb]].
+- On Github I am [[https://github.com/malb][@malb]].
+- On Keybase I am [[https://keybase.io/martinralbrecht][martinralbrecht]]. You can find my OpenPGP key there, too.
+- I am on [[http://uk.linkedin.com/pub/martin-albrecht/95/74b/42a][LinkedIn]].
+- On Google+ I am [[https://www.google.com/+MartinAlbrecht][+MartinAlbrecht]].
 
 ** Academic Interests
 
 My (current) main academic interests are:
 
 -  the hardness of problems underpinning multilinear maps constructions in cryptography
+-  the bit security of (Ring-)LWE
 -  applications of computational mathematics in cryptology
 -  efficient linear algebra (over small finite fields)
 -  computational mathematics in general
--  (polynomial) system solving with noise
 -  symmetric key cryptology and cryptanalysis: block ciphers mainly
--  real world crypto
+-  real world cryptography and applications.
 
 ** Computation
 
@@ -34,4 +35,4 @@ I'm a developer for the [[http://m4ri.sagemath.org][Sage]] mathematics software.
 
 ** Open Source
 
-I make my code [[http://bitbucket.org/malb/][publicly available]], this includes the research code used in publications as well as  LaTeX sources for [[https://bitbucket.org/malb/papers/][papers]] and [[https://bitbucket.org/malb/talks][slides]]. I encourage you to do the same.
+I make all my code [[http://bitbucket.org/malb/][publicly available]], this includes the research code used in publications as well as LaTeX sources for [[https://bitbucket.org/malb/papers/][papers]] and [[https://bitbucket.org/malb/talks][slides]]. I encourage you to do the same.

@@ -1,45 +1,45 @@
 #+POSTID: 716
 #+DATE: [2012-01-20 Fri 16:31]
-#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
-#+CATEGORY: Uncategorized, m4ri, sage
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:t
+#+CATEGORY: m4ri, sage
 #+TAGS: dense linear algebra, linbox, linear algebra, m4ri, m4rie, magma, sage
 #+TITLE: Sage 4.8 is out
 
 If you care about the stuff I care about (and why else would you read this blog?) you might get excited about a few changes in Sage.
 
-** *efficient linear algebra for $\mathbb{F}_{2\^e}$*
+** Efficient linear algebra for $\mathbb{F}_{2^e}$
 
- The very first non-trivial patch I ever produced for Sage was about interfacing with NTL for dense linear algebra over $\mathbb{F}_{2\^e}$ (I was interested in algebraic attacks against AES at the time). Here's William's reply:
+  The very first non-trivial patch I ever produced for Sage was about interfacing with NTL for dense linear algebra over $\mathbb{F}_{2^e}$ (I was interested in algebraic attacks against AES at the time). Here's William's reply:
 
- #+BEGIN_QUOTE
- Your NTL patch worked perfectly for me first try. I tried more benchmarks (on Pentium-M 1.8Ghz).
+  #+BEGIN_QUOTE
+  Your NTL patch worked perfectly for me first try. I tried more benchmarks (on Pentium-M 1.8Ghz).
 
- [...]
+  [...]
 
- This is pretty good; vastly better than what's was in SAGE by default, and way better than PARI. Note that MAGMA is much faster though (nearly 8 times faster):
+  This is pretty good; vastly better than what's was in SAGE by default, and way better than PARI. Note that MAGMA is much faster though (nearly 8 times faster):
 
- [...]
+  [...]
 
- MAGMA uses (1) [...] and (2) a totally different algorithm for computing the echelon form. [...] As far as I know, the MAGMA method is not implemented anywhere in the open source world But I'd love to be wrong about that... or even remedy that.
- #+END_QUOTE
+  MAGMA uses (1) [...] and (2) a totally different algorithm for computing the echelon form. [...] As far as I know, the MAGMA method is not implemented anywhere in the open source world But I'd love to be wrong about that... or even remedy that.
+  #+END_QUOTE
 
-Well, that was *2006*. Fast forward to the year *2011* and we get the following timings for computing the reduced row echelon form of a 1,000 x 1,000 matrix over $\mathbb{F}_{256}$: Sage 4.7.2 takes *36.53* seconds , NTL 5.4.2 takes *31.06* seconds and Magma 2.15 does it in *0.87* seconds. So essentially, the situation didn't change at all for the better.
+ Well, that was *2006*. Fast forward to the year *2011* and we get the following timings for computing the reduced row echelon form of a 1,000 x 1,000 matrix over $\mathbb{F}_{256}$: Sage 4.7.2 takes *36.53* seconds , NTL 5.4.2 takes *31.06* seconds and Magma 2.15 does it in *0.87* seconds. So essentially, the situation didn't change at all for the better.
 
-With Sage 4.8 this situation changes dramatically  and we get that Sage performs this computation in *0.08* seconds, that's 450 times faster than Sage 4.7.2. This is because [[http://m4ri.sagemath.org][M4RIE]] was merged in Sage 4.8. Hence, Sage is now (in some cases by far) fastest system to do linear algebra with dense matrices over $\mathbb{F}_{2\^e}$ for $1 \leq e \leq 8$  and usually also for $9 \leq e \leq 10$.
+ With Sage 4.8 this situation changes dramatically  and we get that Sage performs this computation in *0.08* seconds, that's 450 times faster than Sage 4.7.2. This is because [[http://m4ri.sagemath.org][M4RIE]] was merged in Sage 4.8. Hence, Sage is now (in some cases by far) fastest system to do linear algebra with dense matrices over $\mathbb{F}_{2^e}$ for $1 \leq e \leq 8$  and usually also for $9 \leq e \leq 10$.
 
-** *efficient linear algebra for $\mathbb{F}_{p}$*
+** Efficient linear algebra for $\mathbb{F}_{p}$
 
-One can tell a similar story for $\mathbb{F}_p$ for, say, small to medium sized primes $p$. In Sage 4.7.2 it took *1.12* seconds to multiply two 1,000 x 1,000 matrices over $\mathbb{F}_{251}$ (although you always had the option to call LinBox explicitly which was way faster but took more memory). With Sage 4.8 the same computation takes *0.16* seconds. For comparison, Magma 2.15 takes *0.22* seconds. So here again Sage moved from poor performance to best in class performance between 4.7.2 and 4.8 simply by making proper use of available libraries.
+ One can tell a similar story for $\mathbb{F}_p$ for, say, small to medium sized primes $p$. In Sage 4.7.2 it took *1.12* seconds to multiply two 1,000 x 1,000 matrices over $\mathbb{F}_{251}$ (although you always had the option to call LinBox explicitly which was way faster but took more memory). With Sage 4.8 the same computation takes *0.16* seconds. For comparison, Magma 2.15 takes *0.22* seconds. So here again Sage moved from poor performance to best in class performance between 4.7.2 and 4.8 simply by making proper use of available libraries.
 
 ** Viable Alternative yet?
 
-Overall, the story for dense linear algebra in Sage for small finite fields $\mathbb{F}_q$  is as follows.
+ Overall, the story for dense linear algebra in Sage for small finite fields $\mathbb{F}_q$  is as follows.
 
-| $q$                          | Implementation | Comments                                                                                                               |
-| $2$                          | [[http://m4ri.sagemath.org][M4RI]]           | Fastest implementation or equal performance depending on platform                                                      |
-| $3,5,7 \dots$                | [[http://www.linalg.org/][LinBox]]         | Decent performance, but [[http://arxiv.org/abs/0901.1413][faster]] [[http://arxiv.org/abs/0809.0063][implementations]] are known in the literature. Also, Magma is a bit faster on my machine. |
-| prime < $2\^{23}$            | [[http://linalg.org][LinBox]]         | Fastest implementation or equal performance depending on platform.                                                     |
-| $2\^e$ for $2 \leq e \leq 8$ | [[http://m4ri.sagemath.org][M4RIE]]          | Fastest                                                                                                                |
-| $p\^e$ for $p>2$             | Generic        | Very poor performance, but [[https://groups.google.com/group/linbox-use/browse_thread/thread/c62ae29f3f898c66][some]] [[http://trac.sagemath.org/sage_trac/ticket/12177][work]] is being done.                                                                    |
+ | $q$                          | Implementation | Comments                                                                                                               |
+ | $2$                          | [[http://m4ri.sagemath.org][M4RI]]           | Fastest implementation or equal performance depending on platform                                                      |
+ | $3,5,7 \dots$                | [[http://www.linalg.org/][LinBox]]         | Decent performance, but [[http://arxiv.org/abs/0901.1413][faster]] [[http://arxiv.org/abs/0809.0063][implementations]] are known in the literature. Also, Magma is a bit faster on my machine. |
+ | prime < $2^{23}$             | [[http://linalg.org][LinBox]]         | Fastest implementation or equal performance depending on platform.                                                     |
+ | $2^e$ for $2 \leq e \leq 8$  | [[http://m4ri.sagemath.org][M4RIE]]          | Fastest                                                                                                                |
+ | $p^e$ for $p>2$              | Generic        | Very poor performance, but [[https://groups.google.com/group/linbox-use/browse_thread/thread/c62ae29f3f898c66][some]] [[http://trac.sagemath.org/sage_trac/ticket/12177][work]] is being done.                                                                    |
 
-So, once we fix that last row Sage finally achieves "viable alternative" quality when it comes to dense linear algebra over $\mathbb{F}_{q}$ if $q$  is $q < 2\^{16}$.
+ So, once we fix that last row Sage finally achieves "viable alternative" quality when it comes to dense linear algebra over $\mathbb{F}_{q}$ if $q$ is $q < 2^{16}$.

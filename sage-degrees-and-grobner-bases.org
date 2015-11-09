@@ -1,7 +1,7 @@
 #+POSTID: 291
 #+DATE: [2011-01-10 Mon 10:58]
-#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
-#+CATEGORY: Uncategorized, sage
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:t
+#+CATEGORY: sage
 #+TAGS: commutative algebra, f5, gröbner basis, magma, posso, sage, singular
 #+TITLE: Sage, Degrees and Gröbner Bases
 
@@ -11,7 +11,7 @@ For one reason on [[http://martinralbrecht.wordpress.com/2010/12/15/breaking-an-
 
 A natural question when it comes to Gröbner basis computations is of course how much resources a particular input system is going to require. For many systems (in fact it is conjectured that it holds for /most/ systems) it turns out one can estimate the degree which will be reached during the computation by computing the degree of semi-regularity of the homogenisation of the system, i.e. one computes the first non-zero coefficient of the following power series:
 
-$\sum_{k\geq 0} c_k z\^k = \frac{\prod_{i=0}\^{m-1} (1-z\^{d_i})}{(1-z)\^n}$
+$\sum_{k\geq 0} c_k z^k = \frac{\prod_{i=0}^{m-1} (1-z^{d_i})}{(1-z)^n}$
 
 where $d_i$ are the respective degrees of the input polynomials. While there is a Magma script readily available for computing the degree of semi-regularity (by [[http://www-salsa.lip6.fr/~bettale/][Luk Bettale]]) we didn't have it for Sage.
 
@@ -27,7 +27,8 @@ sage: I.degree_of_semi_regularity()
 
 Thus, we expect to only reach degree three to compute a Gröbner basis  for $I$:
 
-#+BEGIN_SRC pythonsage: I = F.ideal()
+#+BEGIN_SRC python
+sage: I = F.ideal()
 sage: _ = I.groebner_basis('singular:slimgb',prot='sage')
 Leading term degree: 1.
 Leading term degree: 1. Critical pairs: 56.
@@ -87,7 +88,6 @@ Highest degree reached during computation: 3.
 #+END_SRC
 
 Which leads me to my next point.
-[[http://trac.sagemath.org/sage_trac/ticket/10571][**]]
 
 [[http://trac.sagemath.org/sage_trac/ticket/10571][*#10571*]]
 
@@ -119,7 +119,7 @@ Exact search time: 0.000
 ********************
 FAUGERE F4 ALGORITHM
 ********************
-Coefficient ring: GF(2\^4)
+Coefficient ring: GF(2^4)
 Rank: 40
 Order: Graded Reverse Lexicographical
 NEW hash table
@@ -346,6 +346,3 @@ Highest degree reached during computation: 3.
 Note, that these logs are all live, i.e. the are displayed during the computation as soon as the respective system makes them available.
 
 Both patches are up for review on Sage's [[http://trac.sagemath.org][trac server]].
-
-
-
