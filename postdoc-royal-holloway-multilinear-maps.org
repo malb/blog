@@ -1,0 +1,39 @@
+#+BLOG: martinralbrecht
+#+POSTID: 1201
+#+DATE: [2015-10-08 Thu 13:39]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography
+#+TAGS: job, cryptography
+#+DESCRIPTION:
+#+TITLE: Postdoc at Royal Holloway on Multilinear Maps
+
+The multilinear maps project I worked on previously is looking for a new postdoc. See [[https://jobs.royalholloway.ac.uk/vacancy.aspx?ref=1015-296][ad]] below. It’s not necessarily very long, but it’s a nice gig: it’s on an interesting topic, the [[https://isg.rhul.ac.uk][ISG]] is a good department and Kenny is a very nice boss. If you have questions, you can get in touch with Kenny. or, if that’s better for you, feel free to get in touch with me as well.
+
+#+BEGIN_QUOTE
+*Postdoctoral Research Assistant*
+
+*Information Security*
+
+- Location: 	Egham
+- Salary: 	£33,476 to £39,528 per annum - including London Allowance Fixed Term
+- Closing Date: 	Wednesday 04 November 2015
+- Interview Date: 	To be confirmed
+- Reference: 	1015-296
+- Full time fixed term until 31st July 2017
+
+Applications are invited for the post of Postdoctoral Research Assistant in the Information Security Group.
+
+The Postdoctoral Research Assistant will work alongside Professor Kenny Paterson, Dr Enrique Larraia, and the Visiting Researchers Professor Dennis Hofheinz (TU Karlsruhe) and Professor Steven Galbraith (Auckland) on topics within the following areas: the construction and analysis of multilinear maps; the development of sound abstractions of current and future proposals for multilinear maps that are suitable for use by cryptographers; the development of cryptographic schemes making use of multilinear maps; and the formal security analyses of these schemes.
+
+Applicants should have already completed, or be close to completing, a PhD in a relevant discipline. Applicants should have an outstanding research track record in Cryptography, ideally with significant experience in cryptanalysis of lattice-based schemes and/or the analysis of cryptographic schemes using provable security techniques. Applicants should be able to demonstrate scientific creativity, research independence, and the ability to communicate their ideas effectively in written and verbal form.
+
+This is a time post, immediately available until the 31st July 2017. This post is based in Egham, Surrey where the College is situated in a beautiful, leafy campus near to Windsor Great Park and within commuting distance from London.
+
+For an informal discussion about the post, please contact Professor Kenny Paterson on Kenny.Paterson@rhul.ac.uk
+
+To view further details of this post and to apply please visit https://jobs.royalholloway.ac.uk  . The Human Resources Department can be contacted with queries by email at: recruitment@rhul.ac.uk or via telephone on: +44 (0)1784 41 4241.
+
+Please quote the reference: 1015-296
+
+Closing Date:  Midnight, 4th November 2015
+#+END_QUOTE

@@ -1,0 +1,69 @@
+#+BLOG: wordpress
+#+POSTID: 1193
+#+DATE: [2015-09-11 Fri 09:01]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography
+#+TAGS: lattice-based cryptography
+#+DESCRIPTION:
+#+TITLE: ENS Lyon Monthly Lattice and Crypto Meetings
+
+Fabien Laguillaumie, Benoît Libert and Damien Stehlé are organising “soft-monthly” (that’s a word!)
+[[http://perso.ens-lyon.fr/damien.stehle/LATTICE_MEETINGS.html][meetings on lattice cryptography]] which look very nice. Below the announcement from the c2 list
+slightly edited for style.
+
+#+BEGIN_QUOTE
+Dear all,
+
+We are setting up a "soft-monthly" meeting on lattices and cryptography, at ENS Lyon. The meetings
+will consist of several talks on related topics, with a format that will hopefully encourage
+interactions (blackboard, long time slots).
+
+The first meeting, on September 30th and October 1st, will be on Lattice-based and code-based group signatures.
+
+/Tentative program/
+
+We 30/09, 2:30pm - 3:30pm: Benoît Libert
+
+*Tutorial on group signatures*
+
+We 30/09, 4:00pm - 5:30pm:  Khoa Nguyen
+
+*Group signatures from lattices: simpler, tighter, shorter, ring-based*
+
+Th 01/10, 10:15am - 11:15am: Khoa Nguyen
+
+*A provably secure group signature scheme from code-based assumptions*
+
+Th 1:30pm -3:00pm: Philippe Gaborit
+
+*Dynamic traceable signature on lattices with non-frameability property*
+
+Th 3:30pm - 5pm: Fabrice Mouhartem
+
+*Lattice-based group signatures for dynamic groups*
+
+/Location/
+
+ENS de Lyon, Monod campus, main building, level 1, room 116.
+
+/Registration/
+
+Everyone is welcome. Two caveats:
+
+1. speakers are told the audience  is somewhat familiar with lattices and crypto
+2. please send me (damien.stehle_AT_ens-lyon.fr) an email, so that the size of the room fits with the number of participants.
+
+/Housing/
+
+You may contact
+
+  http://www.bedincity.net/
+
+or
+
+  http://www.sejours-affaires.com/residence-hoteliere-aparthotel-lyon-172.html
+
+Best regards
+Damien
+#+END_QUOTE
+
