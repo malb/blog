@@ -1,0 +1,34 @@
+#+BLOG: martinralbrecht
+#+POSTID: 1214
+#+DATE: [2015-11-24 Tue 10:38]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography
+#+TAGS: cryptography, tls, cryptanalysis, lucky 13, timing attack, s2n
+#+DESCRIPTION:
+#+TITLE: Lucky Microseconds: A Timing Attack on Amazon’s s2n Implementation of TLS
+
+Over the summer, [[http://www.isg.rhul.ac.uk/~kp/][Kenny Paterson]] and me spent some time looking at Amazon’s ([[https://github.com/awslabs][Amazon Web Services - Labs]] to be precise) implementation of TLS. This implementation — called [[https://github.com/awslabs/s2n][s2n]] — was released in June with the intent of providing a clean, easy to read, small implementation of a core subset of the TLS protocol.
+
+#+HTML: <!--more-->
+
+We noticed that s2n’s two defences against Lucky 13 timing attacks were imperfect, notified Amazon and [[https://eprint.iacr.org/2015/1129][wrote up]] our findings.[fn:1] In a nutshell, the first counter measure failed because it counted the number of bytes sent to a compression function instead of counting the number of compression function calls (i.e. it counted something fine rather than coarse). The second counter measure was imperfect because it waited for random multiples of microseconds instead of something finer, i.e. the randomised waiting period had too coarse granularity. Here’s the abstract:
+
+#+BEGIN_QUOTE
+/s2n/ is an implementation of the TLS protocol that was released in late June 2015 by Amazon. It is implemented in around 6,000 lines of C99 code. By comparison, OpenSSL needs around 70,000 lines of code to implement the protocol. At the time of its release, Amazon announced that /s2n/ had undergone three external security evaluations and penetration tests. We show that, despite this, /s2n/ — as initially released — was vulnerable to a timing attack in the case of CBC-mode ciphersuites, which could be extended to complete plaintext recovery in some settings. Our attack has two components. The first part is a novel variant of the Lucky 13 attack that works even though protections against Lucky 13 were implemented in /s2n/. The second part deals with the randomised delays that were put in place in s2n as an additional countermeasure to Lucky 13. Our work highlights the challenges of protecting implementations against sophisticated timing attacks. It also illustrates that standard code audits are insufficient to uncover all cryptographic attack vectors.
+#+END_QUOTE
+
+The s2n team reacted quickly and [[https://github.com/awslabs/s2n/commit/4d372986f3b3d2cb787c24fc273072afc85ceabc][fixed]] the issue we reported. Later on, a bug in this fix was found by Manuel Barbosa, José Almeida, Gilles Barthe and François Dupressoir (we never checked the fix). This bug, too, [[https://github.com/awslabs/s2n/pull/179][was fixed]] a while ago now.
+
+Additionally, the s2n team strengthened the randomised waiting counter measure [[https://github.com/awslabs/s2n/commit/ea72cfb2188ddb9309a5012280515aad3fee176d][by switching to a finer granularity]]. This was planned anyway, but our findings moved up the timeline of this change.[fn:2]
+
+Throughout the process, the s2n team – in particular, Colm MacCarthaigh —  were not only very responsive but also generally a pleasure to work with. Colm MacCarthaigh has written up a [[http://blogs.aws.amazon.com/security/post/TxLZP6HNAYWBQ6/s2n-and-Lucky-13][report]] of the whole process over at the [[http://blogs.aws.amazon.com/security/blog][AWS Security Blog]], which is well worth a read. [[http://arstechnica.com/author/dan-goodin/][Dan Goodin]] at Ars Technica also [[http://arstechnica.com/science/2015/11/researchers-poke-hole-in-custom-crypto-protecting-amazon-web-services/][wrote]] about our paper.
+
+In response to our work, some people are now giving the s2n team a hard time, e.g.:
+
+https://twitter.com/bascule/status/668897934751043584
+
+I am unimpressed by comments like these, because I’m quite partial to s2n for being such a pleasure to read. Not just because it avoids =CamelCase= but because it is written by people who understand that code is at least also written for other humans to read, not just for computers to execute. While the issues we identified highlight that readable code and code audits are no guarantee of security, it surely does help. For example, the code being so easy to read helped us to identify and verify the vulnerability rather quickly.
+
+[fn:1] Initially, we had only looked at one of the two defences and overlooked the random timing delay as a second line of defence. After this was pointed out to us by the s2n team, we then also looked at this defence.
+
+[fn:2] At the time, we hadn’t finished our investigation into this counter measure, but out findings confirmed that this was a correct choice.
