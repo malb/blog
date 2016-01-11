@@ -1,0 +1,128 @@
+#+BLOG: martinralbrecht
+#+POSTID: 1225
+#+DATE: [2016-01-10 Sun 15:40]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography
+#+TAGS: cryptography, git, paper, emacs, writing
+#+DESCRIPTION:
+#+TITLE: Writing (Crypto) Papers and Version Control
+
+Academics write. Academics in my field also tend to write in groups of two to five people. Back in the dark days — which I’m told are not over for many researchers — this used to involve mailing LaTeX sources around, forgetting to attach the right file, “I take the editing token for file.tex” e-mails, questions like “Where is the most recent  version of the draft?” and so on. In some cases, I’m told authors actually sat down together and did grammar fixes in a meeting. In a word, it was horrible.
+
+Judging from anecdotal evidence, it is not that bad anymore. Many people now use some sort of revision control to write their papers, with either [[https://subversion.apache.org][Subversion]] or [[https://git-scm.com][Git]] being the tool of choice. However, my impression is that we don’t use the tools available to us to the extent we should. So let me try to make my case for a better practice of collaborative writing for (crypto) academics.
+
+#+HTML: <!--more-->
+
+** Why Git?
+
+Chances are that if you’re writing a paper with a more senior researcher they will prefer Subversion to Git. This is mainly because Subversion is the tool that people used to learn (and the transition from CVS to SVN was pretty straight-forward) and many people don’t see a need for “fancy” Git features such as being distributed and lightweight branches. While I’d say these features do in fact come in handy (see below), I’d say a good reason to use Git is simply because Git is winning the version control battle. Loads of open-source projects are switching over to Git and being familiar with such central tool has benefits beyond writing papers.
+
+Here are a [[https://www.atlassian.com/git/tutorials/][bunch]] of [[https://try.github.io/levels/1/challenges/1][git]] [[https://rogerdudler.github.io/git-guide/][tutorials]].
+
+** One feature per commit
+
+Git is famously distributed, which means you check in locally and eventually push your changes to some server (yeah, yeah, “all is local”, blabla, most people use some central server to coordinate). This allows to commit work in progress and partial solutions. For example, say, you rewrite a theorem and then need to go through the rest of the paper to update how the theorem is referenced. You don’t have to dump all those changes in one big chunk on everybody else, but could create a commit for the revised theorem and then one or more commits for the clean up. This way, it’s much easier for your co-authors to focus on the most important bit — the revised theorem — without it being hidden in a bigger commit. It also makes it easier to, say, import that change into a different version of the document and so on. Once you’re happy with your changes you can then push your changes.
+
+Of course, we don’t necessarily work like this. While fixing up the references to our theorem we might encounter some bad LaTeX style or some bad grammar which we might as well fix. This doesn’t have to be a problem, because git allows you to select which change you want to commit, cf. =git add -i=. [[https://github.com/magit/magit][Magit]] (the Git front-end I’m using) makes this even easier.
+
+** Meaningful commit messages
+
+A lot of commit messages I see simply read “Update” which is as bad as commit messages get. If you have meaningful commits – one feature per commit – it makes sense to write a [[http://chris.beams.io/posts/git-commit/][descriptive git message]]. For example, “Fix LaTeX typography in Section 2.” tells your co-authors that they don’t have to reread the document to check your changes, it’s just some minor stuff.
+
+** Diffs
+
+It’s easy see a comparison what changed in a given revision compared to a previous revision pretty much regardless of which tool you use. In most cases all you need is webbrowser. This is very useful because it reduces the task of checking a new version from “skim read the whole thing” to “let’s see what changed”.
+
+** Cut e-mail
+
+Lots of git hosts like [[https://github.com][GitHub]], [[https://about.gitlab.com][GitLab]] or [[https://bitbucket.org/][Bitbucket]] can send e-mail or other notifications on check ins and so on. This is a useful feature because “I just checked in, can someone double check my proof” is an e-mail no one should have to write if computers can do that for you. If your commit messages are meaningful and automatic notifications are enabled, your coauthors will be notified and you can even ask your questions in the commit message. As an added benefit, this binds the question to a commit so it’s also clear afterwards which version of the paper the question referred to.
+
+** Don’t be afraid of branches and merges
+
+People who come from Subversion do not tend to use branches because branches are not really that great in Subversion. Branches in git however are quick and easy. Creating, diffing and merging branches is a core feature of the system and highly recommended. Have a better way of advertising your results in the introduction? Create a new branch “awesomer-intro”, work on it, push it, convince your co-authors and merge it. All this does not interfere with the main branch in the slightest, where the rest of the work takes place.
+
+Branches or not, at some point the need will arise to merge two versions which cannot be automatically merged due to merge conflicts. This step scares a lot of people, hence those “I take the editing token for file.tex/Section 2” emails.
+
+However, you cannot actually lose any information in a merge. All information that was there before is still there, that’s the point of a revision control system. Secondly, once you get [[https://www.atlassian.com/git/tutorials/using-branches/git-merge][your head around the concept]], it’s not that hard. In particular, if you use a nice 3-way diff/merge tool like [[http://meldmerge.org][Meld]]. I hear good things about [[https://www.gnu.org/software/emacs/manual/html_mono/ediff.html][ediff]], too. Also, remember that it’s typically easy to check what result your collaborators see after you pushed your changes, by simply checking the relevant repository with your webbrowser.
+
+** Use tags
+
+Git has tags, i.e. you can assign tags to commits to find them again later. This is useful when writing papers to tag milestones. For example, you might want to tag the version you submitted to that conference with =thatconference-2016-submission= and continue working on the paper. Later, when you get reviewer comments you can easily go back to see what the heck line 3 on page 5 was about. It also makes sense to tag final versions =thatconference-2016-final= because it allows you to easily check what changed since that version, say, when updating an ePrint afterwards.
+
+** Don’t check in automatically generated files
+
+LaTeX produces loads of files. Don’t check them in. Your repository should not contain any =.bbl= file, no =.aux= and no =paper.pdf= for your =paper.tex=. These files will produce unnecessary conflicts for your collaborates and makes diffs unnecessarily unreadable. You can use one of the many [[https://github.com/github/gitignore/blob/master/TeX.gitignore][pre-made]] =.gitignore= files for LaTeX to avoid checking those kind of files in. In related news, never do =git commit -a=.
+
+The only exception to “never check in automatically generated files“ is if those files take a long time to produce. Say, a computation takes an hour to run to produce a certain log and this computation is only run once or so then it obviously makes sense to check in this log files.
+
+** Don’t copy folders over for journal versions, proceedings versions etc.
+
+Our papers tend to have different versions: proceedings versions, full versions for ePrint, journal versions. A common mistake I see is to have a directory structure something like this:
+
+#+BEGIN_SRC bash
+paper
+|- paper.tex
+|- conference/
+   |- paper.tex
+|- journal
+   |- paper.tex
+#+END_SRC
+
+This is bad as there is no notion of a canonical version so people might work off different copies of =paper.tex=, there is no automatic way of importing a fix from one =paper.tex= to another =paper.tex= and so on. It is much better to use either Latex’s or Git’s facilities for dealing with this.
+
+LaTeX has conditionals, which can be used to compile this or that part depending a flag. For example:
+
+#+BEGIN_SRC LaTeX
+\def\isfullversion{0}
+
+\usepackage{ifthen}
+\usepackage{xspace}
+\newcommand{\fullversion}[2]{\ifthenelse{\equal{\isfullversion}{1}}{{#1}}{{#2}}\xspace}
+#+END_SRC
+
+Alternatively or additionally, Git branches are a way to separate versions while still being able to import fixes etc. across. See [[https://git-scm.com/docs/git-cherry-pick][git cherry-pick]].
+
+** Don’t maintain your own BibTeX database if you don’t have to
+
+There is no need to maintain your own BibTeX database for cryptographic publications because [[https://cryptobib.di.ens.fr][crypto.bib]] does it for you (see [[https://cryptobib.di.ens.fr][crypto.bib]] website for a list of conferences and journals which are covered). It even comes in a [[https://github.com/cryptobib][git repository]] which you can add as a [[https://git-scm.com/docs/git-submodule][git submodule]]. Of course, it’s not always 100% up to date, so you might need to add 1-2 very recent papers by hand. Also, it does not cover all mathematics that we use in cryptography, those still must be added by hand. Still, many of the papers we cite were published in cryptographic venues and there is not point in adding those references by hand. There’s also, for example, a database of [[http://tm.uka.de/~bless/bibrfcindex.html][RFCs]].
+
+You should combine several BibTeX sources in your paper, using pre-existing databases where possible and a =local.bib= file for everything that’s not covered by those databases, like so:
+
+#+BEGIN_SRC LaTeX
+\bibliography{cryptobib/abbrev3,cryptobib/crypto_crossref,local}
+#+END_SRC
+
+To import those missing BibTeX sources, try e.g. [[https://github.com/jkitchin/org-ref/blob/master/org-ref.org][org-ref]] or [[https://github.com/cute-jumper/gscholar-bibtex][gscholar-bibtex]] for Emacs or e.g. [[https://www.refme.com/uk/][RefMe]] for your browser/phone. I like [[https://github.com/tmalsburg/helm-bibtex][helm-bibtex]] for search through my BibTeX database.
+
+** Splitting files up
+
+As far as I can tell, the practice of splitting up LaTeX files in one file per section is a leftover from the days of “I’ll take the editing token for X”. Given modern tooling, perhaps this is not necessary any more.
+
+** Cryptocode
+
+Use [[https://www.ctan.org/pkg/cryptocode?lang=en][cryptocode]]. It defines many useful macros for writing papers in crypto (Landau notation, advantage terms, probabilities, crypto primitives, pseudocode, game based proofs, …) Here’s an example:
+
+#+BEGIN_SRC LaTeX
+\procedure[linenumbering]{$\indcpa_\enc^\adv$}{%
+  b \sample \bin  \\
+  (\pk,\sk) \sample \kgen (\secparam)  \\
+  (\state,m_0,m_1) \sample \adv(\secparam, \pk, c)   \\
+  c \sample \enc(\pk,m_b)  \\
+  b' \sample \adv(\secparam, \pk, c, \state) \\
+  \pcreturn b = b' 
+}
+#+END_SRC
+
+** Services
+
+For most stuff, hosts like [[https://github.com][GitHub]], [[https://about.gitlab.com][GitLab]] or [[https://bitbucket.org/][Bitbucket]] do the trick. In particular, the latter two offer more than one free private repository. Furthermore, Bitbucket offers a free [[https://bitbucket.org/product/pricing][unlimited plan]] for academics, without any restrictions on repositories and number of collaborators. However, I think ideally our institutions should run their own local, say, GitLab instances with local continuous integration (CI) services.
+
+Chiefly, because decentralisation is good and our institutions have the IT infrastructure to provide it. Secondly, however, I really want continuous integration for private LaTeX repositories and none of the CI services I know offer this for free or cheaply. Using CI means some computer yells at you if you forgot to check in a required file, so that your collaborators do not have to.
+
+** My tools
+
+Finally, here’s my [[https://github.com/malb/emacs.d/blob/master/malb.org#latex][LaTeX config]] and my [[https://github.com/malb/emacs.d/blob/master/malb.org#git][Git config]] for Emacs. I also have a [[https://bitbucket.org/malb/paper-template][paper template]] available online in the hope this reduces the start-up time of writing a new paper. Finally, please consider publishing the [[https://bitbucket.org/malb/publications/src][LaTeX source code]] of your paper, so we can all focus on research instead of typesetting.
+
+** Changelog
+
+- *Update 10/01/2016 20:25:* added cryptocode and tags
