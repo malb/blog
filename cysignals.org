@@ -1,0 +1,102 @@
+#+BLOG: martinralbrecht
+#+POSTID: 1233
+#+DATE: [2016-02-10 Wed 10:29]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: Sage
+#+TAGS: sage, cython, python
+#+DESCRIPTION:
+#+TITLE: Cysignals
+If you’ve written a fair amount of [[http://cython.org][Cython]] code in your time, chances are that you got frustrated by
+
+1. buggy C/C++ code crashing your Python shell and
+2. the fact that you cannot interrupt C/C++ functions.
+
+For example, the following Cython code cannot be interrupted:
+
+#+BEGIN_SRC python
+while True:
+    pass
+#+END_SRC
+
+On the other hand, if you have written Cython code in [[http://sagemath.org][Sage]], then you might [[https://github.com/sagemath/sage/search?utf8=✓&q=sig_on+OR+sig_off+OR+sig_check&type=Code][have come across]] its nifty =sig_on()=, =sig_off()= and =sig_check()= macros which prevent crashes and allow your calls to C/C++ code to be interrupted. Sage had signal handling — crashes, interrupts — forever (see below).
+
+[[https://github.com/sagemath/cysignals][Cysignals]] is Sage’s signal handling reborn as a stand-alone module, i.e. it allows to wrap C/C++ code blocks in =sig_on()= and =sig_off()= pairs which catch signals such as =SIGSEGV=. Using it is straight-forward. Simply add
+
+#+BEGIN_SRC python
+include "cysignals/signals.pxi"
+#+END_SRC
+
+to each Cython module and then wrap long-running computations in =sig_on()= / =sig_off()= pairs or check for signals with =sig_check()=. See the [[https://cysignals.readthedocs.org/en/latest/][cysignals documentation]] for details.
+
+We have a first [[https://github.com/sagemath/cysignals/releases/tag/0.9][pre-release]] out. Pre-release because we haven’t switched Sage to the new, stand-alone code yet. Once this is done, we’ll publish [[https://github.com/sagemath/cysignals/issues/18][version 1.0]] since some version of this code has been in use on many different systems for at least decade.
+
+#+HTML: <!--more-->
+
+** History
+
+Sage’s signal handling is rather old. It was definitely already there when I joined the project in 2006. The first version was written by William Stein (like many things Sage). The oldest record I can find is that in November 2006 I improved things a bit and sent William the following e-mail bragging about my results:
+
+#+BEGIN_QUOTE
+William,
+
+my signal handler makeover seems to work, but there is one thing to clean up
+before I can submit it. In the new implementation a unique state struct is
+required, called _signals. As right now interrupt.o is linked statically into
+every extension module this cannot be accomplished. Obviously a shared
+library is the solution here and I'm facing the following decision: Shall I
+create a new spkg with a shared library called libcsage (or something else)
+which gets linked dynamically to every extension module or shall I build an
+extension module "interrupt" containing only C code and use/link that? Does
+distutils support that? I'll go for the separate shared library if you don't
+have an opinion on this because I assume that such a _very_ thin (i.e. 3
+functions or so) library could be handy also for other purposes like a malloc
+replacement etc.. I guess this "library" would be BSD-licensed (?) because of
+the signal handler stuff.
+
+Also I was wondering if you could recommend any test cases for the signal
+handlers. I have tested: Catching a SIGSEGV in NTL works, Ctrl-C in echelon
+form computation modint works, KeyboardInterrupts in the Interpreter work.
+But I'm not sure what else to test.
+
+Martin
+
+PS:
+
+SAGE 1.4:
+
+sage: sage: time for i in range(100000): _ = ntl.GF2E_random()
+CPU times: user 1.33 s, sys: 0.78 s, total: 2.12 s
+Wall time: 2.12
+
+My New Signal Handler:
+
+sage: sage: time for i in range(100000): _ = ntl.GF2E_random()
+CPU times: user 0.38 s, sys: 0.06 s, total: 0.43 s
+Wall time: 0.43
+
+No Signal Handler:
+
+sage: sage: time for i in range(100000): _ = ntl.GF2E_random()
+CPU times: user 0.31 s, sys: 0.00 s, total: 0.32 s
+Wall time: 0.32
+#+END_QUOTE
+
+For your amusement, here is how long that computation takes today:
+
+#+BEGIN_SRC python
+sage: K.<a> = GF(2^8)
+sage: C = ntl.GF2EContext(K)
+sage: time for i in range(100000): _ = ntl.GF2E_random(C)
+CPU times: user 44 ms, sys: 12 ms, total: 56 ms
+Wall time: 39 ms
+#+END_SRC
+
+In 2010, Jeroen Demeyer came along, put a [[http://trac.sagemath.org/ticket/9678][serious amount of work]] into Sage’s signal handling and made it so much faster, more robust and overall better. In 2012, [[http://trac.sagemath.org/ticket/13889][Volker Braun added]] more robust backtracks.
+
+This code now becoming independent of Sage follows a similar trajectory. It started with [[https://groups.google.com/d/msg/sage-support/FbpCcFDLE2E/3Cy087LfAwAJ][a post]] of William on [sage-support]:
+
+#+BEGIN_QUOTE
+As an example, I've suggested numerous times that we should massively refactor the sage library to be a bunch of smaller Python libraries, develop them say on github (?), use Pypi and pip. If people would realize how important it is that we revamp how Sage development is done in a much less monolithic way, and better using existing tools, then I would be happy and enjoy watching as people do the revamp (e.g., like happened with switching from Mercurial to Git, which I didn't do much on, but definitely supported). As it is, I sadly see that nobody seems to "get it" regarding how broken our development process is right now. So, I figure I'll have to do something. Unfortunately, I can't do anything now, due to lack of time. I hope that either I'm totally wrong, or that I do have time before Sage gets into deeper trouble.
+#+END_QUOTE
+
+In the mean time, I had copied Sage’s signal handling for [[https://github.com/malb/fpylll][fpylll]]. Because copying code is evil and motivated by William’s email, I decided to push for Sage’s signal handling being made independent of Sage and started working on it. Once I had a first prototype, Jeroen put in [[https://github.com/sagemath/cysignals/commits/master][a serious amount of work]] and made everything better again.
