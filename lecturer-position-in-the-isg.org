@@ -1,0 +1,35 @@
+#+BLOG: martinralbrecht
+#+POSTID: 1249
+#+DATE: [2016-03-03 Thu 13:12]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography
+#+TAGS: jobs, it security
+#+DESCRIPTION:
+#+TITLE: Lecturer Position in the Information Security Group
+My department is [[https://jobs.royalholloway.ac.uk/vacancy.aspx?ref=0216-068][hiring a new lecturer]] whose interests are related to, or complement, current [[https://www.isg.rhul.ac.uk/bin/staff-dir.php][strengths of the ISG]]. If you have questions get in touch either as suggested below or — if that works better for you — with me.
+
+#+BEGIN_QUOTE
+Lecturer in Information Security
+
+[…]
+
+Applications are invited for the post of Lecturer in the Information Security Group at Royal Holloway, University of London
+
+Applications are invited from researchers whose interests are related to, or complement, current strengths of the ISG. We are particularly interested in applicants who will be able to help drive forward research related to Internet of Things (IoT) security.
+
+Applicants should have a Ph.D. in a relevant subject or equivalent, be a self-motivated researcher, and have a strong publication record. Applicants should be able to demonstrate an enthusiasm for teaching and communicating with diverse audiences, as well as show an awareness of contemporary issues relating to cyber security.
+
+This is a full time and permanent post, with an intended start date of 1st September, 2016, although an earlier or slightly later start may be possible. This post is based in Egham, Surrey, where the College is situated in a beautiful, leafy campus near to Windsor Great Park and within commuting distance from London.
+
+For an informal discussion about the post, please contact Prof. Keith Mayes on keith.mayes@rhul.ac.uk.
+
+To view further details of this post and to apply please visit https://jobs.royalholloway.ac.uk. The Human Resources Department can be contacted with queries by email at: recruitment@rhul.ac.uk or via telephone on: +44 (0)1784 41 4241.
+
+Please quote the reference: *0216-068*
+
+Closing Date: *Midnight, 1st April 2016*
+
+Interview Date: *To be confirmed*
+
+/We particularly welcome female applicants as they are under-represented at this level in the Department of Information Security within Royal Holloway, University of London./
+#+END_QUOTE
