@@ -14,6 +14,7 @@
 
 ** 2014
 
+-  *09.10.2014* - Arora-GB: Algebraic Algorithms for LWE Problems - ENS Lyon, Lyon, France. [[https://bitbucket.org/malb/talks/src/HEAD/20141009%20-%20Arora-GB%20-%20Lyon/?at=master][LaTeX sources]].
 -  *09.05.2014* - [[http://martinralbrecht.files.wordpress.com/2010/07/20140509-lwe-post-quantum-cambridge.pdf][Solving the Learning with Errors Problem]] - [[http://www.turing-gateway.cam.ac.uk/gchq_may2014.shtml][Post Quantum Research]] - Isaac Newton Institute, Cambridge, UK, [[https://bitbucket.org/malb/talks/src/c61384b17eae2017a78d639ed384bd9cb357b5a3/20140509%20-%20LWE%20-%20Cambridge/?at=default][LaTeX sources]].
 -  *23.04.2014* - [[http://martinralbrecht.files.wordpress.com/2010/07/20140423-heartbleed-isg-egham.pdf][Heartbleed]] - ISG Research Seminar, Egham, UK, [[https://bitbucket.org/malb/talks/src/c61384b17eae2017a78d639ed384bd9cb357b5a3/20140423%20-%20Heartbleed%20-%20ISG/?at=default][LaTeX sources]].
 
@@ -28,7 +29,7 @@
 
 -  *16.08.2012* - [[http://martinralbrecht.files.wordpress.com/2010/07/20120816_-_differential_-_windsor.pdf][An All-In-One Approach to Differential Cryptanalysis for Small Block Ciphers]] - SAC 2012, Windsor, Canada, [[https://bitbucket.org/malb/talks/src/tip/20120816%20-%20Differential%20-%20Windsor][LaTeX sources]]
 -  *23.07.2012* - [[http://martinralbrecht.files.wordpress.com/2010/07/20120723_-_m4rie_-_grenoble.pdf][The M4RIE library for dense linear algebra over small fields with even characteristic]] - ISSAC 2012, Grenoble, France - [[https://bitbucket.org/malb/talks/src/8ce3378edb97/20120723%20-%20M4RIE%20-%20Grenoble][LaTeX sources]]
--  *27.06.2012 -* [[http://martinralbrecht.files.wordpress.com/2010/07/20120627_pollycracker_bristol.pdf][Polly Cracker, revisited]] - Bristol University, UK - [[https://bitbucket.org/malb/talks/src/97c3e8284ade/20120627%20-%20PollyCracker%20-%20Bristol][LaTeX sources]]
+-  *27.06.2012* - [[http://martinralbrecht.files.wordpress.com/2010/07/20120627_pollycracker_bristol.pdf][Polly Cracker, revisited]] - Bristol University, UK - [[https://bitbucket.org/malb/talks/src/97c3e8284ade/20120627%20-%20PollyCracker%20-%20Bristol][LaTeX sources]]
 -  *07.06.2012* - The M4RI and M4RIE Libraries - [[http://wiki.lmona.de/events/elagb][ELAGB Workshop]], Kaiserslautern, Germany - [[https://bitbucket.org/malb/talks/src/7ae176bc6c08/20120607%20-%20M4RIE%20-%20Kaiserslautern][LaTeX sources]], [[https://www.youtube.com/watch?v=PjDVn6dOh5k&feature=youtu.be][video]]
 -  *01.06.2012* - [[https://martinralbrecht.files.wordpress.com/2010/07/20120601_-_la_-_mykonos.pdf][Algorithms & Techniques for Dense Linear Algebra over Small Finite Fields]] - ECrypt 2 School on Tools, Mykonos, Greece - [[https://bitbucket.org/malb/talks/src/tip/20120601%20-%20LA%20-%20Mykonos][LaTeX sources]]
 -  *28.05.2012* - [[https://martinralbrecht.files.wordpress.com/2010/07/20120528_-_sage_-_mykonos.pdf][Sage for Cryptographers]] - ECrypt 2 School on Tools, Mykonos, Greece - [[https://bitbucket.org/malb/talks/src/tip/20120528%20-%20Sage%20-%20Mykonos][LaTeX sources]]
@@ -39,7 +40,7 @@
 -  *14.12.2011* - [[http://martinralbrecht.files.wordpress.com/2010/07/20111214_dhies_oxford.pdf][Breaking an Identity-based Encryption Scheme based on DHIES]] - IMA CCC 2011, Oxford, UK
 -  *06.12.2011* - [[http://martinralbrecht.files.wordpress.com/2010/07/20111206_pollycracker_asiacrypt.pdf][PollyCracker, Revisted]] - AsiaCrypt 2011, Seoul, South Korea
 -  *04.11.2011* - Polly Cracker, Revisited - SALSA Seminar, Paris, France
--  *07.10.2011* -[[http://martinralbrecht.files.wordpress.com/2011/10/20111007_-_m4rie_-_raleigh.pdf][Linear algebra over dense matrices over GF(2) and small extensions]] - SIAM AG11, Raleigh, USA
+-  *07.10.2011* - [[http://martinralbrecht.files.wordpress.com/2011/10/20111007_-_m4rie_-_raleigh.pdf][Linear algebra over dense matrices over GF(2) and small extensions]] - SIAM AG11, Raleigh, USA
 -  *28.07.2011* - [[http://martinralbrecht.files.wordpress.com/2011/07/20110728_pollycracker_bochum1.pdf][Polly Cracker, Revisted]] - MAYA Workshop, Bochum, Germany
 -  *18.07.2011* - [[http://martinralbrecht.files.wordpress.com/2011/07/20110718_coldboot_nanning.pdf][Solving Polynomial Systems with Noise using Integer Programming]] - CRC 2011, Nanning, China
 -  *07.06.2011* - [[http://martinralbrecht.files.wordpress.com/2011/06/20110607_coldboot_nerja.pdf][Coldboot Key Recovery by Solving Polynomial Systems with Noise]] -  ACNS 2011, Nerja, Spain
