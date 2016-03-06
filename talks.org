@@ -7,10 +7,11 @@
 
 ** 2015
 
--  *03.09.2015* - On the concrete hardness of Learning with Errors - Imperial, London, UK.
--  *17.06.2015* - [[https://martinralbrecht.files.wordpress.com/2010/07/20150617-survey-epfl.pdf][On the concrete hardness of Learning with Errors]] - EPFL, Lausanne, Switzerland.
--  *26.06.2015* - [[https://martinralbrecht.files.wordpress.com/2010/07/20150526-lowmc-edinburgh.pdf][Ciphers for MPC and FHE]] - Edinburgh, UK
--  *07.05.2015* - On the concrete hardness of Learning with Errors - UCL, London, UK, [[https://bitbucket.org/malb/talks/src/HEAD/20150507%20-%20LWE%20Survey%20-%20London/][LaTeX sources]].
+- *08.10.2015* - Solving LWE with BKW - Workshop on Tools for Asymmetric Cryptanalysis, Bochum, Germany
+- *03.09.2015* - On the concrete hardness of Learning with Errors - Imperial, London, UK.
+- *17.06.2015* - [[https://martinralbrecht.files.wordpress.com/2010/07/20150617-survey-epfl.pdf][On the concrete hardness of Learning with Errors]] - EPFL, Lausanne, Switzerland.
+- *26.06.2015* - [[https://martinralbrecht.files.wordpress.com/2010/07/20150526-lowmc-edinburgh.pdf][Ciphers for MPC and FHE]] - Edinburgh, UK
+- *07.05.2015* - On the concrete hardness of Learning with Errors - UCL, London, UK, [[https://bitbucket.org/malb/talks/src/HEAD/20150507%20-%20LWE%20Survey%20-%20London/][LaTeX sources]].
 
 ** 2014
 
