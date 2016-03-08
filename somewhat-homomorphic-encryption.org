@@ -9,37 +9,39 @@ Today I read the paper "[[http://crypto.stanford.edu/craig/easy-fhe.pdf][Computi
 
 #+BEGIN_SRC python
 class IntegerHomomorphic:
- def __init__(self, l, b=2):
- self.b = b
- self.l = l # lambda is out security parameter
- # these parameters determine the size
- # of various numbers and are chosen such that
- # the approximate GCD is assumed to be hard.
- self.N, self.P, self.Q = 2**(l), 2**(l**2), 2**(l**5)
- self.key_gen()
+    def __init__(self, l, b=2):
+        self.b = b
+        self.l = l  # lambda is out security parameter
+                    # these parameters determine the size
+                    # of various numbers and are chosen such that
+                    # the approximate GCD is assumed to be hard.
+        self.N = 2**(l)
+        self.P = 2**(l**2)
+        self.Q = 2**(l**5)
+        self.key_gen()
 
- def key_gen(self):
- # the secret key is simply an odd number of P bits.
- p = ZZ.random_element(0,self.P-1)
- if p%self.b == 0:
- p += ZZ.random_element(1,self.b)
- self.p = p
+    def key_gen(self):
+        # the secret key is simply an odd number of P bits.
+        p = ZZ.random_element(0, self.P-1)
+        if p%self.b == 0:
+            p += ZZ.random_element(1, self.b)
+        self.p = p
 
- def encrypt(self, m):
- # we want to encrypt 0 &lt;= m &lt; b, thus we pick some m'
- # for which m' % b == m % b holds to avoid having
- # known bits (== 0) in the computation below.
- mprime = ZZ.random_element(0,self.N-1)
- mprime = mprime - mprime%self.b + m%self.b
- # the ciphertext is this m' with some multiple of p
- # added to mask it.
- q = ZZ.random_element(0,self.Q-1)
- return mprime + self.p*q
+    def encrypt(self, m):
+        # we want to encrypt 0 &lt;= m &lt; b, thus we pick some m'
+        # for which m' % b == m % b holds to avoid having
+        # known bits (== 0) in the computation below.
+        mprime = ZZ.random_element(0,self.N-1)
+        mprime = mprime - mprime%self.b + m%self.b
+        # the ciphertext is this m' with some multiple of p
+        # added to mask it.
+        q = ZZ.random_element(0,self.Q-1)
+        return mprime + self.p*q
 
- def decrypt(self, c):
- # if we now p decryption is easy since we can simply
- # mod out p and then recover the value mod b
- return ZZ((c % self.p) % self.b)
+    def decrypt(self, c):
+        # if we now p decryption is easy since we can simply
+        # mod out p and then recover the value mod b
+        return ZZ((c % self.p) % self.b)
 #+END_SRC
 
 To see that this scheme is somewhat homomorphic observe that as long as the *noise is small enough* such that things don't wrap around we have $c_1 + c_2 = m_1 + m_2 + p(q_1 + q_2)$ and $c_1c_2 = m_1 m_2 + pq'$ for some number $q'$.
@@ -75,50 +77,49 @@ Thus, the size of the scheme is both bounded by the gap between $N$ and $P$ whic
 
 #+BEGIN_SRC python
 class PolynomialHomomorphic:
- def __init__(self, l, b=2):
- self.l = l
- K = GF(127) # pick some field
- # we choose a ring with l unknowns, which
- # should make any GB computation at least
- # as hard as 2\^l if we pick the ideal sufficiently
- # random.
- R = PolynomialRing(K, l, 'x', order='degrevlex')
- self.K = K
- self.R = R
- # our small ideal, defines the message space.
- self.b = Ideal([x for x in R.gens()])
+    def __init__(self, l, b=2):
+        self.l = l
+        K = GF(127)  # pick some field
+        # we choose a ring with l unknowns, which
+        # should make any GB computation at least
+        # as hard as 2\^l if we pick the ideal sufficiently
+        # random.
+        R = PolynomialRing(K, l, 'x', order='degrevlex')
+        self.K = K
+        self.R = R
+        # our small ideal, defines the message space.
+        self.b = Ideal([x for x in R.gens()])
 
- # these parameters are pretty arbitrary from a
- # security perspective!
- self.N = 1
- self.P = 2
- self.Q = 5
- self.key_gen()
+    # these parameters are pretty arbitrary from a
+    # security perspective!
+        self.N = 1
+        self.P = 2
+        self.Q = 5
+        self.key_gen()
 
- def key_gen(self):
- b,l = self.b, self.l
- K, R = self.K, self.R
- # we pick a random ideal with l element of degree P
- p = [R.random_element(degree=self.P)
- for _ in range(l)]
- self.p = Ideal(p)
+    def key_gen(self):
+        b, l = self.b, self.l
+        K, R = self.K, self.R
+        # we pick a random ideal with l element of degree P
+        p = [R.random_element(degree=self.P) for _ in range(l)]
+        self.p = Ideal(p)
 
- def encrypt(self, m):
- # we pick some m' which encodes the
- # same plaintext but is bigger
- m = self.R(m)
- mprime = self.R.random_element(degree=self.N)
- mprime -= mprime - mprime.reduce(self.b)
- mprime += m.reduce(self.b)
+    def encrypt(self, m):
+        # we pick some m' which encodes the
+        # same plaintext but is bigger
+        m = self.R(m)
+        mprime = self.R.random_element(degree=self.N)
+        mprime -= mprime - mprime.reduce(self.b)
+        mprime += m.reduce(self.b)
 
- # adding a random ideal element
- for f in self.p.gens():
- mprime += self.R.random_element(degree=self.Q)*f
- return mprime
+        # adding a random ideal element
+        for f in self.p.gens():
+            mprime += self.R.random_element(degree=self.Q)*f
+        return mprime
 
- def decrypt(self, c):
- # decryption is just as in the integer case.
- return c.reduce(self.p).reduce(self.b)
+        def decrypt(self, c):
+            # decryption is just as in the integer case.
+            return c.reduce(self.p).reduce(self.b)
 #+END_SRC
 
 This scheme looks a bit similar to PolyCracker where the security was also related to normal form computations. PolyCracker was broken because normal forms are simpler than Gröbner bases, that is you don't necessarily need a Gröbner basis to compute them. However, in this scheme you must find the ideal $p$ first, before you can start thinking about whether you need a Gröbner basis of it or not. Of course, I assume that my adaptation above can still be broken somehow since that's what tends to happen with multivariate crypto schemes. Also, I'm *really really* not an expert on public-key cryptography. Hey, this is a blog post, not a research paper ... so break it in the comments :)
