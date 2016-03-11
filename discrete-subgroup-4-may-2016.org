@@ -1,0 +1,68 @@
+#+BLOG: martinralbrecht
+#+POSTID: 1290
+#+DATE: [2016-03-11 Fri 17:52]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography
+#+TAGS:cryptography, lattice-based cryptography, workshop, lattices
+#+DESCRIPTION:
+#+TITLE: London-ish Lattice Coding & Crypto Meetings
+
+[[http://www.commsp.ee.ic.ac.uk/~cling/][Cong Ling]] and myself are starting [[http://malb.io/discrete-subgroup/][London-ish Lattice Coding & Crypto Meetings]]. Please help us spread the word.
+
+#+BEGIN_QUOTE
+Lattice-based approaches are emerging as a common theme in modern
+cryptography and coding theory. In communications, they are an
+indispensable mathematical tool to construct powerful error-correction
+codes achieving the capacity of wireless channels. In cryptography, they
+are used to building lattice-based schemes with provable security,
+better asymptotic efficiency, resilience against quantum attacks and new
+functionalities such as fully homomorphic encryption.
+
+We are setting up meetings on lattices in cryptography and coding in the
+London area. [1] These meetings are inspired by similar meetings held in
+Lyon [2] and are aimed at connecting the two communities in the UK with
+a common interest in lattices, with a long-term goal of building a
+synergy of the two fields.
+
+The meetings will consist of several talks on related topics, with a
+format that will hopefully encourage interaction (e.g. longer than usual
+time slots).
+#+END_QUOTE
+
+** Tentative program
+
+For details (as they become available) see [[http://malb.io/discrete-subgroup/2016/05/04/][website]].
+
+11:00 -- 12:30: *Achieving Channel Capacity with Lattice Codes*
+Cong Ling
+
+13:30 -- 15:00: *Post-Quantum Cryptography*
+Nigel Smart
+
+15:00 -- 16:30: *Lattice Coding with Applications to Compute-and-Forward*  Alister Burr
+
+16:30 - 18:00: *A Subfield Lattice Attack on Overstretched NTRU Assumptions* Martin Albrecht
+
+** Venue
+
+Room 611\\
+(Dennis Gabor Seminar Room)\\
+Department of Electrical and Electronic Engineering\\
+Imperial College London\\
+South Kensington London\\
+SW7 2AZ
+
+http://www.imperial.ac.uk/visit/campuses/south-kensington/
+
+** Registration
+
+Everyone is welcome. Two caveats:
+
+1. Speakers are told the audience is somewhat familiar with lattices.
+
+2. Please send us an email at [[mailto:c.ling@imperial.ac.uk][c.ling@imperial.ac.uk]], so that the size of the room fits with the number of participants.
+
+[1] Our definition of London includes Egham, where Royal Holloway's main
+    campus is located.
+
+[2] http://perso.ens-lyon.fr/damien.stehle/LATTICE\_MEETINGS.html
