@@ -98,7 +98,7 @@ To import those missing BibTeX sources, try e.g. [[https://github.com/jkitchin/o
 
 As far as I can tell, the practice of splitting up LaTeX files in one file per section is a leftover from the days of “I’ll take the editing token for X”. Given modern tooling, perhaps this is not necessary any more.
 
-** Cryptocode
+** Cryptocode and friends
 
 Use [[https://www.ctan.org/pkg/cryptocode?lang=en][cryptocode]]. It defines many useful macros for writing papers in crypto (Landau notation, advantage terms, probabilities, crypto primitives, pseudocode, game based proofs, …) Here’s an example:
 
@@ -113,11 +113,13 @@ Use [[https://www.ctan.org/pkg/cryptocode?lang=en][cryptocode]]. It defines many
 }
 #+END_SRC
 
+For figures give [[https://www.di.ens.fr/~jean/latex_crypto/][Tikz for Cryptographers]] a try.
+
 ** Services
 
-For most stuff, hosts like [[https://github.com][GitHub]], [[https://about.gitlab.com][GitLab]] or [[https://bitbucket.org/][Bitbucket]] do the trick. In particular, the latter two offer more than one free private repository. Furthermore, Bitbucket offers a free [[https://bitbucket.org/product/pricing][unlimited plan]] for academics, without any restrictions on repositories and number of collaborators. However, I think ideally our institutions should run their own local, say, GitLab instances with local continuous integration (CI) services.
+For most stuff, hosts like [[https://github.com][GitHub]], [[https://about.gitlab.com][GitLab]] or [[https://bitbucket.org/][Bitbucket]] do the trick. In particular, the latter two offer more than one free private repository. Furthermore, Bitbucket offers a free [[https://bitbucket.org/product/pricing][unlimited plan]] for academics, without any restrictions on repositories and number of collaborators. GitHub gives academics five private repositories for free. Another option is [[https://www.overleaf.com][overleaf]] provides a web editor for LaTeX with a Git interface. Edits done online are automatically committed.
 
-Chiefly, because decentralisation is good and our institutions have the IT infrastructure to provide it. Secondly, however, I really want continuous integration for private LaTeX repositories and none of the CI services I know offer this for free or cheaply. Using CI means some computer yells at you if you forgot to check in a required file, so that your collaborators do not have to.
+However, I think ideally our institutions should run their own local, say, GitLab instances with local continuous integration (CI) services. Chiefly, because decentralisation is good and our institutions have the IT infrastructure to provide it. Secondly, however, I really want continuous integration for private LaTeX repositories and none of the CI services I know offer this for free or cheaply. Using CI means some computer yells at you if you forgot to check in a required file, so that your collaborators do not have to.
 
 ** My tools
 
@@ -126,3 +128,4 @@ Finally, here’s my [[https://github.com/malb/emacs.d/blob/master/malb.org#late
 ** Changelog
 
 - *Update 10/01/2016 20:25:* added cryptocode and tags
+- *Update 08/03/2016 20:20:* added [[https://www.overleaf.com][overleaf]] and [[https://www.di.ens.fr/~jean/latex_crypto/][Tikz for Cryptographers]]. GitHub information updated.
