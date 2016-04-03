@@ -2,7 +2,7 @@
 #+DATE: [2011-02-14 Mon 11:34]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
-#+TAGS: blockcipher, cryptanalysis, cryptography, ideal-cipher model, related-key attack
+#+TAGS: block cipher, cryptanalysis, cryptography, ideal-cipher model, related-key attack
 #+TITLE: On Cipher-Dependent Related-Key Attacks in the Ideal-Cipher Model
 
 I'm at [[http://fse2011.mat.dtu.dk/][FSE 2011]] right now which reminded me to post our paper titled "[[http://eprint.iacr.org/2011/213][On Cipher-Dependent Related-Key Attacks in the Ideal-Cipher Model]]". Here's the abstract:

@@ -2,7 +2,7 @@
 #+DATE: [2011-08-31 Wed 12:02]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
-#+TAGS: algebraic cryptanalysis, aproximate gcd, commutative algebra, cryptanalysis, cryptography, gröbner basis, homomorphic encryption, lwe, posso
+#+TAGS: algebraic cryptanalysis, approximate gcd, commutative algebra, cryptanalysis, cryptography, gröbner basis, homomorphic encryption, lwe, posso
 #+TITLE: Chen & Nguyen's algorithm and Arora & Ge's algorithm
 
 In /Faster Algorithms for Approximate Common Divisors: Breaking Fully-Homomorphic-Encryption Challenges over the Integers/ Yuanmi Chen and Phong Q. Nguyen ([[http://eprint.iacr.org/2011/436][preprint here]]) propose a new algorithm for solving the approximate GCD problem. It drops the complexity from $2\^{2\rho}$ to $2\^{3/2\rho}$ in the general case and from $2\^{\rho}$ to $2\^{\rho/2}$ in the partial case (one multiple of $p$ is given noise-free) which is a pretty big deal.

@@ -2,7 +2,7 @@
 #+DATE: [2014-02-18 Tue 12:08]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography, sage
-#+TAGS: agcd, approximate gcd, cryptanalysis, cryptography, fhe, homomorphic encryption, lattice reduction, multilinear maps, sage
+#+TAGS: agcd, approximate gcd, cryptanalysis, cryptography, homomorphic encryption, lattice reduction, multilinear maps, sage
 #+TITLE: Cryptanalysis of the FHE based on GACD?
 
 Jintai Ding and Chengdong Tao published a [[http://eprint.iacr.org/2014/042][new preprint]] on the IACR's ePrint titled /A New Algorithm for Solving the Approximate Common Divisor Problem and Cryptanalysis of the FHE based on GACD./
@@ -34,7 +34,7 @@ An implementation of the first step of this algorithm for Sage is given [[http:/
 Finally, let's look at the application to parameters as they are used in cryptography. The authors consider [[http://eprint.iacr.org/2009/616.pdf][the fully homomorphic encryption scheme]] due to Marten van Dijkm Craig Gentry, Shai Halevi, Vinod Vaikuntanathan which sets γ = λ^{5}, η = λ^{2} and ρ = λ for a security level of λ, i.e. 2^{λ} operations should be needed to break it. Here is what the authors write:
 
 #+BEGIN_QUOTE
-We apply our algorithm to the parameters in [6] and we could break all the cases where their parameter γ < 2^{20}.
+We apply our algorithm to the parameters in [ 6 ] and we could break all the cases where their parameter γ < 2^{20}.
 #+END_QUOTE
 
 It is not really clear to me if the authors actually ran their attack or not. On the one hand, we have that a choice of parameters where γ < 2^{20} would correspond to  λ=16 as (2^{20})^{(1/5)} = 2^{4}. Hence, attacking such dimensions would not mean much. On the other hand, the estimates by the authors about LLL would mean their attack would cost 2^{135} operations.

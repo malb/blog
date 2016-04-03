@@ -2,7 +2,7 @@
 #+BLOG: martinralbrecht
 #+POSTID: 1251
 #+CATEGORY: cryptography
-#+TAGS: cryptography, homomorphic encryption, fhe, lattice-based cryptography, sage
+#+TAGS: cryptography, homomorphic encryption, lattice-based cryptography, sage
 #+DATE: [2016-03-03 Thu 17:28]
 This week our reading group studied [[http://ia.cr/2013/340][Homomorphic Encryption from Learning with Errors: Conceptually-Simpler, Asymptotically-Faster, Attribute-Based]] by Craig Gentry, Amit Sahai and Brent Waters: a 3rd generation fully homomorphic encryption scheme.
 
