@@ -1,0 +1,381 @@
+#+BLOG: martinralbrecht
+#+POSTID: 1304
+#+DATE: [2016-04-03 Sun 11:40]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography, sage
+#+TAGS: lattices, lattice-based-cryptography, fplll, python, 
+#+DESCRIPTION:
+#+PROPERTY: header-args :exports both :session fpylll :results code :eval never-export
+#+TITLE: fpylll
+#+STARTUP: indent
+
+[[https://github.com/malb/fpylll][fpylll]] is a Python library for performing lattice reduction on lattices over the Integers. It is based on the [[https://github.com/dstehle/fplll][fplll]], a C++ library which describes itself as follows:
+
+#+BEGIN_QUOTE
+fplll contains several algorithms on lattices that rely on floating-point computations. This includes implementations of the floating-point LLL reduction algorithm, offering different speed/guarantees ratios. It contains a 'wrapper' choosing the estimated best sequence of variants in order to provide a guaranteed output as fast as possible. In the case of the wrapper, the succession of variants is oblivious to the user. It also includes a rigorous floating-point implementation of the Kannan-Fincke-Pohst algorithm that finds a shortest non-zero lattice vector, and the BKZ reduction algorithm.
+
+fplll is distributed under the [[https://github.com/dstehle/fplll/blob/master/COPYING][GNU Lesser General Public License]] (either version 2.1 of the License, or, at your option, any later version) as published by the Free Software Foundation.
+#+END_QUOTE
+
+In short, *fplll* is your best bet at a publicly available fast lattice-reduction library and *fpylll* provides a convenient interface for it — for experimentation, development and extension — from Python.
+
+For the rest of this post, I’ll give you a tour of the features currently implemented in *fpylll* and point out some areas where we could do with some help.
+
+#+HTML: <!--more-->
+
+** An Interface to fplll
+
+First of all, *fpylll* is a thin wrapper around *fplll*. In the example below, we first generate an NTRU-like matrix and consider the norm of the first row:
+
+#+BEGIN_SRC python
+from fpylll import IntegerMatrix, LLL
+q = 1073741789
+A = IntegerMatrix.random(30, "ntrulike", bits=30, q=q)
+A[0].norm()
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC python
+3294809651.09
+#+END_SRC
+
+We then call [[https://en.wikipedia.org/wiki/Lenstra–Lenstra–Lovász_lattice_basis_reduction_algorithm][LLL reduction]], i.e. we perform integer-linear combinations of the rows to make shorter rows and observe the output:
+
+#+BEGIN_SRC python 
+LLL.reduction(A)
+A[0].norm()
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC python
+82117.5815888
+#+END_SRC
+
+If LLL reduction isn’t strong enough, we can call the BKZ algorithm for some block size $k$.
+
+#+BEGIN_SRC python
+from fpylll import BKZ
+BKZ.reduction(A, o=BKZ.Param(block_size=10))
+A[0].norm()
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC python
+71600.8858744
+#+END_SRC
+
+We may want to increase the block size $k$ to find shorter vectors.
+
+#+BEGIN_SRC python
+from fpylll import BKZ
+BKZ.reduction(A, o=BKZ.Param(block_size=20))
+A[0].norm()
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC python
+68922.4558181
+#+END_SRC
+
+Or, we just go for the shortest vector. Solving the Shortest Vector Problem (SVP) is supposed to be hard problem, so we only attempt it for a small lattice.
+
+#+BEGIN_SRC python
+from fpylll import SVP
+q = 1073741789
+B = IntegerMatrix.random(10, "ntrulike", bits=7, q=127)
+SVP.shortest_vector(B)
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC python
+(1, 2, -3, 5, -2, 4, 5, -1, 1, 1, 0, -1, 6, -3, 0, 2, 6, -8, 0, 1)
+#+END_SRC
+
+Of course, *fpylll* being a Python library means you can use your favourite Python libraries with it. For example, say, we want to LLL reduce many matrices in parallel, using all our cores, and to compute the norm of the shortest vector across all matrices after LLL reduction. We’ll make use of Python’s [[https://docs.python.org/2/library/multiprocessing.html][multiprocessing]]:
+
+#+BEGIN_SRC python
+from multiprocessing import Pool
+#+END_SRC
+
+If we want to recover the reduced matrix, we have to return it. However, =LLL.reduction= returns nothing and its input =A= will live in its own process. So we add a small function which returns =A=.
+
+#+BEGIN_SRC python
+def f(A):
+    from fpylll import LLL
+    LLL.reduction(A)
+    return A
+#+END_SRC
+
+For this example, we want dimension 40, four worker processes and 32 matrices:
+
+#+BEGIN_SRC python
+from fpylll import IntegerMatrix
+
+d = 20
+workers = 4
+tasks = 32
+
+A = [IntegerMatrix.random(d, "ntrulike", bits=30, q=1073741789) for _ in range(tasks)]
+#+END_SRC
+
+Let’s get to work: we create a pool of workers and kick off the computation:
+
+#+BEGIN_SRC python
+pool = Pool(workers)
+A = pool.map(f, A)
+#+END_SRC
+
+Finally, we output the minimal norm found:
+
+#+BEGIN_SRC python
+min([A_[0].norm() for A_ in A])
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC python
+7194.545155880252
+#+END_SRC
+
+** A Python Library for Developing Lattice-Reduction Algorithms
+
+The main objective of *fpylll* is to make developing and experimenting with the kind of algorithms implemented in *fplll* easier. For example, there are a few variants of the BKZ algorithm in the literature which essentially re-combine the same building blocks — LLL and an SVP oracle — in some way. These kind of algorithms should be easy to implement. The code below is an implementation of the [[https://github.com/malb/fpylll/blob/master/src/fpylll/contrib/simple_bkz.py][plain BKZ algorithm]] in 70 lines of Python.
+
+#+BEGIN_SRC python
+from fpylll import IntegerMatrix, GSO, LLL, BKZ
+from fpylll import Enumeration as Enum
+from fpylll import gso
+
+class BKZReduction:
+    def __init__(self, A):
+        wrapper = LLL.Wrapper(A)
+        wrapper()
+
+        self.A = A
+        self.M = GSO.Mat(A, flags=gso.GSO.ROW_EXPO)
+        self.lll_obj = LLL.Reduction(self.M)
+
+    def __call__(self, block_size):
+        self.M.discover_all_rows()
+
+        while True:
+            clean = self.bkz_tour(block_size, 0, self.A.nrows)
+            if clean:
+                break
+
+    def bkz_tour(self, block_size, min_row, max_row):
+        clean = True
+        for kappa in range(min_row, max_row-1):
+            bs = min(block_size, max_row - kappa)
+            clean &= self.svp_reduction(kappa, bs)
+        return clean
+
+    def svp_reduction(self, kappa, block_size):
+        clean = True
+
+        self.lll_obj(0, kappa, kappa + block_size)
+        if self.lll_obj.nswaps > 0:
+            clean = False
+
+        max_dist, expo = self.M.get_r_exp(kappa, kappa)
+        delta_max_dist = self.lll_obj.delta * max_dist
+
+        solution, max_dist = Enum.enumerate(self.M, max_dist, expo, kappa, kappa + block_size, None)
+
+        if max_dist >= delta_max_dist:
+            return clean
+
+        nonzero_vectors = len([x for x in solution if x])
+
+        if nonzero_vectors == 1:
+            first_nonzero_vector = None
+            for i in range(block_size):
+                if abs(solution[i]) == 1:
+                    first_nonzero_vector = i
+                    break
+
+            self.M.move_row(kappa + first_nonzero_vector, kappa)
+            self.lll_obj.size_reduction(kappa, kappa + 1)
+
+        else:
+            d = self.M.d
+            self.M.create_row()
+
+            with self.M.row_ops(d, d+1):
+                for i in range(block_size):
+                    self.M.row_addmul(d, kappa + i, solution[i])
+
+            self.M.move_row(d, kappa)
+            self.lll_obj(kappa, kappa, kappa + block_size + 1)
+            self.M.move_row(kappa + block_size, d)
+
+            self.M.remove_last_row()
+
+        return False
+#+END_SRC
+
+** Beyond fplll
+
+In the meantime *fpylll* has gained a =contrib= module which implements additional algorithms. As of writing, it contains a simple demo implementation of BKZ (see above), a simple implementation of [[http://ia.cr/2015/1123][Dual BKZ]] and a slightly feature enhanced re-implementation of fplll’s BKZ: it collects additional statistics compared to fplll’s implementation of the same algorithm. Let’s run it to see what that means:
+
+#+BEGIN_SRC python
+from copy import copy
+from fpylll.contrib.bkz import BKZReduction
+C = copy(A)
+b = BKZReduction(C)
+b(BKZ.Param(block_size=30, flags=BKZ.AUTO_ABORT|BKZ.VERBOSE))
+stats = b.stats; stats
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC python
+{"i":   5,  "total":      1.02,  "time":     0.16,  "preproc":     0.03,  "svp":     0.05,  "r_0": 4.7503e+09,  "slope": -0.0541,  "enum nodes": 19.29,  "max(kappa)":  10}
+#+END_SRC
+
+That output isn’t that different from *fplll* outputs. However, in contrast to *fplll* (because I didn’t bother to implement it over there, yet) we also get access to a =stats= object after the computation finished. Let’s use it to inquire how many nodes where visited during enumeration
+
+#+BEGIN_SRC python
+stats.enum_nodes
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC python
+4085856
+#+END_SRC
+
+and how much time we spent in enumeration:
+
+#+BEGIN_SRC python
+stats.svp_time
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC python
+0.32868
+#+END_SRC
+
+*fpylll* also offers a few additional utility functions which go beyond what *fplll* offers such as copying submatrices and modular reduction.
+
+** Integration with other Projects
+
+*fpylll* integrates reasonably nicely with [[http://sagemath.org][Sag]]e (once [[http://trac.sagemath.org/ticket/20291][#20291]] is merged, that is): converting back and forth between data types is seamless. For example:
+
+#+BEGIN_SRC python
+sage: A = random_matrix(ZZ, 10, 10)
+sage: from fpylll import IntegerMatrix, LLL
+sage: B = IntegerMatrix.from_matrix(A)
+sage: LLL.reduction(B)
+sage: B.to_matrix(A)
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC python
+[ -1   1  -1   0   1   0  -1  -2   0  -3]
+[  4   0   0   0  -1   0  -1  -1   0   1]
+[ -1   1   0   2  -3  -1  -2   0   0   3]
+[  0  -1  -3  -1  -1   0  -3   0   2   3]
+[ -2   2   0   0  -1   2  -1   2  -5   0]
+[ -1   0   3   0   4   2   1  -2   1   2]
+[ -1   6  -4   1   2  -1  -2   4   2   0]
+[ -1   1  -7  -3   2  -3   6  -2  -4   3]
+[  0  -7  -2   8   7  -9  -4   1  -4  -1]
+[ -1   5   6 -12   4 -14  -4  -1  -2   5]
+#+END_SRC
+
+In fact, when installed inside Sage, element access for =IntegerMatrix= accepts and returns =sage.rings.integer.Integer= directly, instead of Python integers.
+
+#+BEGIN_SRC python
+sage: type(B[0,0])
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC python
+&lt;type 'sage.rings.integer.Integer'&gt;
+#+END_SRC
+  
+*fpylll* also integrates somewhat with [[http://www.numpy.org][NumPy]]. To see how, let’s create a small NTRU-like matrix again:
+
+#+BEGIN_SRC python
+from fpylll import *
+A = IntegerMatrix.random(4, "ntrulike", bits=7, q=127)
+#+END_SRC
+
+We’d like to do some analysis on its Gram-Schmidt matrix, so let’s compute it:
+
+#+BEGIN_SRC python
+M = GSO.Mat(A)
+M.update_gso()
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC python
+True
+#+END_SRC
+
+Let’s dump it into a NumPy array and spot check that the result is reasonably close:
+
+   #+BEGIN_SRC python
+import numpy
+from fpylll.numpy import dump_mu
+N = numpy.ndarray(dtype="double", shape=(8,8))
+dump_mu(N, M, 0, 8)
+N[1,0] - M.get_mu(1,0)
+   #+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC python
+0.0
+#+END_SRC
+
+Finally, let’s do something more or less useful with our output:
+
+#+BEGIN_SRC python
+numpy.linalg.eigvals(N)
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC python
+[ -2.14381988e-39 +0.00000000e+00j  -1.51590958e-39 +1.51590958e-39j
+  -1.51590958e-39 -1.51590958e-39j   3.26265223e-55 +2.14381988e-39j
+   3.26265223e-55 -2.14381988e-39j   2.14381988e-39 +0.00000000e+00j
+   1.51590958e-39 +1.51590958e-39j   1.51590958e-39 -1.51590958e-39j]
+#+END_SRC
+
+** Tests
+
+*fpylll* runs tests on every check-in for Python 2 and 3. As an added benefit, this extends test coverage for *fplll* as well, which only has a few highlevel tests.
+
+** Lisp
+
+“This is all nice and well”, I hear you say, “but I prefer to do my computations in Lisp, so thanks, but not thanks”. 
+
+[[https://imgs.xkcd.com/comics/lisp_cycles.png]]
+
+No worries, [[http://docs.hylang.org/en/latest/][Hy]] has you covered:
+
+#+BEGIN_SRC clojure
+=> (import [fpylll [*]])
+=> (setv q 1073741789)
+=> (setv A (.random IntegerMatrix 30 "ntrulike" :bits 30 :q q))   
+=> (car A)
+row 0 of <IntegerMatrix(60, 60) at 0x7f1cbbfbf888>
+=> (get A 1)
+row 1 of <IntegerMatrix(60, 60) at 0x7f1cbbfbf888>
+=> (-> (car A) (.norm))
+4019682565.5285482
+
+=> (.reduction LLL A)
+=> (.norm (car A))
+6937.9845776709535
+#+END_SRC
+
+** Help Wanted
+
+*fpylll* isn’t [[https://github.com/malb/fpylll/issues][quite done yet]]. Besides testing and documentation, it would be nice if someone would attempt to re-implement fplll’s [[https://github.com/dstehle/fplll/blob/master/src/wrapper.h][LLL wrapper]] in pure Python. This would serve as a test case to see if everything that’s needed really is exposed and as a starting point for others who like to tweak the strategy. Speaking of LLL, *fpylll* is currently somewhat biased towards playing with BKZ, i.e. it would be nice to see how useful it is for trying out tweaks to the LLL algorithm.
+
+* COMMENT Artefacts 
+
+# Local Variables:
+# eval: (setenv "LD_LIBRARY_PATH" "/home/malb/.virtualenvs/fpylll2/lib")
+# eval: (setenv "PKG_CONFIG_PATH" "/home/malb/.virtualenvs/fpylll2/lib/pkgconfig")
+# eval: (venv-workon "fpylll2")
+# End:
