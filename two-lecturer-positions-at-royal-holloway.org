@@ -1,0 +1,62 @@
+#+BLOG: martinralbrecht
+#+POSTID: 1330
+#+DATE: [2016-05-14 Sat 10:39]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: Cryptography
+#+TAGS: cryptography, it security, jobs
+#+DESCRIPTION:
+#+TITLE: Two Lecturer Positions in the Information Security Group
+
+The ISG has *two* lectureship positions available. One regular lectureship position and one with a teaching focus.
+
+#+HTML: <!--more-->
+
+** Regular
+
+ #+BEGIN_QUOTE
+ | *Location:*       | Egham                                                     |
+ | *Salary:*         | £41,030 to £48,548 per annum - including London Allowance |
+ | *Closing Date:*   | Sunday 12 June 2016                                       |
+ | *Interview Date:* | To be confirmed                                           |
+ | *Reference:*      | [[https://jobs.royalholloway.ac.uk/vacancy.aspx?ref=0516-162][0516-162]]                                                  |
+
+ Royal Holloway, University of London. Note that this position is roughly equivalent to a tenure-track Assistant Professor in North America or a Junior Professor in Europe.
+
+ Applications are invited from researchers whose interests are related to, or complement, current strengths of the ISG. We are particularly interested in applicants with outstanding research achievements and/or potential in relevant information/cyber security areas.
+
+ Applicants should have a Ph.D. in a relevant subject or equivalent, be a self-motivated researcher, and have a strong publication record. Applicants should be able to demonstrate an enthusiasm for teaching and communicating with diverse audiences, as well as show an awareness of contemporary issues relating to cyber security.
+
+ This is a full time and permanent post, with an intended start date of 1st September, 2016, although an earlier or slightly later start may be possible. This post is based in Egham, Surrey, where the College is situated in a beautiful, leafy campus near to Windsor Great Park and within commuting distance from London.
+
+ For an informal discussion about the post, please contact Prof. Keith Mayes on [[mailto:keith.mayes@rhul.ac.uk][keith.mayes@rhul.ac.uk]].
+
+ The Human Resources Department can be contacted with queries by email at: [[mailto:recruitment@rhul.ac.uk][recruitment@rhul.ac.uk]].
+
+ /We particularly welcome female applicants as they are under-represented at this level in the Department of Information Security within Royal Holloway, University of London./
+ #+END_QUOTE
+
+** Teaching Focused
+
+ #+BEGIN_QUOTE
+ | *Location:*       | Egham                                                     |
+ | *Salary:*         | £41,030 to £48,548 per annum - including London Allowance |
+ | *Closing Date:*   | Sunday 12 June 2016                                       |
+ | *Interview Date*: | To be confirmed                                           |
+ | *Reference:*      | [[https://jobs.royalholloway.ac.uk/vacancy.aspx?ref=0516-161][0516-161]]                                                  |
+
+ Applications are invited for the post of Lecturer in the Information Security Group at Royal Holloway, University of London.
+
+ The post holder will contribute to the creation and/or revision, delivery and assessment of postgraduate (MSc) and undergraduate teaching modules across a wide range of topics in the field of information/cyber security; including Security Management.
+
+ Applicants should have a Ph.D. in a relevant subject or equivalent and have a sound knowledge of information/cyber security. Applicants should be able to demonstrate an enthusiasm for teaching and communicating with diverse audiences, as well as show an awareness of contemporary issues relating to cyber security
+
+ This is a five year post, available from 1st September 2016 although an earlier start may be possible. This post is based in Egham, Surrey, where the College is situated in a beautiful, leafy campus near to Windsor Great Park and within commuting distance from London.
+
+ For an informal discussion about the post, please contact Prof. Keith Mayes on [[mailto:keith.mayes@rhul.ac.uk][keith.mayes@rhul.ac.uk]].
+
+ The Human Resources Department can be contacted with queries by email at: [[mailto:recruitment@rhul.ac.uk][recruitment@rhul.ac.uk]].
+
+ /We particularly welcome female applicants as they are under-represented at this level in the Department of Electronic Engineering within Royal Holloway, University of London./
+ #+END_QUOTE
+
+ As usual, feel free to get in touch if you have questions.
