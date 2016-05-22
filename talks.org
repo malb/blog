@@ -7,6 +7,7 @@
 
 ** 2016
 
+- *11.05.2016* - [[https://bitbucket.org/malb/talks/raw/3ac02c44a359541a54a21e707883456700627e09/20160511%2520-%2520S2N%2520-%2520Eurocrypt.pdf][Lucky Microseconds]] - [[http://ist.ac.at/eurocrypt2016/][Eurocrypt 2016]], Vienna, Austria - [[https://bitbucket.org/malb/talks/src/07e94b0417c571bf7d595688e69aef42efb52c95/20160511%2520-%2520S2N%2520-%2520Eurocrypt/?at=master][Org & LaTeX sources]]
 - *04.05.2016* - [[http://malb.io/discrete-subgroup/slides/2016-05-04-albrecht.pdf][A subfield lattice attack on overstretched NTRU assumptions]] - [[http://malb.io/discrete-subgroup/2016/05/04/lattice-meeting/][Discrete Subgroup]], Imperial College, London, UK
 - *14.04.2016* - [[https://bitbucket.org/malb/talks/raw/6621b51351f6e7d5066d6263b5aff4d64f439e21/20160414%2520-%2520GGHLite%2520Implementation%2520-%2520Lyon.pdf][Implementing Operations in Cyclotomic Rings]] - Monthly Lattice Meetings, ENS Lyon, France - [[https://bitbucket.org/malb/talks/src/62cd5eda8611/20160414%2520-%2520GGHLite%2520Implementation%2520-%2520Lyon/?at=master][Org & LaTeX sources]]
 
