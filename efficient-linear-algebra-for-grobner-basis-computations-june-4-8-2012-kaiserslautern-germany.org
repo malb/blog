@@ -1,9 +1,9 @@
+#+TITLE: Efficient Linear Algebra for Gröbner Basis Computations - June 4-8, 2012 - Kaiserslautern, Germany
 #+POSTID: 765
 #+DATE: [2012-05-10 Thu 17:46]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri, misc, sage
 #+TAGS: conference, gröbner basis, linear algebra
-#+TITLE: Efficient Linear Algebra for Gröbner Basis Computations - June 4-8, 2012 - Kaiserslautern, Germany
 
 Linear algebra plays an important role in modern efficient implementations of Gröbner basis algorithms. Consequently, a number of groups aim at developing linear algebra packages for these computations: we mention the HPAC project, LELA by the Singular team, the FGB package by Jean-Charles Faugère, the M4RI libraries, specialised linear algebra routines in PolyBoRi as well as non-public projects. In this workshop we want to bring researchers interested in this problem and developers of these packages together to discuss and develop solutions. The format of this workshop will be a mixture of talks, coding sprints and design discussions.
 

@@ -1,9 +1,9 @@
+#+TITLE: Sage 4.8 is out
 #+POSTID: 716
 #+DATE: [2012-01-20 Fri 16:31]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:t
 #+CATEGORY: m4ri, sage
 #+TAGS: dense linear algebra, linbox, linear algebra, m4ri, m4rie, magma, sage
-#+TITLE: Sage 4.8 is out
 
 If you care about the stuff I care about (and why else would you read this blog?) you might get excited about a few changes in Sage.
 

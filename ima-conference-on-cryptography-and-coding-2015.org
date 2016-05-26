@@ -1,3 +1,4 @@
+#+TITLE: 15th IMA International Conference on Cryptography and Coding
 #+BLOG: wordpress
 #+POSTID: 1169
 #+DATE: [2015-04-21 Tue 11:02]
@@ -5,7 +6,6 @@
 #+CATEGORY: cryptography
 #+TAGS:cryptography, coding theory, conference
 #+DESCRIPTION:
-#+TITLE: 15th IMA International Conference on Cryptography and Coding
 
 [[http://www0.cs.ucl.ac.uk/staff/j.groth/IMACC.html][IMA-CCC]] ([[https://www.facebook.com/events/820767331310476/][Facebook]]) is a crypto and coding conference biennially held in the UK. It was previously
 held in Cirencester. So you might have heard of it as the “Cirncester” conference. However, it has

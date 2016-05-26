@@ -1,3 +1,4 @@
+#+TITLE: C Development with Emacs
 #+BLOG: wordpress
 #+POSTID: 1074
 #+DATE: [2014-11-03 Mon 23:26]
@@ -5,7 +6,6 @@
 #+CATEGORY: Emacs
 #+TAGS: emacs, c
 #+DESCRIPTION:
-#+TITLE: C Development with Emacs
 
 Recently I spent some time customising my Emacs config again. Playing around with different ways of improving your productivity by adjusting Emacs is a great way of loosing any and all productivity you might have had. It is such a fun way of wasting your time, there's even a little scene around just that activity. This can take quite elaborate forms with people posting their Emacs =init.el= configuration files in literal programming style based on [[http://orgmode.org/][org-mode]]'s [[http://orgmode.org/worg/org-contrib/babel/][org-babel]]. This is more useful than it might sound, e.g. I stole a lot from [[http://pages.sachachua.com/.emacs.d/Sacha.html][Sacha's config]].
 

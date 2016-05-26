@@ -1,9 +1,9 @@
+#+TITLE: ﻿M4RI API Change and Big Matrices
 #+POSTID: 379
 #+DATE: [2009-03-20 Fri 11:16]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri
 #+TAGS: linear algebra, m4ri, memory
-#+TITLE: ﻿M4RI API Change and Big Matrices
 
 Finally, I found some time to work on M4RI again: I changed the internal representation of matrices to support more than one =malloc()= call per matrix, i.e. each matrix is split into blocks of some maximal size. This allows to deal with much bigger matrices under Linux because the kernel often won't just give you 8GB mapped to consecutive addresses but it will give you 1GB eight times. This limitation bugged me quite some time now, since this also limited the kind of systems I could solve using [[http://polybori.sourceforge.net][PolyBoRi]] with M4RI enabled. The result is available at [[http://bitbucket.org/malb/m4ri/]] but bear in mind that the API changed quite a bit for this (e.g., I renamed the =packedmatrix= to =mzd_t=) on the way).
 

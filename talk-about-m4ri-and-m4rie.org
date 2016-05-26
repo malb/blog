@@ -1,9 +1,9 @@
+#+TITLE: Talk about M4RI and M4RIE
 #+POSTID: 390
 #+DATE: [2011-03-30 Wed 11:10]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri, sage
 #+TAGS: linear algebra, m4ri, m4rie, multicore, sage
-#+TITLE: Talk about M4RI and M4RIE
 
 I just finished giving a talk about [[http://m4ri.sagemath.org][the M4RI & the M4RIE libraries]] for dense linear algebra over $\mathbb{F}_2$ and $\mathbb{F}_{2\^e}$ respectively. I'm in LORIA, Nancy right now visiting the CARAMEL team, btw. Well, here are the [[http://martinralbrecht.files.wordpress.com/2011/03/20110330_-_m4ri_-_nancy1.pdf][slides]].
 

@@ -1,9 +1,9 @@
+#+TITLE: Polly Cracker, Revisited
 #+POSTID: 510
 #+DATE: [2011-06-03 Fri 17:52]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography, sage
 #+TAGS: commutative algebra, cryptography, design, gröbner basis, homomorphic encryption, learning with errors, paper, polly cracker, sage
-#+TITLE: Polly Cracker, Revisited
 
 I've been mentioning [[http://eprint.iacr.org/2011/289][this work]] a few times; well, finally a pre-print is ready (by myself, Pooya Farshim, Jean-Charles Faugère and Ludovic Perret).
 

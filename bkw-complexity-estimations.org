@@ -1,9 +1,9 @@
+#+TITLE: BKW Complexity Estimations
 #+POSTID: 868
 #+DATE: [2012-12-14 Fri 14:47]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography, sage
 #+TAGS: bkw, lwe, sage, sage single cell server
-#+TITLE: BKW Complexity Estimations
 
 Combining the code I wrote for[[http://eprint.iacr.org/2012/636][our paper on BKW]] and the awesome, awesome [[http://aleph.sagemath.org/][Sage Single Cell server]], here's a [[http://aleph.sagemath.org/?z=eJx9kduKwyAQhu_zFNKlNIHUnLZJUygse7t7v5eLJtqEmijOlNK3X9uEHlK6gvqL38z8o0qz2l80iAY2UcRb5IdqL5Bqu4s6pnhkBQhmq2YJfWuMQIgsO0a1kElWFkm5LliZ54InmShzJgterrjkxZq_r-NEyojvj0sB2HYMtaXmtAg876PtUVhWoefSEKm132_9NKY0i-MgxC2othbWT2kcrtyMaRIEG48Q0ocEQwKHqhIAIalDovSuu6yAbCeSm0xvMrvI3moDg-JXVTGlgGzJ59eP89C72hjQ0a7wg3NNY51bMus3ZJ65gnjeaSKvNty5oCt3rp1K69ncn7q8pbnLR67D-fhN_S5w4TlN5Wx-7mlCDswbsM4o8UAOfd_hI9qcjMZGQAvPePrkYwzirNo_49kUH2nUyNQDfnnjl8nd3SPN_6G_64nz4a_-ABoSyyI=&lang=sage][complexity estimator]] for running BKW on LWE instances.
 

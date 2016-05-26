@@ -1,3 +1,4 @@
+#+TITLE: Cysignals
 #+BLOG: martinralbrecht
 #+POSTID: 1233
 #+DATE: [2016-02-10 Wed 10:29]
@@ -5,7 +6,6 @@
 #+CATEGORY: Sage
 #+TAGS: sage, cython, python
 #+DESCRIPTION:
-#+TITLE: Cysignals
 If you’ve written a fair amount of [[http://cython.org][Cython]] code in your time, chances are that you got frustrated by
 
 1. buggy C/C++ code crashing your Python shell and

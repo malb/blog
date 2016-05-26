@@ -1,3 +1,4 @@
+#+TITLE: Google Summer of Code 2015
 #+BLOG: wordpress
 #+POSTID: 1133
 #+DATE: [2015-03-04 Wed 09:48]
@@ -5,7 +6,6 @@
 #+CATEGORY: sage
 #+TAGS:fplll, gsoogle summer of code, lmonade, flint, sage, lattices
 #+DESCRIPTION:
-#+TITLE: Google Summer of Code 2015
 Both [[http://wiki.sagemath.org/GSoC][Sage]] and the [[http://wiki.lmona.de/get_involved/gsoc][Lmonade]] project were selected for Google’s Summer of Code 2015. If you are an
 eligible student, you should consider applying. If you need ideas what to work on, there are many
 fine projects/project ideas on either the Lmonade or the Sage GSoC pages. In particular, here are

@@ -1,9 +1,9 @@
+#+TITLE: Bitslicing and the Method of the Four Russians over Larger Finite Fields
 #+POSTID: 56
 #+DATE: [2009-01-16 Fri 19:29]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri
 #+TAGS: bit-slice, sage
-#+TITLE: Bitslicing and the Method of the Four Russians over Larger Finite Fields
 
 Tom Boothby's and Robert Bradshaw's paper on the “Method of the Four Russian” multiplication algorithm over $F_3$, $F_5$, $F_7$, $F_{2^2}$ and $F_{2^3}$ is [[http://arxiv.org/abs/0901.1413][available]] as pre-print on the arXiv. If you're into fast exact linear algebra I highly recommend reading it since it has some really nice ideas in it and is well written.
 

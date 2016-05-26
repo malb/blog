@@ -1,3 +1,4 @@
+#+TITLE: London-ish Lattice Coding & Crypto Meetings
 #+BLOG: martinralbrecht
 #+POSTID: 1290
 #+DATE: [2016-03-11 Fri 17:52]
@@ -5,7 +6,6 @@
 #+CATEGORY: cryptography
 #+TAGS:cryptography, lattice-based cryptography, workshop, lattices
 #+DESCRIPTION:
-#+TITLE: London-ish Lattice Coding & Crypto Meetings
 
 [[http://www.commsp.ee.ic.ac.uk/~cling/][Cong Ling]] and myself are starting [[http://malb.io/discrete-subgroup/][London-ish Lattice Coding & Crypto Meetings]]. Please help us spread the word.
 

@@ -1,9 +1,9 @@
+#+TITLE: Cold Boot Key Recovery by Solving Polynomial Systems with Noise
 #+POSTID: 311
 #+DATE: [2011-01-21 Fri 15:59]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography, sage
 #+TAGS: algebraic attacks, algebraic cryptanalysis, cold boot attacks, commutative algebra, cryptography, max-posso, mixed integer programming, optimization, posso, sage
-#+TITLE: Cold Boot Key Recovery by Solving Polynomial Systems with Noise
 
 Carlos and I finally managed to put our [[http://eprint.iacr.org/2011/038][paper]] on polynomial system solving with noise and its application to the [[http://en.wikipedia.org/wiki/Cold_boot_attack][cold boot problem]] out.
 

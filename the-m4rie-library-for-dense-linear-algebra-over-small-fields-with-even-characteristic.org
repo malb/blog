@@ -1,9 +1,9 @@
+#+TITLE: The M4RIE library for dense linear algebra over small fields with even characteristic
 #+POSTID: 682
 #+DATE: [2011-11-30 Wed 12:11]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri, sage
 #+TAGS: bit-slice, gf2e, linear algebra, m4rie, newton-john tables, pre-print
-#+TITLE: The M4RIE library for dense linear algebra over small fields with even characteristic
 
 I finally uploaded a pre-print of the M4RIE paper to the [[http://arxiv.org/abs/1111.6900][arXiv]]:
 

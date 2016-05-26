@@ -1,9 +1,9 @@
+#+TITLE: Choppy Flash Sound under 64-bit Linux
 #+POSTID: 471
 #+DATE: [2011-05-22 Sun 12:40]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: linux
 #+TAGS: debian, flash, glibc, linux
-#+TITLE: Choppy Flash Sound under 64-bit Linux
 
 This took me some time to figure out and the culprit is quite unusual, hence I decided to reproduce the [[https://bugzilla.redhat.com/show_bug.cgi?id=638477#c31][solution]] here. If you get choppy sound and a weird beat of beeps when you play (low sound quality) flash videos under 64-bit Linux, then it is because of a change in memcpy provided by glibc. Linux Torwalds suggested the following fix which works for me:
 

@@ -1,3 +1,4 @@
+#+TITLE: ENS Lyon Monthly Lattice and Crypto Meetings
 #+BLOG: wordpress
 #+POSTID: 1193
 #+DATE: [2015-09-11 Fri 09:01]
@@ -5,7 +6,6 @@
 #+CATEGORY: cryptography
 #+TAGS: lattice-based cryptography
 #+DESCRIPTION:
-#+TITLE: ENS Lyon Monthly Lattice and Crypto Meetings
 
 Fabien Laguillaumie, Benoît Libert and Damien Stehlé are organising “soft-monthly” (that’s a word!)
 [[http://perso.ens-lyon.fr/damien.stehle/LATTICE_MEETINGS.html][meetings on lattice cryptography]] which look very nice. Below the announcement from the c2 list

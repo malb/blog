@@ -1,9 +1,9 @@
+#+TITLE: Polynomial System Solving with Noise
 #+POSTID: 82
 #+DATE: [2010-04-01 Thu 12:33]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
 #+TAGS: max-posso, mixed integer programming, optimization, paper, posso
-#+TITLE: Polynomial System Solving with Noise
 
 The reason I became somewhat interested in mixed integer programming is that it is one way of solving polynomial systems which are noisy. These kind of polynomial systems pop up in crypto all over the place but so far --- to my knowledge --- they have not been studied extensively. In order to clarify what is meant by “polynomial system solving with noise”, we can define a familiy of /Max-PoSSo/ problems similar to the [[http://en.wikipedia.org/wiki/Maximum_satisfiability_problem][Max-SAT]] family of problems (in fact, you can reduce /Max-PoSSo/ to /Max-SAT/).
 

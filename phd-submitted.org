@@ -1,9 +1,9 @@
+#+TITLE: PhD Submitted
 #+POSTID: 31
 #+DATE: [2010-07-10 Sat 18:08]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
 #+TAGS: algebraic attacks, commutative algebra, cryptography, f5, linear algebra, m4ri, sage
-#+TITLE: PhD Submitted
 
 I've submitted my PhD on Monday morning. It should be on its way to my examiners now such that I'll hopefully have my defence in September. Well, here's the current version:
 

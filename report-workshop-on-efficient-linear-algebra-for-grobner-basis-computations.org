@@ -1,9 +1,9 @@
+#+TITLE: Report: Workshop on Efficient Linear Algebra for Gröbner Basis Computations
 #+POSTID: 771
 #+DATE: [2012-06-08 Fri 09:42]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri, sage
 #+TAGS: conference, f4, f5, gröbner basis, linbox, linear algebra, m4ri, m4rie, matrix decomposition, sage, sage days
-#+TITLE: Report: Workshop on Efficient Linear Algebra for Gröbner Basis Computations
 
 As you may know, today is the last day of the wokshop on [[http://wiki.lmona.de/events/elagb][Efficient Linear Algebra for Gröbner Basis Computations]] that [[https://github.com/ederc][Christian Eder]], [[https://github.com/burcin][Burcin]] [[https://bitbucket.org/burcin][Eröcal]], [[https://github.com/alexanderdreyer][Alexander]] [[https://bitbucket.org/alexanderdreyer][Dreyer]] and I organised.
 

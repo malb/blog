@@ -1,9 +1,9 @@
+#+TITLE: Cryptanalysis of my Somewhat Homomorphic PollyCracker Scheme
 #+POSTID: 329
 #+DATE: [2011-02-01 Tue 10:01]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography, sage
 #+TAGS: algebraic attacks, algebraic cryptanalysis, cryptography, gröbner basis, homomorphic encryption, sage
-#+TITLE: Cryptanalysis of my Somewhat Homomorphic PollyCracker Scheme
 
 About 5 months ago I [[http://martinralbrecht.wordpress.com/2010/08/19/somewhat-homomorphic-encryption/][wrote]] about a homomorphic scheme based on integers and an adaptation of this schemes to use multivariate polynomials. At the very end I wrote: ﻿﻿
 

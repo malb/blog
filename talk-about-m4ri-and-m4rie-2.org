@@ -1,9 +1,9 @@
+#+TITLE: Talk about M4RI and M4RIE
 #+POSTID: 603
 #+DATE: [2011-10-07 Fri 21:34]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri, sage
 #+TAGS: conference, linear algebra, m4ri, m4rie, siam ag11, talk
-#+TITLE: Talk about M4RI and M4RIE
 
 I just finished with my talk at [[http://www.siam.org/meetings/ag11/][SIAM AG11]] about the M4RI and the M4RIE libraries  ... here are the [[http://martinralbrecht.files.wordpress.com/2011/10/20111007_-_m4rie_-_raleigh.pdf][slides]].
 

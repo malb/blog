@@ -1,9 +1,9 @@
+#+TITLE: Somewhat Homomorphic Encryption
 #+POSTID: 177
 #+DATE: [2010-08-19 Thu 17:59]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography, sage
 #+TAGS: commutative algebra, cryptography, homomorphic encryption, sage
-#+TITLE: Somewhat Homomorphic Encryption
 
 Today I read the paper "[[http://crypto.stanford.edu/craig/easy-fhe.pdf][Computing Arbitrary Functions of Encrypted Data]]" by Craig Gentry in which he explains the basic ideas behind his work on fully homomorphic encryption. If you don't know what homomorphic encryption is: it means that one can evaluate a function on ciphertexts which has the same result as evaluating that function on the plaintexts. Thus, one can compute with data without getting to see it. The canonical example Gentry uses in his papers is a search engine that searches through sensitive data without seeing the actual content. It is similar to secure multi-party computation except that it is not interactive at all, i.e. you send your query and get the result back without any interaction in between. In the above mentioned paper Gentry gives a simplified version of a recent integer based fully homomorphic scheme. This simplified version is symmetric and only somewhat homomorphic (more on this below). Since the basic idea of the scheme is so simple, it is quickly implemented. The code below is actually some slight generalisation such that b isn't always forced to be two.
 

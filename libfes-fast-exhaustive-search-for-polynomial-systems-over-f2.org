@@ -1,9 +1,9 @@
+#+TITLE: libFES : Fast Exhaustive Search for Polynomial Systems over F2
 #+POSTID: 948
 #+DATE: [2013-10-10 Thu 16:19]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography, sage
 #+TAGS: algebraic attacks, algebraic cryptanalysis, cryptanalysis, cryptography, cryptominisat, f4, gröbner basis, libfes, magma, sage, sat
-#+TITLE: libFES : Fast Exhaustive Search for Polynomial Systems over F2
 
 [[http://www.lifl.fr/~bouillag/][Charles Bouillaguet]] set up a nice shiny [[http://www.lifl.fr/~bouillag/fes/][website]] for libFES the library for exhaustive search on polynomial systems over $\mathbb{F}_2$. The library has a Sage interface, so it's easy to get started. It's also integrated in Charles' upcoming one-stop boolean system solving [[http://trac.sagemath.org/ticket/13850][patch]].
 

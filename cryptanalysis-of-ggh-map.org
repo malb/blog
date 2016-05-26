@@ -1,3 +1,4 @@
+#+TITLE: Sage Code for GGH Cryptanalysis by Hu and Jia
 #+BLOG: wordpress
 #+POSTID: 1140
 #+DATE: [2015-04-13 Mon 14:39]
@@ -5,7 +6,6 @@
 #+CATEGORY: cryptography, sage
 #+TAGS: cryptography, cryptanalysis, multilinear maps, lattice-based cryptography, sage
 #+DESCRIPTION:
-#+TITLE: Sage Code for GGH Cryptanalysis by Hu and Jia
 
 Recently, Yupu Hu and Huiwen Jia put a [[https://eprint.iacr.org/2015/301][paper]] on the [[https://eprint.iacr.org/][Cryptology ePrint Archive]] which describes a
 successful attack of the GGH (and GGHLite) [[https://eprint.iacr.org/2012/610][candidate multilinear map]]. The attack does not try to

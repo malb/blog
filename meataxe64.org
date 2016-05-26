@@ -1,9 +1,9 @@
+#+TITLE: meataxe64
 #+POSTID: 1061
 #+DATE: [2014-06-17 Tue 14:05]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri, sage
 #+TAGS: dense linear algebra, exact linear algebra, finite field, linear algebra, matrix decomposition, software
-#+TITLE: meataxe64
 
 #+BEGIN_QUOTE
 Meataxe64 is a large software development project to produce programs for working at high performance with large matrices over finite fields.

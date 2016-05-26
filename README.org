@@ -1,7 +1,7 @@
+#+TITLE: README
 #+OPTIONS: ':nil *:t -:t ::t <:active H:3 \n:nil ^:t arch:headline author:t c:nil creator:nil
 #+OPTIONS: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:t p:nil pri:nil prop:nil stat:t
 #+OPTIONS: tags:t tasks:t tex:t timestamp:t title:t toc:nil todo:t |:t
-#+TITLE: README
 #+AUTHOR: Martin R. Albrecht
 
 This repository holds my [[https://martinralbrecht.wordpress.com][blog]] posts.

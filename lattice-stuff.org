@@ -1,9 +1,9 @@
+#+TITLE: Lattice Stuff
 #+POSTID: 931
 #+DATE: [2013-08-04 Sun 15:31]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
 #+TAGS: bkw, conference, cryptanalysis, cryptography, lattice, lattice-based cryptography, lwe, pre-print
-#+TITLE: Lattice Stuff
 
 We - with [[http://www-calfor.lip6.fr/~jcf/][Jean-Charles Faugère]], [[http://rfcrypto.com/][Robert Fitzpatrick]] and [[http://www-polsys.lip6.fr/~perret/][Ludovic Perret]] - managed to finish [[http://eprint.iacr.org/2013/470][our work]] on the cryptanalysis of all proposed parameters of the public-key encryption scheme proposed at PKC 2012 by Huang, Liu and Yang. The key observation is that the scheme can be viewed as an easy LWE instance:
 

@@ -1,9 +1,9 @@
+#+TITLE: Lazy Modulus Switching for the BKW Algorithm on LWE
 #+POSTID: 957
 #+DATE: [2014-01-08 Wed 19:15]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
 #+TAGS: `````````````````````````````````````````````````````, bkw, cryptanalysis, cryptography, linear algebra, lwe, paper, pre-print, sage
-#+TITLE: Lazy Modulus Switching for the BKW Algorithm on LWE
 
 our [[http://eprint.iacr.org/2014/019][paper]] (with [[http://www-polsys.lip6.fr/~jcf/][Jean-Charles Faugère]], [[http://rfcrypto.com/][Robert Fitzpatrick]] and [[http://www-polsys.lip6.fr/~perret/][Ludovic Perret]]) on solving small secret LWE faster just hit [[http://eprint.iacr.org][ePrint]] (and was [[http://www.iacr.org/workshops/pkc2014/accepted.html][accepted]] for presentation at [[http://www.iacr.org/workshops/pkc2014/][PKC 2014]])
 

@@ -1,9 +1,9 @@
+#+TITLE: SAT Solvers for Sage
 #+POSTID: 793
 #+DATE: [2012-06-15 Fri 21:19]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography, sage
 #+TAGS: algebraic attacks, algebraic cryptanalysis, cryptanalysis, cryptography, cryptominisat, glucose, posso, rsat, sage, sat
-#+TITLE: SAT Solvers for Sage
 
 One of the most efficient techniques for solving polynomial systems over $\mathbb{F}_2$ is to convert the problem to a satisfiability problem and to use a standard SAT solver. In the past, I have used CryptoMiniSat and either my own ANF to CNF converter [[https://bitbucket.org/malb/algebraic_attacks/src/5d8dafeef675/anf2cnf.py][scripts]] based on Gregory Bard's ideas or PolyBoRi's [[https://bitbucket.org/malb/algebraic_attacks/src/5d8dafeef675/polybori-cnf-converter.py][script]].
 

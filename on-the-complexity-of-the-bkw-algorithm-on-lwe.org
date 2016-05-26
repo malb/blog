@@ -1,9 +1,9 @@
+#+TITLE: On the Complexity of the BKW Algorithm on LWE
 #+POSTID: 858
 #+DATE: [2012-11-11 Sun 16:22]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
 #+TAGS: algorithm, bkw, cryptanalysis, cryptography, lwe
-#+TITLE: On the Complexity of the BKW Algorithm on LWE
 
 We (with [[http://www.isg.rhul.ac.uk/~ccid/][Carlos Cid]], [[http://www-calfor.lip6.fr/~jcf/][Jean-Charles Faugère]], [[http://rfcrypto.com/][Robert Fitzpatrick]] and [[http://www-polsys.lip6.fr/~perret/][Ludovic Perret]]) have finally managed to put our work on BKW [[http://eprint.iacr.org/2012/636][on ePrint]].
 

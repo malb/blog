@@ -1,9 +1,9 @@
+#+TITLE: M4RI Website
 #+POSTID: 39
 #+DATE: [2008-05-13 Tue 19:15]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri
 #+TAGS: m4ri
-#+TITLE: M4RI Website
 
 I finally put together the [[http://sage.math.washington.edu/home/malb/m4ri][website for the M4RI library]]. For those who don't know M4RI:
 

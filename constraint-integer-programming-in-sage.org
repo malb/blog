@@ -1,9 +1,9 @@
+#+TITLE: Constraint Integer Programming in Sage
 #+POSTID: 362
 #+DATE: [2011-03-07 Mon 18:09]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography, sage
 #+TAGS: cryptography, mixed integer programming, optimization, posso, sage, scip
-#+TITLE: Constraint Integer Programming in Sage
 
 Now that version [[http://groups.google.com/group/sage-announce/browse_thread/thread/527fb8fe7e00c3bc][4.6.2]] of [[http://www.sagemath.org][Sage]] is out which contains the new [[http://www.sagemath.org/doc/thematic_tutorials/linear_programming.html][Mixed Integer Programming]] [[http://trac.sagemath.org/sage_trac/ticket/10341][interface]] that Nathann (mainly) and I (a little bit) wrote, I took the time to get my [[http://scip.zib.de][SCIP]] interface enough into shape to open a [[http://trac.sagemath.org/sage_trac/ticket/10879][ticket]] on Sage's bugtracker for it.For those who don't know SCIP, here's how its developers describe it:
 

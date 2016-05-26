@@ -1,9 +1,9 @@
+#+TITLE: AsiaCrypt 2011 accepted papers
 #+POSTID: 543
 #+DATE: [2011-08-30 Tue 15:19]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
 #+TAGS: conference, cryptography
-#+TITLE: AsiaCrypt 2011 accepted papers
 
 The [[http://cist.korea.ac.kr/~asiacrypt2011/index.php?cont=accepted][list of accepted papers]] for AsiaCrypt 2011 is out ... which I find exciting because for the first time I have a paper at one of the three big IACR conferences. yay!
 

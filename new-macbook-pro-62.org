@@ -1,9 +1,9 @@
+#+TITLE: New Macbook Pro 6,2
 #+POSTID: 124
 #+DATE: [2010-07-26 Mon 09:17]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: linux
 #+TAGS: debian, linux, macbook pro
-#+TITLE: New Macbook Pro 6,2
 
 I received my new Macbook Pro (i7, 4GB Ram, 256GB SSD, yay!) on Friday and succeeded in installing Linux on it by now. After some initial troubles the whole installation was far less difficult than last time (Macbook Pro 2,2). All in all the various Wikis ([[http://wiki.debian.org/MacBookPro][Debian]], [[https://help.ubuntu.com/community/MacBookPro6-2/Lucid][Ubuntu]], [[http://wiki.archlinux.org/index.php/MacBookPro][Arch]], [[http://en.gentoo-wiki.com/wiki/Apple_Macbook_Pro][Gentoo]]) on the matter paint a good picture. Two caveats though:
 

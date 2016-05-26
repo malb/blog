@@ -1,9 +1,9 @@
+#+TITLE: Sage 5.10
 #+POSTID: 915
 #+DATE: [2013-06-20 Thu 21:28]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri, sage
 #+TAGS: dense linear algebra, exact linear algebra, linear algebra, m4ri, m4rie, sage
-#+TITLE: Sage 5.10
 
 Sage 5.10 was released earlier today. It has the following goodies I particularly care about:
 

@@ -1,9 +1,9 @@
+#+TITLE: Ring-LWE and the GB(N) Problem
 #+POSTID: 632
 #+DATE: [2011-11-16 Wed 23:04]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography, sage
 #+TAGS: commutative algebra, cryptography, gröbner basis, homomorphic encryption, lwe, posso, ring-lwe
-#+TITLE: Ring-LWE and the GB(N) Problem
 
 Over at the [[http://bristolcrypto.blogspot.com/2011/11/study-group-polly-cracker-revisited.html][Bristol Cryptography Blog]] Martijn Stam writes about our "Polly Cracker, Revisted" paper:
 

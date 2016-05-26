@@ -1,9 +1,9 @@
+#+TITLE: Linear Algebra for Gröbner Bases over GF(2): LELA
 #+POSTID: 822
 #+DATE: [2012-06-22 Fri 10:48]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri, sage
 #+TAGS: commutative algebra, f4, gröbner basis, lela, linear algebra, m4ri
-#+TITLE: Linear Algebra for Gröbner Bases over GF(2): LELA
 
 The [[http://wiki.lmona.de/events/elagb][Efficient Linear Algebra for Gröbner Basis Computations]] workshop in Kaiserslautern two weeks ago was a welcome opportunity to finally test out [[http://www.singular.uni-kl.de/lela/][LELA]], a library specifically written for linear algebra for Gröbner basis computations including for GF(2). The library implements the "Faugère-Lachartre" [[https://dl.acm.org/citation.cfm?doid=1837210.1837225][algorithm]] (a similar trick, though less developed, appeared before in PolyBoRi) and uses M4RI for dense parts over GF(2).
 

@@ -1,9 +1,9 @@
+#+TITLE: Cryptanalysis of "Fully Homomorphic Encryption over the Binary Polynomials"
 #+POSTID: 371
 #+DATE: [2011-03-08 Tue 21:07]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography, sage
 #+TAGS: algebraic attacks, algebraic cryptanalysis, homomorphic encryption, linear algebra, sage
-#+TITLE: Cryptanalysis of "Fully Homomorphic Encryption over the Binary Polynomials"
 
 Turns out, I'm not he only one who was inspired to adapt the /Fully Homomorphic Encryption over the Integers/ [[http://eprint.iacr.org/2009/616.pdf][scheme]] by van Dijk, Gentry, Halevi and Vaikuntanathan to polynomials. ﻿﻿﻿ Gu Chunsheng posted a [[http://eprint.iacr.org/2011/110][pre-print]] on the [[http://eprint.iacr.org][IACR eprint server]] this week which essentially instantiates the integer scheme over univariate polynomials over $\mathbb{F}_2$.  Below is my implementation (in [[http://www.sagemath.org][Sage]]) of his somewhat homomorphic scheme:
 

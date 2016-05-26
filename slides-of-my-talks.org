@@ -1,9 +1,9 @@
+#+TITLE: Slides of my talks
 #+POSTID: 7
 #+DATE: [2010-06-21 Mon 17:12]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography, m4ri, sage
 #+TAGS: algebraic cryptanalysis, cold boot attacks, commutative algebra, cryptography, m4ri, matrix decomposition
-#+TITLE: Slides of my talks
 
 I'm giving four talks this week at the ECRYPT [[http://www.ecrypt.eu.org/symlab/tools2010/][Tools for Cryptanalysis]] 2010 workshop and at the 2nd International Conference on [[http://scc2010.rhul.ac.uk/][Symbolic Computation and Cryptography]] (both at Royal Holloway). If you want to come prepared to ask the really tough questions but are too lazy to read the papers, here are the slides:
 

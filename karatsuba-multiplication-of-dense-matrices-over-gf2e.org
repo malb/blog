@@ -1,9 +1,9 @@
+#+TITLE: Karatsuba Multiplication of Dense Matrices over GF(2^e)
 #+POSTID: 139
 #+DATE: [2010-08-15 Sun 18:24]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:t
 #+CATEGORY: m4ri, sage
 #+TAGS: karatsuba, linear algebra, m4ri, m4rie
-#+TITLE: Karatsuba Multiplication of Dense Matrices over GF(2^e)
 
 Elements in $GF(2^e)$ can be represented as $c_0 a^0 + c_1 a^1 + \dots + c_{e-1} a^{e-1}$ where $a$ is a root of the primitive polynomial of $GF(2^e)$ and $c_i$ are elements in $GF(2)$. Thus, we can rewrite a matrix over $GF(2^e)$ as a list of $e$ matrices over $GF(2)$ which contain the coefficients for each degree of $a$. To put it in another way: we can turn the matrix with polynomial entries into a polynomial with matrix coefficients. In [[http://arxiv.org/abs/0901.1413][Bitslicing and the Method of Four Russians Over Larger Finite Fields]] Tomas J. Boothby and Robert Bradshaw (both Sage developers from Seattle by the way) proposed to use this representation to perform matrix multiplication.
 

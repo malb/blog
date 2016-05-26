@@ -1,3 +1,4 @@
+#+TITLE: PolyBoRi is dead, it needs your help
 #+BLOG: wordpress
 #+POSTID: 1179
 #+DATE: [2015-06-13 Sat 11:01]
@@ -5,7 +6,6 @@
 #+CATEGORY: sage
 #+TAGS: sage
 #+DESCRIPTION:
-#+TITLE: PolyBoRi is dead, it needs your help
 On [[https://groups.google.com/forum/#!topic/sage-devel/9Uhnvm3wef8][the Sage development list]] a discussion is going on what to do about [[http://polybori.sourceforge.net/][PolyBoRi]]. For those who do not know PolyBoRi, for computing Gröbner bases for Boolean polynomials it is pretty much the only (open-source) game in town (as far as I know):
 
 #+BEGIN_QUOTE

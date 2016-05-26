@@ -1,9 +1,9 @@
+#+TITLE: Cryptanalysis of the FHE based on GACD?
 #+POSTID: 973
 #+DATE: [2014-02-18 Tue 12:08]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography, sage
 #+TAGS: agcd, approximate gcd, cryptanalysis, cryptography, homomorphic encryption, lattice reduction, multilinear maps, sage
-#+TITLE: Cryptanalysis of the FHE based on GACD?
 
 Jintai Ding and Chengdong Tao published a [[http://eprint.iacr.org/2014/042][new preprint]] on the IACR's ePrint titled /A New Algorithm for Solving the Approximate Common Divisor Problem and Cryptanalysis of the FHE based on GACD./
 

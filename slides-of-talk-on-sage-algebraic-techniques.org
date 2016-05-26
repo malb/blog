@@ -1,9 +1,9 @@
+#+TITLE: Slides of Talk on Sage & Algebraic Techniques
 #+POSTID: 919
 #+DATE: [2013-06-11 Tue 16:36]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: sage
 #+TAGS: algebraic attacks, algebraic cryptanalysis, block cipher, conference, cryptominisat, f4, gröbner basis, sage, sat
-#+TITLE: Slides of Talk on Sage & Algebraic Techniques
 
 The slides of my [[http://ice.mat.dtu.dk/][Icebreak]] talk on Sage and algebraic techniques for (lazy) cryptographers are now [[http://martinralbrecht.files.wordpress.com/2010/07/20130606_-_algebra.pdf][available]] (LaTeX sources [[https://bitbucket.org/malb/talks/src/a35f85ed2d4b820d688777aa46bab8307d9b5850/20130606%20-%20Algebra%20for%20Crypto%20-%20Reykjavik?at=default][here]]).
 

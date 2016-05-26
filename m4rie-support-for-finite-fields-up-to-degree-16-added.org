@@ -1,9 +1,9 @@
+#+TITLE: M4RIE: support for finite fields up to degree 16 added
 #+POSTID: 853
 #+DATE: [2012-08-23 Thu 17:16]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri, sage
 #+TAGS: givaro, linear algebra, m4rie, polynomials
-#+TITLE: M4RIE: support for finite fields up to degree 16 added
 
 I committed support for finite fields up to degree 16 to M4RIE a few days ago. Furthermore, the dependency on [[http://givaro.forge.imag.fr/][Givaro]] for constructing finite fields was dropped.
 

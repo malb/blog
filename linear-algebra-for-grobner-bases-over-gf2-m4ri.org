@@ -1,9 +1,9 @@
+#+TITLE: Linear Algebra for Gröbner Bases over GF(2): M4RI
 #+POSTID: 827
 #+DATE: [2012-06-24 Sun 14:40]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri, sage
 #+TAGS: commutative algebra, f4, gröbner basis, lela, linear algebra, m4ri, matrix decomposition, sage
-#+TITLE: Linear Algebra for Gröbner Bases over GF(2): M4RI
 
 Two days ago I wrote about LELA's implementation of Gaussian elimination for Gröbner basis computations over $\mathbb{F}_2$. Yesterday, I [[https://bitbucket.org/malb/m4ri-groebner][implemented]] LELA's algorithm (which is from Faugere & Lachartre [[https://dl.acm.org/citation.cfm?doid=1837210.1837225][paper]]) in M4RI.
 

@@ -1,9 +1,9 @@
+#+TITLE: M4RIE
 #+POSTID: 116
 #+DATE: [2010-07-21 Wed 11:54]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri, sage
 #+TAGS: linear algebra, m4ri, m4rie
-#+TITLE: M4RIE
 
 My coding spring project here at [[http://wiki.sagemath.org/days24][Sage Days 24]] was/is to write a [[http://bitbucket.org/malb/m4rie/][new library]] for dense linear algebra over small extensions of GF(2).
 

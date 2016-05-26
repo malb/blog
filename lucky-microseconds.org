@@ -1,3 +1,4 @@
+#+TITLE: Lucky Microseconds: A Timing Attack on Amazon’s s2n Implementation of TLS
 #+BLOG: martinralbrecht
 #+POSTID: 1214
 #+DATE: [2015-11-24 Tue 10:38]
@@ -5,7 +6,6 @@
 #+CATEGORY: cryptography
 #+TAGS: cryptography, tls, cryptanalysis, lucky 13, timing attack, s2n
 #+DESCRIPTION:
-#+TITLE: Lucky Microseconds: A Timing Attack on Amazon’s s2n Implementation of TLS
 
 Over the summer, [[http://www.isg.rhul.ac.uk/~kp/][Kenny Paterson]] and me spent some time looking at Amazon’s ([[https://github.com/awslabs][Amazon Web Services - Labs]] to be precise) implementation of TLS. This implementation — called [[https://github.com/awslabs/s2n][s2n]] — was released in June with the intent of providing a clean, easy to read, small implementation of a core subset of the TLS protocol.
 

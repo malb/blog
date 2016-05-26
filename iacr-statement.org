@@ -1,9 +1,9 @@
+#+TITLE: IACR Statement
 #+POSTID: 1055
 #+DATE: [2014-05-15 Thu 10:01]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
 #+TAGS: cryptography, iacr
-#+TITLE: IACR Statement
 
 The IACR membership meeting at Eurocrypt produced a s[[https://www.iacr.org/news/index.php?p=detail&id=3675#3675][tatement on mass surveillance]]:
 

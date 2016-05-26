@@ -1,3 +1,4 @@
+#+TITLE: Postdoc at Royal Holloway on Multilinear Maps
 #+BLOG: martinralbrecht
 #+POSTID: 1201
 #+DATE: [2015-10-08 Thu 13:39]
@@ -5,7 +6,6 @@
 #+CATEGORY: cryptography
 #+TAGS: job, cryptography
 #+DESCRIPTION:
-#+TITLE: Postdoc at Royal Holloway on Multilinear Maps
 
 The multilinear maps project I worked on previously is looking for a new postdoc. See [[https://jobs.royalholloway.ac.uk/vacancy.aspx?ref=1015-296][ad]] below. It’s not necessarily very long, but it’s a nice gig: it’s on an interesting topic, the [[https://isg.rhul.ac.uk][ISG]] is a good department and Kenny is a very nice boss. If you have questions, you can get in touch with Kenny. or, if that’s better for you, feel free to get in touch with me as well.
 

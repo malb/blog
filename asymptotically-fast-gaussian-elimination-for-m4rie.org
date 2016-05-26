@@ -1,9 +1,9 @@
+#+TITLE: Asymptotically fast Gaussian elimination for M4RIE
 #+POSTID: 592
 #+DATE: [2011-09-22 Thu 15:42]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri, sage
 #+TAGS: linear algebra, m4rie, ple
-#+TITLE: Asymptotically fast Gaussian elimination for M4RIE
 
 I guess one perk of being on vacation is that one can get more work done. Hence, I finished implementing PLE decomposition (formerly known as PLS decomposition) and hence asymptotically fast Gaussian elimination. The implementation uses two matrix representations: =mzd_slice_t= and =mzed_t=. The former is optimised for implementing Karatsuba multiplication (cf., [[http://martinralbrecht.wordpress.com/2010/08/15/karatsuba-multiplication-of-dense-matrices-over-gf2e/][here]]) and the latter is optimised for using Travolta tables (cf., [[http://martinralbrecht.wordpress.com/2010/07/21/m4rie/][here]]). That is, multiplication is based on Karatsuba while the PLE base case is based on Travolta tables. The same applies to TRSM where the base case is also implemented using Travolta tables.
 

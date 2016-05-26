@@ -1,9 +1,9 @@
+#+TITLE: Debian/testing on Macbook Pro 11,3
 #+POSTID: 1048
 #+DATE: [2014-05-03 Sat 12:02]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: linux
 #+TAGS: Macbook, NVIDIA, debian, linux, macbook pro
-#+TITLE: Debian/testing on Macbook Pro 11,3
 
 I have used Debian/testing on my new Macbook Pro for a few months now. Here is what works, what doesn't and what tweaks I applied.
 

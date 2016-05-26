@@ -1,9 +1,9 @@
+#+TITLE: Mutants are people too
 #+POSTID: 303
 #+DATE: [2011-01-23 Sun 17:14]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
 #+TAGS: algebraic attacks, algebraic cryptanalysis, commutative algebra, cryptography, f4, gröbner basis, mutantxl, mxl, posso
-#+TITLE: Mutants are people too
 
 Despite being proven to be a [[http://eprint.iacr.org/2004/112.pdf][redundant variant]] of the [[http://en.wikipedia.org/wiki/Faugère's_F4_and_F5_algorithms][F4]] algorithm, the [[http://en.wikipedia.org/wiki/XSL_attack][XL]] algorithm still receives a lot of attention from the cryptographic community. This is partly because XL is considered to be conceptually much simpler than Gröbner basis algorithms. However, in doing so the wealth of theory available to understand algorithms for polynomial system solving is largely ignored.
 

@@ -1,9 +1,9 @@
+#+TITLE: ECrypt II PhD Summer School
 #+POSTID: 466
 #+DATE: [2011-05-18 Wed 10:10]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
 #+TAGS: conference, cryptanalysis, cryptography, ecrypt, phd summer school
-#+TITLE: ECrypt II PhD Summer School
 
 The ECrypt network is hosting a PhD summer school in Albena in a few weeks. Every time I try to look up something on its website it turns out to be not easy to find, which is a pitty. Well, now I can find it easily :)
 

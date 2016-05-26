@@ -1,9 +1,9 @@
+#+TITLE: Enrico Bertolazzi's linear algebra code over GF(2) available
 #+POSTID: 940
 #+DATE: [2013-08-17 Sat 12:22]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri, sage
 #+TAGS: GF2toolkit, linear algebra, m4ri, matrix decomposition, paper, ple
-#+TITLE: Enrico Bertolazzi's linear algebra code over GF(2) available
 
 [[http://www.ing.unitn.it/~bertolaz/][Enrico]] made the [[https://www.researchgate.net/publication/233927317_GF2toolkit_software_used_in_the_manuscript_Fast_matrix_decomposition_in_F2?ev=prf_pub][code]] (if the link doesn't work search for his name on Research Gate) for his LU factorisation code over GF(2) available online under the GPL. This is an implement of the algorithm described by Anna and him in [[http://arxiv.org/abs/1209.5198][Fast matrix decomposition in F2]] and for which they give timings in that paper (discussed a bit [[http://martinralbrecht.wordpress.com/2012/12/21/m4ri-20121224/][here]]). I had to fix some includes to make it compile on my box, but nothing major. I can also confirm the impressive performance of their software (I ran =testRankComputation=).
 

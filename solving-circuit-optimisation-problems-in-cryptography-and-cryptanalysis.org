@@ -1,9 +1,9 @@
+#+TITLE: Solving Circuit Optimisation Problems in Cryptography and Cryptanalysis
 #+POSTID: 584
 #+DATE: [2011-09-06 Tue 11:09]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
 #+TAGS: bit-slice, cryptanalysis, cryptography, present cipher
-#+TITLE: "Solving Circuit Optimisation Problems in Cryptography and Cryptanalysis"
 
 Recently, [[http://www.cs.ucl.ac.uk/staff/n.courtois/][Nicolas Courtois]] sent me a revised version of my [[https://bitbucket.org/malb/algebraic_attacks/src/dd3845601204/present_bitslice.c][PRESENT bitslice implementation]] which improves the representation of the S-Box and hence the performance considerably. A paper describing the techniques used to arrive at this new S-box representation is now available on [[http://eprint.iacr.org/2011/475][eprint]]:
 

@@ -1,9 +1,9 @@
+#+TITLE: Job?
 #+POSTID: 786
 #+DATE: [2012-06-11 Mon 13:11]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography, misc, sage
 #+TAGS: job
-#+TITLE: Job?
 
 I am now on the job market as my current contract will expire by the end of the year. So if you know of any positions I should apply for, drop me an e-mail. Thanks.
 

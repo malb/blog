@@ -1,9 +1,9 @@
+#+TITLE: Algorithmic Algebraic Techniques and their Application to Block Cipher Cryptanalysis
 #+POSTID: 229
 #+DATE: [2010-10-11 Mon 13:16]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: 
 #+TAGS: 
-#+TITLE: Algorithmic Algebraic Techniques and their Application to Block Cipher Cryptanalysis
 
 In Part I we present and discuss implementations of both well-known and novel algorithms for fundamental problems of linear algebra over the field with two elements. In particular, we present the best known implementations for matrix-matrix multiplication and matrix decomposition for dense matrices over F2. These implementations are based on novel variants of the "M4RM" multiplication algorithm and the M4RI elimination algorithm.
 

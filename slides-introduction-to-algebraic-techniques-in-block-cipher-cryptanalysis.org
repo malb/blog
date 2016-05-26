@@ -1,9 +1,9 @@
+#+TITLE: Slides: Introduction to Algebraic Techniques in Block Cipher Cryptanalysis
 #+POSTID: 506
 #+DATE: [2011-06-02 Thu 13:54]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
 #+TAGS: algebraic attacks, algebraic cryptanalysis, commutative algebra, conference, cryptanalysis, cryptography, f4, gröbner basis, mixed integer programming, posso, sat
-#+TITLE: Slides: Introduction to Algebraic Techniques in Block Cipher Cryptanalysis
 
 This morning I delivered my talk titled "[[http://martinralbrecht.files.wordpress.com/2011/06/algebraic_cryptanalysis.pdf][Algebraic Techniques in Cryptanlysis (of block ciphers with a bias towards Gröbner bases)]]" at the ECrypt PhD Summerschool here in Albena, Bulgaria. I covered:
 

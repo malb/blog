@@ -1,9 +1,9 @@
+#+TITLE: Mercurial, LaTex and my Thesis
 #+POSTID: 84
 #+DATE: [2010-03-15 Mon 12:36]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: sage
 #+TAGS: latex, mercurial, thesis
-#+TITLE: Mercurial, LaTex and my Thesis
 
 I use [[http://mercurial.selenic.com/][Mercurial]] (and [[http://bitbucket.org][bitbucket.org]]) to track changes to my thesis (yes, I'm writing up, scary thought). Quite naturally, I use LaTeX to typeset my thesis. For LaTeX documents I prefer not have a fixed column width where line breaks are inserted manually. This makes using Mercurial's standard diff somewhat pointless because it will only show me paragraphs that I edited. Meet [[http://www.gnu.org/software/wdiff/][wdiff]]: “The program wdiff is a front end to diff for comparing files on a word per word basis. A word is anything between whitespace. This is useful for comparing two texts in which a few words have been changed and for which paragraphs have been refilled.” I use the following options in order to use wdiff.
 

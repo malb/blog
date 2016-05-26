@@ -1,9 +1,9 @@
+#+TITLE: Cool New Stuff in Recent Sage Releases
 #+POSTID: 92
 #+DATE: [2009-12-26 Sat 12:42]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: sage
 #+TAGS: commutative algebra, linear algebra, m4ri, mixed integer programming, sage, singular
-#+TITLE: Cool New Stuff in Recent Sage Releases
 
 Now that Sage 4.3 was released, maybe it's time to point out some of the cool recent developments. Of course the following list is very very biased.
 

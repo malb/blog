@@ -1,9 +1,9 @@
+#+TITLE: M4RI-20110601
 #+POSTID: 479
 #+DATE: [2011-05-31 Tue 13:00]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri, sage
 #+TAGS: linear algebra, m4ri, release, sage
-#+TITLE: M4RI-20110601
 
 I just just pressed the button and release M4RI version [[https://bitbucket.org/malb/m4ri/wiki/M4RI-20110601][20110601]]. This version contains quite a significant number of changes both internally (for developers) and for end users. For example, we changed the internal matrix layout (including the bit order per word). Furthermore, we greatly improved our testing and benchmarking code such that it will be easier to write fast code in the future: it gives much more accurate and fine grained timing information (cycles, cache hits/misses, etc.), with confidence interval for the returned times and all bells and whistles. It's pretty neat. Finally, making use of these new features we improved performance especially for small operations. Details are given in the [[https://bitbucket.org/malb/m4ri/wiki/M4RI-20110601][release note]].
 

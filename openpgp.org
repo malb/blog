@@ -1,9 +1,9 @@
+#+TITLE: OpenPGP
 #+POSTID: 106
 #+DATE: [2009-09-04 Fri 12:52]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
 #+TAGS: cryptography, openpgp, pgp
-#+TITLE: OpenPGP
 
 One of the nice aspects of my current occupation is that I can type [[http://en.wikipedia.org/wiki/OpenPGP#OpenPGP][OpenPGP]] into [[http://springerlink.com/content/?k=OpenPGP][springerlink]]'s and [[http://scholar.google.co.uk/scholar?q=OpenPGP][Google Scholar]]'s search boxes and claim that reading every paper I deem interesting is “work”. OpenPGP is the standard which is implemented by programs like [[http://www.gnupg.org/][GnuPG]] and PGP for e-mail encryption and digital signatures. The reason I became curious is because I wanted to implement something like an OpenPGP encrypted wiki or filesystem for multiple users.
 

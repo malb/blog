@@ -1,9 +1,9 @@
+#+TITLE: M4RI-20091101 Released
 #+POSTID: 41
 #+DATE: [2009-11-04 Wed 19:18]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri
 #+TAGS: m4ri
-#+TITLE: M4RI-20091101 Released
 
 I just tagged the new release. Get it at [[http://m4ri.sagemath.org]] or from [[http://bitbucket.org/malb/m4ri][http://bitbucket.org/m4ri/malb]]. We did not change that much but this release finally has our improvements from Sage Days 16 where we improved matrix elimination quite a bit.
 

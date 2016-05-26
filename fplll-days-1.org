@@ -1,3 +1,4 @@
+#+TITLE: fplll days 1
 #+BLOG: martinralbrecht
 #+POSTID: 1246
 #+DATE: [2016-02-19 Fri 19:02]
@@ -5,7 +6,6 @@
 #+CATEGORY: cryptography
 #+TAGS:fplll, crypto, sage, workshop
 #+DESCRIPTION:
-#+TITLE: fplll days 1
 We’ll have a [[https://github.com/dstehle/fplll/wiki/fplll-days-1][first fplll coding sprint]] aka “fplll days” from June 20 to June 24 at ENS Lyon.
 
 The idea of [[https://github.com/dstehle/fplll][fplll]] days is inspired by and might follow the format of [[https://wiki.sagemath.org/Workshops][Sage Days]] which are semi-regularly organised by the [[http://sagemath.org][SageMath]] community. The idea is simply to get a bunch of motivated developers in a room to work on code. Judging from experience in the SageMath community, lots of interesting projects get started and completed.

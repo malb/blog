@@ -1,3 +1,4 @@
+#+TITLE: First CoDiMa Training School in Computational Discrete Mathematics
 #+BLOG: wordpress
 #+POSTID: 1191
 #+DATE: [2015-09-08 Tue 21:05]
@@ -5,7 +6,6 @@
 #+CATEGORY: Sage
 #+TAGS: sage, gap 
 #+DESCRIPTION:
-#+TITLE: First CoDiMa Training School in Computational Discrete Mathematics
 
 This [[http://www.codima.ac.uk/2015/09/06/first-codima-training-school-in-computational-discrete-mathematics/][winter school]] sounds excellent:
 

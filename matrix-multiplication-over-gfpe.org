@@ -1,9 +1,9 @@
+#+TITLE: Matrix Multiplication over GF(p^e)
 #+POSTID: 884
 #+DATE: [2013-01-16 Wed 13:41]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography, m4ri, sage
 #+TAGS: complexity, linear algebra, m4ri, m4rie, matrix multiplication, mixed integer programming, sage
-#+TITLE: Matrix Multiplication over GF(p^e)
 
 After my [[http://martinralbrecht.files.wordpress.com/2010/07/20111219_-_m4ri_-_warwick.pdf][talk]] at Sage Days 35 in Warwick (that was in winter 2011) David Harvey had an idea on how to speed up matrix multiplication over $\mathbb{F}_{p\^n}$. We spend some time on this in Warwick and developed this idea further (adding fun stuff like Mixed Integer Programming in the process) but did not get around to do much on this project in the mean time (I have explained the idea at the end of my [[https://martinralbrecht.files.wordpress.com/2010/07/20120601_-_la_-_mykonos.pdf][talk]] in Mykonos, though).
 

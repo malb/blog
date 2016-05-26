@@ -1,9 +1,9 @@
+#+TITLE: Sage Development Visualisation by Alex Ghitza
 #+POSTID: 108
 #+DATE: [2009-10-19 Mon 12:53]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: sage
 #+TAGS: sage
-#+TITLE: Sage Development Visualisation by Alex Ghitza
 
 In the first few seconds were Gonzalo does all the work, he imports all of Sage into the revision control system DARCS. Before then we were not using revision control at all.
 

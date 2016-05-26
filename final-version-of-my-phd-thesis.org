@@ -1,9 +1,9 @@
+#+TITLE: Final Version of my PhD thesis
 #+POSTID: 230
 #+DATE: [2010-10-11 Mon 13:27]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri, sage
 #+TAGS: algebraic attacks, algebraic cryptanalysis, cold boot attacks, commutative algebra, cryptography, f5, linear algebra, m4ri, matrix decomposition, max-posso, mixed integer programming, present cipher, sage, thesis
-#+TITLE: Final Version of my PhD thesis
 
 I passed my PhD defence on Friday. I've uploaded the final version of my thesis titled [[http://martinralbrecht.files.wordpress.com/2010/10/phd.pdf][Algorithmic Algebraic Techniques and their Application to Block Cipher Cryptanalysis]]. Not much changed since the last draft, which I also posted on this blog, except a few typos and errors.
 

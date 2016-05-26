@@ -1,9 +1,9 @@
+#+TITLE: An MSc thesis on implementing F4
 #+POSTID: 273
 #+DATE: [2010-12-07 Tue 15:28]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: sage
 #+TAGS: commutative algebra, f4, gröbner basis, linear algebra, sage
-#+TITLE: An MSc thesis on implementing F4
 
 Daniel Cabarcas' [[http://www.google.com/url?sa=t&source=web&cd=3&ved=0CBsQFjAC&url=http%3A%2F%2Fetd.ohiolink.edu%2Fsend-pdf.cgi%2FCabarcas%2520Daniel.pdf%3Fucin1277120935&ei=BlH-TM6WJYO38gO1-J2NCw&usg=AFQjCNHY_8IujAEIAcCfyZHZbj5ylF7QJQ][Msc thesis]] has the title /An Implementation of Faugère's F4 Algorithm for Computing Gröbner Bases/ and the following abstract:
 

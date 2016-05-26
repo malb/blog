@@ -1,9 +1,9 @@
+#+TITLE: PyME 0.9.0
 #+POSTID: 1057
 #+DATE: [2014-05-15 Thu 18:06]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
 #+TAGS: cryptography, gnupg, gpgme, openpgp, pyme, release
-#+TITLE: PyME 0.9.0
 
 [[https://bitbucket.org/malb/pyme][PyMe]] is a Python interface to [[https://www.gnupg.org/related_software/gpgme/][GPGME]] library using [[http://www.swig.org/][SWIG]]. Being based on SWIG, which does most of the heavy lifiting, it should be fairly complete in terms of coverage of what GPGME has to offer. Here is the history of PyMe as far as I understand it.
 

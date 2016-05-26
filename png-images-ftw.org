@@ -1,9 +1,9 @@
+#+TITLE: PNG Images FTW
 #+POSTID: 608
 #+DATE: [2011-10-15 Sat 18:33]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri
 #+TAGS: file format, linear algebra, m4ri, matrix, png
-#+TITLE: PNG Images FTW
 
 I had the pleasure to attend a meeting of the [[http://www.linalg.org][LinBox]] developers this week in Raleigh, NC. One of the question that came up was how to exchange and store matrices. For example, matrices for whose "class" one wants to find/implement dedicated algorithms. To give a more concrete example: matrices appearing during Gröbner basis computations have a special structure which allows to reduce them faster than random matrices (cf. this [[http://www-salsa.lip6.fr/~jcf/Papers/PASCO2010.pdf][paper]] or [[https://bitbucket.org/brickenstein/polybori/src/f2ae1a754b3e/groebner/include/polybori/groebner/linear_algebra_step.h#cl-248][this code]]). Hence, we'd like to have some sort of format to store such matrices such that we can work on these dedicated algorithms. Of course, such a format should be flexible, human readable (preferably writable as well) and reasonably simple. I'm not sure how the LinBox crew would think about me blogging about details of their meeting, hence I'll only use this opportunity to plug my own proposal (at least for reasonably dense matrices): /PNG images/.
 

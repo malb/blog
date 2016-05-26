@@ -1,9 +1,9 @@
+#+TITLE: Rank-profile revealing Gaussian elimination and the CUP matrix decomposition
 #+POSTID: 711
 #+DATE: [2012-01-07 Sat 12:19]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri, sage
 #+TAGS: exact linear algebra, linear algebra, m4ri, m4rie, matrix decomposition, paper, ple, pre-print
-#+TITLE: Rank-profile revealing Gaussian elimination and the CUP matrix decomposition
 
 by Claude-Pierre Jeannerod, Clément Pernet, Arne Storjohann is now available on the archive. I like this paper a lot and we also referenced it in both the [[http://arxiv.org/abs/1111.6549][M4RI elimination paper]] and the [[http://arxiv.org/abs/1111.6900][M4RIE paper]] so three cheers that it's now available.
 

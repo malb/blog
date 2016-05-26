@@ -1,9 +1,9 @@
+#+TITLE: Back at Royal Holloway
 #+POSTID: 764
 #+DATE: [2014-01-16 Thu 19:00]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
 #+TAGS: cryptography, gchq, job, multilinear maps, nsa
-#+TITLE: Back at Royal Holloway
 
 Since the beginning of this month I am back at the Information Security Group (which is now its own department) at Royal Holloway, University of London. In particular, I have a three year postdoc position on a [[http://gow.epsrc.ac.uk/NGBOViewGrant.aspx?GrantRef=EP/L018543/1][project]] looking into [[http://eprint.iacr.org/2012/610][multilinear maps]]. The project is with [[http://www.isg.rhul.ac.uk/~kp/][Kenny Paterson]].
 

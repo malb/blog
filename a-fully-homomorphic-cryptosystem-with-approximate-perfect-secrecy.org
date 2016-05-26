@@ -1,9 +1,9 @@
+#+TITLE: A Fully Homomorphic Cryptosystem with Approximate Perfect Secrecy
 #+POSTID: 894
 #+DATE: [2013-03-05 Tue 13:17]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
 #+TAGS: commutative algebra, cryptography, gröbner basis, homomorphic encryption, polly cracker
-#+TITLE: A Fully Homomorphic Cryptosystem with Approximate Perfect Secrecy
 
 At CT-RSA 2013 a [[http://link.springer.com/chapter/10.1007%2F978-3-642-36095-4_24][paper]] titled "A Fully Homomorphic Cryptosystem with Approximate Perfect Secrecy" by Michal Hojsík and Veronika Půlpánová was presented. Here is the abstract:
 

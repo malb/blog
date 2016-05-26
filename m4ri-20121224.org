@@ -1,9 +1,9 @@
+#+TITLE: M4RI 20121224
 #+POSTID: 875
 #+DATE: [2012-12-21 Fri 20:30]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri, sage
 #+TAGS: linear algebra, m4ri, ple, pre-print, sage
-#+TITLE: M4RI 20121224
 
 I have just pushed the button to release [[https://bitbucket.org/malb/m4ri/wiki/M4RI-20121224][M4RI 20121224]]. The main feature of this release is a considerable performance improvement. It all started with /Fast matrix decomposition in F2/ by Enrico Bertolazzi and Anna Rimoldi showing up on the [[http://arxiv.org/abs/1209.5198][arXiv]]. Here's the abstract
 

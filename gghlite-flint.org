@@ -1,3 +1,4 @@
+#+TITLE: Improved Parameters and an Implementation of Graded Encoding Schemes from Ideal Lattices
 #+BLOG: wordpress
 #+POSTID: 1086
 #+DATE: [2014-11-12 Wed 10:00]
@@ -5,7 +6,6 @@
 #+CATEGORY: cryptography
 #+TAGS: cryptography, multilinear maps, pre-print, flint
 #+DESCRIPTION:
-#+TITLE: Improved Parameters and an Implementation of Graded Encoding Schemes from Ideal Lattices
 Our paper (with Catalin Cocis, Fabien Laguillaumie and Adeline Langlois) on picking parameters and implementing [[https://eprint.iacr.org/2014/487][GGHLite]] just hit [[http://eprint.iacr.org/2014/928][eprint]]. Here's the abstract:
 
 #+BEGIN_QUOTE

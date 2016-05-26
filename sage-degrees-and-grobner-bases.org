@@ -1,9 +1,9 @@
+#+TITLE: Sage, Degrees and Gröbner Bases
 #+POSTID: 291
 #+DATE: [2011-01-10 Mon 10:58]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:t
 #+CATEGORY: sage
 #+TAGS: commutative algebra, f5, gröbner basis, magma, posso, sage, singular
-#+TITLE: Sage, Degrees and Gröbner Bases
 
 For one reason on [[http://martinralbrecht.wordpress.com/2010/12/15/breaking-an-identity-based-encryption-scheme-based-on-dhies/][another]] I found myself computing Gröbner bases over fields which are not $\mathbb{F}_2$.  Thus, my interest in Sage's interface to [[http://www.singular.uni-kl.de/][Singular]] and [[http://magma.maths.usyd.edu.au/magma/][Magma]] increased quite a bit again recently (before I was mainly using [[http://polybori.sourceforge.net/][PolyBoRi]]). Hence I wrote two patches which need review (hint, hint):
 

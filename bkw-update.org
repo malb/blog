@@ -1,9 +1,9 @@
+#+TITLE: BKW: Update
 #+POSTID: 911
 #+DATE: [2013-05-08 Wed 14:51]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography, sage
 #+TAGS: bkw, bkz, cryptanalysis, lattice-based cryptography, lwe, pre-print, sage
-#+TITLE: BKW: Update
 
 We have updated our [[http://eprint.iacr.org/2012/636][pre-print]] titled "On the Complexity of the BKW Algorithm on LWE" on ePrint.
 

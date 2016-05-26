@@ -1,9 +1,9 @@
+#+TITLE: Sage Paris/Orsay User Group - 16.2. Orsay
 #+POSTID: 737
 #+DATE: [2012-02-07 Tue 12:49]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: sage
 #+TAGS: sage, sage paris-orsay user group
-#+TITLE: Sage Paris/Orsay User Group - 16.2. Orsay
 
 So, the second meeting of the Sage Paris/Orsay User Group (SPOUG or shall we call it a Sage Halfday?) is on the 16th in Orsay. Here's the official announcement.
 

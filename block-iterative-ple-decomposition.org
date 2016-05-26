@@ -1,9 +1,9 @@
+#+TITLE: Block-iterative PLE decomposition
 #+POSTID: 517
 #+DATE: [2011-07-06 Wed 13:56]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri
 #+TAGS: linear algebra, m4ri, matrix decomposition, sparse matrix
-#+TITLE: Block-iterative PLE decomposition
 
 I guess one advantage of not finishing a [[https://bitbucket.org/cpernet/pluqm4ri/overview][paper that is "done"]] is that one can (a) change the name of the algorithm over and over again and (b) improve said algorithm.
 

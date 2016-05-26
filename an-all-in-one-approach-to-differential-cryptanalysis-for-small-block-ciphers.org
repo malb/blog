@@ -1,9 +1,9 @@
+#+TITLE: An All-In-One Approach to Differential Cryptanalysis for Small Block Ciphers
 #+POSTID: 848
 #+DATE: [2012-08-05 Sun 13:54]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
 #+TAGS: conference, cryptanalysis, cryptography, differential cryptanalysis, katan cipher, paper
-#+TITLE: An All-In-One Approach to Differential Cryptanalysis for Small Block Ciphers
 
 a paper that I wrote with Gregor Leander is finally done, out and accepted for presentation at SAC.
 

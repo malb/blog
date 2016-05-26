@@ -1,3 +1,4 @@
+#+TITLE: Writing (Crypto) Papers and Version Control
 #+BLOG: martinralbrecht
 #+POSTID: 1225
 #+DATE: [2016-01-10 Sun 15:40]
@@ -5,7 +6,6 @@
 #+CATEGORY: cryptography
 #+TAGS: cryptography, git, paper, emacs, writing
 #+DESCRIPTION:
-#+TITLE: Writing (Crypto) Papers and Version Control
 
 Academics write. Academics in my field also tend to write in groups of two to five people. Back in the dark days — which I’m told are not over for many researchers — this used to involve mailing LaTeX sources around, forgetting to attach the right file, “I take the editing token for file.tex” e-mails, questions like “Where is the most recent  version of the draft?” and so on. In some cases, I’m told authors actually sat down together and did grammar fixes in a meeting. In a word, it was horrible.
 

@@ -1,9 +1,9 @@
+#+TITLE: Polly Cracker Revisited - Slides
 #+POSTID: 348
 #+DATE: [2011-02-10 Thu 17:27]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
 #+TAGS: commutative algebra, cryptography, gröbner basis, homomorphic encryption, max-posso, posso
-#+TITLE: Polly Cracker Revisited - Slides
 
 I just gave a talk in the [[http://isg.rhul.ac.uk][ISG]] seminar at Royal Holloway, University of London about this Polly Cracker business I've been thinking about lately. I've also decided to publish the [[http://martinralbrecht.files.wordpress.com/2011/02/20110210_pollycracker_egham.pdf][slides]]. However, I'd like to stress that everything in there is preliminary, i.e. this is yet another of those presentations presenting work in progress (which I personally think is a good thing to do). Anyway, here's the abstract:
 

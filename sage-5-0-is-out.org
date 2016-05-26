@@ -1,9 +1,9 @@
+#+TITLE: Sage 5.0 is out
 #+POSTID: 768
 #+DATE: [2012-05-16 Wed 21:35]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: sage
 #+TAGS: sage
-#+TITLE: Sage 5.0 is out
 
 It took a while but it's finally out: Sage 5.ooohhhhh. Official announcement (edited):
 

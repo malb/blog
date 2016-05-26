@@ -1,9 +1,9 @@
+#+TITLE: Postdoc position in Cryptology at DTU
 #+POSTID: 1020
 #+DATE: [2014-01-27 Mon 13:10]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
 #+TAGS: cryptography, dtu, job, postdoc
-#+TITLE: Postdoc position in Cryptology at DTU
 
 DTU has a postdoc position [[http://www.dtu.dk/english/career/job?id=75ce13d3-7f72-4e8c-b508-8d56749f53df][available]] in the crypto group. I can highly recommend working there.
 

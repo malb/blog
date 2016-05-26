@@ -1,9 +1,9 @@
+#+TITLE: TRSM with Greasing == TRSM reduced to Matrix Multiplication
 #+POSTID: 261
 #+DATE: [2010-11-19 Fri 01:47]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri
 #+TAGS: linear algebra, m4ri, trsm
-#+TITLE: TRSM with Greasing == TRSM reduced to Matrix Multiplication
 
 Recently, I met Sylvain Lachartre (one of the authors of "[[http://www-salsa.lip6.fr/~jcf/Papers/PASCO2010.pdf][Parallel Gaussian elimination for Gröbner bases computations in finite fields]]") who mentioned to me that his thesis contains a description of Triangular System Solving with Matrices (TRSM) using Greasing or the M4RM caching trick. Since TRSM is a step in asymptotically fast echelon form computations, I figured I should implement it as well in M4RI (note, I haven't actually read his thesis, so he might have a much more clever idea than I did). That's what I did today.[[http://martinralbrecht.files.wordpress.com/2010/11/benchmarketing-trsm-normal-m4ri.png][[[http://martinralbrecht.files.wordpress.com/2010/11/benchmarketing-trsm-normal-m4ri.png?w=300]]]]
 

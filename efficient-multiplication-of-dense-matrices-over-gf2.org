@@ -1,9 +1,9 @@
+#+TITLE: Efficient Multiplication of Dense Matrices over GF(2)
 #+POSTID: 47
 #+DATE: [2008-11-12 Wed 19:22]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri
 #+TAGS: m4ri, pre-print
-#+TITLE: Efficient Multiplication of Dense Matrices over GF(2)
 
 #+BEGIN_QUOTE
 [[http://arxiv.org/abs/0811.1714][We describe]] an efficient implementation of a hierarchy of algorithms for multiplication of dense matrices over the field with two elements (GF(2)). In particular we present our implementation - in the M4RI library - of Strassen-Winograd matrix multiplication and the “Method of the Four Russians” multiplication (M4RM) and compare it against other available implementations. Good performance is demonstrated on on AMD's Opteron and particulary good performance on Intel's Core 2 Duo. The open-source M4RI library is available stand-alone as well as part of the Sage mathematics software.

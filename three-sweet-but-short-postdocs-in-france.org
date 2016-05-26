@@ -1,9 +1,9 @@
+#+TITLE: Three sweet but short postdocs in France
 #+POSTID: 1022
 #+DATE: [2014-02-06 Thu 09:20]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: misc, sage
 #+TAGS: HPAC, computer algebra, exact linear algebra, gröbner basis, job, linear algebra, parallel computing, postdoc, sage
-#+TITLE: Three sweet but short postdocs in France
 
 The HPAC project has three one-year postdoc positions available:
 

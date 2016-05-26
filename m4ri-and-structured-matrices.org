@@ -1,9 +1,9 @@
+#+TITLE: M4RI and Structured Matrices
 #+POSTID: 37
 #+DATE: [2010-04-14 Wed 19:14]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri
 #+TAGS: m4ri
-#+TITLE: M4RI and Structured Matrices
 
 I have blogged [[http://www.informatik.uni-bremen.de/cgi-bin/cgiwrap/malb/blosxom.pl/2009/11/04#m4ri-20091101][before]] about the issues we face in M4RI if the matrices we work with are relatively sparse. In a nutshell, computing the, say, row echelon form of these matrices may take /longer/ than for random matrices. In particular, all the nice work we've done for making matrix elimination fast M4RI might not pay off for the kind of matrices I care about such as matrices as they appear when computing Gröbner bases for relatively dense systems of polynomials in [[http://polybori.sourceforge.net/][PolyBoRi]]. A few examples of such matrices can be downloaded from the M4RI [[http://m4ri.sagemath.org/performance.html][performance site]]. Since I am writing up my thesis (and [[http://membres-liglab.imag.fr/pernet/][Clément]] and I are working on a [[http://bitbucket.org/cpernet/pluqm4ri/][joint paper]]) I played around with a simple hybrid algorithm today. The idea is simple: M4RI is faster for sparse-ish matrices than PLS decomposition mainly due to the lack of column swaps. Thus, run M4RI until the density of the remaining matrix is above a certain threshold and then switch to the PLS-based approach. It turns out this works reasonably well for the benchmark matrices.
 

@@ -1,9 +1,9 @@
+#+TITLE: LPN and SVP
 #+POSTID: 888
 #+DATE: [2013-01-16 Wed 15:50]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography, sage
 #+TAGS: LPN, conference, cryptanalysis, cryptography, lattice, linear algebra, lwe, sage
-#+TITLE: LPN and SVP
 
 I am currently attending [[https://www.cryptolux.org/esc2013/][ESC 2013]] in Mondorf, Luxembourg. Over dinner someone mentioned that there is no known reduction from LPN to lattice reduction, i.e., it is not known that you can solve LPN with LLL and friends.  This seems rather strange to me, because the standard lattice attack on LWE seems to be carrying over as is:
 

@@ -1,9 +1,9 @@
+#+TITLE: Sage Development as an RTS
 #+POSTID: 463
 #+DATE: [2011-05-16 Mon 15:22]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: sage
 #+TAGS: development, information visualisation, sage
-#+TITLE: Sage Development as an RTS
 
 This is nice:
 

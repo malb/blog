@@ -1,9 +1,9 @@
+#+TITLE: BatzenCA - OpenPGP Key Management for Mailing Lists
 #+POSTID: 964
 #+DATE: [2014-01-10 Fri 10:45]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
 #+TAGS: cryptography, gnupg, openpgp, pgp, pyme, python, sqlalchemy
-#+TITLE: BatzenCA - OpenPGP Key Management for Mailing Lists
 
 Lately, I have been writing a little Python library which is aimed at managing [[https://en.wikipedia.org/wiki/Pretty_Good_Privacy][OpenPGP]] encrypted mailing lists easier. In particular, it addresses the following scenario. A group of users setup a normal mailing list - say a Google group. To realise encryption all users encrypt to all users, say, by relying on Thunderbird's/Enigmail's "Per-Recipient Rules". This is annoying, but doable for groups sufficiently small. However, doing all the mutual key authentications for all users would be a lot more annoying. Our users could rely on the [[https://en.wikipedia.org/wiki/Pretty_Good_Privacy][web of trust]], but many people who use encryption seem to be reluctant to publish a social graph [[http://pgp.mit.edu/][on the Internet]], so they'd rely on exchanging this information somewhat privately, e.g. on the list itself.
 

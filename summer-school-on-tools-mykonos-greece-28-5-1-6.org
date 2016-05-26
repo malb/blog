@@ -1,9 +1,9 @@
+#+TITLE: Summer School on Tools :: Mykonos, Greece :: 28.5 - 1.6.
 #+POSTID: 750
 #+DATE: [2012-03-01 Thu 13:55]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography, sage
 #+TAGS: algebraic attacks, algebraic cryptanalysis, block cipher, commutative algebra, conference, cryptanalysis, cryptography, gröbner basis, hash function, linear algebra, mixed integer programming, sage, sat
-#+TITLE: Summer School on Tools :: Mykonos, Greece :: 28.5 - 1.6.
 
 Slightly redacted announcement for the [[https://www.cosic.esat.kuleuven.be/ecrypt/courses/mykonos12/index.shtml][2012 Summer School on Tools]] below.
 

@@ -1,9 +1,9 @@
+#+TITLE: Geometric XL
 #+POSTID: 98
 #+DATE: [2009-06-03 Wed 12:47]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography, sage
 #+TAGS: commutative algebra, cryptography, posso, sage
-#+TITLE: Geometric XL
 
 The [[http://www.isg.rhul.ac.uk/~sean/JMC-220-Final-LNCS.pdf][paper]] by Sean Murphy and Maura Paterson has been around for quite some time now (same for my toy implementation). Gröbner basis algorithms and related methods like XL are algebraic in nature. In particular, their complexity is not invariant under a linear change of coordinates. For example consider Cyclic-6
 

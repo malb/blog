@@ -1,9 +1,9 @@
+#+TITLE: A Generator for LWE and Ring-LWE Instances
 #+POSTID: 906
 #+DATE: [2013-04-29 Mon 15:59]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography, sage
 #+TAGS: cryptography, lwe, ring-lwe, sage
-#+TITLE: A Generator for LWE and Ring-LWE Instances
 
 We're ready to announce our [[http://en.wikipedia.org/wiki/Learning_with_errors][LWE]]/Ring-LWE [[https://bitbucket.org/malb/lwe-generator/wiki/Home][generators]] for[[http://trac.sagemath.org/sage_trac/ticket/14478][Sage]]:
 

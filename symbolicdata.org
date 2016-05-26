@@ -1,9 +1,9 @@
+#+TITLE: SymbolicData
 #+POSTID: 730
 #+DATE: [2012-02-01 Wed 23:51]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: sage
 #+TAGS: commutative algebra, gröbner basis, optional package, sage, symbolic data
-#+TITLE: SymbolicData
 
 Sage has many optional packages, about 50 actually. However, it is not necessarily well known what some of these do. For example, recently William asked me to fix some issue in the optional /database_symbolic_data/ (still [[http://trac.sagemath.org/sage_trac/ticket/12336][needing review]] btw. hint hint) package which bought it back to my attention. Shortly after, Burcin mentioned to me that he spent considerable time copy'n'pasting some standard ideals from some package to Sage's input format. Time which he probably wouldn't have spent if he'd known about the [[http://www.symbolicdata.org][SymbolicData.org]] database and it's Sage interface. Here's in it action:
 

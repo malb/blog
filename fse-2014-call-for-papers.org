@@ -1,9 +1,9 @@
+#+TITLE: FSE 2014 - Call for Papers
 #+POSTID: 944
 #+DATE: [2013-10-02 Wed 09:18]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
 #+TAGS: call for papers, cfp, confer, cryptography, fse
-#+TITLE: FSE 2014 - Call for Papers
 
 The [[http://fse2014.isg.rhul.ac.uk/index.php?p=cfp][Call for Papers]] for 21st International Workshop on Fast Software Encryption (aka FSE) is out. FSE will be great for at least three reasons:
 

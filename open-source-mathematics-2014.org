@@ -1,3 +1,4 @@
+#+TITLE: Looking Back and Forward for Open-Source Mathematics Software (2014)
 #+BLOG: wordpress
 #+POSTID: 1099
 #+DATE: [2014-12-17 Wed 16:53]
@@ -5,7 +6,6 @@
 #+CATEGORY: sage
 #+TAGS: open-source, sage, mathematics, linear-algebra, lattices, m4ri, m4rie, fplll
 #+DESCRIPTION:
-#+TITLE: Looking Back and Forward for Open-Source Mathematics Software (2014)
 
 When a year ends people make lists. I can only guess that several people are currently busy with writing “The 5 most revised papers on [[https://eprint.iacr.org][eprint]] ” and “The 8 best IACR flagship conference rump session presentations of 2014”. Since all the good lists are taken, my list has to be a little bit more personal. Alas, here is my list of stuff that happened in open-source computational mathematics in 2014 around me. That is, below I list what developments happened in 2014 and try to provide an outlook for 2015 (so that I can come back in a year to notice that nothing played out as planned). 
 

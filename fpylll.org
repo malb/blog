@@ -1,3 +1,4 @@
+#+TITLE: fpylll
 #+BLOG: martinralbrecht
 #+POSTID: 1304
 #+DATE: [2016-04-03 Sun 11:40]
@@ -6,7 +7,6 @@
 #+TAGS: lattices, lattice-based-cryptography, fplll, python, 
 #+DESCRIPTION:
 #+PROPERTY: header-args :exports both :session fpylll :results code :eval never-export
-#+TITLE: fpylll
 #+STARTUP: indent
 
 [[https://github.com/malb/fpylll][fpylll]] is a Python library for performing lattice reduction on lattices over the Integers. It is based on the [[https://github.com/dstehle/fplll][fplll]], a C++ library which describes itself as follows:

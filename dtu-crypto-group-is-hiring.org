@@ -1,9 +1,9 @@
+#+TITLE: DTU Crypto Group is hiring
 #+POSTID: 881
 #+DATE: [2013-01-15 Tue 14:21]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
 #+TAGS: dtu, job
-#+TITLE: DTU Crypto Group is hiring
 
 the group I am in is [[http://www.job.dtu.dk/English.aspx?guid=23fcca99-3bd7-47ea-be88-406d4d5d8bec][hiring]] an assistant/associate professor.
 

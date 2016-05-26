@@ -1,9 +1,9 @@
+#+TITLE: Encouraging female reverse engineers
 #+POSTID: 892
 #+DATE: [2013-02-04 Mon 17:46]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: misc
 #+TAGS: gender, gender gap, it security, reverse engineering
-#+TITLE: Encouraging female reverse engineers
 
 Thomas Dullien is running a [[http://addxorrol.blogspot.de/2013/01/encouraging-female-reverse-engineers.html][nice competition]] to address the gender gap in IT security or more precisely reverse engineering:
 

@@ -1,9 +1,9 @@
+#+TITLE: How to print at the ISG at Royal Holloway
 #+POSTID: 1017
 #+DATE: [2014-01-20 Mon 15:27]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: misc
 #+TAGS: 
-#+TITLE: How to print at the ISG at Royal Holloway
 
 It seems all the information on printing from proper operating systems at the Information Security Group at Royal Holloway, University of London available online is a bit outdated. So here's what you should do when using CUPS:
 

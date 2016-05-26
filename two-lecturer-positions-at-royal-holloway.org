@@ -1,3 +1,4 @@
+#+TITLE: Two Lecturer Positions in the Information Security Group
 #+BLOG: martinralbrecht
 #+POSTID: 1330
 #+DATE: [2016-05-14 Sat 10:39]
@@ -5,7 +6,6 @@
 #+CATEGORY: Cryptography
 #+TAGS: cryptography, it security, jobs
 #+DESCRIPTION:
-#+TITLE: Two Lecturer Positions in the Information Security Group
 
 The ISG has *two* lectureship positions available. One regular lectureship position and one with a teaching focus.
 

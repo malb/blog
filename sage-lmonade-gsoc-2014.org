@@ -1,9 +1,9 @@
+#+TITLE: Sage & LMonade GSOC 2014
 #+POSTID: 1041
 #+DATE: [2014-03-06 Thu 15:39]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: sage
 #+TAGS: google summer of code, gsoc, gsoc2014, linbox, lmonade, open-source, sage
-#+TITLE: Sage & LMonade GSOC 2014
 
 This year [[http://www.google-melange.com/gsoc/org2/google/gsoc2014/sagemath][Sage]] and [[http://www.google-melange.com/gsoc/org2/google/gsoc2014/lmonade][lmonade]] are mentoring organizations for the [[http://www.google-melange.com/gsoc/homepage/google/gsoc2014][Google Summer of Code]] again. We have many exciting projects for students to work (from home) over the summer, get mentored by experts in the field and get paid by Google.
 

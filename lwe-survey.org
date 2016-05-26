@@ -1,3 +1,4 @@
+#+TITLE: On the concrete hardness of Learning with Errors
 #+BLOG: wordpress
 #+POSTID: 1116
 #+DATE: [2015-01-20 Tue 19:28]
@@ -5,7 +6,6 @@
 #+CATEGORY: cryptography, sage
 #+TAGS: cryptography, cryptanalysis, lattice-based cryptography, lwe, paper, pre-print
 #+DESCRIPTION:
-#+TITLE: On the concrete hardness of Learning with Errors
 
 Together with Rachel Player and Sam Scott (both also from the [[https://isg.rhul.ac.uk][Information Security Group]] at Royal Holloway, University of London) we finally managed to put our [[https://eprint.iacr.org/2015/046][survey]] on solving the Learning with Errors problem out. Here’s the abstract:
 

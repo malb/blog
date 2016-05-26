@@ -1,9 +1,9 @@
+#+TITLE: Coldboot Code Available
 #+POSTID: 692
 #+DATE: [2011-12-02 Fri 10:53]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography, sage
 #+TAGS: algebraic attacks, algebraic cryptanalysis, bitbucket, cold boot attacks, cryptanalysis, cryptography, mixed integer programming, sage, scip
-#+TITLE: Coldboot Code Available
 
 After receiving two inquiries about the coldboot attack paper which were best answered by looking at the code or by comparing with our code, I figured it was about time I put it online. So here it is:
 

@@ -1,9 +1,9 @@
+#+TITLE: Stats Porn
 #+POSTID: 88
 #+DATE: [2010-02-02 Tue 12:39]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
 #+TAGS: conference, cryptography
-#+TITLE: Stats Porn
 
 I just scanned the website of Lars Knudsen (who is visiting Royal Holloway right now) and came across this gem.
 

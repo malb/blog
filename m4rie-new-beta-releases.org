@@ -1,9 +1,9 @@
+#+TITLE: M4RIE new beta releases
 #+POSTID: 127
 #+DATE: [2010-07-27 Tue 15:17]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri, sage
 #+TAGS: linear algebra, m4ri, m4rie, sage
-#+TITLE: M4RIE new beta releases
 
 I just uploaded new releases of[[http://m4ri.sagemath.org/downloads/m4ri-20100730.tar.gz][M4RI]] and [[http://m4ri.sagemath.org/downloads/m4rie-20100730.tar.gz][M4RIE]] to the[[http://m4ri.sagemath.org][M4RI]] website. Not much changed except that I implemented Strassen multiplication in M4RIE. The results are visualised below, where blue means M4RIE wins and red means Magma wins. The first two plots are for a Xeon (eno at UW) and the last two for an Opteron (prai243 at RHUL).
 

@@ -1,9 +1,9 @@
+#+TITLE: Postdoc Position at LIP6
 #+POSTID: 488
 #+DATE: [2011-05-26 Thu 13:13]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography, sage
 #+TAGS: algebraic attacks, algebraic cryptanalysis, commutative algebra, cryptography, gröbner basis, job, optimization, postdoc
-#+TITLE: Postdoc Position at LIP6
 
 My team is hiring:
 

@@ -1,9 +1,9 @@
+#+TITLE: SAT Solving Pointers
 #+POSTID: 104
 #+DATE: [2009-08-17 Mon 12:51]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: sage
 #+TAGS: algebraic attacks, algebraic cryptanalysis, cryptography, sage, sat
-#+TITLE: SAT Solving Pointers
 
 This is just a quick note to point out two SAT-solving sources relevant for cryptography.
 

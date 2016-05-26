@@ -1,9 +1,9 @@
+#+TITLE: Algorithms for LWE and the Approximate GCD Problem over the Integers
 #+POSTID: 413
 #+DATE: [2011-05-07 Sat 15:32]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
 #+TAGS: commutative algebra, cryptography, gröbner basis, homomorphic encryption, linear algebra
-#+TITLE: Algorithms for LWE and the Approximate GCD Problem over the Integers
 
 Let $n$ be the number of variables in some polynomial ring $\mathbb{R}[x_1,\dots,x_n]$ (with $\mathbb{R}$ a ring) and let $d$ be the degree of a bunch of polynomials $F = [f_1,\dots,f_m]$ in $\mathbb{R}$, i.e., $\deg(f_i) = d$. Of course, we can "solve" $F$ by computing a Gröbner basis on $F$. Furthermore, it is well-known that if $n=1$ computing a GB is equivalent to computing the GCD of $F$ and that if $d=1$ computing a GB is equivalent to Gaussian elimination, i.e., finding a triangular basis for a module. In a nutshell, Gröbner bases generalise GCDs and Gaussian elimination. So far, so classical.
 

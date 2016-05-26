@@ -1,9 +1,9 @@
+#+TITLE: New M4RI Release Coming Up
 #+POSTID: 54
 #+DATE: [2009-01-03 Sat 19:27]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri
 #+TAGS: m4ri
-#+TITLE: New M4RI Release Coming Up
 
 I will probably cut a new [[http://m4ri.sagemath.org][M4RI]] release within a week or so. The main changes are:
 

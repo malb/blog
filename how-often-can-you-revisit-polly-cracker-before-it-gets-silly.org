@@ -1,9 +1,9 @@
+#+TITLE: How often can you revisit Polly Cracker before it gets silly?
 #+POSTID: 865
 #+DATE: [2012-11-19 Mon 16:33]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
 #+TAGS: cryptography, gröbner basis, homomorphic encryption, lwe, paper, pre-print
-#+TITLE: How often can you revisit Polly Cracker before it gets silly?
 
 We (with [[https://farshim.wordpress.com/][Pooya Farshim]], [[http://www.cits.rub.de/personen/herold.html][Gottfried Herold]], [[http://www-polsys.lip6.fr/~perret/][Ludovic Perret]] and [[http://www-calfor.lip6.fr/~jcf/][Jean-Charles Faugère]]) updated our [[http://eprint.iacr.org/2011/289][pre-print of the full version]] of the Polly Cracker paper. It is a major revision based on Gottfried's [[http://www.springerlink.com/content/3q36306327j17740/][corrections and critique]].
 

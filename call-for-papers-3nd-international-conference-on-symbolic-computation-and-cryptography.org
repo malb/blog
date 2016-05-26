@@ -1,9 +1,9 @@
+#+TITLE: Call for Papers: 3nd International Conference on Symbolic Computation and Cryptography
 #+POSTID: 760
 #+DATE: [2012-03-22 Thu 17:03]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
 #+TAGS: SCC2012, algebraic attacks, algebraic cryptanalysis, commutative algebra, conference, cryptography, gröbner basis, posso
-#+TITLE: Call for Papers: 3nd International Conference on Symbolic Computation and Cryptography
 
 CIEM - Castro Urdiales, Spain, 11-13 July 2012, [[http://scc2012.unican.es/]]
 

@@ -1,9 +1,9 @@
+#+TITLE: Dense matrices mod n via FFLAS/FFPACK
 #+POSTID: 545
 #+DATE: [2011-08-30 Tue 15:44]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: sage
 #+TAGS: fflas, ffpack, linbox, linear algebra, sage, sage days
-#+TITLE: Dense matrices mod n via FFLAS/FFPACK
 
 During last weeks [[http://wiki.sagemath.org/days32][Sage Days 32]] I worked on finishing a [[http://trac.sagemath.org/sage_trac/ticket/4260][patch]] by Clément Pernet and Burcin Eröcal which switches Sage's native matrices mod /n/ (for $n<2\^{23}$) to [[http://ljk.imag.fr/membres/Jean-Guillaume.Dumas/FFLAS/][FFLAS/FFPACK]]. The purpose of this exercise was to make operations with dense matrices mod /n/ both faster and more memory efficient (currently, Sage does a lot of copying around when calling any [[http://www.linalg.org/][LinBox]] function). Well, we almost succeeded.
 

@@ -1,9 +1,9 @@
+#+TITLE: Challenge matrices
 #+POSTID: 621
 #+DATE: [2011-10-19 Wed 20:00]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri
 #+TAGS: algebraic attacks, algebraic cryptanalysis, commutative algebra, cryptography, f4, gröbner basis, linear algebra, m4ri, mutantxl
-#+TITLE: Challenge matrices
 
 Now, that we have a decent PNG reader/writer in M4RI, it's much easier to get some challenge matrices out of the library. Below, I list and link a few such matrices as they appear during Gröbner basis computations.
 

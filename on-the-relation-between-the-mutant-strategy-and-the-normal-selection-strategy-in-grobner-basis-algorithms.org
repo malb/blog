@@ -1,9 +1,9 @@
+#+TITLE: On the Relation Between the Mutant Strategy and the Normal Selection Strategy in Gröbner Basis Algorithms
 #+POSTID: 397
 #+DATE: [2011-04-01 Fri 10:38]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
 #+TAGS: algebraic attacks, algebraic cryptanalysis, commutative algebra, f4, gröbner basis, linear algebra, mutantxl, mxl, posso
-#+TITLE: On the Relation Between the Mutant Strategy and the Normal Selection Strategy in Gröbner Basis Algorithms
 
 We finally (sorry for the delay!) finished our [[http://martinralbrecht.files.wordpress.com/2011/04/mutant.pdf][paper]] on the Mutant strategy. Here's the abstract:
 

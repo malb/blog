@@ -1,9 +1,9 @@
+#+TITLE: Efficient dense Gaussian elimination over the field with two elements
 #+POSTID: 675
 #+DATE: [2011-11-23 Wed 14:32]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: m4ri, sage
 #+TAGS: linear algebra, m4ri, matrix decomposition, paper, pre-print, sage
-#+TITLE: Efficient dense Gaussian elimination over the field with two elements
 
 Finally, we finished our paper about Gaussian elimination in the M4RI library.
 

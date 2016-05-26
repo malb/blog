@@ -1,9 +1,9 @@
+#+TITLE: A Simple Bitslice Implementation of PRESENT
 #+POSTID: 96
 #+DATE: [2009-03-10 Tue 12:45]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
 #+TAGS: cryptography, present cipher
-#+TITLE: A Simple Bitslice Implementation of PRESENT
 
 I had a hunch the other day which required $2\^{36}$ plaintext---ciphertext pairs to be tested. While the hunch turned out to be wrong, at least I got a simple
 [[http://en.wikipedia.org/wiki/Bit_slicing][bitslice]] implementation of [[http://www.ist-ubisecsens.org/publications/present_ches2007.pdf][PRESENT]] (in pure C99) [[http://bitbucket.org/malb/algebraic_attacks/src/tip/present_bitslice.c][out of it]]. The implementation is far from optimal:

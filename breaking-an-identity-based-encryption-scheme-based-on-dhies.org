@@ -1,9 +1,9 @@
+#+TITLE: Breaking An Identity-Based Encryption Scheme based on DHIES
 #+POSTID: 284
 #+DATE: [2010-12-15 Wed 13:42]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: cryptography
 #+TAGS: algebraic cryptanalysis, commutative algebra, cryptography, f5, identity-based encryption
-#+TITLE: Breaking An Identity-Based Encryption Scheme based on DHIES
 
 A paper I wrote with Kenneth G. Paterson just became [[http://eprint.iacr.org/2010/637][available]] on e-print. here's the abstract:
 

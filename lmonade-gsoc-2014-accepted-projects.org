@@ -1,9 +1,9 @@
+#+TITLE: LMonade GSoC 2014 Accepted Projects
 #+POSTID: 1044
 #+DATE: [2014-04-22 Tue 10:15]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: misc, sage
 #+TAGS: google summer of code, gsoc2014, lmonade, m1ri, sage
-#+TITLE: LMonade GSoC 2014 Accepted Projects
 The list of accepted projects of this year's [[https://www.google-melange.com/gsoc/homepage/google/gsoc2014][Google Summer of Code]] is out. For the list of accepted projects for [[http://sagemath.org][Sage]] see [[http://blog.harald.schil.ly/2014/04/sage-gsoc-2014-projects.html][here]], for the [[http://www.lmona.de/][LMonade]] project see below, for all other accepted projects see Google's [[https://www.google-melange.com/gsoc/projects/list/google/gsoc2014][site]]. I am going to mentor William's M1RI project together with Clément Pernet. It's going to be a blast.
 ** Implementing the LLL algorithm in FLINT
 

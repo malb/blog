@@ -1,9 +1,9 @@
+#+TITLE: About Me
 #+POSTID: 2
 #+DATE: [2010-07-10 Sat 16:56]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
 #+CATEGORY: 
 #+TAGS: 
-#+TITLE: About Me
 
 I am a lecturer in the [[http://www.rhul.ac.uk/isg/home.aspx][Information Security Group]] at [[https://royalholloway.ac.uk][Royal Holloway, University of London]]. Previously, I was a postdoc in the same group working on multilinear maps, a postdoc at [[http://dtu.dk][DTU]] in Copenhagen, Denmark and a postdoc in the [[http://www-polsys.lip6.fr/][POLSYS]] team of LIP6 at Université Pierre et Marie Curie (UPMC) in Paris. I earned my PhD in the [[http://isg.rhul.ac.uk][Information Security Group]] at [[http://www.rhul.ac.uk][Royal Holloway, University of London]] under the supervision of [[http://isg.rhul.ac.uk/~ccid][Carlos Cid]]. Before, I studied computer science at [[http://www.uni-bremen.de][Universität Bremen]] where I wrote my Diplomarbeit in the [[http://sepharden.math.uni-bremen.de/][AℓZAGK]] group under the supervision of [[http://www.informatik.uni-bremen.de/~michaelh/][Michael Hortmann]].
 

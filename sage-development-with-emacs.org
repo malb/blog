@@ -1,3 +1,4 @@
+#+TITLE: Sage Development with Emacs
 #+BLOG: wordpress
 #+POSTID: 1124
 #+DATE: [2015-02-12 Thu 14:23]
@@ -5,7 +6,6 @@
 #+CATEGORY: sage, emacs
 #+TAGS: sage, emacs,
 #+DESCRIPTION:
-#+TITLE: Sage Development with Emacs
 A while back I [[https://martinralbrecht.wordpress.com/2014/11/03/c-development-with-emacs/][described]] my (then current) setup to develop C code with Emacs. The other programming language I tend to spend a lot of time with is Python, specifically [[http://sagemath.org][Sage]]’s Python. Here’s my Emacs setup for writing Sage code. For starters, it makes sense to [[https://github.com/antonj/Highlight-Indentation-for-Emacs/][highlight indentation]] in Python.
 
 #+BEGIN_SRC emacs-lisp

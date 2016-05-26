@@ -1,3 +1,4 @@
+#+TITLE: Sage 6.4
 #+BLOG: wordpress
 #+POSTID: 1090
 #+DATE: [2014-11-16 Sun 20:46]
@@ -5,7 +6,6 @@
 #+CATEGORY: sage
 #+TAGS: sage, lattice-based cryptography, linear algebra
 #+DESCRIPTION: 
-#+TITLE: Sage 6.4
 
 [[http://sagemath.org][Sage 6.4]] is out. Here are some (to me) particularly exciting changes.
 
