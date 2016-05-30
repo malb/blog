@@ -23,7 +23,7 @@ $(x_{0,0} + k_0 + p_{0,0}) + (x_{1,0} + k_0 + p_{1,0}) = x_{0,0} + x_{1,0} + p_{
 
 Thus, it might be beneficial to not consider a polynomial system of multiple plaintext-ciphertext pairs but instead to consider a system for $P_0, C_0$ and $(P_i - P_0), (C_i - C_0)$ for $i > 0$.
 
-To apply this trick to my algebraic integral attack[[http://bitbucket.org/malb/algebraic_attacks/src/tip/present.py][polynomial system generator]] for PRESENT, replace the code:
+To apply this trick to my algebraic integral attack [[http://bitbucket.org/malb/algebraic_attacks/src/tip/present.py][polynomial system generator]] for PRESENT, replace the code:
 
 #+BEGIN_SRC python
 for j in range(min_round,len(rounds)):
