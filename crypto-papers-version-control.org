@@ -15,7 +15,7 @@ Judging from anecdotal evidence, it is not that bad anymore. Many people now use
 
 ** Why Git?
 
-Chances are that if you’re writing a paper with a more senior researcher they will prefer Subversion to Git. This is mainly because Subversion is the tool that people used to learn (and the transition from CVS to SVN was pretty straight-forward) and many people don’t see a need for “fancy” Git features such as being distributed and lightweight branches. While I’d say these features do in fact come in handy (see below), I’d say a good reason to use Git is simply because Git is winning the version control battle. Loads of open-source projects are switching over to Git and being familiar with such central tool has benefits beyond writing papers.
+Chances are that if you’re writing a paper with a more senior researcher they will prefer Subversion to Git. This is mainly because Subversion is the tool that people used to learn (and the transition from CVS to SVN was pretty straightforward) and many people don’t see a need for “fancy” Git features such as being distributed and lightweight branches. While I’d say these features do in fact come in handy (see below), I’d say a good reason to use Git is simply because Git is winning the version control battle. Loads of open-source projects are switching over to Git and being familiar with such central tool has benefits beyond writing papers.
 
 Here are a [[https://www.atlassian.com/git/tutorials/][bunch]] of [[https://try.github.io/levels/1/challenges/1][git]] [[https://rogerdudler.github.io/git-guide/][tutorials]].
 
@@ -47,7 +47,7 @@ However, you cannot actually lose any information in a merge. All information th
 
 ** Use tags
 
-Git has tags, i.e. you can assign tags to commits to find them again later. This is useful when writing papers to tag milestones. For example, you might want to tag the version you submitted to that conference with =thatconference-2016-submission= and continue working on the paper. Later, when you get reviewer comments you can easily go back to see what the heck line 3 on page 5 was about. It also makes sense to tag final versions =thatconference-2016-final= because it allows you to easily check what changed since that version, say, when updating an ePrint afterwards.
+Git has tags, i.e. you can assign tags to commits to find them again later. This is useful when writing papers to tag milestones. For example, you might want to tag the version you submitted to that conference with =thatconference-2016-submission= and continue working on the paper. Later, when you get reviewer comments you can easily go back to see what the heck line 3 on page 5 was about. It also makes sense to tag final versions =thatconference-2016-final= because it allows you to easily check what changed since that version, say, when updating on ePrint afterwards.
 
 ** Don’t check in automatically generated files
 
