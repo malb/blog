@@ -1,0 +1,333 @@
+#+TITLE: Handling Email with Emacs
+#+BLOG: martinralbrecht
+#+POSTID: 1336
+#+DATE: [2016-05-30 Mon 23:04]
+#+CATEGORY: Emacs
+
+Like many other people, I write, receive and loath a lot of email. Writing it goes something like this:
+
+1. Create a new draft,
+2. figure out the right address to put into the =To:= field,
+3. write “Hi <first name>”,
+4. write the actual message,
+5. attach the correct file (if any),
+6. append “Cheers, Martin”.
+
+Also, a lot of email is repetitive and boring but necessary, such as asking seminar speakers for their titles and abstracts, giving people advise on how to claim reimbursement when they visit Royal Holloway, responding to requests of people who'd like to pursue a PhD.
+
+Here is my attempt to semi-automate some of the boring steps in Emacs.
+
+#+HTML:<!--more-->
+
+* Plumbing
+
+I use [[http://isync.sourceforge.net/mbsync.html][mbsync]] for syncing my e-mail to my local hard disk as I often work offline, e.g. during my commute or while working on airplanes.[fn:1] Mbsync does not speak [[https://en.wikipedia.org/wiki/IMAP_IDLE][IMAP IDLE]], aka push notifications, so I use [[https://www.npmjs.com/package/imapnotify][imapnotify]] for this; here’s my (sanitised) imapnotify config file:
+
+#+BEGIN_SRC js :tangle no
+var child_process = require('child_process');
+
+function getStdout(cmd) {
+  var stdout = child_process.execSync(cmd);
+  return stdout.toString().trim();
+}
+
+exports.host = "imap.gmail.com";
+exports.port = 993;
+exports.tls = true;
+exports.username = "martinralbrecht@gmail.com";
+exports.password = // whatever needs doing, e.g. call getStdout()
+exports.onNewMail = "mbsync googlemail-minimal";
+exports.onNewMailPost = "emacsclient  -e '(mu4e-update-index)'";
+exports.boxes = [ "INBOX"];
+#+END_SRC
+
+I only need imapnotify in Emacs, so I use [[https://github.com/rejeep/prodigy.el][prodigy]] to start/stop it.
+
+#+BEGIN_SRC emacs-lisp
+(use-package prodigy
+  :ensure t
+  :init (prodigy-define-tag
+          :name 'email
+          :ready-message "Checking Email using IMAP IDLE. Ctrl-C to shutdown.")
+  (prodigy-define-service
+    :name "imapnotify"
+    :command "imapnotify"
+    :args (list "-c" (expand-file-name ".config/imapnotify.gmail.js" (getenv "HOME")))
+    :tags '(email)
+    :kill-signal 'sigkill))
+#+END_SRC
+
+Once arrived, email is parsed by [[http://www.djcbsoftware.nl/code/mu/][Mu]] which provides fast, powerful fulltext search. Finally, [[http://www.djcbsoftware.nl/code/mu/mu4e.html][Mu4e]] provides that email client experience™ in Emacs.
+
+On the other end, I’m not relying on Emacs’ [[https://www.emacswiki.org/emacs/SendingMail][built-in support]] for sending email but use [[https://www.opensmtpd.org][opensmtpd]].[fn:2] Using Emacs’ built-in functionality means that it will hang while sending email (due to lack of multithreading), especially on slow connections, which defeats the purpose of getting email out of the way quickly.
+
+* Reading
+
+Mu shines at search, it’s fast and expressive. For example, to search for messages between 2 kilobytes and 2Mb, written in December 2009 with an attachment from Bill, search
+
+#+BEGIN_EXAMPLE 
+size:2k..2m date:20091201..20093112 flag:attach from:bill
+#+END_EXAMPLE
+
+Below are some examples for how I use it. Other ideas can be to filter for your project students, by your course number etc.
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list
+ 'mu4e-bookmarks
+ '("flag:unread NOT flag:trashed AND (flag:list OR from:trac@sagemath.org)"
+   "Unread bulk messages" ?l))
+
+(add-to-list
+ 'mu4e-bookmarks
+ '("flag:unread NOT flag:trashed AND NOT flag:list AND (maildir:\"/royal holloway\" OR maildir:/INBOX)"
+   "Unread messages addressed to me" ?i))
+
+(add-to-list
+ 'mu4e-bookmarks
+ '("mime:application/* AND NOT mime:application/pgp* AND (maildir:\"/royal holloway\" OR maildir:/INBOX)"
+   "Messages with attachments for me." ?d) t)
+
+(add-to-list
+ 'mu4e-bookmarks
+ '("flag:flagged"
+   "Flagged messages" ?f) t)
+
+(add-to-list
+ 'mu4e-bookmarks
+ '("(maildir:\"/[Google Mail]/.Sent Mail\" OR maildir:\"/royal holloway/.sent\") AND date:7d..now"
+   "Sent in last 7 days" ?s) t)
+#+END_SRC
+
+By default Mu’s search is REPL, i.e. you type a query, press =<enter>= and look at the results. Sometimes you want real-time updates as you type, e.g. to adapt your search quickly. In this case, [[https://github.com/emacs-helm/helm-mu][helm-mu]] has you covered. [[https://emacs-helm.github.io/helm/][Helm]] adds a generic search-as-you-type interface to Emacs, here’s a nice [[https://tuhdo.github.io/helm-intro.html][intro]].
+
+#+BEGIN_SRC emacs-lisp
+(use-package helm-mu
+  :ensure t
+  :config (progn
+            (bind-key "S" #'helm-mu mu4e-main-mode-map)))
+#+END_SRC
+
+By the way, enabling =helm-follow-mode= via =C-c C-f= allows to preview emails as you search.
+
+Sometimes, you might want to file an email with some project notes to be able to find it later without any effort or you might want to refer to it directly from your TODO list. I use [[http://orgmode.org][Org-Mode]] for my TODOs and notes. Mu4e comes with Org-Mode support which provides links for messages and search queries. First, enable it
+
+#+BEGIN_SRC emacs-lisp
+(use-package org-mu4e
+  :config (setq org-mu4e-link-query-in-headers-mode nil))
+#+END_SRC
+
+and then add some [[http://orgmode.org/manual/Capture.html][org-capture]] templates to make filing and email or creating a TODO based on an email easy:
+
+#+BEGIN_SRC emacs-lisp
+(use-package org-capture
+  :bind ("<f9>" . org-capture)
+  :config (setq org-capture-templates
+                '(("r" "respond ro email (mu4e)"
+                   entry (file+headline malb/inbox-org "Email")
+                   "* REPLY to [[mailto:%:fromaddress][%:fromname]] on %a\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+1d\"))\n%U\n\n"
+                   :immediate-finish t
+                   :prepend t)
+
+                  ("f" "file email (mu4e)"
+                   entry (file+headline malb/inbox-org "Email")
+                   "* %a by [[mailto:%:fromaddress][%:fromname]]\n%U\n\n%i%?\n"
+                   :immediate-finish nil
+                   :prepend nil))))
+#+END_SRC
+
+* Writing
+
+First, let’s make finding that email address easier. For this, I want an automatically maintained database holding at least
+
+1. first name, 
+2. last name and
+3. email address
+
+which is then used for autocompletion as I type. “Automatically maintained“ here means that this database should be built from our email correspondence, similar to e.g. what Gmail does. Adding email addresses and whatever else is in the =From:= field to some database isn’t difficult per se and many clients do it. For example, Mu4e comes with this built-in.
+
+However, there are a few different conventions out there for how people write names in a =From:= field, so this needs a bit of tidying up. For example, Royal Holloway likes “Lastname, Firstname (Year)” for students; some people like to YELL their LASTNAME and then write the first name; some people misspell their own name. The code below canonicalises this.
+
+#+BEGIN_SRC emacs-lisp
+(defun malb/canonicalise-contact-name (name)
+  (let ((case-fold-search nil))
+    (setq name (or name ""))
+    (if (string-match-p "^[^ ]+@[^ ]+\.[^ ]" name)
+        ""
+      (progn
+        ;; drop email address
+        (setq name (replace-regexp-in-string "^\\(.*\\) [^ ]+@[^ ]+\.[^ ]" "\\1" name)) 
+        ;; strip quotes
+        (setq name (replace-regexp-in-string "^\"\\(.*\\)\"" "\\1" name)) 
+        ;; deal with YELL’d last names
+        (setq name (replace-regexp-in-string "^\\(\\<[[:upper:]]+\\>\\) \\(.*\\)" "\\2 \\1" name))
+        ;; Foo, Bar becomes Bar Foo
+        (setq name (replace-regexp-in-string "^\\(.*\\), \\([^ ]+\\).*" "\\2 \\1" name)) 
+        ;; look up names and replace from static table, TODO look this up by email
+        (setq name (or (cdr (assoc name malb/mu4e-name-replacements)) name)) 
+        ))))
+
+(defun malb/mu4e-contact-rewrite-function (contact)
+  (let* ((name (or (plist-get contact :name) ""))
+         (mail (plist-get contact :mail))
+         (case-fold-search nil))
+    (plist-put contact :name (malb/canonicalise-contact-name name))
+    contact))
+
+(setq mu4e-contact-rewrite-function #'malb/mu4e-contact-rewrite-function)
+#+END_SRC
+
+Now that our addresses are canonicalised, I can use those to fill in a few more bits. Given an email starting with “To: John Doe <john@example.com>” there is no point in typing the name “John” again when I do the customary “Hi …,”. Here, [[https://joaotavora.github.io/yasnippet/][YASnippet]] comes in. YASnippet is a templating system for Emacs inspired by [[http://manual.macromates.com/en/snippets][TextMate]], which allows to map short sequences of characters to other sequences of characters, potentially by asking for more user input and/or calling some arbitrary Emacs Lisp function. For example, here’s the template we use to advertise the ISG seminar
+
+#+BEGIN_EXAMPLE
+# -*- mode: snippet -*-
+# name: Announce ISG Research Seminar
+# key: isg-announce
+# --
+${1:Thu}, $2 @ ${3:11:00} in ${4:HLT2}: $5
+---
+
+When:   $1, $2, 2016 @ $3
+Where:  $4
+Why:    Because… reasons!
+Who:    $5 ($6)
+
+# Title #
+
+$0
+
+# Abstract #
+
+
+
+# Bio #
+
+
+
+Cheers,
+Lorenzo & Martin
+#+END_EXAMPLE
+
+and here’s my “hi” template
+
+#+BEGIN_EXAMPLE
+# -*- mode: snippet -*-
+# name: Say "hi"
+# key: Hi
+# --
+Hi ${1:`(malb/yas-get-names-from-to-fields)`},
+
+$0
+
+Cheers,
+Martin
+#+END_EXAMPLE
+
+Using this snippet, typing =Hi<Tab>= triggers email boilerplate to be inserted, with the cursor eventually placed in the position of =$0=. The name used in the greeting is computed using the following function:
+
+#+BEGIN_SRC emacs-lisp
+(defun malb/yas-get-names-from-fields (fields)
+  (let (names
+        ret
+        name
+        point-end-of-line
+        (search-regexp (mapconcat (lambda (arg)
+                                    (concat "^" arg ": "))
+                                  fields "\\|"))
+        (case-fold-search nil))
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward search-regexp nil t)
+        (save-excursion
+          (setq point-end-of-line (re-search-forward "$")))
+        (setq name (buffer-substring-no-properties (point) point-end-of-line))
+        (setq name (split-string name "[^ ]+@[^ ]+," t " ")) ;; split on email@address,
+        (setq names (append names name)))
+      (dolist (name names)
+        (setq name (malb/canonicalise-contact-name name))
+        (if (string-match "\\([^ ,]+\\)" name)
+            (progn
+              (setq name (match-string 1 name))
+              (setq name (capitalize name))
+              (if ret
+                  (setq ret (concat ret ", " name))
+                (setq ret name)))))
+      (if ret ret "there"))))
+
+(defun malb/yas-get-names-from-to-fields ()
+  (interactive)
+  (malb/yas-get-names-from-fields '("To")))
+#+END_SRC
+
+Of course, you can create much more elaborate snippets calling all kinds of functions to respond to all kinds of email. Once you created so many snippets that you’re at risk of loosing track, I recommend [[https://github.com/emacs-jp/helm-c-yasnippet][helm-yasnippet]] as a nice interactive interface for selecting the right snippet.
+
+To simplify adding attachments — because traversing directory trees is boring — I wrote a small interface to [[https://community.kde.org/Baloo][Baloo]], which is KDE’s version of OSX’s Spotlight, i.e. desktop search:
+
+#+BEGIN_SRC emacs-lisp
+(defcustom helm-baloo-file-limit 100
+  "Limit number of entries returned by baloo to this number."
+  :group 'helm-baloo
+  :type '(integer :tag "Limit"))
+
+
+(defun baloo-search (pattern)
+  (start-process "baloosearch" nil "baloosearch" (format "-l %d " helm-baloo-file-limit) pattern))
+
+(defun helm-baloo-search ()
+  (baloo-search helm-pattern))
+
+(defun helm-baloo-transform (cs)
+  (let '(helm-baloo-clean-up-regexp (rx (or
+                                         control
+                                         (seq "[0;31m" (+ (not (any "["))) "[0;0m")
+                                         "[0;32m"
+                                         "[0;0m")))
+    (mapcar (function
+             (lambda (c)
+               (replace-regexp-in-string
+                (rx (seq bol (+ space))) ""
+                (replace-regexp-in-string helm-baloo-clean-up-regexp "" c))))
+            cs)))
+
+(defvar helm-source-baloo
+  (helm-build-async-source "Baloo"
+    :candidates-process #'helm-baloo-search
+    :candidate-transformer #'helm-baloo-transform
+    :action '(("Open" . (lambda (x) (find-file x)))
+              ("Attach to Email" . (lambda (x) (mml-attach-file x))))))
+
+(defun helm-baloo ()
+  (interactive)
+  (helm :sources helm-source-baloo
+        :buffer "*helm baloo*"))
+#+END_SRC
+
+The line =("Attach to Email" . (lambda (x) (mml-attach-file x))= adds an option to attach any file to an email by pressing =<F2>=. If you prefer good ol’ locate, you can add this option to [[https://github.com/emacs-helm/helm/wiki/Locate][helm-locate]] too:
+
+#+BEGIN_SRC emacs-lisp
+(helm-add-action-to-source "Attach to Email" #'mml-attach-file helm-source-locate)
+#+END_SRC
+
+Finally, a few more nice-to-have tweaks:
+
+- I write email in German and English and manually switching spell-checking dictionaries is not on; [[https://github.com/nschum/auto-dictionary-mode][auto-dictionary-mode]] allows to pick the right dictionary automatically by looking for key words and their frequency like “the” or “der/die/das”.
+
+- Footnotes in email can be quite handy.
+
+- [[https://github.com/jorgenschaefer/typoel][Typo-mode]] replace quotes and friends with their typographically correct counterparts because UTF-8 is a thing.
+
+- LaTeX notation like =\lambda= [[https://github.com/malb/emacs.d/blob/master/malb.org#latex][gets replaced]] by $\lambda$ because, again, UTF-8 is a thing.
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'message-mode-hook #'flyspell-mode)
+(add-hook 'message-mode-hook #'typo-mode)
+(add-hook 'message-mode-hook #'adict-guess-dictionary)
+(add-hook 'message-mode-hook #'footnote-mode)
+#+END_SRC
+
+* Footnotes
+
+[fn:1] GMail takes care of all sorting into folders aka labels.
+
+[fn:2] Debian GNU/Linux comes with [[https://wiki.debian.org/Exim][exim4]] by default, which isn’t easy to configure. [[https://www.opensmtpd.org][OpenSMTPD,]] on the other hand, is rather straightforward.
+
+ 
