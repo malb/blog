@@ -257,7 +257,7 @@ stats.svp_time
 
 ** Integration with other Projects
 
-*fpylll* integrates reasonably nicely with [[http://sagemath.org][Sag]]e (once [[http://trac.sagemath.org/ticket/20291][#20291]] is merged, that is): converting back and forth between data types is seamless. For example:
+*fpylll* integrates reasonably nicely with [[http://sagemath.org][Sage]] (once [[http://trac.sagemath.org/ticket/20291][#20291]] is merged, that is): converting back and forth between data types is seamless. For example:
 
 #+BEGIN_SRC python
 sage: A = random_matrix(ZZ, 10, 10)
@@ -285,11 +285,7 @@ In fact, when installed inside Sage, element access for =IntegerMatrix= accepts 
 
 #+BEGIN_SRC python
 sage: type(B[0,0])
-#+END_SRC
-
-#+RESULTS:
-#+BEGIN_SRC python
-&lt;type 'sage.rings.integer.Integer'&gt;
+<type 'sage.rings.integer.Integer'>
 #+END_SRC
   
 *fpylll* also integrates somewhat with [[http://www.numpy.org][NumPy]]. To see how, let’s create a small NTRU-like matrix again:
@@ -302,38 +298,26 @@ A = IntegerMatrix.random(4, "ntrulike", bits=7, q=127)
 We’d like to do some analysis on its Gram-Schmidt matrix, so let’s compute it:
 
 #+BEGIN_SRC python
-M = GSO.Mat(A)
-M.update_gso()
-#+END_SRC
-
-#+RESULTS:
-#+BEGIN_SRC python
+sage: M = GSO.Mat(A)
+sage: M.update_gso()
 True
 #+END_SRC
 
 Let’s dump it into a NumPy array and spot check that the result is reasonably close:
 
-   #+BEGIN_SRC python
-import numpy
-from fpylll.numpy import dump_mu
-N = numpy.ndarray(dtype="double", shape=(8,8))
-dump_mu(N, M, 0, 8)
-N[1,0] - M.get_mu(1,0)
-   #+END_SRC
-
-#+RESULTS:
 #+BEGIN_SRC python
+sage: import numpy
+sage: from fpylll.numpy import dump_mu
+sage: N = numpy.ndarray(dtype="double", shape=(8,8))
+sage: dump_mu(N, M, 0, 8)
+sage: N[1,0] - M.get_mu(1,0)
 0.0
 #+END_SRC
 
 Finally, let’s do something more or less useful with our output:
 
 #+BEGIN_SRC python
-numpy.linalg.eigvals(N)
-#+END_SRC
-
-#+RESULTS:
-#+BEGIN_SRC python
+sage: numpy.linalg.eigvals(N)
 [ -2.14381988e-39 +0.00000000e+00j  -1.51590958e-39 +1.51590958e-39j
   -1.51590958e-39 -1.51590958e-39j   3.26265223e-55 +2.14381988e-39j
    3.26265223e-55 -2.14381988e-39j   2.14381988e-39 +0.00000000e+00j
