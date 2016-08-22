@@ -22,18 +22,18 @@ I am a lecturer in the [[http://www.rhul.ac.uk/isg/home.aspx][Information Securi
 
 My (current) main academic interests are:
 
--  the hardness of problems underpinning multilinear maps constructions in cryptography
--  the bit security of (Ring-)LWE
--  applications of computational mathematics in cryptology
--  efficient linear algebra (over small finite fields)
--  computational mathematics in general
--  symmetric key cryptology and cryptanalysis: block ciphers mainly
--  real world cryptography and applications.
+- the bit security of (Ring-)LWE
+- applications of computational mathematics in cryptology
+- real world cryptography and applications
+- the hardness of problems underpinning multilinear maps constructions in cryptography
+- computational mathematics in general
+- symmetric key cryptology and cryptanalysis: block ciphers mainly
+- efficient linear algebra (over small finite fields)
 
 ** Computation
 
-I'm a developer for the [[http://m4ri.sagemath.org][Sage]] mathematics software. I am also the maintainer of the [[http://m4ri.sagemath.org][M4RI]] library for fast linear algebra over $\mathbb{F}\_2$ and the [[http://m4ri.sagemath.org][M4RIE]] library for fast linear algebra over $\mathbb{F}\_{2\^e}$.
+I’m a maintainer for [[https://github.com/fplll/fplll][fplll]] and [[https://github.com/fplll/fpylll][fpylll]]. I'm also a developer for the [[http://m4ri.sagemath.org][Sage]] mathematics software, the maintainer of the [[http://m4ri.sagemath.org][M4RI]] library for fast linear algebra over $\mathbb{F}\_2$ and the [[http://m4ri.sagemath.org][M4RIE]] library for fast linear algebra over $\mathbb{F}\_{2\^e}$.
 
 ** Open Source
 
-I make all my code [[http://bitbucket.org/malb/][publicly available]], this includes the research code used in publications as well as LaTeX sources for [[https://bitbucket.org/malb/papers/][papers]] and [[https://bitbucket.org/malb/talks][slides]]. I encourage you to do the same.
+I make all my code [[http://bitbucket.org/malb/][publicly]] [[https://github.com/malb][available]], this includes the research code used in publications as well as LaTeX sources for [[https://bitbucket.org/malb/papers/][papers]] and [[https://bitbucket.org/malb/talks][slides]]. I encourage you to do the same.
