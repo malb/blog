@@ -1,5 +1,5 @@
-#+DATE: [2016-08-22 Mon 12:59]
 #+TITLE: fplll 5.0
+#+DATE: [2016-08-22 Mon 12:59]
 #+BLOG: martinralbrecht
 #+POSTID: 1364
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
@@ -7,7 +7,7 @@
 #+TAGS: fplll, cryptography, sage, lattice-based cryptography, lattices, release, open-source
 #+DESCRIPTION:
 
-Fplll 4.0.4 was [[https://raweb.inria.fr/rapportsactivite/RA2013/aric/uid91.html][released in 2013]]. Fplll 5.0.0, whose development started in autumn 2014, came out [[https://github.com/fplll/fplll/releases/tag/5.0.0][today]]. About 600 commits by [[https://github.com/fplll/fplll/graphs/contributors][13 contributors]] went into this release. Overall, fplll 5.0 is quite a significant improvement over the 4.x series.
+Fplll 4.0.4 was [[https://raweb.inria.fr/rapportsactivite/RA2013/aric/uid91.html][released in 2013]]. Fplll 5.0.0, whose development started in autumn 2014, came out [[https://github.com/fplll/fplll/releases/][today]]. About 600 commits by [[https://github.com/fplll/fplll/graphs/contributors][13 contributors]] went into this release. Overall, fplll 5.0 is quite a significant improvement over the 4.x series.
 
 #+HTML:<!--more-->
 
