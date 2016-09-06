@@ -1,6 +1,6 @@
+#+TITLE: London-ish Lattice Coding & Crypto Meeting: 21 September 2016
 #+BLOG: martinralbrecht
 #+POSTID: 1377
-#+TITLE: London-ish Lattice Coding & Crypto Meeting: 21 September 2016
 #+DATE: [2016-08-29 Mon 13:46]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
 #+CATEGORY: cryptography
