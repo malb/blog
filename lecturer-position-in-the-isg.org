@@ -4,7 +4,7 @@
 #+DATE: [2016-03-03 Thu 13:12]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
 #+CATEGORY: cryptography
-#+TAGS: jobs, it security
+#+TAGS: job, it security
 #+DESCRIPTION:
 My department is [[https://jobs.royalholloway.ac.uk/vacancy.aspx?ref=0216-068][hiring a new lecturer]] whose interests are related to, or complement, current [[https://www.isg.rhul.ac.uk/bin/staff-dir.php][strengths of the ISG]]. If you have questions get in touch either as suggested below or — if that works better for you — with me.
 

@@ -1,0 +1,30 @@
+#+TITLE: Postdoc position at Royal Holloway
+#+BLOG: martinralbrecht
+#+POSTID: 1382
+#+DATE: [2016-09-09 Fri 16:10]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: Cryptography
+#+TAGS:cryptography, job, postdoc, royal holloway
+#+DESCRIPTION:
+
+We got a one year crypto postdoc position in the Information Security Group.
+
+#+BEGIN_QUOTE
+| *Location*       | Egham                                                     |
+| *Salary*         | £33,789 to £39,902 per annum - including London Allowance |
+| *Closing Date*   | Monday 10 October 2016                                    |
+| *Interview Date* | To be confirmed                                           |
+| *Reference*      | [[https://jobs.royalholloway.ac.uk/vacancy.aspx?ref=0916-295][0916-295]]                                                  |
+
+The ISG is seeking to recruit a post-doctoral research assistant to work in the area of Cryptography. The position is available now for the period of one year.
+
+The PDRA will work alongside Prof. Kenny Paterson and other cryptographic researchers at Royal Holloway on topics in Cryptography. Our current areas of interest include lattice-based cryptography, multilinear maps, indistinguishability obfuscation, and applied cryptography.
+
+Applicants should have already completed (essential if COS required), or be close to completing, a PhD in a relevant discipline. Applicants should have an outstanding research track record in Cryptography. Applicants should be able to demonstrate scientific creativity, research independence, and the ability to communicate their ideas effectively in written and verbal form.
+
+This is a full time post, available as soon as possible for a fixed term period of 12 months. This post is based in Egham, Surrey, where the College is situated in a beautiful, leafy campus near to Windsor Great Park and within commuting distance from London.
+
+Informal enquiries can be made to Kenny Paterson at kenny.paterson@rhul.ac.uk.
+
+The Human Resources Department can be contacted with queries by email at: recruitment@rhul.ac.uk.
+#+END_QUOTE

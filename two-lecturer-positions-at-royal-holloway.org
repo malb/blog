@@ -3,8 +3,8 @@
 #+POSTID: 1330
 #+DATE: [2016-05-14 Sat 10:39]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
-#+CATEGORY: Cryptography
-#+TAGS: cryptography, it security, jobs
+#+CATEGORY: cryptography
+#+TAGS: cryptography, it security, job
 #+DESCRIPTION:
 
 The ISG has *two* lectureship positions available. One regular lectureship position and one with a teaching focus.
