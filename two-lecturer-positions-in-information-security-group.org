@@ -1,0 +1,62 @@
+#+BLOG: martinralbrecht
+#+POSTID: 1389
+#+TITLE: Two Lecturer Positions in the Information Security Group
+#+DATE: [2017-02-28 Tue 09:20]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography
+#+TAGS: cryptography, it security, job
+#+DESCRIPTION:
+
+My department - the [[https://www.royalholloway.ac.uk/isg/home.aspx][Information Security Group]] at [[https://www.royalholloway.ac.uk/isg/home.aspx][Royal Holloway]], [[http://www.london.ac.uk/][University of London]] - has two open positions. One 4 year teaching focused post and one permanent post with the usual research and teaching profile (similar to, say, a Junior Professor in Germany). It's a nice place to work, there's good research going on from cryptography and [[http://s2lab.isg.rhul.ac.uk/][system security]] to [[https://pure.royalholloway.ac.uk/portal/en/persons/lizzie-coleskemp(35669a97-ec97-4538-ab1c-a38dc5140809)/publications.html][human and social aspects of information security]] and the ISG hosts one of the two UK [[https://www.royalholloway.ac.uk/isg/cybersecuritycdt/home.aspx][Centres for Doctoral Training in Cyber Security]] which means we have funding for 10 PhD students per year at the moment. Most teaching is at the [[https://www.royalholloway.ac.uk/isg/prospectivestudents/prospectivestudents-msc/home.aspx][MSc level]].
+
+#+HTML: <!--more-->
+
+** Permanent
+
+#+BEGIN_QUOTE
+| Location        | Egham                                                   |
+| Salary:         | 41,458 to 49,059 per annum - including London Allowance |
+| Closing Date:   | Sunday 09 April 2017                                    |
+| Interview Date: | To be confirmed                                         |
+| Reference:      | [[https://jobs.royalholloway.ac.uk/vacancy.aspx?ref=0217-090][0217-090]]                                                |
+
+Applications are invited for the post of Lecturer in the Information Security Group at Royal Holloway, University of London. Note that thisposition is roughly equivalent to a tenure-track Assistant Professor in North America or a Junior Professor in Europe.
+
+Applications are invited from researchers whose interests are related to, or complement, current strengths of the ISG. We are particularly interested in applicants with outstanding research achievements and/or potential in relevant information/cyber security areas.
+
+Applicants should have a Ph.D. in a relevant subject or equivalent, be a self-motivated researcher, and have a strong publication record. Applicants should be able to demonstrate an enthusiasm for teaching and communicating with diverse audiences, as well as show an awareness of contemporary issues relating to cyber security.
+
+This is a full time and permanent post, with an earliest start date of 18tht September, 2017, although a slightly later start may be preferable. This post is based in Egham, Surrey, where the College is situated in a beautiful, leafy campus near to Windsor Great Park and within commuting distance from London.
+
+For an informal discussion about the post, please contact Prof. Keith Mayes on [[mailto:keith.mayes@rhul.ac.uk][keith.mayes@rhul.ac.uk]].
+
+The Human Resources Department can be contacted with queries by email at: [[mailto:recruitment@rhul.ac.uk][recruitment@rhul.ac.uk]].
+
+/We particularly welcome female applicants as they are under-represented at this level in the Department./
+#+END_QUOTE
+
+** 4 Year Teaching Focused
+
+#+BEGIN_QUOTE
+| Location       | Egham                                                           |
+| Salary         | 41,458 to 49,059 per annum - including London Allowance         |
+| Closing Date   | Sunday 09 April 2017                                            |
+| Interview Date | To be confirmed                                                 |
+| Reference      | [[https://jobs.royalholloway.ac.uk/vacancy.aspx?ref=0217-089][0217-089]]                                                        |
+
+Applications are invited for the post of Lecturer (teaching focused) in the Information Security Group at Royal Holloway, University of London.
+
+The post holder will contribute to the creation and/or revision, delivery and assessment of postgraduate (MSc) and undergraduate teaching modules across a wide range of topics in the field of information/cyber security.
+
+Applicants should have a Ph.D. in a relevant subject or equivalent and have a sound knowledge of information/cyber security. Applicants should be able to demonstrate an enthusiasm for teaching and communicating with diverse audiences, as well as show an awareness of contemporary issues relating to cyber security
+
+This is a four year teaching post, with an earliest start date of 18th September 2017, although a slightly later start may be preferable. This post is based in Egham, Surrey, where the College is situated in a beautiful, leafy campus near to Windsor Great Park and within commuting distance from London.
+
+It should be noted that teaching post holders are permitted to spend 10% of their time following their research interests.
+
+For an informal discussion about the post, please contact Prof. Keith Mayes on [[mailto:keith.mayes@rhul.ac.uk][keith.mayes@rhul.ac.uk]].
+
+The Human Resources Department can be contacted with queries by email at: [[mailto:recruitment@rhul.ac.uk][recruitment@rhul.ac.uk]].  
+
+/We particularly welcome female applicants as they are under-represented at this level in the Department./
+#+END_QUOTE
