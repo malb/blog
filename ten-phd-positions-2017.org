@@ -1,0 +1,25 @@
+#+TITLE: 10 PhD Positions at Royal Holloway's Centre for Doctoral Training in Cyber Security
+#+BLOG: martinralbrecht
+#+POSTID: 1392
+#+DATE: [2017-03-25 Sat 10:05]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography
+#+TAGS: it security, cryptography, job, phd
+#+DESCRIPTION:
+
+At Royal Holloway we once again have *ten* PhD positions in [[https://www.youtube.com/watch?v=F7aKqJsuPDg][Cyber Security]] nee Information Security. The catch is that almost all of those positions are reserved for UK residents. Note that this does not mean nationality, see [[https://www.royalholloway.ac.uk/isg/cybersecuritycdt/funding.aspx][funding page]] (there might also be some wiggle room in some cases). For more information see the [[https://www.royalholloway.ac.uk/isg/cybersecuritycdt/home.aspx][CDT website]] and the [[https://www.royalholloway.ac.uk/isg/research/researchoverview.aspx][ISG website]] for what kind of research we do. Closing date is *30 April*.
+
+#+BEGIN_QUOTE
+Welcome to the EPSRC Centre for Doctoral Training (CDT) in Cyber Security at Royal Holloway. The Centre was established in 2013, and has as its main objective to produce cohorts of highly-trained researchers with a broad understanding of cyber security.
+
+The CDT is hosted by the [[https://www.royalholloway.ac.uk/isg/home.aspx][Information Security Group]] (ISG), and provides multidisciplinary training to annual cohorts of around ten students each. The students follow a 4-year doctoral programme: the first phase consists of a taught component comprising 25 per cent of the
+programme. The remaining three years follow the more traditional path of doctoral studies, with each student undertaking research in an advanced topic in the field of cyber security. See the [[https://www.royalholloway.ac.uk/isg/cybersecuritycdt/courseofstudy.aspx][CDT Course of Study page]] for more information about the programme.
+
+CDT recruitment typically runs from November to April, to select students for the CDT cohort starting every October. Selected applicants are awarded fully-funded PhD studentships (stipend and College fees) for four years. We consider applications from candidates with
+undergraduate and masters qualifications in a wide range of disciplines, including, but not limited to, mathematics, computer science, and electrical and electronic engineering. 
+
+*We are now open for applications for the 2017/18 CDT cohort.* We have a number of fully-funded studentships to award to qualified and eligible candidates, to start their PhD studies in September 2017. *Closing date for receiving applications is 30 April 2017*. We will
+however assess applications on an ongoing basis, and we reserve the right to make an offer to candidates before the closing date.
+
+Please explore the links below to learn more about the [[https://www.royalholloway.ac.uk/isg/cybersecuritycdt/entryrequirements.aspx][entry requirements]], [[https://www.royalholloway.ac.uk/isg/cybersecuritycdt/funding.aspx][funding and eligibility]], and [[https://www.royalholloway.ac.uk/isg/cybersecuritycdt/howtoapply.aspx][how to apply]] to Royal Holloway's CDT in Cyber Security.
+#+END_QUOTE
