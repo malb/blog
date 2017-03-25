@@ -1,6 +1,6 @@
+#+TITLE: Two Lecturer Positions in the Information Security Group
 #+BLOG: martinralbrecht
 #+POSTID: 1389
-#+TITLE: Two Lecturer Positions in the Information Security Group
 #+DATE: [2017-02-28 Tue 09:20]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
 #+CATEGORY: cryptography
