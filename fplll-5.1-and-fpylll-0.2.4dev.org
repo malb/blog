@@ -1,0 +1,116 @@
+#+TITLE: fplll 5.1 and fpylll 0.2.4dev
+#+BLOG: martinralbrecht
+#+POSTID: 1395
+#+DATE: [2017-03-26 Sun 16:09]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography, sage
+#+TAGS: fplll, lattice-reduction, fpylll
+#+DESCRIPTION:
+New versions of fplll and fpylll were released today. I’ve reproduced release notes below for greater visibility. The biggest user-visible changes for fplll are probably that 
+
+- CVP enumeration is not experimental any more,
+- support for external enumeration libraries (go write that GPU implementation of enumeration) was added and
+- support for OSX was greatly improved.
+
+On the fpylll side, the biggest user-visible changes are probably various API updates and a much nicer strategy/framework for gathering statistics about BKZ.
+
+The next version of fplll will contain support for [[https://github.com/fplll/fplll/pull/236][LLL reduction on Gram matrices]].
+
+#+HTML:<!--more-->
+
+** Release Notes
+
+*** Fplll
+
+#+BEGIN_QUOTE
+Hi there,
+
+fplll 5.1.0 was released on 26 March 2017 and is available at
+
+https://github.com/fplll/fplll/releases/tag/5.1.0
+
+Major changes in fplll-5.1.0 compared to fplll-5.0.3:
+
+- CVP is not experimental any longer by implementing the resetting feature (Guillaume Bonnoron https://github.com/fplll/fplll/pull/191)
+
+- pruner rewrite providing faster pruning, a new greedy pruning strategy, support for multiple solutions and a simpler API (Léo Ducas https://github.com/fplll/fplll/pull/228)
+
+- support for external enumeration libraries paving the way for multithreaded/MPI/GPU enumeration libraries. See https://github.com/cr-marcstevens/fplll-extenum for an example external library (Marc Stevens https://github.com/fplll/fplll/pull/227)
+
+- Gaussian Heuristic improved and renamed to ‘adjust\_radius\_to\_gh\_bound‘ (Léo Ducas https://github.com/fplll/fplll/pull/231)
+
+- Reduced calls to LLL during BKZ (Martin Albrecht https://github.com/fplll/fplll/pull/226, Damien Stehlé and Shi Bai https://github.com/fplll/fplll/pull/230)
+
+- Greatly improved OSX support (Martin Albrecht and Isuru Fernando https://github.com/fplll/fplll/issues/205,)
+
+- Evaluator rewrite/refactoring now supporting different evaluation strategies (Marc Stevens https://github.com/fplll/fplll/pull/224)
+
+- We now enforce coding conventions (Tancrède Lepoint https://github.com/fplll/fplll/pull/215, https://github.com/fplll/fplll/pull/219)
+
+We also fixed various other issues, see https://github.com/fplll/fplll/compare/5.0.3...5.1.0 for details.
+
+The following people have contributed to this release (based on the link above):
+
+- Martin Albrecht 
+- Shi Bai 
+- Guillaume Bonnoron 
+- Sylvain Chevillard 
+- Henry de Valence 
+- Léo Ducas 
+- Tancrède Lepoint 
+- Damien Stehlé 
+- Marc Stevens
+
+Please report issues at
+
+https://github.com/fplll/fplll/issues
+
+Cheers, the maintainers
+#+END_QUOTE
+
+*** Fpylll
+
+#+BEGIN_QUOTE
+Hi there,
+
+fpylll 0.2.4dev was released on 26 March 2017 and is available at
+
+https://github.com/fplll/fpylll/releases/tag/0.2.4dev
+
+Major changes:
+
+- Update to current fplll API (Martin Albrecht)
+
+- Support for gathering multiple solutions from enumeration (Guillaume Bonnoron, Léo Ducas)
+
+- Support for BDD/CVP enumeration (Martin Albrecht, Guillaume Bonnoron)
+
+- Canonical base from/to Gram-Schmidt base conversion (Martin Albrecht)
+
+- Multiply left for integer matrices (Martin Albrecht)
+
+- A new tree-based tracer for gathering statistics (Martin Albrecht)
+
+- A simple parallel BKZ (Martin Albrecht)
+
+- Support for arbitrary auxiliary parameters for =BKZ.Param= (Martin Albrecht)
+
+- =install-dependencies.sh= will clone the matching fplll branch if it exists to aid development (Martin Albrecht)
+
+We also fixed various other issues, see https://github.com/fplll/fpylll/compare/0.2.3dev...0.2.4dev for details.
+
+The following people have contributed to this release (based on the link above):
+
+- Martin Albrecht 
+- Jérôme Benoit 
+- Guillaume Bonnoron 
+- Frédéric Chapoton 
+- Léo Ducas 
+- Isuru Fernando
+
+Please report issues at
+
+https://github.com/fplll/fpylll/issues
+
+Cheers, the maintainers
+#+END_QUOTE
