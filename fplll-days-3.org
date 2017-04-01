@@ -1,0 +1,29 @@
+#+TITLE: Fplll Days 3: July 6 - 14, Amsterdam
+#+BLOG: martinralbrecht
+#+POSTID: 1404
+#+DATE: [2017-04-01 Sat 11:42]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography, sage
+#+TAGS: cryptography, lattice-reduction, fplll, fpylll, workshop, sage, lattices
+#+DESCRIPTION:
+
+We'll have an fplll coding sprint aka "FPLLL Days" in July. This time around, we plan a slightly modified format compared to previous instances. That is, in order to encourage new developers to get involved, we plan to have a 2 day tutorial session (shorter or longer depending on participants/interest) before the start of FPLLL Days proper.
+
+#+HTML:<!--more-->
+
+If you'd like to attend, please send us an e-mail. If you would like to attend but require financial support, let us know as we have some funding available.
+
+* Date
+
+- July 6 - 7 (Thursday - Friday): Tutorials  
+- July 10 - 14 (Monday - Friday-ish): FPLLL Days
+
+* Location
+
+CWI, Amsterdam, The Netherlands
+
+* Format
+
+The idea of fplll days is inspired by the format of [[https://wiki.sagemath.org/Workshops <https://wiki.sagemath.org/Workshops>][Sage Days]] which are semi-regularly organised by the [[http://sagemath.org][SageMath]] community. The idea is simply to get a bunch of motivated developers in a room to work on code. We also schedule the occasional talk but the focus is on collaborative development of lattice algorithms.
+
+We've also started a [[https://github.com/fplll/fplll/wiki/fplll-days-3][Wiki page]] for the workshop with some coding project ideas.
