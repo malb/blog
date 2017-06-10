@@ -2,7 +2,8 @@
 #+BLOG: martinralbrecht
 #+POSTID: 1336
 #+DATE: [2016-05-30 Mon 23:04]
-#+CATEGORY: Emacs
+#+CATEGORY: emacs
+#+TAGS: emacs, email
 
 Like many other people, I write, receive and loath a lot of email. Writing it goes something like this:
 
