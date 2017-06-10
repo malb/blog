@@ -1,6 +1,6 @@
+#+TITLE: 16th IMA International Conference on Cryptography and Coding
 #+BLOG: martinralbrecht
 #+POSTID: 1410
-#+TITLE: 16th IMA International Conference on Cryptography and Coding
 #+DATE: [2017-06-10 Sat 13:09]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
 #+CATEGORY: cryptography
