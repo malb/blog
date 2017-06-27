@@ -1,0 +1,30 @@
+#+TITLE: CCA Conversions
+#+BLOG: martinralbrecht
+#+POSTID: 1414
+#+DATE: [2017-06-26 Mon 22:35]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography
+#+TAGS: cryptography, preprint 
+#+DESCRIPTION:
+In [[http://ia.cr/2017/354][Tightly Secure Ring-LWE Based Key Encapsulation with Short Ciphertexts]] we — together with Emmanuela Orsini, Kenny Paterson, Guy Peer and Nigel Smart — give a tight reduction of Alex Dent’s [[http://ia.cr/2002/174][IND-CCA secure KEM conversion]] (from an OW-CPA schemes) when the underlying scheme is (Ring-)LWE:
+
+#+BEGIN_QUOTE
+*Abstract:* We provide a tight security proof for an IND-CCA Ring-LWE based Key Encapsulation Mechanism that is derived from a generic construction of Dent (IMA Cryptography and Coding, 2003). Such a tight reduction is not known for the generic construction. The resulting scheme has shorter ciphertexts than can be achieved with other generic constructions of Dent or by using the well-known Fujisaki-Okamoto constructions (PKC 1999, Crypto 1999). Our tight security proof is obtained by reducing to the security of the underlying Ring-LWE problem, avoiding an intermediate reduction to a CPA-secure encryption scheme. The proof technique maybe of interest for other schemes based on LWE and Ring-LWE.
+#+END_QUOTE
+
+#+HTML:<!--more-->
+
+Turns out, though, that you can achieve the same generically:
+
+#+BEGIN_QUOTE
+In concurrent and independent work, Hoevelmann et al. [HHK17] have shown that, amongst other things, Dent’s second construction can be proven to achieve IND-CCA security in a tight manner, for any starting scheme that is IND-CPA secure (rather than OW-CPA secure as in Dent’s original analysis).
+#+END_QUOTE
+
+That passage refers to [[http://ia.cr/2017/604][A Modular Analysis of the Fujisaki-Okamoto Transformation]] by Dennis Hofheinz, Kathrin Hövelmanns and Eike Kiltz:
+
+#+BEGIN_QUOTE
+*Abstract:* The Fujisaki-Okamoto (FO) transformation (CRYPTO 1999 and Journal of Cryptology 2013) turns any weakly secure public-key encryption scheme into a strongly (i.e., IND-CCA) secure one in the random oracle model. Unfortunately, the FO analysis suffers from several drawbacks, such as a non-tight security reduction, and the need for a perfectly correct scheme. While several alternatives to the FO transformation have been proposed, they have stronger requirements, or do not obtain all desired properties. In this work, we provide a fine-grained and modular toolkit of transformations for turning weakly secure into strongly secure public-key encryption schemes. All of our transformations are robust against schemes with correctness errors, and their combination leads to several tradeoffs among tightness of the reduction, efficiency, and the required security level of the used encryption scheme. For instance, one variant of the FO transformation constructs an IND-CCA secure scheme from an IND-CPA secure one with a tight reduction and very small efficiency overhead. Another variant assumes only an OW-CPA secure scheme, but leads to an IND-CCA secure scheme with larger ciphertexts. We note that we also analyze our transformations in the quantum random oracle model, which yields security guarantees in a post-quantum setting.
+#+END_QUOTE
+
+
+
