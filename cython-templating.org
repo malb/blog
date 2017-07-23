@@ -1,0 +1,756 @@
+#+TITLE: Adventures in Cython Templating
+#+BLOG: martinralbrecht
+#+POSTID: 1417
+#+DATE: [2017-07-23 Sun 18:00]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: sage
+#+TAGS: cython, fpylll, fplll
+#+DESCRIPTION:
+#+STARTUP: indent
+
+[[https://github.com/fplll/fpylll][Fpylll]] makes heavy use to [[http://cython.readthedocs.io/en/latest/src/userguide/wrapping_CPlusPlus.html][Cython]] to expose [[https://github.com/fplll/fpylll][Fplll]]’s functionality to Python. Fplll, in turn, makes use of C++ templates. For example, =double=, =long double=, =dd_real= (http://crd.lbl.gov/~dhbailey/mpdist/) and =mpfr_t= (http://www.mpfr.org/) are supported as floating point types. While Cython supports C++ templates, we still have to generate code for all possible instantiations of the C++ templates for Python to use/call. The way I implemented these bindings is showing its limitations. For example, here’s how attribute access to the dimension of the Gram-Schmidt object looks like:
+
+#+BEGIN_SRC cython :tangle no :exports code
+    @property
+    def d(self):
+        """
+        Number of rows of ``B`` (dimension of the lattice).
+
+        >>> from fpylll import IntegerMatrix, GSO, set_precision
+        >>> A = IntegerMatrix(11, 11)
+        >>> M = GSO.Mat(A)
+        >>> M.d
+        11
+
+        """
+        if self._type == gso_mpz_d:
+            return self._core.mpz_d.d
+        IF HAVE_LONG_DOUBLE:
+            if self._type == gso_mpz_ld:
+                return self._core.mpz_ld.d
+        if self._type == gso_mpz_dpe:
+            return self._core.mpz_dpe.d
+        IF HAVE_QD:
+            if self._type == gso_mpz_dd:
+                return self._core.mpz_dd.d
+            if self._type == gso_mpz_qd:
+                return self._core.mpz_qd.d
+        if self._type == gso_mpz_mpfr:
+            return self._core.mpz_mpfr.d
+
+        if self._type == gso_long_d:
+            return self._core.long_d.d
+        IF HAVE_LONG_DOUBLE:
+            if self._type == gso_long_ld:
+                return self._core.long_ld.d
+        if self._type == gso_long_dpe:
+            return self._core.long_dpe.d
+        IF HAVE_QD:
+            if self._type == gso_long_dd:
+                return self._core.long_dd.d
+            if self._type == gso_long_qd:
+                return self._core.long_qd.d
+        if self._type == gso_long_mpfr:
+            return self._core.long_mpfr.d
+
+        raise RuntimeError("MatGSO object '%s' has no core."%self)
+
+#+END_SRC
+
+In the code above uppercase =IF= and =ELSE= are compile-time conditionals, lowercase =if= and =else= are run-time checks. If we wanted to add =Z_NR<double>= to the list of supported integer types (yep, Fplll supports that), then the above Python approximation of a [[http://www.cprogramming.com/tutorial/lesson5.html][switch/case]] statement would grow by a factor 50%. The same would have to be repeated for /every/ member function or attribute. There must be a /more better/ way.
+
+#+HTML:<!--more-->
+
+* Example Library
+:PROPERTIES:
+:END:
+
+As the running example, consider the following simple “upstream library“ implementing numbers that permit additions and some basic I/O. It contains a simple templated class =NR= and a templated function =add= (since Fplll uses templated functions in places). The templated class also contains a member function whose parameters do not depend on the template, for reasons that will become apparent below.
+
+#+BEGIN_SRC C++ :tangle upstream.h :exports code
+// upstream.h
+# pragma once
+
+template <class T> class NR {
+  T data;
+
+public:
+  inline NR<T>(): data() {};
+  inline NR<T>(const T& t): data(t) {};
+  inline NR<T>(const NR<T>& t): data(t.data) {};
+
+  inline NR<T> operator+(const NR<T> &a) {
+    NR<T> r;
+    r.data = data + a.data;
+    return r;
+  }
+
+  void iiadd(const long &a) {
+    data += a;
+  }
+
+  inline T &get_data() {return data;}
+};
+
+template <class T> NR<T> add(NR<T> &a, const NR<T> &b) {
+  return a + b;
+}
+#+END_SRC
+
+To make this library available in Python via Cython, we will need to make Cython aware of the C++ API. For this, we can use Cython’s [[http://cython.readthedocs.io/en/latest/src/userguide/wrapping_CPlusPlus.html][support]] for C++ templates.
+
+#+BEGIN_SRC cython :tangle upstream.pxd :exports code
+# upstream.pxd
+# distutils: language = c++
+
+cdef extern from "upstream.h":
+    cdef cppclass NR[T]:
+        NR()
+        NR(const T& t)
+
+        NR[T] operator+(const NR[T] &a)
+        void iiadd(const long &a)
+        inline T& get_data();
+
+    NR[T] add[T](NR[T] &a, NR[T] &b)
+#+END_SRC
+
+To compile our code, we will also need some [[https://docs.python.org/2/library/distutils.html][distutils]] wiring where we compile all =.pyx= files starting with a lower-case letter; below we will generate some =.pyx= files which we do not want to compile and which start with =__=.
+
+#+BEGIN_SRC python :tangle setup.py :exports code
+# setup.py
+
+from distutils.core import setup
+from Cython.Build import cythonize
+
+setup(ext_modules = cythonize("[a-z]*.pyx"))
+#+END_SRC
+
+** Getting the code
+
+If you want to play with the code, download the source file for this blog post from https://bitbucket.org/malb/blog/raw/master/cython-templating.org. Then run 
+
+#+BEGIN_SRC shell :exports code
+emacs -Q --batch --eval \
+   "(progn (require 'org) \
+           (require 'ob) \
+           (require 'ob-tangle) \
+           (find-file \"cython-templating.org\") \
+           (org-babel-tangle))"
+#+END_SRC
+
+to extract the code and call
+
+#+BEGIN_SRC shell :results output :exports both
+python setup.py build_ext --inplace
+#+END_SRC
+
+to compile it. It should produce something like:
+
+#+RESULTS:
+#+begin_example
+Compiling cstyle__base.pyx because it changed.
+Compiling cstyle__double.pyx because it changed.
+Compiling cstyle__long.pyx because it changed.
+Compiling preprocessor__raw.pyx because it changed.
+Compiling runtime.pyx because it changed.
+Compiling vtables.pyx because it changed.
+[1/6] Cythonizing cstyle__base.pyx
+[2/6] Cythonizing cstyle__double.pyx
+[3/6] Cythonizing cstyle__long.pyx
+[4/6] Cythonizing preprocessor__raw.pyx
+[5/6] Cythonizing runtime.pyx
+[6/6] Cythonizing vtables.pyx
+running build_ext
+building 'cstyle__base' extension
+creating build
+creating build/temp.linux-x86_64-2.7
+x86_64-linux-gnu-gcc -pthread -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -fno-strict-aliasing -Wdate-time -D_FORTIFY_SOURCE=2 -g -fdebug-prefix-map=/build/python2.7-HVkOs2/python2.7-2.7.13=. -fstack-protector-strong -Wformat -Werror=format-security -fPIC -I/usr/include/python2.7 -c cstyle__base.cpp -o build/temp.linux-x86_64-2.7/cstyle__base.o
+x86_64-linux-gnu-g++ -pthread -shared -Wl,-O1 -Wl,-Bsymbolic-functions -Wl,-z,relro -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -Wdate-time -D_FORTIFY_SOURCE=2 -g -fdebug-prefix-map=/build/python2.7-HVkOs2/python2.7-2.7.13=. -fstack-protector-strong -Wformat -Werror=format-security -Wl,-z,relro -Wdate-time -D_FORTIFY_SOURCE=2 -g -fdebug-prefix-map=/build/python2.7-HVkOs2/python2.7-2.7.13=. -fstack-protector-strong -Wformat -Werror=format-security build/temp.linux-x86_64-2.7/cstyle__base.o -o /home/malb/Software/cython-template-playground/cstyle__base.so
+building 'cstyle__double' extension
+x86_64-linux-gnu-gcc -pthread -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -fno-strict-aliasing -Wdate-time -D_FORTIFY_SOURCE=2 -g -fdebug-prefix-map=/build/python2.7-HVkOs2/python2.7-2.7.13=. -fstack-protector-strong -Wformat -Werror=format-security -fPIC -I. -I/usr/include/python2.7 -c cstyle__double.cpp -o build/temp.linux-x86_64-2.7/cstyle__double.o
+x86_64-linux-gnu-g++ -pthread -shared -Wl,-O1 -Wl,-Bsymbolic-functions -Wl,-z,relro -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -Wdate-time -D_FORTIFY_SOURCE=2 -g -fdebug-prefix-map=/build/python2.7-HVkOs2/python2.7-2.7.13=. -fstack-protector-strong -Wformat -Werror=format-security -Wl,-z,relro -Wdate-time -D_FORTIFY_SOURCE=2 -g -fdebug-prefix-map=/build/python2.7-HVkOs2/python2.7-2.7.13=. -fstack-protector-strong -Wformat -Werror=format-security build/temp.linux-x86_64-2.7/cstyle__double.o -o /home/malb/Software/cython-template-playground/cstyle__double.so
+building 'cstyle__long' extension
+x86_64-linux-gnu-gcc -pthread -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -fno-strict-aliasing -Wdate-time -D_FORTIFY_SOURCE=2 -g -fdebug-prefix-map=/build/python2.7-HVkOs2/python2.7-2.7.13=. -fstack-protector-strong -Wformat -Werror=format-security -fPIC -I. -I/usr/include/python2.7 -c cstyle__long.cpp -o build/temp.linux-x86_64-2.7/cstyle__long.o
+x86_64-linux-gnu-g++ -pthread -shared -Wl,-O1 -Wl,-Bsymbolic-functions -Wl,-z,relro -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -Wdate-time -D_FORTIFY_SOURCE=2 -g -fdebug-prefix-map=/build/python2.7-HVkOs2/python2.7-2.7.13=. -fstack-protector-strong -Wformat -Werror=format-security -Wl,-z,relro -Wdate-time -D_FORTIFY_SOURCE=2 -g -fdebug-prefix-map=/build/python2.7-HVkOs2/python2.7-2.7.13=. -fstack-protector-strong -Wformat -Werror=format-security build/temp.linux-x86_64-2.7/cstyle__long.o -o /home/malb/Software/cython-template-playground/cstyle__long.so
+building 'preprocessor__raw' extension
+x86_64-linux-gnu-gcc -pthread -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -fno-strict-aliasing -Wdate-time -D_FORTIFY_SOURCE=2 -g -fdebug-prefix-map=/build/python2.7-HVkOs2/python2.7-2.7.13=. -fstack-protector-strong -Wformat -Werror=format-security -fPIC -I. -I/usr/include/python2.7 -c preprocessor__raw.cpp -o build/temp.linux-x86_64-2.7/preprocessor__raw.o
+x86_64-linux-gnu-g++ -pthread -shared -Wl,-O1 -Wl,-Bsymbolic-functions -Wl,-z,relro -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -Wdate-time -D_FORTIFY_SOURCE=2 -g -fdebug-prefix-map=/build/python2.7-HVkOs2/python2.7-2.7.13=. -fstack-protector-strong -Wformat -Werror=format-security -Wl,-z,relro -Wdate-time -D_FORTIFY_SOURCE=2 -g -fdebug-prefix-map=/build/python2.7-HVkOs2/python2.7-2.7.13=. -fstack-protector-strong -Wformat -Werror=format-security build/temp.linux-x86_64-2.7/preprocessor__raw.o -o /home/malb/Software/cython-template-playground/preprocessor__raw.so
+building 'runtime' extension
+x86_64-linux-gnu-gcc -pthread -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -fno-strict-aliasing -Wdate-time -D_FORTIFY_SOURCE=2 -g -fdebug-prefix-map=/build/python2.7-HVkOs2/python2.7-2.7.13=. -fstack-protector-strong -Wformat -Werror=format-security -fPIC -I. -I/usr/include/python2.7 -c runtime.cpp -o build/temp.linux-x86_64-2.7/runtime.o
+x86_64-linux-gnu-g++ -pthread -shared -Wl,-O1 -Wl,-Bsymbolic-functions -Wl,-z,relro -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -Wdate-time -D_FORTIFY_SOURCE=2 -g -fdebug-prefix-map=/build/python2.7-HVkOs2/python2.7-2.7.13=. -fstack-protector-strong -Wformat -Werror=format-security -Wl,-z,relro -Wdate-time -D_FORTIFY_SOURCE=2 -g -fdebug-prefix-map=/build/python2.7-HVkOs2/python2.7-2.7.13=. -fstack-protector-strong -Wformat -Werror=format-security build/temp.linux-x86_64-2.7/runtime.o -o /home/malb/Software/cython-template-playground/runtime.so
+building 'vtables' extension
+x86_64-linux-gnu-gcc -pthread -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -fno-strict-aliasing -Wdate-time -D_FORTIFY_SOURCE=2 -g -fdebug-prefix-map=/build/python2.7-HVkOs2/python2.7-2.7.13=. -fstack-protector-strong -Wformat -Werror=format-security -fPIC -I. -I/usr/include/python2.7 -c vtables.cpp -o build/temp.linux-x86_64-2.7/vtables.o
+x86_64-linux-gnu-g++ -pthread -shared -Wl,-O1 -Wl,-Bsymbolic-functions -Wl,-z,relro -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -Wdate-time -D_FORTIFY_SOURCE=2 -g -fdebug-prefix-map=/build/python2.7-HVkOs2/python2.7-2.7.13=. -fstack-protector-strong -Wformat -Werror=format-security -Wl,-z,relro -Wdate-time -D_FORTIFY_SOURCE=2 -g -fdebug-prefix-map=/build/python2.7-HVkOs2/python2.7-2.7.13=. -fstack-protector-strong -Wformat -Werror=format-security build/temp.linux-x86_64-2.7/vtables.o -o /home/malb/Software/cython-template-playground/vtables.so
+#+end_example
+
+To test that everything works as advertised, run [[https://doc.pytest.org/][py.test]]:
+
+#+BEGIN_SRC shell :results output :exports both
+py.test -v tests.py
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+============================= test session starts ==============================
+platform linux2 -- Python 2.7.13, pytest-3.1.3, py-1.4.34, pluggy-0.4.0 -- /usr/bin/python
+cachedir: .cache
+rootdir: /home/malb/Software/cython-template-playground, inifile:
+collecting ... collected 6 items
+
+tests.py::test_runtime PASSED
+tests.py::test_vtables PASSED
+tests.py::test_preprocessor_raw PASSED
+tests.py::test_preprocessor PASSED
+tests.py::test_cstyle_raw PASSED
+tests.py::test_cstyle PASSED
+
+=========================== 6 passed in 0.02 seconds ===========================
+#+end_example
+
+* 1 — Explicit Run-Time Dispatch
+
+Our first approach matches what [[https://github.com/fplll/fpylll][Fpylll]] currently does: we define a single Cython class for all template instantiations and choose between them at run-time. We start with the Cython definitions/header file =runtime.pxd= which imports the definitions from =upstream.pxd= but adds the suffix =_c= to avoid name clashes with the Cython class that we are going to define below.
+
+#+BEGIN_SRC cython :tangle runtime.pxd :exports code
+# runtime.pxd
+# distutils: language = c++
+
+from upstream cimport NR as NR_c
+
+#+END_SRC
+
+We define an =enum= for types and a struct which contains one object of each type. In Fpylll this struct actually contains pointers to such objects as opposed to the objects themselves, but for the purpose of this experiment the actual objects will do. Also, in the case of pointers we could use a =union= instead of a =struct=.
+
+#+BEGIN_SRC cython :tangle runtime.pxd :exports code
+ctypedef enum NR_type_t:
+    NR_LONG   = 1
+    NR_DOUBLE = 2
+
+ctypedef struct NR_core_t:
+    NR_c[long]   l
+    NR_c[double] d
+
+#+END_SRC
+
+Next, we define the actual Cython class. This one will be visible in Python. It holds a container and a type.
+
+#+BEGIN_SRC cython :tangle runtime.pxd :exports code
+cdef class NR:
+    cdef NR_type_t _type
+    cdef NR_core_t _core
+#+END_SRC
+
+The implementation in =runtime.pyx= then picks which instantiation to use at run-time. The constructor instantiates the right type depending on the =nr_type= parameter.
+
+#+BEGIN_SRC cython :tangle runtime.pyx :exports code
+# runtime.pyx
+# distutils: language = c++
+
+from upstream cimport add as add_c
+
+cdef class NR:
+    def __init__(self, int value=0, nr_type="long"):
+        if nr_type == "long" or nr_type == NR_LONG:
+            self._type = NR_LONG
+            self._core.l = NR_c[long](value)
+        elif nr_type == "double" or nr_type == NR_DOUBLE:
+            self._type = NR_DOUBLE
+            self._core.d = NR_c[double](value)
+        else:
+            raise ValueError
+#+END_SRC
+
+Member functions then check =_type= and call the appropriate method on the matching C++ object.
+
+#+BEGIN_SRC cython :tangle runtime.pyx :exports code
+    def __repr__(self):
+        if self._type == NR_LONG:
+            return str(self._core.l.get_data())
+        elif self._type == NR_DOUBLE:
+            return str(self._core.d.get_data())
+        else:
+            raise RuntimeError
+
+    def __add__(NR self, NR other):
+        cdef NR_core_t r
+
+        if self._type == NR_LONG and other._type == NR_LONG:
+            r.l = self._core.l + other._core.l
+            return NR(r.l.get_data())
+        elif self._type == NR_DOUBLE and other._type == NR_DOUBLE:
+            r.d = self._core.d + other._core.d
+            return NR(r.d.get_data(), nr_type=NR_DOUBLE)
+        else:
+            raise RuntimeError
+
+#+END_SRC
+
+Wrapping a templated function like =add= is no different:
+
+#+BEGIN_SRC cython :tangle runtime.pyx :exports code
+def add(NR self, NR other):
+    cdef NR_core_t r
+
+    if self._type == NR_LONG and other._type == NR_LONG:
+        r.l = self._core.l + other._core.l
+        return NR(r.l.get_data())
+    elif self._type == NR_DOUBLE and other._type == NR_DOUBLE:
+        r.d = self._core.d + other._core.d
+        return NR(r.d.get_data())
+    else:
+        raise RuntimeError
+#+END_SRC
+
+Our class only implements a constructor, addition and conversion to a string. Thus, that’s what we test:
+
+#+BEGIN_SRC python :tangle tests.py :exports code
+# tests.py
+
+def test_runtime():
+    import runtime
+    assert str(runtime.NR(1) + runtime.NR(2)) == "3"
+    assert str(runtime.NR(1, nr_type="double") + runtime.NR(2, nr_type="double")) == "3.0"
+    assert str(runtime.add(runtime.NR(1), runtime.NR(2))) == "3"
+
+#+END_SRC
+
+The advantage of this approach is that it is conceptually simple and everything is together in one place. On the other hand, as mentioned above, instantiating e.g. =NR<char>= would require touching /every/ single attribute and function.
+
+* 2 — Vtable Run-Time Dispatch
+
+C++ provides its own run-time dispatch in the form of [[https://en.wikipedia.org/wiki/Virtual_function][virtual]] functions and methods. Thus, for some APIs, we can simply leave it to C++ to figure out the right function to call. This approach is also mentioned in a Stack Overflow [[https://stackoverflow.com/questions/31436593/cython-templates-in-python-class-wrappers][answer]] mentioned below. For our upstream library, it requires some boilerplate C++ and that the function signatures do not depend on the template, e.g. =foo<long>(int a, int b)= is fine, but =foo<long>(NR<long> a, NR<long> b)= is not. Thus, for example, Fplll’s =BKZReduction<ZT, FT>= would be a candidate, but =FP_NR<T>= is not. 
+
+To make use of vtables, we’ll need to sandwich our template instances between two other classes. We first create an interface class:
+
+#+BEGIN_SRC c++ :tangle vtables.h :exports code
+// vtables.h
+
+#pragma once
+
+#include "upstream.h"
+
+class NRInterface {
+public:
+  virtual void iiadd(const long &a) = 0;
+  virtual long get_long() = 0;
+};
+#+END_SRC
+
+Then, we create a class =NR__long= which inherits both from =NRInterface= and =NR<long>=. We also have to add some wiring so that the right method can be found at run-time. I’m using double underscores to express types and files that are generally out of view for the user.
+
+#+BEGIN_SRC c++ :tangle vtables.h :exports code
+class NR__long : public NRInterface, public NR<long> {
+public:
+  inline NR__long(long t): NR<long>(t) {};  
+  virtual ~NR__long() final {};
+  virtual void iiadd(const long &a) final {return NR<long>::iiadd(a);};
+  virtual long get_long() final {return NR<long>::get_data();}
+};
+#+END_SRC
+
+We will have to do that for every instantiation type, so there’s that.
+
+#+BEGIN_SRC c++ :tangle vtables.h :exports code
+class NR__double : public NRInterface, public NR<double> {
+public:
+  inline NR__double(long t): NR<double>(t) {}; 
+  virtual ~NR__double() final {};
+  virtual void iiadd(const long &a) final {return NR<double>::iiadd(a);};
+  virtual long get_long() final {return static_cast<long>(NR<double>::get_data());}
+};
+#+END_SRC
+
+As before, we need to inform Cython about the C++ API. Note, though, that we need to declare e.g. =iiadd= only once for =NRInterface=.
+
+#+BEGIN_SRC cython :tangle vtables.pyx :exports code
+# distutils: language = c++
+
+from upstream cimport NR as NR_c
+
+ctypedef enum NR_type_t:
+    NR_LONG   = 1
+    NR_DOUBLE = 2
+
+cdef extern from "vtables.h":
+    cdef cppclass NRInterface:
+        void iiadd(const long &a)
+        long get_long()
+
+    cdef cppclass NR__long:
+        NR__long(long v)
+
+    cdef cppclass NR__double:
+        NR__double(double v)
+#+END_SRC
+
+Next, we create Cython class which holds a pointer to =NRInterface= and a type.
+
+#+BEGIN_SRC cython :tangle vtables.pyx :exports code
+cdef class NR:
+   cdef NRInterface *_core
+   cdef NR_type_t _type
+
+#+END_SRC
+
+The constructor constructs the right kind of object, remembers the type and stores an =NRInterface= pointer.
+
+#+BEGIN_SRC cython :tangle vtables.pyx :exports code
+   def __init__(self, v, nr_type="long"):
+       if nr_type == "long" or nr_type == NR_LONG:
+           self._type = NR_LONG
+           self._core = <NRInterface*>new NR__long(v)
+       elif nr_type == "double" or nr_type == NR_DOUBLE:
+           self._type = NR_DOUBLE
+           self._core = <NRInterface*>new NR__double(v)
+       else:
+           raise ValueError
+
+#+END_SRC
+
+We have to be careful to call the right destructor (someone better at C++ might be able to tell how to avoid this specialisation).
+
+#+BEGIN_SRC cython :tangle vtables.pyx :exports code
+   def dealloc(self):
+       cdef NR__long *lp
+       cdef NR__double **dp
+
+       if self._type == NR_LONG:
+           lp = <NR__long*>self._core
+           del lp
+       elif self._type == NR_DOUBLE:
+           ld = <NR__double*>self._core
+           del ld
+#+END_SRC
+
+Finally, we are reaping some benefits: the two member functions below use vtables to find the right implementation.
+
+#+BEGIN_SRC cython :tangle vtables.pyx :exports code
+   def __repr__(self):
+       return str(self._core.get_long())
+
+   def __iadd__(self, int other):
+       self._core.iiadd(other)
+       return self
+#+END_SRC
+
+Our class does not do all that much, so we simply test the constructor and =iadd=:
+
+#+BEGIN_SRC python :tangle tests.py :exports code
+def test_vtables():
+    import vtables
+    e = vtables.NR(1)
+    e += 2
+    assert str(e) == "3"
+#+END_SRC
+
+This approach seems to have a lot of boilerplate, but that is mainly because our upstream library does not use virtual tables and a common interface (for good, performance reasons). For something like [[https://github.com/fplll/fplll/blob/master/fplll/gso_interface.h][MatGSOInterface]], [[https://github.com/fplll/fplll/blob/master/fplll/gso_interface.h][MatGSO]] and [[https://github.com/fplll/fplll/blob/master/fplll/gso_gram.h][MatGSOGram]], though, that part comes for free from the library can hence be readily made use of.
+
+* 3 — Preprocessors
+
+On [[https://groups.google.com/forum/#!forum/cython-users][{cython-users}]], Jeroen [[https://groups.google.com/d/msg/cython-users/LwhLIz0nyQU/3wytqVpJBgAJ][recommended]] to use a templating engine or preprocessor, such as [[http://jinja.pocoo.org/docs/latest/][Jinja2]]. In [[https://github.com/defeo/cypari2][CyPari2]] they use their own templating engine. In a similar spirit, a Stack Overflow [[https://stackoverflow.com/questions/31436593/cython-templates-in-python-class-wrappers][answer]] recommends using Python’s format strings. I’ll explain this variant. We write a file =preprocessor.pxi.in= for consumption by the preprocessor:
+
+#+BEGIN_SRC cython :tangle preprocessor.pxi.in :exports code
+# preprocessor.pxi.in
+# distutils: language = c++
+
+from upstream cimport NR as NR_c
+from upstream cimport add as add_c
+
+cdef class NR__{T}:
+    cdef NR_c[{T}] _core
+
+    def __init__(self, int value=0):
+        self._core = NR_c[{T}](value)
+
+    def __repr__(self):
+        return str(self._core.get_data())
+
+    def __add__(NR__{T} self, NR__{T} other):
+        cdef NR_c[{T}] r = self._core + other._core
+        return NR__{T}(r.get_data())
+
+def add__{T}(NR__{T} self, NR__{T} other):
+    cdef NR_c[{T}] r = add_c[{T}](self._core, other._core)
+    return NR__{T}(r.get_data())
+
+#+END_SRC
+
+Note that above I skipped the matching =.pxd= file because I don’t need it for this experiment; its production is analogous to the production of the =.pyx= file shown here.
+
+Next, we read the =.pxi.in= file as a Python string ~code~ and run ~code.format(T="long")~ and ~code.format(T="double")~ to produce strings for each instantiation, which we then write to the =.pyx= file meant for consumption by Cython.
+
+#+BEGIN_SRC python :tangle no :exports code
+code = open("preprocessor.pxi.in", "r").read()
+fh = open("preprocessor__raw.pyx", "w")
+fh.write(code.format(T="long"))
+fh.write(code.format(T="double"))
+fh.close()
+#+END_SRC
+
+#+RESULTS:
+: None
+
+This produces a Python module with the following API:
+
+#+BEGIN_SRC python :tangle tests.py :exports code
+def test_preprocessor_raw():
+    import preprocessor__raw
+    assert str(preprocessor__raw.NR__long(1) + preprocessor__raw.NR__long(2)) == "3"
+    assert str(preprocessor__raw.NR__double(1) + preprocessor__raw.NR__double(2)) == "3.0"
+    assert str(preprocessor__raw.add__long(preprocessor__raw.NR__long(1), preprocessor__raw.NR__long(2))) == "3"
+#+END_SRC
+
+However, that Python-level API is perhaps a bit awkward, we may want to hide it. For this, we can use Python or Cython. Here, I’m going for the simple Python route. We need to create a constructor that dispatches to the right classes:
+
+#+BEGIN_SRC python :tangle preprocessor.py :exports code
+import preprocessor__raw
+
+def NR(value, nr_type="long"):
+    if nr_type == "long":
+        return preprocessor__raw.NR__long(value)
+    elif  nr_type == "double":
+        return preprocessor__raw.NR__double(value)
+    else:
+        raise ValueError
+#+END_SRC
+
+We also need a high-level function =add= dispatching to the various =add__template= implementations. 
+
+#+BEGIN_SRC python :tangle preprocessor.py :exports code
+def add(a, b):
+    if type(a) != type(b):
+        raise ValueError
+
+    if isinstance(a, preprocessor__raw.NR__long):
+        return preprocessor__raw.add__long(a, b)
+    elif isinstance(a, preprocessor__raw.NR__double):
+        return preprocessor__raw.add__doublee(a, b)
+    else:
+        raise NotImplementedError
+#+END_SRC
+
+Thus, we arrive at the same API as above:
+
+#+BEGIN_SRC python :tangle tests.py :exports code
+def test_preprocessor():
+    import preprocessor
+    assert str(preprocessor.NR(1) + preprocessor.NR(2)) == "3"
+    assert str(preprocessor.NR(1, nr_type="double") + preprocessor.NR(2, nr_type="double")) == "3.0"
+    assert str(preprocessor.add(preprocessor.NR(1), preprocessor.NR(2))) == "3"
+#+END_SRC
+
+One disadvantage of this approach, which is quite flexible, is that you are never editing valid Cython when editing the =.pxi.in= file. Thus, your editor’s tooling, e.g. [[https://github.com/lbolla/emacs-flycheck-cython][cython-flycheck]], have a hard(er) time giving you immediate feedback. Depending on how much confidence you have in your ability to write correct code, you might consider this a small or big price to pay. Another disadvantage is the need for an additional step — preprocessing — which needs to be hacked into the build process. Again, you might consider this a rather mild price to pay.
+
+* 4 — C-style Templates
+
+Our fourth attempt matches how [[http://www.sagemath.org/][Sage]] wraps [[http://www.linalg.org/][LinBox]] matrices modulo word sized integers. The strategy is inspired from how template-like functionality is realised by using the C preprocessor’s =#include=. That is, we use the fact that Cython, too, can include files. The [[https://cython.readthedocs.io/en/latest/src/userguide/language_basics.html#the-include-statement][general recommendation]] is to avoid such includes. However, for our use-case, they are adequate.
+
+In Sage that trick was implemented by Burcin Erocal and myself in 2010-2011. You can think of it as using Cython’s preprocessor instead of Jinja2 or Python’s =format= etc. In this variant, each C++ template instantiation again gets its own Cython class. This fact is then hidden behind a few convenience functions as above.
+
+Albeit not technically required, it can be convenient later to make all instantiation classes inherit from one common parent =NRBase=. In this example, the class’ declaration is empty, it merely serves as an anchor. Thus, =cstyle__base.pxd= contains:
+
+#+BEGIN_SRC cython :tangle cstyle__base.pxd :exports code
+# cstyle__base.pxd
+# distutils: language = c++
+
+cdef class NR__Base:
+    pass
+#+END_SRC
+
+The matching =.pyx= is also empty.
+
+#+BEGIN_SRC cython :tangle cstyle__base.pyx :exports code
+cdef class NR__Base:
+    pass
+#+END_SRC
+
+We define a class =NR__template= in  =__cstyle__template.pxd= which is an instantiation of some type =TT= which is, for now, unspecified.
+
+#+BEGIN_SRC cython :tangle __cstyle__template.pxd :exports code
+# __cstyle__template.pxd
+# distutils: language = c++
+
+from cstyle__base cimport NR__Base
+from upstream cimport NR as NR_c
+
+cdef class NR__template(NR__Base):
+    cdef NR_c[TT] _core
+#+END_SRC
+
+In =__cstyle__template.pyx= we spell out each attribute/function of =NR__template= using our mysterious, still unspecified =TT=. Thus, this file would not compile on its own.
+
+#+BEGIN_SRC cython :tangle __cstyle__template.pyx :exports code
+# __cstyle__template.pyx
+# distutils: language = c++
+
+from upstream cimport NR as NR_c
+from upstream cimport add as add_c
+
+cdef class NR__template:
+    def __init__(self, int value=0):
+        self._core = NR_c[TT](value)
+
+    def __repr__(self):
+        return str(self._core.get_data())
+
+    def __add__(NR__template self, NR__template other):
+        cdef NR_c[TT] r = self._core + other._core
+        return NR__template(r.get_data())
+
+def add__template(NR__template self, NR__template other):
+    cdef NR_c[TT] r = add_c[TT](self._core, other._core)
+    return NR__template(r.get_data())
+
+#+END_SRC
+
+Now, to instantiate our Cython-template-for-C++-templates, we produce a =.pxd= which specifies =TT= to be =long= before including the header template.
+
+#+BEGIN_SRC cython :tangle cstyle__long.pxd :exports code
+# cstyle__long.pxd
+# distutils: language = c++
+
+ctypedef long TT
+
+include "__cstyle__template.pxd"
+
+cdef class NR__long(NR__template):
+    pass
+#+END_SRC
+
+The matching implementation in =cstyle__long.pyx= just includes the implementation template. It does not need to specify =TT= again, since all declarations in the matching =.pxd= file are automatically available in the =.pyx= file. Then, for convenience, we also define a new type =NR__long= which inherits from the template we just instantiated with =TT= defined as =long=. We could use this class to implement any methods/attributes which are specific to the =long= instantiation, e.g. for I/O. We could also use [[https://cython.readthedocs.io/en/latest/src/userguide/language_basics.html#conditional-compilation][compile time definitions]] to enable/disable parts of the template.
+
+#+BEGIN_SRC cython :tangle cstyle__long.pyx :exports code
+# cstyle__long.pyx
+# distutils: language = c++
+
+include "__cstyle__template.pyx"
+
+cdef class NR__long(NR__template):
+    pass
+#+END_SRC
+
+Now, to instantiate =NR= over =double= we just add a =.pxd= file where =TT= is defined as =double= and a matching =.pyx= file.
+
+#+BEGIN_SRC cython :tangle cstyle__double.pxd :exports code
+# cstyle__double.pxd
+# distutils: language = c++
+
+ctypedef double TT
+
+include "__cstyle__template.pxd"
+
+#+END_SRC
+
+#+BEGIN_SRC cython :tangle cstyle__double.pyx :exports code
+# cstyle__double.pyx
+# distutils: language = c++
+
+include "__cstyle__template.pyx"
+
+cdef class NR__double(NR__template):
+    pass
+#+END_SRC
+
+Note that having =NR__template= twice is no problem. One of them lives in the =cstyle__long= module, while the other lives in the =cstyle__double= module. On the other hand, we do need to create a new =.pyx/.pxd= pair for each new template instantiation, which is a bit annoying.
+
+As it stands, our implementation realises the following functionality:
+
+#+BEGIN_SRC python :tangle tests.py :exports code
+def test_cstyle_raw():
+    import cstyle__long, cstyle__double
+    assert str(cstyle__long.NR__long(1) + cstyle__long.NR__long(2)) == "3"
+    assert str(cstyle__double.NR__double(1) + cstyle__double.NR__double(2)) == "3.0"
+    assert str(cstyle__long.add__template(cstyle__long.NR__long(1), cstyle__long.NR__long(2))) == "3"
+#+END_SRC
+
+Again that Python-level API is perhaps a bit awkward, so we make it prettier:
+
+#+BEGIN_SRC python :tangle cstyle.py :exports code
+import cstyle__long, cstyle__double
+
+def NR(value, nr_type="long"):
+    if nr_type == "long":
+        return cstyle__long.NR__long(value)
+    elif  nr_type == "double":
+        return cstyle__double.NR__double(value)
+    else:
+        raise ValueError
+
+def add(a, b):
+    if type(a) != type(b):
+        raise ValueError
+
+    if isinstance(a, cstyle__long.NR__long):
+        return cstyle__long.add__template(a, b)
+    elif isinstance(a, cstyle__double.NR__double):
+        return cstyle__double.add__template(a, b)
+    else:
+        raise NotImplementedError
+#+END_SRC
+
+Thus, we arrive at the same API as above:
+
+#+BEGIN_SRC python :tangle tests.py :exports code
+def test_cstyle():
+    import cstyle
+    assert str(cstyle.NR(1) + cstyle.NR(2)) == "3"
+    assert str(cstyle.NR(1, nr_type="double") + cstyle.NR(2, nr_type="double")) == "3.0"
+    assert str(cstyle.add(cstyle.NR(1), cstyle.NR(2))) == "3"
+#+END_SRC
+
+** Additional Tweaks
+
+While this approach does live up to the promise of always editing valid Cython code, the editing experience is still lacking. When editing =cystle__template.pyx=, tools like [[https://github.com/lbolla/emacs-flycheck-cython][flycheck-cython]] would not be able to identify real issues as they are masked by the absence of a definition for =TT=.
+
+A possible workaround is to add =ctypedef long TT= to =__cstyle__template.pyx= temporarily while doing bigger edit jobs. This additional definition would produce a compiler error when attempting to compile =cstyle__double.pyx=, thus there is no danger of leaving it in accidentally. On the other hand, adding and removing this declaration does slow down the compile-and-test cycle and we’re seeking a way to avoid that.
+
+Alternatively, we could inform our tooling to always consider =cstyle__template.pyx= in the context of one of its instantiations, e.g. =cstyle__long.pyx= where =ctypedef long TT= is declared. I’ve submitted [[https://github.com/lbolla/emacs-flycheck-cython/pull/2][pull request]] to flycheck-cython allowing for this.
+
+We could also conditionally declare =ctypedef long TT= whenever =TT= is undefined in =cstyle__template.pyx=, i.e. when the file is considered standalone and not in the context of either =cstyle__long.pyx= or =cstyle__double.pyx=. Unfortunately, Cython does not have a =IFDEF= (only =IF= and =ELSE=) which would make such a conditional definition easy. On the other hand, C(++) /does/ have =#ifdef=. Thus, for some types, we could add another file =cstyle__long.h=
+
+#+BEGIN_SRC C++ :tangle no :exports code
+// cstyle__long.h
+#ifndef CSTYLE_HAVE_TEMPLATE
+#define CSTYLE_HAVE_TEMPLATE
+typedef long TT;
+#endif //CSTYLE_HAVE_TEMPLATE
+#+END_SRC
+
+and
+
+#+BEGIN_SRC C++ :tangle no :exports code
+// cstyle__double.h
+#ifndef CSTYLE_HAVE_TEMPLATE
+#define CSTYLE_HAVE_TEMPLATE
+typedef double TT;
+#endif //CSTYLE_HAVE_TEMPLATE
+#+END_SRC
+
+We’d then replace the =ctypedef= declaration in =cstyle__long.pxd= with 
+
+#+BEGIN_SRC cython :tangle no :exports code
+cdef extern from "cstyle__long.h":
+    pass
+#+END_SRC
+
+which just triggers the inclusion of =cstyle__long.h=. Finally, we’d add
+
+#+BEGIN_SRC cython :tangle no :exports code
+cdef extern from "cstyle__long.h":
+    ctypedef int TT
+#+END_SRC
+
+to =cstyle__template.pxd=. This includes =cstyle__long.h=. However, its =typedef= declaration would only trigger if there was no previous include of e.g. =cstyle__double.h= due to the matching header guards in both fils. Thus, =TT= is defined only if it is as of yet undefined. On the other hand, a Cython =ctypedef= declaration in an =extern= block does not replace =TT= with =int= but merely informs Cython how to map Python datatypes to =TT=. That is, at the Python level =int= is used, but the templates are actually compiled with =TT= as typedef’d in the headers.
+
+* Honorary Mention: Fused Types
+
+Cython also supports [[https://cython.readthedocs.io/en/latest/src/userguide/fusedtypes.html][fused types]] but I cannot see how to fruitfully apply them to this use-case.
+
+* Artefacts                                                           :noexport:
+
+
+# Local Variables:
+# eval: (add-hook 'after-save-hook (lambda () (when (eq major-mode 'org-mode) (org-babel-tangle))) nil t)
+# End:
+
