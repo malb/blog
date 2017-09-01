@@ -28,4 +28,4 @@ matches the observed behaviour, e.g.
 
 [[https://martinralbrecht.files.wordpress.com/2017/09/observation.png]]
 
-Just like the above plots, the general answer is a clear “yes”.
+Just like for the above plots, the general answer is a clear “yes”.
