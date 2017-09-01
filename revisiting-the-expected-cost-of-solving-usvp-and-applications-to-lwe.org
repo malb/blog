@@ -1,0 +1,31 @@
+#+TITLE: Revisiting the Expected Cost of Solving uSVP and Applications to LWE
+#+BLOG: martinralbrecht
+#+POSTID: 1531
+#+DATE: [2017-09-01 Fri 16:57]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography
+#+TAGS: lattice-reduction, lwe, cryptanalysis, post-quantum cryptography, fplll, fpylll
+#+DESCRIPTION:
+
+Our — together with [[http://dblp.uni-trier.de/pers/g/G=ouml=pfert:Florian][Florian Göpfert]], [[https://pure.royalholloway.ac.uk/portal/en/persons/fernando-virdia(4ad6e099-9f70-4a5d-b0ac-cc37dd176547).html][Fernando Virdia]] and [[https://www.cdc.informatik.tu-darmstadt.de/de/cdc/personen/thomas-wunderer/][Thomas Wunderer]] — paper [[https://eprint.iacr.org/2017/815][Revisiting the Expected Cost of Solving uSVP and Applications to LWE]] is now available on [[https://eprint.iacr.org/][ePrint]]. Here’s the abstract:
+
+#+BEGIN_QUOTE
+Reducing the Learning with Errors problem (LWE) to the Unique-SVP problem and then applying lattice reduction is a commonly relied-upon strategy for estimating the cost of solving LWE-based constructions. In the literature, two different conditions are formulated under which this strategy is successful. One, widely used, going back to Gama & Nguyen's work on predicting lattice reduction (Eurocrypt 2008) and the other recently outlined by Alkim et al. (USENIX 2016). Since these two estimates predict significantly different costs for solving LWE parameter sets from the literature, we revisit the Unique-SVP strategy. We present empirical evidence from lattice-reduction experiments exhibiting a behaviour in line with the latter estimate. However, we also observe that in some situations lattice-reduction behaves somewhat better than expected from Alkim et al.'s work and explain this behaviour under standard assumptions. Finally, we show that the security estimates of some LWE-based constructions from the literature need to be revised and give refined expected solving costs.
+#+END_QUOTE
+
+Our work is essentially concerned with spelling out in more detail and experimentally verifying a prediction made in the [[https://eprint.iacr.org/2015/1092.pdf][New Hope]] paper on when lattice reduction successfully recovers an unusually short vector.
+
+Denoting by $v$ the unusually short vector in some lattice $\Lambda$ of dimension $d$ (say, derived from some LWE instance using Kannan’s embedding), $\beta$ the block size used for the BKZ algorithm and $\delta_0$ the root-Hermite factor for $\beta$, then the New Hope paper predicts that $v$ can be found if \[\sqrt{\beta/d} \|v\| \leq \delta_0^{2\beta-d} \, {\mathrm{Vol}(\Lambda}^{1/d},\]
+under the assumption that the Geometric Series Assumption holds (until a projection of the unusually short vector is found). 
+
+The rationale is that this condition ensures that the projection of \(v\) orthogonally to the first $d-\beta$ (Gram-Schmidt) vectors (denoted as \(\pi_{d-\beta+1}(v)\)) is shorter than the expectation for the \(d-\beta+1\)-th Gram-Schmidt vector $b_{d-\beta+1}^*$ under the GSA and thus would be found by the SVP oracle when called on the last block of size \(\beta\). Hence, for any \(\beta\) satisfying the above inequality, the actual behaviour would deviate from that predicted by the GSA. Finally, the argument can be completed by appealing to the intuition that a deviation from expected behaviour on random instances — such as the GSA — leads to a revelation of the underlying structural, secret information. In any event, such a deviation would already solve Decision-LWE.
+
+In our work, we spell out this argument in more detail (e.g. how $v$ is recovered from $\pi_{d-\beta+1}(v)$) and throw 23k core hours at the problem of checking if the predicted behaviour, e.g.
+
+https://martinralbrecht.files.wordpress.com/2017/09/prediction.png
+
+matches the observed behaviour, e.g.
+
+[[https://martinralbrecht.files.wordpress.com/2017/09/observation.png]]
+
+Just like the above plots, the general answer is a clear “yes”.
