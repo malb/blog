@@ -29,3 +29,13 @@ matches the observed behaviour, e.g.
 [[https://martinralbrecht.files.wordpress.com/2017/09/observation.png]]
 
 Just like for the above plots, the general answer is a clear “yes”.
+
+* Pretty Pictures or GTFO
+
+I forgot the most important bit. The behaviour of the BKZ algorithm on uSVP(-BDD) instances can be observed in this video.
+
+#+BEGIN_EXPORT html
+<iframe width="560" height="315" src="https://www.youtube.com/embed/C1e_YV1L7jc?rel=0" frameborder="0" allowfullscreen></iframe>
+#+END_EXPORT
+
+You can observe the basis approaching the GSA until the SVP oracle finds the unusually short vector $\pi_{d-\beta+1}(v)$. From $\pi_{d-\beta+1}(v)$, $v$ is then immediately recovered using size reduction. The grey area is the currently worked on block. The notation in the legend isn’t consistent with the plots above or even internally ($n$ v $d$), but the general idea should still be apparent. In case you’re wondering about the erratic behaviour of the tails (which occasionally goes all over the place), this is due to a bug in fpylll which has [[https://github.com/fplll/fpylll/commit/5f6c4c3859a7572f551e92e7b4f84773ff32bd55][recently been fixed]].
