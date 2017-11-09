@@ -2,6 +2,7 @@
 #+BLOG: martinralbrecht
 #+POSTID: 1422
 #+DATE: [2017-08-02 Wed 16:05]
+#+TAGS: cryptography, job, postdoc, royal holloway
 
 Together with [[http://www.isg.rhul.ac.uk/~ccid/][Carlos Cid]], we have a [[https://jobs.royalholloway.ac.uk/vacancy.aspx?ref=0817-306][two-year postdoc position]] available. The position is focused on hardware implementations of quantum-safe cryptography such as lattice-based, code-based, hash-based or mq-based schemes. If you are interested, feel free to get in touch with Carlos or me. If you know of somone who might be interested, we would appreciate if you could make them aware of this position.
 

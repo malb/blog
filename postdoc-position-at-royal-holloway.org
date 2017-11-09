@@ -1,9 +1,9 @@
-#+TITLE: Postdoc position at Royal Holloway
+#+TITLE: Postdoc Position at Royal Holloway
 #+BLOG: martinralbrecht
 #+POSTID: 1382
 #+DATE: [2016-09-09 Fri 16:10]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
-#+CATEGORY: Cryptography
+#+CATEGORY: cryptography
 #+TAGS:cryptography, job, postdoc, royal holloway
 #+DESCRIPTION:
 

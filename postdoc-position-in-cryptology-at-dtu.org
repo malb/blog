@@ -1,4 +1,4 @@
-#+TITLE: Postdoc position in Cryptology at DTU
+#+TITLE: Postdoc Position in Cryptology at DTU
 #+POSTID: 1020
 #+DATE: [2014-01-27 Mon 13:10]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil TeX:nil
