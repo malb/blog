@@ -1,0 +1,38 @@
+#+TITLE: Postdoc at Royal Holloway on Post-Quantum Cryptography in Hardware
+#+BLOG: martinralbrecht
+#+POSTID: 1604
+#+DATE: [2017-11-09 Thu 08:58]
+#+CATEGORY: cryptography
+#+TAGS: cryptography, job, postdoc, royal holloway
+
+Together with [[http://www.isg.rhul.ac.uk/~ccid/][Carlos Cid]], we have a [[https://jobs.royalholloway.ac.uk/vacancy.aspx?ref=0817-306-R][two-year postdoc position]] available. The position is focused on hardware implementations of post-quantum cryptography such as lattice-based, code-based, hash-based or mq-based schemes. If you are interested, feel free to get in touch with Carlos or me. If you know of somone who might be interested, we would appreciate if you could make them aware of this position.
+
+#+HTML:<!--more-->
+
+#+BEGIN_QUOTE
+| *Location*       | Egham                                          |
+| *Salary*         | £36,654 per annum - including London Allowance |
+| *Closing Date*   | Sunday 10 December 2017                        |
+| *Interview Date* | To be confirmed                                |
+| *Reference*      | [[https://jobs.royalholloway.ac.uk/vacancy.aspx?ref=0817-306-R][0817-306-R]]                                     |
+
+As a result of a collaboration between L3 TRL Technology and Royal Holloway, University of London, applications are invited for a postdoctoral research assistant position in the Information Security Group (ISG) at Royal Holloway to work in the area of post-quantum cryptography.
+
+Post-Quantum (PQ) cryptography refers to cryptographic algorithms and schemes that are expected to be resistant to cryptanalytic attacks based on quantum computers. Examples include lattice-based encryption and signature schemes, code-based public-key cryptosystems, Multivariate Quadratic (MQ) cryptosystems, and hash-based digital signature schemes. The goal of this industry-funded two-year project is to investigate and propose novel methods and techniques for hardware implementation of popular and promising post-quantum cryptographic schemes.
+
+The post is based in the Information Security Group at Royal Holloway’s main campus in Egham, Surrey, within commuting distance from London. The successful applicant will work with Prof Carlos Cid, Dr Martin Albrecht and other members of the ISG, in the research of efficient and secure hardware implementations of post-quantum cryptographic schemes. An initial focus will be on the FPGA implementation aspects of lattice-based key exchange schemes (e.g. RLWE schemes and variants) and code-based key exchange schemes (e.g. McEliese cryptosystem and variants).  They will consider the specific mathematical structure and features of these schemes, and will investigate the most suitable algorithmic and parameter choices for FPGA implementations. Moreover, potential trade-offs involving implementation costs, speed and scalability will be evaluated, considering for example the deployment in particular environments.
+
+We are looking for a candidate with a PhD degree in a relevant subject and strong background and experience in FPGA implementation, ideally of cryptographic algorithms. The post will last for two years and the ideal candidate should be able to start as soon as possible.
+
+Established in 1990, the Information Security Group at Royal Holloway was one of the first dedicated academic groups in the world to conduct research and teaching in information security. The ISG is today a world-leading interdisciplinary research group with 20 full-time members of staff, 10 post-doctoral research assistants and over 50 PhD students working on a range of subjects in cyber security, in particular cryptography.
+
+For an informal discussion about the post, please contact Prof Carlos Cid on carlos.cid@rhul.ac.uk or +44 (0)1784 414685.
+
+To view further details of this post and to apply please visit https://jobs.royalholloway.ac.uk. For queries on the application process the Human Resources Department can be contacted by email at: recruitment@rhul.ac.uk.
+
+Please quote the reference: *0817-306-R*
+
+Closing Date:  *Midnight, 10 December 2017*
+
+Interview Date: *To be confirmed*
+#+END_QUOTE
