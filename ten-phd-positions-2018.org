@@ -1,6 +1,6 @@
+#+TITLE: 10 PhD Positions at Royal Holloway's Centre for Doctoral Training in Cyber Security
 #+BLOG: martinralbrecht
 #+POSTID: 1609
-#+TITLE: 10 PhD Positions at Royal Holloway's Centre for Doctoral Training in Cyber Security
 #+DATE: [2017-11-15 Wed 14:41]
 #+BLOG: martinralbrecht
 #+CATEGORY: cryptography
