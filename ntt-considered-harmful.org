@@ -1,0 +1,104 @@
+#+TITLE: NTT Considered Harmful?
+#+BLOG: martinralbrecht
+#+POSTID: 1612
+#+DATE: [2018-07-14 Sat 16:21]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+ORG2BLOG:
+#+CATEGORY: cryptography
+#+TAGS: lattice-based-cryptography, post-quantum-cryptography, algorithm, cold-boot-attacks, cryptography, learning-with-errors, lattices, ntt
+#+DESCRIPTION:
+
+In a typical Ring-LWE-based public-key encryption scheme, Alice publishes \[(a, b) = (a, a \cdot s + e) \in \mathbb{Z}_q[x]/(x^n+1)\] (with \(n\) a power of two[fn:1]) as the public key, where \(s, e\) are both “small” and secret. To encrypt, Bob computes \[(c_{0}, c_{1}) = (v \cdot a + e', v \cdot b + e'' + \textnormal{Encode}(m))\] where \(v, e', e''\) are small, \(m\) is the message \(\in \{0,1\}^n\) and \(\textnormal{Encode}(\cdot)\) some encoding function, e.g. \(\sum_{i=0}^{n-1} \lfloor \frac{q}{2} \rfloor m_i x^i\) . To decrypt, Alice computes \[c_{0} \cdot s - c_{1} = (v \cdot a + e')\cdot s - v \cdot (a\cdot s + e) + e'' + \textnormal{Encode}(m),\] which is equal to \(e' \cdot s - v \cdot e + e'' + \textnormal{Encode}(m)\). Finally, Alice recovers \(m\) from the noisy encoding of \(m\) where \(e' \cdot s - v \cdot e + e''\) is the noise. In the Module-LWE variant the elements essentially live in \(\left(\mathbb{Z}_q[x]/(x^n+1)\right)^k\), e.g. \(a\) is not a polynomial but a vector of polynomials.
+
+Thus, both encryption and decryption involve polynomial multiplication modulo \(x^n+1\). Using schoolbook multiplication this costs \(\mathcal{O}(n^2)\) operations. However, when selecting parameters for Ring-LWE, we can choose \(q \equiv 1 \bmod 2n\) which permits to use an NTT to realise this multiplication (we require \(\equiv \bmod 2n\) to use the *negacyclic* NTT which has modular reductions modulo \(x^n+1\) baked in). Then, using the NTT we can implement multiplication by 
+
+1. evaluation (perform NTT),
+2. pointwise multiplication,
+3. interpolation (perform inverse NTT). 
+
+Steps (1) and (3) take \(\mathcal{O}(n \log n)\) operations by using specially chosen evaluation points (roots of one). Step (2) costs \(\mathcal{O}(n)\) operations. 
+
+This is trick is very popular. For example, many (but not all!) Ring-LWE based schemes submitted to the [[https://csrc.nist.gov/Projects/Post-Quantum-Cryptography][NIST PQC]] +competition+ process use it, namely NewHope, LIMA ([[https://lima-pq.github.io][go LIMA]]!), LAC, KCL, HILA5, R.EMBLEM, Ding Key-Exchange, CRYSTALS-KYBER, CRYSTALS-DILITHIUM (sorry, if I forgot one). Note that since steps (1) and (3) are the expensive steps, it makes sense to remain in the NTT domain (i.e. after applying the NTT) and only to convert back at the very end. For example, it is faster for Alice to store \(s, e\) in NTT domain and, since the NTT maps uniform to uniform, to sample \(a\) in NTT domain directly, i.e. to just assume that a random vector \(a\) is already the output of an NTT on some other random vector.
+
+This post is about two recent results I was involved in suggesting that this is not necessarily always the best choice (depending on your priorities.)
+
+*Warning: This is going to be one of those clickbait-y pieces where the article doesn’t live up to the promise in the headline. The NTT is fine. Some of my best friends use the NTT. In fact I’ve [[https://bitbucket.org/malb/gghlite-flint/src/48b8f119143b2f42a99c27ae43d0d5e735d649e9/oz/ntt.c#lines-118][implemented and used the NTT myself]].*
+
+#+HTML:<!--more-->
+
+* Cold Boot Attacks on Ring and Module LWE Keys Under the NTT
+
+In a [[https://eprint.iacr.org/2018/672][recent work]] with [[http://www.isg.rhul.ac.uk/~kp/][Kenny Paterson]] and [[https://pure.royalholloway.ac.uk/portal/en/persons/amit-deo(0ef69cf5-f802-4b3d-ad36-dc7cf7fe6a84).html][Amit Deo]], we studied [[https://en.wikipedia.org/wiki/Cold_boot_attack][cold boot attacks]] on Ring-/Module-LWE-base cryptographic primitives. In a cold boot attack the attacker is assumed to have physical access to a machine shortly after a power down cycle, e.g. after kicking in the target’s door and seizing their computer. The attacker proceeds by extracting from memory a noisy version of a scheme's secret key, where a small number of bits have been flipped. The attacker then recovers the key by applying bespoke error correction algorithms.
+
+The performance of the attack depends on the performance of the bespoke error correction algorithm. First, consider Ring-/Module-LWE as described above. In this scenario, the attacker encounters \(\tilde s = s + \Delta\), where \(\Delta\) represents the bit flips. Thus, the attacker has to solve the following problem:
+\[a\cdot \tilde s - b = a\cdot \tilde s - a\cdot s - e = a\cdot (\tilde s-s) + e = a \cdot \Delta + e,\] i.e. a Ring-/Module-LWE instance with secret \(\Delta\). Note that \(\Delta\) is sparse when considered as a bitstring. However, It is not, a priori, small when considered \(\bmod q\). Yet, since know that \(s\) is small, we can simply ignore higher order bits of \(\tilde s\). Thus, in this setting \(\Delta\) is both sparse and small. In our paper, we estimate that solving this problem for [[https://pq-crystals.org/kyber/][Kyber-768]] and a bit flip rate of roughly \(1.0\%\) takes \(\approx 2^{70}\) operations.
+
+Now, let’s consider the case when \(s\) is stored in the NTT domain. The attacker observes some \(\tilde{\hat{s}} = \textnormal{NTT}(s) + \Delta.\) Using that we can write an NTT application as a matrix multiplication with a full rank, structured matrix, we can write: \[\tilde{\hat s} = W \cdot s + \Delta\qquad \textnormal{ or }\qquad \tilde{s} = W^{-1} \cdot \Delta + s\] where \(W^{-1}\) is the matrix representation of the inverse negacyclic NTT. In our paper, we refer to recovering \(s\) as the *cold boot NTT decoding problem*. On the one hand, this problem seems harder than the above problem:  since lattice reduction finds small things, we’d rather have \(\Delta\) small when considered \(\bmod q\). However, in contrast to the scenario above, we cannot easily arrange for that. In our paper, we handle this by guessing the higher order bits of \(\Delta\) (of which there are few since \(\Delta\) is sparse as a bitstring). On the other hand, the problem is easier for two reasons. Firstly, in the Module-LWE setting \(s \in \left(\mathbb{Z}_q[x]/(x^n+1)\right)^k\) and the NTT is applied to each component of \(s\) individually. Thus, the dimension of the problem is only \(n\) instead of \(n\cdot k\). 
+
+Secondly, and more interestingly, \(W\) is very structured. For example, consider \(n=8\), given a \(2n\)-th root of unity \(\gamma\), we can write the *forward* negacyclic NTT in matrix form as
+\[W_{n} = \left(\begin{array}{rrrrrrrr}
+1 & \gamma    & \gamma^2  & \gamma^3  & \gamma^4  & \gamma^5  & \gamma^6  & \gamma^7 \\
+1 & \gamma^3  & \gamma^6  & -\gamma   & -\gamma^4 & -\gamma^7 & \gamma^2  & \gamma^5 \\
+1 & \gamma^5  & -\gamma^2 & -\gamma^7 & \gamma^4  & -\gamma   & -\gamma^6 & \gamma^3 \\
+1 & \gamma^7  & -\gamma^6 & \gamma^5  & -\gamma^4 & \gamma^3  & -\gamma^2 & \gamma \\
+1 & -\gamma   & \gamma^2  & -\gamma^3 & \gamma^4  & -\gamma^5 & \gamma^6  & -\gamma^7 \\
+1 & -\gamma^3 & \gamma^6  & \gamma    & -\gamma^4 & \gamma^7  & \gamma^2  & -\gamma^5 \\
+1 & -\gamma^5 & -\gamma^2 & \gamma^7  & \gamma^4  & \gamma    & -\gamma^6 & -\gamma^3 \\
+1 & -\gamma^7 & -\gamma^6 & -\gamma^5 & -\gamma^4 & -\gamma^3 & -\gamma^2 & -\gamma
+\end{array}\right)
+\]
+Adding the rows \(i\) and \(i+4\) for \(i \in \{0,1,2,3\}\), we obtain \(W_{n}^{{(+)}}\) as shown below which corresponds to the NTT matrix for \(n=4\) scaled by \(\xi = 2\):
+\[
+W_{n}^{{(+)}} =  \left(\begin{array}{rrrrrrrr}
+2 & 0 & 2 \gamma^2 & 0 & 2 \gamma^4  & 0 & 2 \gamma^6  &0\\
+2 & 0 & 2 \gamma^6 & 0 & -2 \gamma^4 & 0 & 2 \gamma^2  &0\\
+2 & 0 & -2\gamma^2 & 0 & 2 \gamma^4  & 0 & -2 \gamma^6 &0\\
+2 & 0 & -2\gamma^6 & 0 & -2 \gamma^4 & 0 & -2 \gamma^2 &0\\
+    \end{array}\right), \quad 2\,W_{n/2} = \left(\begin{array}{rrrr}
+2 & 2 \gamma^2  & 2 \gamma^4  & 2 \gamma^6 \\
+2 & 2 \gamma^6  & -2 \gamma^4 & 2 \gamma^2 \\
+2 & -2 \gamma^2 & 2 \gamma^4  & -2 \gamma^6 \\
+2 & -2 \gamma^6 & -2 \gamma^4 & -2 \gamma^2
+\end{array}\right).
+\]  
+
+Thus, we can “fold” our problem in dimension \(n\) to a problem in dimension \(n/2\). However, note that I used the *forward* negacyclic NTT above instead of the inverse negacyclic NTT. The technical reason for this is that folding the inverse would introduce some scaling terms which do not map small things to small things. See paper for details. 
+
+We can now solve the problem by recursively folding our problem down to a manageable dimension, each time adding up two components of \(\Delta\) to produce a new shorter vector \(\Delta'\). Thus, we cannot fold “all the way down” as we would end up with a vector \(\Delta\) that isn’t sparse any more. In our paper we fold down to \(n=32\) where we then apply a combination of guessing bits and lattice point enumeration. For Kyber-768 we estimate this to cost \(2^{43}\) operations for the same bit flip rate as above.
+
+On the other hand, this trick doesn’t work so well when considering NewHope instead of Kyber. The chief difference between the two is that in the case of Module-LWE (i.e. Kyber) we get a reduction in dimension by a factor \(k\) for free, but we do not get this advantage in the Ring-LWE setting (i.e. NewHope). For NewHope and the parameters we looked at, the attack performs roughly the same in the NTT and non-NTT domain. It is also worth mentioning, our work is a bit of a near-miss: If we didn’t have to decode the *negacyclic* NTT but only a plain NTT, then we would preserve sparsity of \(\Delta\) while folding (since we’d add components of \(s\) to each other instead of components of \(\Delta\)). I’m mentioning this here to flag that we might have missed some neat trick to do the same for the negacyclic case. Also, let me mention that our [[https://eprint.iacr.org/2018/672][paper]] comes with Sage code to play with.
+
+Now, to relate this to my lurid headline. Clearly, under our attacks, using the NTT or not makes no difference for Ring-LWE. For Module-LWE, though, we do get better attacks under the NTT. However, this doesn’t mean we have to drop the NTT when cold boot attacks are a concern. Simply storing the key not in NTT domain would be sufficient.
+
+* Learning with Errors on RSA Co-Processors
+
+The second work I want to discuss is co-authored with [[https://at.linkedin.com/in/christian-hanser-0ba01665/de][Christian Hanser]], [[https://www.linkedin.com/in/andrea-h%2525C3%2525B6ller-37090983][Andrea Hoeller]], [[http://tpoeppelmann.de/][Thomas Pöppelmann]], [[https://www.linkedin.com/in/andreas-wallner-6705722b][Andreas Wallner]] (all Infineon) and [[https://pure.royalholloway.ac.uk/portal/en/persons/fernando-virdia(4ad6e099-9f70-4a5d-b0ac-cc37dd176547).html][Fernando Virdia]]. In this work we implemented Kyber-768 on a smart card. Specifically, the kind of smart card found in e.g. German passports. So, [[https://www.netbsd.org/gallery/in-Action/][NetBSD runs on a toaster]], lattice-based cryptography runs on a passport. These sort of smart cards  come equipped with a cryptographic co-processor (or several of them), most importantly with a co-processor for speeding up RSA. Note that the main CPU doesn’t even have a hardware word-sized integer multiplier. At the end of the day, to run RSA you need to be able to compute \(A \cdot B \bmod N\) for integers of \(\approx 2048\) bits (or larger, but these cards are limited to roughly 2000 bits). Thus, these RSA co-processors are essentially modular integer multipliers. Now, to make use of these facilities, we can apply Kronecker substitution.
+
+Kronecker substitution is a classical technique in computer algebra for reducing polynomial arithmetic to large integer arithmetic. The fundamental idea behind this technique is that univariate polynomial and integer arithmetic are identical except for carry propagation in the latter. Thus, coefficients are simply packed into an integer in such a way as to terminate any possible carry chain. For example, say, we want to multiply two polynomials \(f(x) = x + 2\) with \(g(x) = 3x + 4\)  in \(\mathbb{Z}[x]\). We may write \(f(100) = 100 + 2 = 102\) and \(g(100) = 300 + 4 = 304\). Multiplying gives \(102 \cdot 304 = 31008\) or \(3x^{2} + 10x + 8\). In implementations, we use powers of two as evaluation points since this permits efficient “packing” (polynomial to integer) and “unpacking” (integer to polynomial) using only cheap bit shifts.
+
+Thus, at a high-level, our implementation realises polynomial multiplication using Kronecker substitution instead of the NTT. In reality everything is a bit more messy. Firstly, just applying this strategy would produce integers of more than \(2048\) bits which wouldn’t fit into our hardware multiplier. We address this by firstly applying the KS2 algorithm of [[http://web.maths.unsw.edu.au/~davidharvey/][David Harvey]].
+
+The KS2 algorithm proceeds as follows. Assume \(a(x), b(x)\) are such that their product \(c(x) = a(x) \cdot b(x)\) has positive coefficients bounded by \(2^{2\ell}\). Let
+\[c^{(+)} =  c(2^\ell) = a(2^{\ell}) \cdot b(2^{\ell})   = \sum_{i \textnormal{ even}} c_{i}\, 2^{i\ell} + \sum_{i \textnormal{ odd}} c_{i}\, 2^{i\ell}\]
+\[c^{(-)} =  c(-2^\ell) = a(-2^{\ell}) \cdot b(-2^{\ell})   = \sum_{i  \textnormal{ even}} c_{i}\, 2^{i\ell} - \sum_{i \textnormal{ odd}} c_{i}\, 2^{i\ell}\]
+Then, we can recover the even coefficients of \(c(x)\) from
+\[  c^{(+)} + c^{(-)} = c(2^\ell) + c(-2^\ell) = 2\,\sum_{i  \textnormal{ even}} c_{i}\, 2^{i\ell}\]
+and the odd coefficients from
+\[ c^{(+)} - c^{(-)} = c(2^\ell) - c(-2^\ell)  = 2\cdot 2^{\ell} \sum_{i \textnormal{ odd}} c_{i}\, 2^{(i-1)\ell}
+\] since the sum and the difference cancel out either the even or the odd powers. The coefficients can be either read directly with care to their offset, or dividing the above quantities by the appropriate power of $2$ over the integers.
+
+However, this still does not produce integers that fit into our multiplier. Thus, secondly, on top of these integer multiplications we perform (low-degree) polynomial multiplication (Karatsuba or schoolbook), essentially splitting up our problem into several 2000 bit-sized problems.
+
+Thirdly, naively we would only load 1000 bit integers into our multiplier to ensure that the product is at most 2000 bits. However, it turns out we can merge (some of) the modular reductions modulo \(x^n+1\) into the integer multiplication by computing modulo \(2^{n\,\ell} + 1\). That is, we can exploit that RSA co-processors are modular multipliers which in turn permits us the full 2000 bits of our multiplier. This is somewhat analogous to using the negacyclic instead of the normal NTT, where the former has the modular reductions modulo \(x^n+1\) baked in.
+
+Overall, this allows us to execute CCA-secure Kyber-768 key generation in 79.6 ms, encapsulation in
+102.4 ms and decapsulation in 132.7 ms. Well, we do not actually implement Kyber as specified. Firstly, Kyber specifies SHA-3 but our smart card has a SHA-2 co-processor. Thus, we replace SHA-3 with SHA-2. Secondly, Kyber assumes that the output of its random polynomial generator is in the NTT domain. That is, when sampling the vector \(a \in \left(\mathbb{Z}_q[x]/(x^n+1)\right)^k\) the specification assumes that \(a\) is already the output of applying the NTT. This saves on NTT applications since arithmetic in the reference implementation is done using the NTT. However, the whole point our implementation is to replace the NTT by the hardware integer multiplier. To be compliant, we would thus have to apply an inverse NTT on \(a\) before using \(a\) in our multiplication route. This extra call to a software NTT (recall that we don’t even have a word-sized integer multiplier on the CPU) would kill all the performance gains obtained by making use of the RSA co-processing, which is why we do not do it.
+
+So, to finally make good on that headline, there are platforms where you do not want to implement an NTT and “hardcoding” an NTT in the specification of scheme leads to performance losses on those platforms. Thus, insofar you care about such platforms, you may want to avoid the NTT. On the other hand, as smart card land is moving towards stronger CPUs, e.g. those having one of those fancy single-cycle word-sized integer multipliers, perhaps these considerations become less important.
+
+Finally, let me mention that this [[https://eprint.iacr.org/2018/425][paper]], too, comes with Sage code to play with.
+
+* Footnotes
+
+[fn:1] Alternatively, we can also consider \(\sum_{i=0}^p x^i\) for \(p\) a prime, as in e.g. LIMA-2p.
+
