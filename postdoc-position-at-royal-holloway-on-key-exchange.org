@@ -1,0 +1,48 @@
+#+BLOG: martinralbrecht
+#+POSTID: 1690
+#+TITLE: Postdoc Position at Royal Holloway on Key Exchange
+#+DATE: [2019-02-12 Tue 16:16]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography
+#+TAGS: postdoc, job, cryptography, 
+#+DESCRIPTION:
+
+Carlos and I have a [[https://jobs.royalholloway.ac.uk/vacancy.aspx?ref=0219-048][postdoc position]] on designing cryptographic key exchange protocols that support incorporating key material from, erm, … diverse sources. This is part of a consortium that looks at integrating some quantum cryptography with post-quantum cryptography, but there is no need to think so narrowly about the problem. That is, the project is about incorporating randomness from wherever it might come and what security goals can be achieved depending on what is compromised. More generally, if you enjoy cryptographic protocols, not limited to key exchange protocols, this might be a fitting postdoc position. Get in touch with Carlos or me, if you’re unsure on whether the position is a good fit.
+
+#+begin_quote
+
+| Location:       | Egham                                                     |
+| Salary:         | £39,479 to £41,743 per annum - including London Allowance |
+| Closing Date:   | Tuesday 12 March 2019                                     |
+| Interview Date: | To be confirmed                                           |
+| Reference:      | 0219-048                                                  |
+
+The Information Security Group at Royal Holloway University of London is seeking to recruit a postdoctoral research assistant (PDRA) to work in the area of cryptography. The position is available for immediate start, for up to 26 months (until 31 March 2021).
+
+The PDRA will work alongside Prof. Carlos Cid, Dr. Martin Albrecht and other cryptographic researchers at Royal Holloway on topics connected to the design and analysis of cryptographic key exchange protocols that support incorporating key material from diverse sources. This post is part of the AQuaSec project, a Innovate UK-funded research project with 17 partners from industry and academia, aiming to develop technologies for quantum-safe communications by integrating post-quantum cryptography with techniques from quantum cryptography. 
+
+Applicants for this role should have already completed, or be close to completing, a PhD in a relevant discipline, with an outstanding research track record in cryptography. Applicants should be able to demonstrate scientific creativity, research independence, and the ability to communicate their ideas effectively in written and verbal form. Salary is £39,479 per annum, inclusive of London Allowance. This post is appointed at Grade 7, Spine point 34.
+
+Established in 1990, the Information Security Group at Royal Holloway was one of the first dedicated academic groups in the world to conduct research and teaching in information security. The ISG is today a world-leading interdisciplinary research group with 20 full-time members of staff, several postdoctoral research assistants and over 50 PhD students working on a range of subjects in cyber security, in particular cryptography.
+
+In return we offer a highly competitive rewards and benefits package including:
+
+- Generous annual leave entitlement 
+- Training and Development opportunities
+- Pension Scheme with generous employer contribution 
+- Various schemes including Cycle to Work, Season Ticket Loans and help with the cost of Eyesight testing. 
+- Free parking 
+- Competitive Maternity, Adoption and Shared Parental Leave provisions
+
+The post is based in Egham, Surrey where the College is situated in a beautiful, leafy campus near to Windsor Great Park and within commuting distance from London.
+
+To view further details of this post and to apply please visit https://jobs.royalholloway.ac.uk. For queries on the application process the Human Resources Department can be contacted by email at: recruitment@rhul.ac.uk. Informal enquiries can be made to Prof. Carlos Cid at carlos.cid@rhul.ac.uk. 
+
+Please quote the reference: [[https://jobs.royalholloway.ac.uk/vacancy.aspx?ref=0219-048][0219-048]]
+
+Closing Date: Midnight, 12 March 2019 
+
+Interview Date: To be confirmed
+#+end_quote
+
+*PS:* I will have two more postdoc positions, on lattice-based cryptography in the next few weeks/months.
