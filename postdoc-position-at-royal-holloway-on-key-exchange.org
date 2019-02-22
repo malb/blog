@@ -1,6 +1,6 @@
+#+TITLE: Postdoc Position at Royal Holloway on Key Exchange
 #+BLOG: martinralbrecht
 #+POSTID: 1690
-#+TITLE: Postdoc Position at Royal Holloway on Key Exchange
 #+DATE: [2019-02-12 Tue 16:16]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
 #+CATEGORY: cryptography
