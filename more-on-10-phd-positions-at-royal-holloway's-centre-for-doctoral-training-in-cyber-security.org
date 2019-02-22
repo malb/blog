@@ -1,0 +1,79 @@
+#+TITLE: More on those 10 PhD Positions at Royal Holloway's CDT in Cyber Security
+#+BLOG: martinralbrecht
+#+POSTID: 1692
+#+DATE: [2019-02-22 Fri 12:39]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: misc
+#+TAGS: it security, job, phd
+#+DESCRIPTION:
+
+My colleagues who work on the social/cultural side of (information) security together with colleagues from other departments have put together an outline for people who come from disciplines such as Human Geography, Sociology, Criminology, Law, Political Science, International Relations, Classics, Archaeology, Cultural Studies and Media Studies.
+
+#+BEGIN_QUOTE
+Fully Funded 4-year PhD Studentships at the EPSRC funded Royal Holloway Centre for Doctoral Training in Cyber Security for the Everyday
+
+We are pleased to advertise positions for up to 10 PhD studentships to begin in September 2019 at the new Centre for Doctoral Training (CDT) in Cyber Security for the Everyday at Royal Holloway University of London.
+
+We seek applications or informal expressions of interest from students and researchers with an interest in cyber security. In addition to Mathematics and Computer Science, relevant disciplines may include Human Geography, Sociology, Criminology, Law, Political Science, International Relations, Classics, Archaeology, Cultural Studies, Media Studies and more.
+
+Building on two previous Centres for Doctoral Training in Cyber Security based at Royal Holloway, and anchored within the Information Security Group, the new CDT reflects the growth in and need for interdisciplinary research which critically engages with everyday cyber security questions. It does so by combining an understanding of technical systems with social science and humanities approaches to cyber security, personal information and growing datafication. In a broad sense, PhD projects will explore cyber security in the context of societal needs, critically evaluate the contribution cyber security makes to societal and individual securities and place discussions over the ethics, rights, responsibility and fairness of cyber security at the centre rather than at the periphery. Other academic departments involved in the Centre include Computer Science, Geography, Law, Psychology and Politics and IR.
+
+Whilst broad in scope, the CDT is driven by two overarching strands of enquiry:
+
+- The technologies deployed in digital systems that people use, sometimes inadvertently, every day; and
+
+- Everyday societal experiences of cyber security, including how different societies, communities, groups and individuals conceptualise, materialise, negotiate, and respond to increasingly digitally mediated and technologically driven worlds 
+
+A central aspect of the CDT programme is interdisciplinary collaborations as students work on shared projects and other collaborative activities within their PhD cohort. This is encouraged throughout their studies but a key component of the first year, which is devoted to training activities and individual and group projects. Students may not have established project ideas at the time of recruitment but develop these during the first year.
+
+The core strategic objectives of the CDT in Cyber Security for the Everyday are:
+
+1. To develop cohorts of truly multi-disciplinary researchers, with a broad understanding of cyber security and a strong appreciation of the interplay between technical and social questions;
+2. To promote research in cyber security that is original, significant, responsible, of international excellence and responsive to societal needs; and
+3. To engage with stakeholders in the cyber security community and wider society
+
+We are keen to encourage applications from across the Social Sciences and Humanities. Potential areas of interdisciplinary study include but are not limited to:
+
+Conceptualise
+
+- The arts and critical discourses of cyber security
+- Agenda-setting, framing and cyber security
+- Feminist cyber security 
+- Social difference, intersectionality and cyber security
+- Intimate spaces of cyber security (including the body, home, etc.)
+- Everyday/routine violences and cyber security
+- Solidarity and resistance and alternative forms of cyber security
+- Narratives of security
+- Ontological security across disciplines and forms of expression
+
+Materialise
+
+- Contemporary archaeologies of cyber security
+- Cyber security and the city
+- The materiality of digital mediation in cyber security 
+- Media as data
+- Resistance through data, memes/gifs/films
+- Simulation and simulated affect -emotional security data  & machines
+
+Negotiate
+
+- Sustainable development goals and cyber security
+- The impact of cyber security and public policy
+- Territory, diplomacy and cyber security
+- Regional and international cyber security
+- Transnational and global governance of cyber security 
+- Cyber security of democratic institutions
+- Cybersecurity at work
+- Organisational approaches to and processes of cybersecurity
+- Cybersecurity profession and professionals
+- E-surveillance at work
+
+Respond
+
+- Mobilities, automated and autonomous mobility systems 
+- Resistance, dissent and cyber security
+- Hate crimes and affect 
+- Cultural economies, crypto-currencies and piracy
+- The dark web, visibility and invisibility
+- Practices of data hacking in media consumption.
+#+END_QUOTE
