@@ -1,0 +1,30 @@
+#+TITLE: Two Postdocs on Lattice-based Cryptography
+#+BLOG: martinralbrecht
+#+POSTID: 1697
+#+DATE: [2019-03-01 Fri 09:47]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography
+#+TAGS: job, postdoc, lattice-based-cryptography, lattices
+#+DESCRIPTION:
+
+I have *two* postdoc positions available to work on lattice-based or post-quantum cryptography with me and other people here in the [[https://www.royalholloway.ac.uk/research-and-teaching/departments-and-schools/information-security/][ISG]]. Currently, five PhD students work on post-quantum or lattice-based cryptography in the ISG, as well as two postdocs. Furthermore, several more students, staff and postdocs work across the field of cryptography in general. We have regular reading groups, research seminars, visitors and decent travel funding. Beyond cryptography, the ISG works across the field of information security, e.g. smart card/embedded security, malware analysis and social or cultural aspects of security. I guess what I’m saying is: yes, Royal Holloway is in Brexit-land, but the ISG is a good place to work. If you have any informal queries, feel free to get in touch.
+
+#+BEGIN_QUOTE
+| Location        | Egham                                          |
+| Salary          | £37,345 per annum - including London Allowance |
+| Closing Date    | Friday 05 April 2019                           |
+| Interview Date  | To be confirmed                                |
+| Reference       | [[https://jobs.royalholloway.ac.uk/vacancy.aspx?ref=0219-081][0219-081]]                                       |
+
+The postdoc will work alongside Dr. Martin Albrecht and other cryptographic researchers in the ISG on topics in lattice-based cryptography and related fields. One post is funded by a joint grant between Royal Holloway and Imperial College (Dr. Cong Ling) for bridging the gap between lattice-based cryptography and coding theory (starting date: 15 April or later). The second post is funded by an EPSRC grant on investigating the security of lattice-based and post-quantum cryptographic constructions (starting date: 1 June or later). Applicants with a strong background in all areas of cryptography are encouraged to apply.
+
+Applicants should have already completed, or be close to completing, a PhD in a relevant discipline. Applicants should have an outstanding research track record in cryptography. Applicants should be able to demonstrate scientific creativity, research independence, and the ability to communicate their ideas effectively in written and verbal form.
+
+The ISG is one of the largest departments dedicated to information security in the world with 21 core academic staff in the department, as well as research and support staff. We work with many research partners in other departments and have circa 90 PhD students working on a wide range of security research, many of whom are fully funded through our Centre for Doctoral Training in Cyber Security. We have a strong, vibrant, embedded and successful multi-disciplinary research profile spanning from cryptography to systems security and social aspects of security. This vibrant environment incorporates visiting researchers, weekly research seminars, weekly reading groups, PhD seminars and mini conferences, the WISDOM group (Women in the Security Domain Or Mathematics) and we are proud of our collegial atmosphere and approach. 
+
+If you require any further information please email: recruitment@rhul.ac.uk. Informal enquiries can be made to Martin Albrecht at martin.albrecht@rhul.ac.uk.
+
+- Please quote the reference: [[https://jobs.royalholloway.ac.uk/vacancy.aspx?ref=0219-081][0219-081]]
+- Closing Date: Midnight, 5 April 2019
+- Interview Date: To be confirmed
+#+END_QUOTE
