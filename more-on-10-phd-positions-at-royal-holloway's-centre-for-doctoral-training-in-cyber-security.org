@@ -10,7 +10,7 @@
 My colleagues who work on the social/cultural side of (information) security together with colleagues from other departments have put together an outline for people who come from disciplines such as Human Geography, Sociology, Criminology, Law, Political Science, International Relations, Classics, Archaeology, Cultural Studies and Media Studies.
 
 #+BEGIN_QUOTE
-Fully Funded 4-year PhD Studentships at the EPSRC funded Royal Holloway Centre for Doctoral Training in Cyber Security for the Everyday
+Fully Funded 4-year PhD Studentships at the EPSRC funded Royal Holloway [[https://royalholloway.ac.uk/research-and-teaching/departments-and-schools/information-security/studying-here/centre-for-doctoral-training-in-cyber-security-for-the-everyday/][Centre for Doctoral Training in Cyber Security for the Everyday]]
 
 We are pleased to advertise positions for up to 10 PhD studentships to begin in September 2019 at the new Centre for Doctoral Training (CDT) in Cyber Security for the Everyday at Royal Holloway University of London.
 
