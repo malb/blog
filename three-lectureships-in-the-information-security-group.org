@@ -1,0 +1,63 @@
+#+TITLE: Three Lectureships (Assistant Professor) in the Information Security Group
+#+BLOG: martinralbrecht
+#+POSTID: 1700
+#+DATE: [2019-04-12 Fri 13:04]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography
+#+TAGS: job, lecturer
+#+DESCRIPTION:
+
+My department is [[https://jobs.royalholloway.ac.uk/vacancy.aspx?ref=0419-139][hiring]] *three* full-time, permanent lecturers. These are normal research and teaching positions, equivalent to an assistant professor in the US. We’re definitely interested in recruiting at least one cryptographer. The department is nice, some great research is done here and we’ve got a Centre for Doctoral Training (CDT), meaning funding for 10 PhD studentships each year for (at least) the next four years. Thus, pretty good conditions to make the jump from postdoc to lecturer. 
+
+If you’d like to know more, feel free to contact me or the people named in the advert.
+
+#+BEGIN_QUOTE
+| *Location:*       | Egham                                                     |
+| *Salary:*         | £42,926 to £50,811 per annum - including London Allowance |
+| *Closing Date:*   | Tuesday 07 May 2019                                       |
+| *Interview Date:* | Thursday 13 June 2019                                     |
+| *Reference:*      | 0419-139                                                  |
+
+Full-Time, Permanent (3 roles available)
+
+Applications are invited for three full time permanent posts of Lecturer in the Information Security Group (ISG) at Royal Holloway, University of London.
+
+The applicants should have a good research profile that fits within the wide range of  [[https://www.royalholloway.ac.uk/research-and-teaching/departments-and-schools/information-security/research/our-research-areas/][research undertaken by the ISG]]. We are particularly interested in applicants who will be able to lead and drive forward research related to:
+
+- Cryptography (theory and applications),
+- Social aspects of cyber security,
+- Software and systems security, and
+- The Smart Card & IOT Research Centre
+
+However, we also welcome applications from scholars in other areas of security research that relate to our research interests.
+
+The applicants should have some experience in postgraduate and undergraduate teaching across a range of topics in information/cyber security and be able to demonstrate an enthusiasm for research as well as teaching and communicating with diverse audiences.
+
+These posts have a preferred start date as soon as possible, although there is some flexibility in start date. These posts are based in Egham, Surrey, where the College is situated in a beautiful, leafy campus near to Windsor Great Park and within commuting distance of London.
+
+For an informal discussion about these posts, please contact the Head of Department [[mailto:peter.komisarczuk@rhul.ac.uk][Peter Komisarczuk]], or senior subject specialists, Professor [[mailto:keith.martin@rhul.ac.uk][Keith Martin]] (cryptography), Professor [[mailto:Lizzie.Coles-Kemp@rhul.ac.uk][Lizzie Coles-Kemp]] (social aspects), Professor [[mailto:Stephen.Wolthusen@rhul.ac.uk][Stephen Wolthusen]] (software and systems) or Professor [[mailto:K.Markantonakis@rhul.ac.uk][Kostas Markantonakis]] (the Smart Card and IOT Research Centre).
+
+*Further details:*
+
+The post holders will contribute to the research and teaching of the Information Security Group which is a full department within the University that hosts a dynamic inter-disciplinary group of academics and researchers focused on information/cyber security research and teaching (see [[https://www.royalholloway.ac.uk/research-and-teaching/departments-and-schools/information-security/about-us/][about us]]). The ISG is amongst the largest departments dedicated to information/cyber security in the world with circa [[https://www.royalholloway.ac.uk/research-and-teaching/departments-and-schools/information-security/contact-us/?department=information+security][20 academic staff]] in the department, as well as research and support staff. We work with many research partners in other departments and have circa 70 PhD students working on a wide range of security research, many of whom are fully funded through our Centre for Doctoral Training in Cyber Security.
+
+We have a strong, vibrant, embedded and successful [[https://www.royalholloway.ac.uk/research-and-teaching/departments-and-schools/information-security/research/][multi-disciplinary research profile]], and a strong ethos of working on real world security that encompasses, industry, standardisation, government and society. This vibrant environment incorporates visiting researchers, research seminar series, reading groups and mini conferences, the [[https://wisdom.rhul.ac.uk/][WISDOM Group]] (Women in the Security Domain Or Mathematics) and we are proud of our collegial atmosphere and approach.
+
+Our research is collaborative and interdisciplinary, both within the ISG and externally. Within Royal Holloway we collaborate across many other departments including: Computer Science, Electronic Engineering, Economics, Geography, Law, School of Management, Mathematics, Psychology, Politics and International Relations and Classics. ISG members are also encouraged to build and maintain external networks of collaboration and we are prominent members of both national and international research communities. The ISG is active in industry and government, where our colleagues find opportunities for applied research, consultancy and policy work. We also have a strong track record in community research as part of our cultural studies programme. Our research is overviewed on our [[https://www.royalholloway.ac.uk/research-and-teaching/departments-and-schools/information-security/research/our-research-areas/][website]] and our many [[https://pure.royalholloway.ac.uk/portal/en/organisations/information-security-group(cb903903-da88-442b-8a73-24b97cad90ae)/projects.html][funded research projects are listed on the Royal Holloway repository]] showing our success is across a wide range of topics and funding bodies.
+
+In the UK context we are an Academic Centre of Excellence in Cyber Security Research ( [[https://epsrc.ukri.org/research/centres/acecybersecurity/][ACE-CSR]]), we host a [[https://www.royalholloway.ac.uk/research-and-teaching/departments-and-schools/information-security/studying-here/centre-for-doctoral-training-in-cyber-security/][Centre for Doctoral Training (CDT) in Cyber Security]] and have circa 70 PhD students working across a wide range of security research. We are excited to have received new funding for our CDT which allows us to offer 10 fully funded PhD scholarships for the next 5 years. Our PhD students undertake cutting edge and innovative research that has won national and international awards. Our students are encouraged to publish their work in leading venues (including: CRYPTO, EUROCRYPT, ACM CCS, IEEE S&P, USENIX, CHI, CSCW and DIS) and to contribute to national and international research, policy and practice initiatives.
+
+In addition the University offers a full range of [[https://www.ncsc.gov.uk/information/ncsc-certified-degrees][undergraduate and postgraduate degrees in information security]] that are certified by the UK National Cyber Security Centre (NCSC). The ISG teaches the security modules on these courses:
+
+-  [[https://www.royalholloway.ac.uk/studying-here/postgraduate/information-security/information-security/][MSc Information Security]] (Campus based and [[https://london.ac.uk/courses/information-security][Distance Learning]]),
+-  [[https://www.royalholloway.ac.uk/studying-here/undergraduate/computer-science/computer-science-information-security-msci/][MSci Computer Science (Information Security)]], and
+-  [[https://www.royalholloway.ac.uk/studying-here/undergraduate/computer-science/computer-science-information-security/][BSc Computer Science (Information Security)]],
+
+All campus programmes can include a year in industry option. Our MSc is the largest in the UK with students studying across the full-time, part-time or distance learning modes of study. Our MSc is one of the oldest programmes in the world, having started in 1992 and has a large alumni network with over 4000 graduates.
+
+To view further details of these posts and to apply please visit [[https://jobs.royalholloway.ac.uk/][https://jobs.royalholloway.ac.uk]]. The Human Resources Department can be contacted with queries by email at: [[http://www.rhul.ac.uk/Personnel/JobVacancies.htm][recruitment@rhul.ac.uk]].
+
+- Please quote the reference: *0419-139*
+- Closing Date: *Midnight, 7 May 2019*
+- Interview Date: *13 June 2019*
+#+END_QUOTE
