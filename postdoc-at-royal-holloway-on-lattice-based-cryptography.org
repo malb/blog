@@ -6,6 +6,7 @@
 #+CATEGORY: cryptography
 #+TAGS: job, postdoc, lattice-based-cryptography, lattices, 
 #+DESCRIPTION:
+
 I am looking for a postdoc to join us to work on lattice-based cryptography. This postdoc is funded by the EU H2020 [[http://prometheuscrypt.gforge.inria.fr][PROMETHEUS]] project for building privacy preserving systems from advanced lattice primitives. At Royal Holloway, the project is looked after by Kenny Paterson and me. Feel free to e-mail me with any queries you might have.
 
 The ISG is a nice place to work; it’s a very friendly environment with strong research going on in several areas. We got people working across the field of information security including several people working on cryptography. A postdoc here is a 100% research position, i.e. you wouldn’t have teaching duties. That said, if you’d like to gain some teaching experience, we can arrange for that as well. 
