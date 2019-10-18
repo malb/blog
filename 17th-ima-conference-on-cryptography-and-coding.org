@@ -1,0 +1,57 @@
+#+BLOG: martinralbrecht
+#+POSTID: 1711
+#+TITLE: 17th IMA Conference on Cryptography and Coding
+#+DATE: [2019-10-12 Sat 10:28]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography
+#+TAGS: cryptography, coding theory, conference
+
+[[https://malb.io/imacc2019/][IMA-CC]] is a crypto and coding theory conference biennially held in the UK. It was previously held in Cirencester. So you might have heard of it as the “Cirncester” conference. However, it has been moved to Oxford, so calling it Cirencester now is a bit confusing. Anyway, it is happening again this year. IMA is a small but fine conference with the added perk of being right before Christmas. This is great because around that time of the year Oxford is a fairly Christmas-y place to be.
+
+#+BEGIN_CENTER
+*16 - 18 December 2019, St Anne’s College, University of Oxford*
+#+END_CENTER
+
+#+HTML:<!--more-->
+
+We lucked out and somehow managed to convince
+
+- [[https://people.cispa.io/cas.cremers/][Cas Cremers]]: Security Standardisation and Secure Messaging
+- [[https://cseweb.ucsd.edu/~nadiah/][Nadia Heninger]]: TBC
+- [[https://cmaurice.fr/][Clémentine Maurice]]: Side-channel Attacks on Microarchitecture: Beyond Crypto
+- [[http://www.iscc.cnrs.fr/spip.php?article1980][Francesca Musiani]]: Nuancing the ‘User’ of Secure Messaging Tools
+
+to accept our invitation to speak. In addition, we have an exciting programme of 17 contributed papers:
+
+
+- Behzad Abdolmaleki, Hamidreza Khoshakhlagh and Daniel Slamanig. *A Framework for UC-Secure Commitments from Publicly Computable Smooth Projective Hashing* ([[https://eprint.iacr.org/2019/1063][eprint]])
+- Terry Shue Chien Lau, Chik How Tan and Theo Fanuela Prabowo. *Key Recovery Attack on Rank Metric Code-based Signatures*
+- Daniele Cozzo and Nigel Smart. *Sharing the LUOV: Threshold Post-Quantum Signatures*
+- Claire Delaplace, Andre Esser and Alexander May. *Improved Low-Memory Subset Sum and LPN Algorithms via Multiple Collisions* ([[https://eprint.iacr.org/2019/804][eprint]])
+- Jan Camenisch, Maria Dubovitskaya and Patrick Towa. *Efficient Fully Secure Leakage-Deterring Encryption*
+- Nigel Smart and Younes Talibi Alaoui. *Distributing any Elliptic Curve Based Protocol* ([[https://eprint.iacr.org/2019/768][eprint]])
+- Ivan Damgård, Helene Haagh, Michael Nielsen and Claudio Orlandi. *Commodity-Based 2PC for Arithmetic Circuits* ([[https://eprint.iacr.org/2019/705][eprint]])
+- Pedro Branco, Jintai Ding, Manuel Goulão and Paulo Mateus. *A Framework for Universally Composable Oblivious Transfer from One-Round Key-Exchange* ([[https://eprint.iacr.org/2019/726][eprint]])
+- Rowena Alma Betty and Akihiro Munemasa. *Classification of self-dual codes of length 20 over $\mathbb{Z}_4$ and length at most 18 over $\mathbb{F}_2+u\mathbb{F}_2$*
+- Hyang-Sook Lee and Jeongeun Park. *On the Security of Multikey Homomorphic Encryption* ([[https://eprint.iacr.org/2019/1082][eprint]])
+- Ramiro Martínez and Paz Morillo. *RLWE-based Zero-Knowledge Proofs for linear and multiplicative relations*
+- Karim Baghery. *Subversion-Resistant Simulation (Knowledge) Sound NIZKs* ([[https://eprint.iacr.org/2019/1162][eprint]])
+- Shyam Murthy and Srinivas Vivek. *Cryptanalysis of a Protocol for Efficient Sorting on SHE Encrypted Data* ([[https://eprint.iacr.org/2019/1087][eprint]])
+- Marcel Armour and Bertram Poettering. *Decryption Algorithm Substitution Attacks*
+- Maria Eichlseder, Daniel Kales and Markus Schofnegger. *Forgery Attacks on FlexAE and FlexAEAD* ([[https://eprint.iacr.org/2019/679][eprint]])
+- Shingo Sato and Junji Shikata. *Quantum-Secure (Non-)Sequential Aggregate Message Authentication Codes*
+- Shingo Sato and Junji Shikata. *SO-CCA secure PKE from KEM in the QROM and the QICM*
+
+and nine presentations:
+
+- James Howe, Marco Martinoli, Elisabeth Oswald and Francesco Regazzoni. *Optimised Lattice-Based Key Encapsulation in Hardware* 
+- Gabrielle De Micheli, Remi Piau and Cecile Pierrot. *A Tale of Three Signatures: practical attack of ECDSA with wNAF*  
+- Nina Bindel, Mike Hamburg, Andreas Hülsing and Edoardo Persichetti. *Tighter proofs of CCA security in the quantum random oracle model*  
+- Monika Trimoska, Sorina Ionica and Gilles Dequen. *A SAT-based approach for index calculus on binary elliptic curves*  
+- Jake Massimo. *Primality Testing in Cryptographic Applications*
+- Anamaria Costache, Kim Laine and Rachel Player. *Homomorphic noise growth in practice: comparing BGV and FV*  
+- Sergiu Carpov, Malika Izabachène and Victor Mollimard. *TFHE Toolbox for homomorphic neural network prediction*  
+- Woojoo Na, Alexander Allin and Christophe Petit. *Trapdoor attacks on Cayley hash function parameters proposed at the NutMiC 2019 conference*  
+- Lydia Garms and Anja Lehmann. *Group Signatures with Selective Linkability* 
+
+To register visit https://ima.org.uk/11167/17th-ima-international-conference-on-cryptography-and-coding/
