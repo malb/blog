@@ -1,6 +1,6 @@
+#+TITLE: 17th IMA Conference on Cryptography and Coding
 #+BLOG: martinralbrecht
 #+POSTID: 1711
-#+TITLE: 17th IMA Conference on Cryptography and Coding
 #+DATE: [2019-10-12 Sat 10:28]
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
 #+CATEGORY: cryptography
