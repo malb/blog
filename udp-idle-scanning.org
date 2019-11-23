@@ -1,0 +1,576 @@
+#+TITLE: UDP Idle Scanning
+#+BLOG: martinralbrecht
+#+POSTID: 1714
+#+DATE: [2019-10-25 Fri 13:37]
+#+CATEGORY: networking
+#+TAGS: port scanning, idle scan, icmp rate limit, side channel
+#+DESCRIPTION:
+
+We describe a (seemingly) new scanning technique for determining whether a UDP port is open without sending IP packets with the scanner's IP to the target. It is a (UDP specific) variant of the TCP Idle Scan[fn:1] that was uncovered 20 years ago. It proceeds similarly to the TCP RST Ratelimit Scan[fn:2], but uses ICMP rate limiting as the side-channel. It only works for UDP protocols where we can solicit a reply.[fn:3] For a list of such protocols, see e.g. ZMap's UDP Probe Module[fn:4] or NMap's payloads[fn:5].
+
+* Scan
+
+Consider three machines: 
+
+*S* : Scanner
+
+*Z* : Zombie, we assume Z is sufficiently close to S to allow burst IP packets to arrive in, well, bursts. We also assume the zombie is running a Linux kernel with version at least v3.18-rc1[fn:6] and with default options set. In particular, we assume =icmp_msgs_burst = 50= (other small values are fine, too) and =icmp_ratemask = 0x1818=. We will make use of the =Destination Unreachable= bit being set.[fn:7]
+
+*T* : Target, we wish to check if the target is listening on =$UDPPORT=, speaking a protocol for which we can solicit a reply (e.g =DNS=, =PCAnywhere=, =NetBios=, =SIP= or anything speaking =DTLS=, see above).
+
+The scan proceeds as follows:
+
+1. *S(Z) -> T*: 1 UDP packet to =$UDPPORT= at T, spoofed from Z's IP address
+2. *S -> Z*: 49 UDP packets to a closed port from 49 different spoofed source IPs (to prevent per host ICMP rate limiting to kick in)
+3. *T -> Z*: If the target port is open then the target will respond to Z. Otherwise an =ICMP Destination Unreachable= message is sent from the target to the zombie.
+4. *Z -> T*: If a UDP response was generated, the zombie will respond with =ICMP Destination Unreachable= message to the target. Otherwise, nothing happens.
+5. *S -> Z*: 1 UDP probe to some closed port.
+6. *Z -> S*: If the zombie has exhausted its budget of 50 burst messages by responding to the target, the scanner will not receive a response. Otherwise, it will.
+
+*Note:* A variant of this scan is to target =icmp_msgs_per_sec= which is 1000 by default.
+
+#+HTML:<!--more-->
+
+* Background: ICMP Rate Limits in the Linux Kernel
+
+When an ICMP reply is generated in =icmp_reply=, the Linux kernel checks whether it is allowed to send by calling =icmpv4_global_allow(net, type, code)=. If not, the packet is dropped.
+
+https://github.com/torvalds/linux/blob/152854025528b30c5ca5113a443ead98c3f1e7a5/net/ipv4/icmp.c
+
+#+name: ICMP reply in Linux kernel
+#+BEGIN_SRC C
+static void icmp_reply(struct icmp_bxm *icmp_param, struct sk_buff *skb)
+{
+	struct ipcm_cookie ipc;
+	struct rtable *rt = skb_rtable(skb);
+	struct net *net = dev_net(rt->dst.dev);
+	struct flowi4 fl4;
+	struct sock *sk;
+	struct inet_sock *inet;
+	__be32 daddr, saddr;
+	u32 mark = IP4_REPLY_MARK(net, skb->mark);
+	int type = icmp_param->data.icmph.type;
+	int code = icmp_param->data.icmph.code;
+
+	if (ip_options_echo(net, &icmp_param->replyopts.opt.opt, skb))
+		return;
+
+	/* Needed by both icmp_global_allow and icmp_xmit_lock */
+	local_bh_disable();
+
+	/* global icmp_msgs_per_sec */
+	if (!icmpv4_global_allow(net, type, code))
+		goto out_bh_enable;
+
+	sk = icmp_xmit_lock(net);
+	if (!sk)
+		goto out_bh_enable;
+	inet = inet_sk(sk);
+    [...]
+}
+#+END_SRC
+
+This function first checks =icmp_ratemask= to check if the ICMP message to be generated is of the kind that is rate limited. The documentation of the mask is
+
+#+name: ICMP rate limit mask
+#+BEGIN_EXAMPLE
+icmp_ratemask - INTEGER
+	Mask made of ICMP types for which rates are being limited.
+	Significant bits: IHGFEDCBA9876543210
+	Default mask:     0000001100000011000 (6168)
+
+	Bit definitions (see include/linux/icmp.h):
+		0 Echo Reply
+		3 Destination Unreachable *
+		4 Source Quench *
+		5 Redirect
+		8 Echo Request
+		B Time Exceeded *
+		C Parameter Problem *
+		D Timestamp Request
+		E Timestamp Reply
+		F Info Request
+		G Info Reply
+		H Address Mask Request
+		I Address Mask Reply
+
+	* These are rate limited by default (see default mask above)
+#+END_EXAMPLE
+
+The function then checks the global ICMP rate limit =icmp_global_allow=
+
+#+name: ICMP overall check
+#+BEGIN_SRC C
+static bool icmpv4_global_allow(struct net *net, int type, int code)
+{
+	if (icmpv4_mask_allow(net, type, code))
+		return true;
+
+	if (icmp_global_allow())
+		return true;
+
+	return false;
+}
+#+END_SRC
+
+In =icmp_global_allow= a global =credit= is checked. If it is positive, the packet is permitted; otherwise, it is not.
+
+#+name: ICMP rate limit check
+#+BEGIN_SRC C
+bool icmp_global_allow(void)
+{
+	u32 credit, delta, incr = 0, now = (u32)jiffies;
+	bool rc = false;
+
+	/* Check if token bucket is empty and cannot be refilled
+	 ,* without taking the spinlock.
+	 ,*/
+	if (!icmp_global.credit) {
+		delta = min_t(u32, now - icmp_global.stamp, HZ);
+		if (delta < HZ / 50)
+			return false;
+	}
+
+	spin_lock(&icmp_global.lock);
+	delta = min_t(u32, now - icmp_global.stamp, HZ);
+	if (delta >= HZ / 50) {
+		incr = sysctl_icmp_msgs_per_sec * delta / HZ ;
+		if (incr)
+			icmp_global.stamp = now;
+	}
+	credit = min_t(u32, icmp_global.credit + incr, sysctl_icmp_msgs_burst);
+	if (credit) {
+		credit--;
+		rc = true;
+	}
+	icmp_global.credit = credit;
+	spin_unlock(&icmp_global.lock);
+	return rc;
+}
+#+END_SRC
+
+Note that in addition to these global limits, the kernel also has a per host limit, controlled by =icmp_ratelimit=. This explains why we need to spoof 49 different IPs in the scan.
+
+#+name: ICMP per host limit
+#+BEGIN_SRC C
+#define XRLIM_BURST_FACTOR 6
+bool inet_peer_xrlim_allow(struct inet_peer *peer, int timeout)
+{
+	unsigned long now, token;
+	bool rc = false;
+
+	if (!peer)
+		return true;
+
+	token = peer->rate_tokens;
+	now = jiffies;
+	token += now - peer->rate_last;
+	peer->rate_last = now;
+	if (token > XRLIM_BURST_FACTOR * timeout)
+		token = XRLIM_BURST_FACTOR * timeout;
+	if (token >= timeout) {
+		token -= timeout;
+		rc = true;
+	}
+	peer->rate_tokens = token;
+	return rc;
+}
+EXPORT_SYMBOL(inet_peer_xrlim_allow);
+#+END_SRC
+
+* Proof of Concept
+
+We implemented a proof of concept of the scan in Go. ScaPy[fn:8] would have been an ideal platform but in our experiments we could not make it produce packets fast enough to exhaust the zombie's credit limit. Thus, Go + Gopacket[fn:9] it is.
+
+** Scanner
+
+The scanner proceeds as explained above. Since it spoofs IP addresses it needs to use a raw socket and thus requires the appropriate permissions to do so. Thus, run:
+
+#+name: scanner build instructions
+#+BEGIN_SRC bash :eval never
+$ go build udp-idle-scan.go
+$ sudo setcap cap_net_raw=ep udp-idle-scan
+#+END_SRC
+
+*** Source Code
+
+#+name: scanner source code
+#+begin_src go
+// UDP Idle Scanner Proof of Concept
+//
+// AUTHOR: Martin R. Albrecht <martin.albrecht@royalholloway.ac.uk>
+//
+// The author was learning Go when writing this. Several go routines were
+// harmed in the making of this proof of concept.
+
+package main
+
+import (
+	"github.com/google/gopacket"
+	"github.com/google/gopacket/layers"
+	"log"
+	"net"
+	"math/rand"
+	"fmt"
+	"syscall"
+	"time"
+	"os"
+	"encoding/binary"
+	"flag"
+)
+
+
+// Make a probe to dstip:dstport from srcip (ours)
+
+func probe(srcip net.IP,
+	srcport int,
+	dstip net.IP,
+	dstport int) (buffer gopacket.SerializeBuffer) {
+	buffer = gopacket.NewSerializeBuffer()
+	
+	ip := &layers.IPv4{
+		DstIP: dstip,
+		SrcIP: srcip,
+		Protocol: layers.IPProtocolUDP,
+		Version: 4,
+		TTL: 64,
+	}
+
+	udp  := &layers.UDP{
+		SrcPort: layers.UDPPort(srcport),
+		DstPort: layers.UDPPort(dstport)}
+
+	if err := udp.SetNetworkLayerForChecksum(ip); err != nil {
+		log.Fatal("Failed calc checksum. ", err)
+	}
+	if err := gopacket.SerializeLayers(buffer, gopacket.SerializeOptions{
+		ComputeChecksums: true,
+		FixLengths:       true,
+	}, ip, udp); err != nil {
+		log.Fatal("Failed to serialize. ", err)
+	}
+	return buffer
+}
+
+// prepare empty UDP packet from srcip to dstip:dstport
+func spoof(srcip net.IP,
+	dstip net.IP,
+	dstport int) (buffer gopacket.SerializeBuffer) {
+	buffer = gopacket.NewSerializeBuffer()	
+
+	ip  := &layers.IPv4{DstIP: dstip,
+		SrcIP: srcip,
+		Protocol: layers.IPProtocolUDP,
+		Version: 4, TTL: 64}
+	udp := &layers.UDP{SrcPort: layers.UDPPort(rand.Int31n(20000)+1000),
+		DstPort: layers.UDPPort(dstport)}
+
+	if err := udp.SetNetworkLayerForChecksum(ip); err != nil {
+		log.Fatal("Failed calc checksum. ", err)
+	}
+	if err := gopacket.SerializeLayers(buffer,
+		gopacket.SerializeOptions{ComputeChecksums: true,
+			FixLengths: true,},
+		ip, udp); err != nil {
+		log.Fatal("Failed to serialize. ", err)
+	}
+	return buffer
+}
+
+// monitor incoming ICMP messages for destination unreachable on target port
+func monitorICMP(testport int) {
+	fd, _ := syscall.Socket(syscall.AF_INET, syscall.SOCK_RAW,
+		syscall.IPPROTO_ICMP)
+	f := os.NewFile(uintptr(fd), fmt.Sprintf("fd %d", fd))
+	
+	for {
+		buf := make([]byte, 1024)
+		n, err := f.Read(buf)
+		if err != nil {
+			log.Fatal(err)
+		}
+		p := gopacket.NewPacket(buf[:n], layers.LayerTypeIPv4, gopacket.Default)
+		if p.ErrorLayer() != nil {
+			log.Fatal("Failed to decode IPv4 packet")
+		}
+		l, ok := p.Layer(layers.LayerTypeICMPv4).(*layers.ICMPv4)
+		if !ok {
+			log.Fatal("Failed to decode ICMPv4 packet")
+		}
+		if l.TypeCode.Code() == 3 {
+			port := int(binary.BigEndian.Uint16(buf[48:50]))
+			if (testport == port) {
+				fmt.Printf("Port is closed.\n")
+			} else {
+				log.Output(0,
+					fmt.Sprintf("Received Destination Unreachable for port %d\n",
+						port))
+			}
+		}
+	}
+}
+
+
+func UDPFlood(npackets int,
+	dstip net.IP,
+	a byte,
+	b byte) (buffers []gopacket.SerializeBuffer) {
+	buffers = make([]gopacket.SerializeBuffer, 0, npackets)
+	
+	var i = 0
+	for c := byte(0); c < 255; c++ {
+		for d := byte(1); d < 201; d++ {
+			var buffer = gopacket.NewSerializeBuffer()
+			ip := &layers.IPv4{
+				SrcIP: net.IP{a, b, c, d},
+				DstIP: dstip,
+				Protocol: layers.IPProtocolUDP,
+				Version: 4,
+				TTL: 64,
+			}
+
+			udp := &layers.UDP{
+				SrcPort: layers.UDPPort(rand.Int31n(20000)+1000),
+				DstPort: layers.UDPPort(10000+len(buffers))}
+
+			if err := udp.SetNetworkLayerForChecksum(ip); err != nil {
+				log.Fatal("Failed calc checksum. ", err)
+			}
+			if err := gopacket.SerializeLayers(buffer, gopacket.SerializeOptions{
+				ComputeChecksums: true,
+				FixLengths:       true,
+			}, ip, udp); err != nil {
+				log.Fatal("Failed to serialize. ", err)
+			}
+			buffers = append(buffers, buffer)
+			i += 1;
+			if i >= npackets {
+				return;
+			}
+		}
+	}
+	return nil
+}
+
+func parseCmdLine() (scannerip, zombieip, targetip net.IP, targetport int) {
+	scannerip_  := flag.String("s", "", "IP address of scanner")
+	zombieip_   := flag.String("z", "", "IP address of zombie used for scanning")
+	targetip_   := flag.String("t", "", "IP address of target to scan.")
+	targetport_ := flag.Int("p", 13771, "UDP port to scan")
+
+	flag.Parse()
+
+	scannerip = net.ParseIP(*scannerip_)
+	zombieip  = net.ParseIP(*zombieip_)
+	targetip  = net.ParseIP(*targetip_)
+	targetport  = *targetport_
+	
+	return
+}
+
+func ipv4ToSockAddr(ip net.IP) (addr syscall.SockaddrInet4) {
+	addr = syscall.SockaddrInet4{Port: 0}
+	copy(addr.Addr[:], ip.To4()[0:4])
+	return
+}
+
+func main() {
+
+	scannerip, zombieip, targetip, targetport := parseCmdLine()
+
+	fmt.Printf("scanner: %s, ", scannerip)
+	fmt.Printf("zombie: %s, ", zombieip)
+	fmt.Printf("target: %s:%d\n\n", targetip, targetport)
+	
+	var (
+		a byte    = 134
+		b byte    = 219
+		localport = 10000
+		npackets    = 49
+	)
+	
+	var err error
+	handle, err := syscall.Socket(syscall.AF_INET, syscall.SOCK_RAW,
+		syscall.IPPROTO_RAW)
+
+	if err != nil {
+      log.Fatal("Error opening device. ", err)
+	}
+	defer syscall.Close(handle)
+
+	targetaddr := ipv4ToSockAddr(targetip)
+	zombieaddr := ipv4ToSockAddr(zombieip)
+
+	spoof_pkt  := spoof(zombieip, targetip, targetport)
+	flood_pkts := UDPFlood(npackets, zombieip, a, b)
+	probe_pkt  := probe(scannerip, localport, zombieip, 0)
+
+	// monitor incoming ICMP packets to catch our probe
+	go monitorICMP(localport)
+
+	// send spoofed packet
+	err = syscall.Sendto(handle, spoof_pkt.Bytes(), 0, &targetaddr)
+	if err != nil {
+		log.Fatal("Error sending packet to network device. ", err)
+	}
+
+	// exhaust ICMP rate limit
+	for i := 0; i < npackets; i++ {
+		err = syscall.Sendto(handle, flood_pkts[i].Bytes(), 0, &zombieaddr)
+		if err != nil {
+			log.Fatal("Error sending packet to network device. ", err)
+		}
+	}
+
+	// send probe
+	err = syscall.Sendto(handle, probe_pkt.Bytes(), 0, &zombieaddr)
+	if err != nil {
+		log.Fatal("Error sending packet to network device. ", err)
+	}
+
+	time.Sleep(100*time.Millisecond)
+}
+#+end_src
+
+** Target
+
+To test the scanner, we wrote a simple UDP reflector, to build and run:
+
+#+name: reflector build and run instructions
+#+BEGIN_SRC bash :eval never
+$ go build udp-reflector.go
+$ ./udp-reflector
+#+END_SRC
+
+*** Source Code:
+
+#+name: reflector source code
+#+begin_src go
+package main
+
+import (
+	"log"
+	"net"
+	"fmt"
+	"flag"
+)
+
+const maxPayload = 1024
+
+func main() {
+	port := flag.Int("p", 13771, "UDP port to listen on.")
+	flag.Parse()
+	var bindAddress = fmt.Sprintf(":%d", *port)
+
+	udpAddr, err := net.ResolveUDPAddr("udp", bindAddress)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	conn, err := net.ListenUDP("udp", udpAddr)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer conn.Close()
+
+	log.Printf("Listening on %v", conn.LocalAddr())
+
+	for {
+		payloadData := make([]byte, maxPayload)
+		sz, addr, err := conn.ReadFrom(payloadData)
+		if err != nil {
+			log.Fatal(err)
+		}
+		log.Output(0, fmt.Sprintf("reflected to %s", addr))
+		conn.WriteTo(payloadData[:sz], addr)
+	}
+}
+#+end_src
+
+** Example: Open Port
+
+To illustrate the behaviour here is a run where UDP port 13771 is open (and responding) on =192.168.0.68=.
+
+#+name: example run port open
+#+BEGIN_SRC bash :eval never
+$ ./udp-idle-scan -s 192.168.0.28 -t 192.168.0.68 -z 192.168.0.15 -p 13771
+
+scanner: 192.168.0.28, zombie: 192.168.0.15, target: 192.168.0.68:13771
+#+END_SRC
+
+Running =tcpdump= on the zombie (=192.168.0.68=), we see:
+
+#+name: TCP dump port open
+#+BEGIN_EXAMPLE
+12:28:36.978657 IP 192.168.0.15 > 134.219.0.1: ICMP 192.168.0.68 
+  udp port 10000 unreachable, length 36
+[...]
+12:28:36.979018 IP 192.168.0.15 > 134.219.0.7: ICMP 192.168.0.68 
+  udp port 10006 unreachable, length 36
+12:28:36.979082 IP 192.168.0.15 > 192.168.0.68: ICMP 192.168.0.68 
+  udp port 19081 unreachable, length 36
+12:28:36.979144 IP 192.168.0.15 > 134.219.0.8: ICMP 192.168.0.68
+  udp port 10007 unreachable, length 36 
+[...]
+12:28:36.985655 IP 192.168.0.15 > 134.219.0.49: ICMP 192.168.0.68 
+  udp port 10048 unreachable, length 36
+#+END_EXAMPLE
+
+Note that the zombie sent an =ICMP Destination Unreachable= message to the target but does not send a =ICMP Destination Unreachable= in response to the scanner's probe.
+
+** Example: Closed Port
+
+The same but for a closed port:
+
+#+name: example run port closed
+#+BEGIN_SRC bash :eval never
+$ ./udp-idle-scan -s 192.168.0.28 -t 192.168.0.68 -z 192.168.0.15 -p 13770
+scanner: 192.168.0.28, zombie: 192.168.0.15, target: 192.168.0.68:13770
+
+Port is closed.
+#+END_SRC
+
+Running =tcpdump= on the zombie, we see:
+
+#+name: TCP dump port closed
+#+BEGIN_EXAMPLE
+12:27:07.514360 IP 192.168.0.15 > 134.219.0.1: ICMP 192.168.0.68 
+  udp port 10000 unreachable, length 36
+[...]
+12:27:07.520268 IP 192.168.0.15 > 134.219.0.48: ICMP 192.168.0.68 
+  udp port 10047 unreachable, length 36
+12:27:07.520294 IP 192.168.0.15 > 134.219.0.49: ICMP 192.168.0.68 
+  udp port 10048 unreachable, length 36
+12:27:07.520319 IP 192.168.0.15 > 192.168.0.28: ICMP 192.168.0.68 
+  udp port 0 unreachable, length 36
+#+END_EXAMPLE
+
+Note that our probe is responded to because no =ICMP Destination Unreachable= message was sent to the target.
+
+* Discussion
+
+A UDP idle scan has perhaps limited utility in a 2019 Internet compared with the 1998 Internet when the TCP Idle Scan was born. However, the UDP idle scan here is but one application exploiting the global ICMP rate limit side channel.[fn:10] This side channel allows to determine whether a host (in our example: the zombie) has sent an ICMP message or not.
+
+* Footnotes
+
+[fn:1] http://seclists.org/bugtraq/1998/Dec/79
+
+[fn:2] Ensafi, R., Park, J. C., Kapur, D., & Crandall, J. R. (2010). Idle port scanning and non-interference analysis of network protocol stacks using model checking. In , & , USENIX Security 2010 (pp. 257–272). : USENIX Association.
+
+[fn:3] For these protocols, the original TCP Idle Scan would also have applied almost as is.
+
+[fn:4] https://github.com/zmap/zmap/wiki/UDP-Probe-Module
+
+[fn:5] https://nmap.org/book/nmap-payloads.html
+
+[fn:6] https://github.com/torvalds/linux/commit/4cdf507d54525842dfd9f6313fdafba039084046
+
+[fn:7] To check run =echo $((`cat /proc/sys/net/ipv4/icmp_ratelimit` &
+1<<3))==
+
+[fn:8] https://scapy.net/
+
+[fn:9] https://github.com/google/gopacket
+
+[fn:10] Again, this side channel may or may not be new. We haven't seen it before, though.
+
