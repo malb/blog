@@ -1,0 +1,55 @@
+#+TITLE: 10 PhD Positions at Royal Holloway's Centre for Doctoral Training in Cyber Security for the Everyday
+#+BLOG: martinralbrecht
+#+POSTID: 1729
+#+DATE: [2020-01-06 Mon 18:25]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography
+#+TAGS: it security, cryptography, job, phd
+
+At Royal Holloway we are again taking applications for *ten* fully-funded PhD positions in Information Security. See the [[https://royalholloway.ac.uk/research-and-teaching/departments-and-schools/information-security/studying-here/centre-for-doctoral-training-in-cyber-security-for-the-everyday/][CDT website]] and the [[https://www.royalholloway.ac.uk/research-and-teaching/departments-and-schools/information-security/][ISG website]] for what kind of research we do. Also, check out our [[https://royalholloway.ac.uk/research-and-teaching/departments-and-schools/information-security/studying-here/centre-for-doctoral-training-in-cyber-security-for-the-everyday/][past and current CDT students]] and our [[https://seminars.isg.rhul.ac.uk/][research seminar schedule]] to get an idea of how broad and diverse the areas of information security are in which the ISG works. 
+
+More narrowly, to give you some idea of cryptographic research (and thus supervision capacity) in the ISG/at Royal Holloway: currently, there are nine permanent members of staff working on cryptography: [[https://dblp.org/pers/b/Blackburn:Simon_R=][Simon Blackburn]] (Maths), [[https://dblp.org/pers/c/Cid:Carlos][Carlos Cid]], [[https://dblp.uni-trier.de/pers/m/Martin:Keith][Keith Martin]], [[https://dblp.uni-trier.de/pers/m/Murphy:Sean][Sean Murphy]], [[https://dblp.uni-trier.de/pers/hd/n/Ng:Siaw=Lynn][Siaw-Lynn Ng]], [[https://dblp.org/pers/p/Player:Rachel][Rachel Player]], [[https://dblp.org/pers/q/Quaglia:Elizabeth_A=][Liz Quaglia]] and [[https://dblp.uni-trier.de/pers/a/Albrecht:Martin_R=][me]]. In addition, there are five postdocs working on cryptography and roughly 15 PhD students. Focus areas of cryptographic research currently are: lattice-based cryptography and applications, post-quantum cryptography, symmetric cryptography, statistics, access control, information-theoretic security and protocols. 
+
+Note that most of these positions are reserved for UK residents, which does, however, not mean nationality (see CDT website for details) and there might also be some wiggle room for EU residents (yes, still!).
+
+#+HTML:<!--more-->
+
+#+begin_quote
+Royal Holloway is pleased to announce up to 10 fully-funded PhD studentships (four years of
+enhanced stipend and fees) in its EPSRC Centre for Doctoral Training in Cyber Security for the
+Everyday.
+
+The CDT was first established in 2013, and has as its main objective to develop cohorts of
+multidisciplinary researchers with a broad understanding of cyber security and a strong
+appreciation of the interplay between technical and social issues.
+
+Research in the CDT will address challenges concerning:
+
+- the technologies deployed in digital systems that people use, sometimes inadvertently, every
+day;
+- the everyday societal experience and practice of security.
+
+The CDT is centred around Royal Holloway’s Information Security Group and partners with
+departments throughout the institution. We offer a collegial and inclusive environment,
+exemplified by our award-winning WISDOM group, which supports female cyber-security staff and
+students. 
+
+CDT researchers follow a four-year PhD programme. The first year consists of comprehensive
+multidisciplinary cyber security training. The remaining three years focus on research in an
+advanced topic in the field of cyber security, including, but are not restricted to:
+
+- Embedded technology security
+- Secure and trusted systems
+- Cryptography and its applications
+- Trust, rights and understanding of cyber security
+- Methodological innovation in researching cyber security
+- Difference and inequalities in cyber security
+
+We welcome applications from candidates with undergraduate and/or masters qualifications in a
+wide range of technical and social disciplines of relevance to cyber security. 
+
+For more information on course of study, entrance requirements, funding, application process,
+research priorities and existing CDT activities, see:
+
+https://www.royalholloway.ac.uk/research-and-teaching/departments-and-schools/information-security/studying-here/centre-for-doctoral-training-in-cyber-security/
+#+end_quote
