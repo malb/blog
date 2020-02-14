@@ -1,0 +1,82 @@
+#+TITLE: Lecturer/Assistant Professor in Cryptography in the ISG
+#+BLOG: martinralbrecht
+#+POSTID: 1732
+#+DATE: [2020-01-28 Tue 09:00]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography
+#+TAGS: cryptography, job, crypto
+#+DESCRIPTION: Job advert for lecturer position in the ISG.
+The ISG is [[https://jobs.royalholloway.ac.uk/vacancy.aspx?ref=0120-023][recruiting]] a lecturer (≡ assistant professor in the US system, ≡ Juniorprofessor in the German system, ≡ Maître de conférences in the French system; that’s all the systems I know). This is a full-time, permanent research and teaching position. 
+
+Look, I know this is England post-Brexit but let me give you a personal pitch of why you should apply:
+
+- It’s a big group. We got ~20 permanent members of staff working across the field of information security: cryptography, systems and social. Check out our [[https://seminars.isg.rhul.ac.uk/][seminar programme]] and our [[https://pure.royalholloway.ac.uk/portal/en/organisations/department-of-information-security(cb903903-da88-442b-8a73-24b97cad90ae)/publications.html][publications]] to get a sense of what is going on in the group.
+
+- It’s a group with lots of cryptography going on. As mentioned in the ad below, eight permanent members of staff, five postdocs and about 15 PhD students focus on or contribute to cryptographic research. As a corollary, we also have plenty of cryptographers coming through for visits and talks. We got a weekly cryptography reading group, our students have another one and our seminar regularly has cryptography talks.
+
+- It’s a group with a good mix of areas and lots of interaction. UK universities don’t work like German ones where professors have their little empires which don’t interact all too much. Rather, the hierarchies are pretty flat within a department (everybody is line managed by the Head of Department) which facilitates more interaction; at least within the ISG that’s true. For example, I’m currently working on a project with someone from the systems and software security lab and one of our social scientists. I doubt this sort of collaboration would have come about if we didn’t attend the same meetings, taught the same modules, went to lunch and the pub together etc. Interdisciplinarity from above is annoying, when it emerges spontaneously it can be great.
+
+- It’s a nice group. People are genuinely friendly and we help each other out. It will be easy to find someone to proof read your grant applications or share previously successfully funded ones etc. I don’t know any official numbers but the unionisation level seems to be relatively high, which I also take as an indication that people don’t adopt a “everyone for themselves” approach.
+
+- We got funding for our [[https://www.royalholloway.ac.uk/research-and-teaching/departments-and-schools/information-security/studying-here/centre-for-doctoral-training-in-cyber-security-for-the-everyday/][Centre for Doctoral Training]] for the next four years (then we have to reapply). This means 10 PhD positions *per year*. Also, our CDT attracts strong students. My research career really took off after getting a chance to work with our amazing students.
+
+- The ISG is its own department (in a school with Physics, EE, Mathematics and Computer Science). All of our teaching is on information security with a focus on our Information Security MSc (which is huge). So you’ll get to teach information security. It is unlikely, though, that you will get to teach cryptography specifically.
+
+- The ISG has strong industry links. Thus, if that’s your cup of tea, it will be easy to get introductions etc. A side effect of these strong links is that consulting opportunities tend to pop up. Consulting is not only permitted by the employer but encouraged (they take a cut if you do it through them).
+
+- The ISG is a large group but Royal Holloway is a relatively small university. That means getting things done by speaking to the person in charge is often possible, i.e. it’s not some massive bureaucracy and exceptions can be negotiated.
+
+- It’s within one standard deviation from London. This means [[http://sec.cs.ucl.ac.uk/people/][UCL]] and [[https://www.surrey.ac.uk/surrey-centre-cyber-security/people/core-members][Surrey]], and thus the cryptographers there, aren’t too far away. [[https://londoncryptoday.github.io/2019/][London Crypto Day]] is a thing and so are the [[http://malb.io/discrete-subgroup/][London-ish Lattice Coding & Crypto Meetings]]. Also, you get to live in London (or near Egham if that’s your thing, no judgement).
+
+I’m happy to answer informal inquiries etc. We’d appreciate any help in spreading the word.
+
+#+HTML:<!--more-->
+
+#+begin_quote
+| Location:       | Egham                                   |
+| Salary:         | £43,660 to £51,687 per annum - incl. LA |
+| Closing Date:   | Wednesday 15 April 2020                 |
+| Interview Date: | 9 June or 10 June                       |
+| Reference:      | [[https://jobs.royalholloway.ac.uk/vacancy.aspx?ref=0120-023][0120-023]]                                |
+
+Full-Time, Permanent
+
+Applications are invited for a full time permanent post of [[https://en.wikipedia.org/wiki/Lecturer][Lecturer]] in the Information Security Group (ISG) at Royal Holloway, University of London. This post carries the responsibility to conduct research and to contribute to the teaching in the department. The post is equivalent to an assistant professor in the US system, or a Juniorprofessor in Germany.
+
+The applicant should have a good research profile that fits within the wide range of research undertaken by the [[https://www.royalholloway.ac.uk/research-and-teaching/departments-and-schools/information-security/research/our-research-areas/][ISG]]. We are particularly interested in applicants who will be able to drive forward research related to all fields of cryptography: theory, applied, primitives, protocols, symmetric, asymmetric. However, strong social scientists working on information security and researchers working on software and systems security or any other field of information security are also encouraged to apply.
+
+The applicant should be able to demonstrate enthusiasm for research as well as teaching and communicating with diverse audiences.
+
+The post has a preferred start date of autumn 2020, although there is some flexibility in start date. The post is based in Egham, Surrey, where the College is situated in a leafy campus near to Windsor Great Park and within commuting distance of London.
+
+For an informal discussion about this post, please contact Professor Martin Albrecht.
+
+*Further details*
+
+The post holder will contribute to the research and teaching of the Information Security Group which is a full department within the University that hosts a dynamic inter-disciplinary group of academics and researchers focused on information security research and teaching. The ISG is amongst the largest departments dedicated to information security in the world with circa 20 academic staff in the department, as well as research and support staff. We work with many research partners in other departments and have circa 70 PhD students working on a wide range of security research, [[https://www.royalholloway.ac.uk/research-and-teaching/departments-and-schools/information-security/studying-here/centre-for-doctoral-training-in-cyber-security-for-the-everyday/][many of whom]] are fully funded through our [[https://www.royalholloway.ac.uk/research-and-teaching/departments-and-schools/information-security/studying-here/centre-for-doctoral-training-in-cyber-security-for-the-everyday/][Centre for Doctoral Training in Cyber Security for the Everyday]], funding 10 PhD positions per annum for the next four years. Our PhD students undertake exciting research that has won national and international awards. Our students are encouraged to publish their work in leading venues (s.t. CRYPTO, EUROCRYPT, ACM CCS, IEEE S&P, USENIX, CHI, CSCW and DIS) and to contribute to national and international research, policy and practice initiatives. We are also an [[https://epsrc.ukri.org/research/centres/acecybersecurity/][Academic Centre of Excellence in Cyber Security Research]] (ACE-CSR).
+
+We have a strong, vibrant, embedded and successful multi-disciplinary research profile. This vibrant environment incorporates visiting researchers, [[https://seminars.isg.rhul.ac.uk/][research seminar series]], reading groups and mini conferences, the [[https://intranet.royalholloway.ac.uk/isg/wisdom/wisdom-group.aspx][WISDOM Group]] and we are proud of our collegial atmosphere.
+
+Our research is collaborative and interdisciplinary, both within the ISG and externally. Within Royal Holloway we collaborate across many other departments including: Computer Science, Electronic Engineering, Economics, Geography, Law, Management, Mathematics, Psychology, Politics and International Relations and Classics. ISG members are also encouraged to build and maintain external networks of collaboration and we are prominent members of both national and international research communities. The ISG is active in industry and government, where our colleagues find opportunities for applied research and consultancy. We also have a strong track record of working with underserved communities on the edge of society, addressing their security needs and conceptions.
+
+Currently, there are eight permanent members of staff focusing on cryptography in the ISG: [[https://dblp.uni-trier.de/pers/a/Albrecht:Martin_R=][Martin Albrecht]], [[https://dblp.org/pers/c/Cid:Carlos][Carlos Cid]], [[https://dblp.uni-trier.de/pers/m/Martin:Keith][Keith Martin]], [[https://dblp.uni-trier.de/pers/m/Murphy:Sean][Sean Murphy]], [[https://dblp.uni-trier.de/pers/hd/n/Ng:Siaw=Lynn][Siaw-Lynn Ng]], [[https://dblp.org/pers/p/Player:Rachel][Rachel Player]] and [[https://dblp.org/pers/q/Quaglia:Elizabeth_A=][Liz Quaglia]]. In addition, [[https://dblp.org/pers/b/Blackburn:Simon_R=][Simon Blackburn]] from the Maths department regularly contributes to the field of cryptography. Currently there are five postdocs working on cryptography and roughly 15 PhD students. Focus areas of cryptographic research currently are: lattice-based cryptography and applications (Albrecht, Murphy, Player), post-quantum cryptography (Albrecht, Blackburn, Cid, Murphy, Player), symmetric cryptography (Albrecht, Cid, Murphy), statistics (Murphy, Player), access control (Martin), information-theoretic security (Martin, Ng) and protocols (Albrecht, Quaglia). We are particularly looking to strengthen our capacity in protocols.
+
+The University offers a full range of undergraduate and postgraduate degrees in information security that are certified by the UK National Cyber Security Centre (NCSC). This is where most members of staff focus their teaching. In particular, the ISG teaches the security modules on these courses:
+
+- MSc Information Security (Campus based and Distance Learning), 
+- MSci Computer Science (Information Security), and
+- BSc Computer Science (Information Security).
+
+All campus programmes can include a year in industry option. Our MSc is the largest in the UK with students studying across the full-time, part-time or distance learning modes of study.  Our MSc is one of the oldest programmes in the world, having started in 1992 and has a large alumni network with over 4,000 graduates. 
+
+To view further details of the post and to apply please visit https://jobs.royalholloway.ac.uk. The Human Resources Department can be contacted with queries by email at: recruitment@rhul.ac.uk.
+
+Please quote the reference: [[https://jobs.royalholloway.ac.uk/vacancy.aspx?ref=0120-023][0120-023]]
+
+Closing Date: 15 April 2020
+
+Interview Date: 9 June or 10 June
+
+/The College is committed to equality and diversity, and encourages applications from all sections of the community./
+#+end_quote
+
