@@ -1,0 +1,90 @@
+#+TITLE: The Approximate GCD Problem
+#+BLOG: martinralbrecht
+#+POSTID: 1737
+#+DATE: [2020-03-21 Sat 22:09]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography
+#+TAGS: agcd, lattice-based-cryptography, cryptography, homomorphic-encryption, 
+#+DESCRIPTION:
+
+Steven Galbraith once told me that he expects mathematicians to teach RSA long after the world has migrated to post-quantum algorithms; because it is so easy to explain. Arguably, LWE is easier to explain than RSA but the Approximate Greatest Common Divisors problem (AGCD) is even easier than that and requires only scalars. Thus, it is a nice post-quantum alternative for an undergraduate mathematics module. Someone should perhaps write an undergraduate mathematics textbook introducing cryptography using Approximate Common Divisors.
+
+#+HTML:<!--more-->
+
+** RSA
+
+To set a baseline, let’s start with recalling naive RSA.
+
+- *KeyGen.* The public key is $(N,e)$ and the private key is $d$, with
+
+  - $N = p \cdot q$ where $p$ and $q$ prime,
+  - $e$ coprime to $\phi(N) = (p-1)(q-1)$ and
+  - $d$ such that $e \cdot d \equiv 1 \mod{\phi(N)}$.
+
+- *Enc.* $c \equiv m^e \bmod{N}$
+
+- *Dec.* $m \equiv c^d \equiv m^{e \cdot d} \equiv m^{1} \bmod{N}$
+ 
+This naive version of RSA only achieves a basic form of security — OW-CPA — even against classical adversaries: it is hard to recover random messages when eavesdropping. Kids, always implement [[https://en.wikipedia.org/wiki/Optimal_asymmetric_encryption_padding][RSA-OAEP]]. It is easy to see that an adversary that can factor large integers can break RSA: knowing \(p\) and \(q\) permits to compute \(\phi(N)\) which permits to compute \(d\). (It should be noted, though, that this does not mean an adversary *has* to factor to solve RSA.) The best known classical algorithm for factoring is the [[https://en.wikipedia.org/wiki/General_number_field_sieve][Number Field Sieve]] (NFS). It has a *super-polynomial* but *sub-exponential* complexity of \[\mathcal{O}(e^{1.9 \kappa^{1/3} \log\kappa^{2/3}})\] operations. On the other hand, and this is the reason why we care about post-quantum cryptography, an adversary with access to a quantum computer with \[ \mathcal{O}(\kappa^2 \log\kappa \log\log\kappa)\] gates can factor $N$ using [[https://en.wikipedia.org/wiki/Shor%27s_algorithm][Shor’s algorithm]].
+
+** Greatest Common Divisors
+
+Now, to pivot to GCDs, what if two or more users generate moduli $N_0 = q_0 \cdot p$ and $N_1 = q_1 \cdot p$, i.e. [[https://dl.acm.org/doi/10.5555/2362793.2362828][moduli with shared factors]]? We assume that factoring each of $N_0$ or $N_1$ is hard, but computing $\mathrm{gcd}(N_0, N_1)$, i.e. the largest integer dividing both $N_0$ and $N_1$, reveals $p$ (or a small multiple). We can compute greatest common divisors using the *Euclidean algorithm*:
+
+#+BEGIN_SRC python
+def gcd(a, b):
+    if b == 0:
+        return a
+    else:
+        return gcd(b, a % b)
+#+END_SRC
+
+This algorithm runs in time $\mathcal{O}(\kappa^2)$ but the [[https://perso.ens-lyon.fr/damien.stehle/BINARY.html][best known algorithm]] runs in time $\mathcal{O}(\kappa \log^2 \kappa)$. For comparison, integer multiplication costs $\mathcal{O}(\kappa \log \kappa)$ using the [[https://hal.archives-ouvertes.fr/hal-02070778][Harvey and van der Hoeven]] algorithm. So computing GCDs is pretty fast.
+
+** Approximate Greatest Common Divisors
+
+Thus, computing GCDs can break RSA with poor randomness. On the other hand, adding a bit of noise to the problem – going from Greatest Common Divisors to Approximate Greatest Common Divisors – makes the problem (for all we know) hard, even on a quantum computer.
+
+The *Approximate GCD* problem is the problem of distinguishing \[x_i = q_i \cdot p  + r_i\] from uniform $\mathbb{Z} \cap [0, X)$ with $x_i < X$ (\(q_i\), \(r_i\) and \(p\) are secret). For the problem to be hard, we [[http://perso.ens-lyon.fr/damien.stehle/downloads/AGCD.pdf][require]] \(r_i \approx 2^\lambda\), \(p \approx 2^{\lambda + \log \lambda}\) and \(q \approx 2^{\lambda \log \lambda}\). 
+
+We can build public-key encryption from the AGCD problem as follows:
+- *KeyGen.* The public key is a bunch of AGCD samples where the errors are multiples of 2, i.e.  $\{x_i = q_i \cdot p + 2\,r_i\}_{0 \leq i < \tau}$ and the private key is $p$. It can be shown that all errors being multiples of two does not weaken security.
+
+- *Enc.* For $m \in \{0,1\}$ output $c = m + \sum b_i \cdot x_i$ with \(b_i \leftarrow_{\$} \{0,1\}\), i.e. do a random zero-one combination of the samples in the public key and add \(m\). This effectively samples a new AGCD sample and adds \(m\).
+
+- *Dec.* $m = (c \bmod p) \bmod 2$, i.e. take the ciphertext mod \(p\) which produces \(m + \sum b_i \cdot 2\,r_i\) and the take that mod 2 to recover \(m\).
+ 
+If the AGCD problem is hard then this encryption scheme is IND-CPA secure. That’s better than merely OW-CPA but to achieve security against active attacks we would need to apply a [[https://eprint.iacr.org/2017/604.pdf][generic transform]].
+
+** Solving AGCD
+
+How would we attempt to solve the AGCD problem? Following the mantra I first heard from Alexander May – first you try exhaustive search, then you try a time-memory trade-off, then you think – let’s start with exhaustive search.
+
+Given $x_0 = q_0 \cdot p + r_0$ and $x_1 = q_1 \cdot p + r_1$ we know that \[p \mid \gcd\left((x_0 - r_0), (x_1 - r_1)\right)\] and we can simply guess $r_0$ and $r_1$ which costs $2^{2\lambda}$ GCD computations. 
+
+Thus, under this attack would get way with smaller \(r_i\) but there is time-memory trade-off. The basic idea is the realisation that we can replace GCDs by multiplications, if \(a \mid b\) or \(a \mid c\) then we have \(a \mid b \cdot c\) and  \(a \mid (b \cdot c) \bmod a\). That is, we can compute \[\gcd\left(x_0', \prod_{i=0}^{2^\lambda-1} (x_1 - i) \bmod x_0'\right)\] for all guesses $x_0' = x_0 - j$ with $0 \leq j < 2^{\lambda-1}$. The cost of this is $2^\lambda$ GCD computations (yay!), $2^{2\lambda}$ multiplications (boo!), so it does not give us much of a saving. Yet, this can be extended to a [[https://link.springer.com/chapter/10.1007%2F978-3-642-29011-4_27][time-memory trade-off]] which recovers $p$ with overwhelming probability in time $\tilde{\mathcal{O}}(2^{\frac{\tau+1}{\tau-1}\cdot \rho})$. This is why we require \(r_i \approx 2^\lambda\).
+
+Finally, a lattice attack. Given \(x_0  = q_0 \cdot p + r_0\) and \(x_1  = q_1 \cdot p + r_1\), consider
+
+$$\begin{aligned}q_0 \cdot x_1 - q_1 \cdot x_0  &= q_0 \cdot (q_1 \cdot p + r_1) - q_1 \cdot (q_0 \cdot p + r_0)\\&=  q_0 \cdot q_1 \cdot p + q_0 \cdot r_1 - q_1 \cdot q_0 \cdot p - q_1 \cdot r_0\\& =  q_0 \cdot r_1 - q_1 \cdot r_0
+\end{aligned}$$
+
+and note that \(q_0 x_1 - q_1 x_0 \ll x_i\). So there is a linear combination of \(x_0\) and \(x_1\) that produces something small. This is all nice and well, but we don’t know which $q_i$ to pick! Still, let’s generalise this observation and write it down in matrix form.
+\[\mathbf{B} = \begin{pmatrix}
+2^{\lambda + 1}  & x_1  & x_2   & \cdots  & x_t\\
+              & -x_0 &       &         & \\
+              &      &  -x_0 &         & \\
+              &      &       &  \ddots & \\
+              &      &       &         &  -x_0\\
+\end{pmatrix}.\]
+As before, multiplying on the left by the vector $\mathbf{q} = (q_0, q_1, q_2, \cdots, q_t)$ gives
+\[\begin{aligned}\mathbf{v} &= (q_0, q_1, \cdots, q_t) \cdot \mathbf{B} \\&= (q_0\cdot 2^{\rho+1}, q_0 \cdot x_1 - q_1 \cdot x_0, \cdots, q_0 \cdot x_t - q_t \cdot x_0)\\&= (q_0\cdot 2^{\rho+1}, q_0 \cdot r_1 - q_1 \cdot r_0, \cdots, q_0 \cdot r_t - q_t r_0)\end{aligned}\]
+which is a vector with small coefficients compared to the $x_i$. 
+
+The set of all integer-linear combinations of the rows of matrix is called the *lattice* spanned by (the rows of) that matrix. Finding short vectors in lattices is assumed to be hard, even on a quantum computer. 
+
+While the above only sketches that we can break AGCD if we can find short vectors (similar to RSA and factoring), it is also possible to show that if you can solve the AGCD problem then we can also find short vectors in lattices (in contrast to RSA and factoring!). That is, if there is an algorithm efficiently solving the AGCD problem [[http://perso.ens-lyon.fr/damien.stehle/downloads/AGCD.pdf][then there exists]] an algorithm which solves the *Learning with Errors* problem with essentially the same performance. Then, second step, if there is an algorithm efficiently solving the LWE problem [[https://cims.nyu.edu/~regev/papers/qcrypto.pdf][then there exists]] a quantum algorithm which solves worst-case SIVP instances, i.e. finds short vectors in arbitrary lattices.
+
+** PS: Homomorphic encryption
+
+Given $c_i = q_i \cdot p + m_i'$ with $m_i' = 2\,r_i + m_i$, we can compute \[c' = c_0 \cdot c_1 = q_0 \cdot q_1 \cdot p^2 + q_0 \cdot m_1' \cdot p  + q_1 \cdot m_0' \cdot p + m_0' \cdot m_1'\] to get \(c' \bmod p =  m_0' \cdot m_1'\) and \( m_0' \cdot m_1' \bmod 2 = m_0 \cdot m_1 \bmod 2\). We can also compute \[c' = c_0 + c_1 = (q_0 + q_1) p + (m_0' + m_1')\] to get $c' \bmod p \bmod 2 = m_0 \oplus m_1$. That is, we can compute =AND= and =XOR= which suffice to build any gate. Thus, we can [[https://crypto.stanford.edu/craig/easy-fhe.pdf][compute on encrypted data]].
