@@ -5,6 +5,8 @@
 #+CATEGORY: 
 #+TAGS: 
 
+*Not maintained* See https://bitbucket.org/malb/talks/src/master/
+
 ** 2016
 
 - *15.08.2016* - [[https://bitbucket.org/malb/talks/src/98be83f5bab0480cfb39f424d2ec6bb5195bf13e/20160822%2520-%2520AGCD%2520-%2520BigO.pdf][Greatest Common Divisors: Attacks on RSA and Post-Quantum Security]] - [[http://www.meetup.com/big-o-london/][London Big-O Meetup]], [[https://skillsmatter.com/skillscasts/8301-greatest-common-divisors-attacks-on-rsa-and-post-quantum-security][Skills Matter CodeNode]], London, UK - [[https://bitbucket.org/malb/talks/src/d86e508ad93b/20160822%2520-%2520AGCD%2520-%2520BigO/?at=master][Org & LaTeX sources]], [[https://skillsmatter.com/skillscasts/8301-greatest-common-divisors-attacks-on-rsa-and-post-quantum-security][video]]
