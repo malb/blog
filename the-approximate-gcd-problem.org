@@ -62,7 +62,7 @@ How would we attempt to solve the AGCD problem? Following the mantra I first hea
 
 Given $x_0 = q_0 \cdot p + r_0$ and $x_1 = q_1 \cdot p + r_1$ we know that \[p \mid \gcd\left((x_0 - r_0), (x_1 - r_1)\right)\] and we can simply guess $r_0$ and $r_1$ which costs $2^{2\lambda}$ GCD computations. 
 
-Thus, under this attack would get way with smaller \(r_i\) but there is time-memory trade-off. The basic idea is the realisation that we can replace GCDs by multiplications, if \(a \mid b\) or \(a \mid c\) then we have \(a \mid b \cdot c\) and  \(a \mid (b \cdot c) \bmod a\). That is, we can compute \[\gcd\left(x_0', \prod_{i=0}^{2^\lambda-1} (x_1 - i) \bmod x_0'\right)\] for all guesses $x_0' = x_0 - j$ with $0 \leq j < 2^{\lambda-1}$. The cost of this is $2^\lambda$ GCD computations (yay!), $2^{2\lambda}$ multiplications (boo!), so it does not give us much of a saving. Yet, this can be extended to a [[https://link.springer.com/chapter/10.1007%2F978-3-642-29011-4_27][time-memory trade-off]] which recovers $p$ with overwhelming probability in time $\tilde{\mathcal{O}}(2^{\frac{\tau+1}{\tau-1}\cdot \rho})$. This is why we require \(r_i \approx 2^\lambda\).
+Thus, under this attack would get way with smaller \(r_i\) but there is time-memory trade-off. The basic idea is the realisation that we can replace GCDs by multiplications, if \(a \mid b\) or \(a \mid c\) then we have \(a \mid b \cdot c\) and  \(a \mid (b \cdot c) \bmod a\). That is, we can compute \[\gcd\left(x_0', \prod_{i=0}^{2^\lambda-1} (x_1 - i) \bmod x_0'\right)\] for all guesses $x_0' = x_0 - j$ with $0 \leq j < 2^{\lambda-1}$. The cost of this is $2^\lambda$ GCD computations (yay!), $2^{2\lambda}$ multiplications (boo!), so it does not give us much of a saving. Yet, this can be extended to a [[https://link.springer.com/chapter/10.1007%2F978-3-642-29011-4_27][time-memory trade-off]] which recovers $p$ with overwhelming probability in time $\tilde{\mathcal{O}}(2^{\frac{\tau+1}{\tau-1}\cdot \lambda})$. This is why we require \(r_i \approx 2^\lambda\).
 
 Finally, a lattice attack. Given \(x_0  = q_0 \cdot p + r_0\) and \(x_1  = q_1 \cdot p + r_1\), consider
 
@@ -78,7 +78,7 @@ and note that \(q_0 x_1 - q_1 x_0 \ll x_i\). So there is a linear combination of
               &      &       &         &  -x_0\\
 \end{pmatrix}.\]
 As before, multiplying on the left by the vector $\mathbf{q} = (q_0, q_1, q_2, \cdots, q_t)$ gives
-\[\begin{aligned}\mathbf{v} &= (q_0, q_1, \cdots, q_t) \cdot \mathbf{B} \\&= (q_0\cdot 2^{\rho+1}, q_0 \cdot x_1 - q_1 \cdot x_0, \cdots, q_0 \cdot x_t - q_t \cdot x_0)\\&= (q_0\cdot 2^{\rho+1}, q_0 \cdot r_1 - q_1 \cdot r_0, \cdots, q_0 \cdot r_t - q_t r_0)\end{aligned}\]
+\[\begin{aligned}\mathbf{v} &= (q_0, q_1, \cdots, q_t) \cdot \mathbf{B} \\&= (q_0\cdot 2^{\lambda+1}, q_0 \cdot x_1 - q_1 \cdot x_0, \cdots, q_0 \cdot x_t - q_t \cdot x_0)\\&= (q_0\cdot 2^{\lambda+1}, q_0 \cdot r_1 - q_1 \cdot r_0, \cdots, q_0 \cdot r_t - q_t r_0)\end{aligned}\]
 which is a vector with small coefficients compared to the $x_i$. 
 
 The set of all integer-linear combinations of the rows of matrix is called the *lattice* spanned by (the rows of) that matrix. Finding short vectors in lattices is assumed to be hard, even on a quantum computer. 
