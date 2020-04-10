@@ -6,6 +6,9 @@
 #+CATEGORY: cryptography
 #+TAGS: cryptography, job, crypto
 #+DESCRIPTION: Job advert for lecturer position in the ISG.
+
+*Unfortunately, recruitment for this post was stopped due to the uncertain financial position that UK universities are in at the moment.*
+
 The ISG is [[https://jobs.royalholloway.ac.uk/vacancy.aspx?ref=0120-023][recruiting]] a lecturer (≡ assistant professor in the US system, ≡ Juniorprofessor in the German system, ≡ Maître de conférences in the French system; that’s all the systems I know). This is a full-time, permanent research and teaching position. 
 
 Look, I know this is England post-Brexit but let me give you a personal pitch of why you should apply:
