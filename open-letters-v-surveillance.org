@@ -1,0 +1,76 @@
+#+TITLE: Open Letters v Surveillance
+#+BLOG: martinralbrecht
+#+POSTID: 1797
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography
+#+TAGS: cryptography, surveillance 
+#+DATE: [2020-05-03 Sun 18:30]
+
+A letter, signed by 177 scientists and researchers working in the UK in the fields of information security and privacy, reads:
+
+#+begin_quote
+“Echoing the [[https://drive.google.com/file/d/1OQg2dxPu-x-RZzETlpV3lFa259Nrpk1J/view][letter]] signed by 300 international leading researchers, we note that it is vital that,
+when we come out of the current crisis, we have not created a tool that enables data collection on
+the population, or on targeted sections of society, for surveillance. Thus, solutions which allow
+reconstructing invasive information about individuals must be fully justified.[fn:1] Such invasive
+information can include the ‘social graph’ of who someone has physically met over a period of time.
+With access to the social graph, a bad actor (state, private sector, or hacker) could spy on
+citizens' real-world activities.”
+#+end_quote
+
+Our letter[fn:2] stands in a tradition of similar letters and resolutions. For example, here is the “[[https://www.iacr.org/misc/statement-May2014.html][Copenhagen Resolution]]” of the International Association for Cryptologic Research (IACR), i.e. the professional body of cryptographers, from May 2014:
+
+#+begin_quote
+“The membership of the IACR repudiates mass surveillance and the undermining of cryptographic solutions and standards. Population-wide surveillance threatens democracy and human dignity. We call for expediting research and deployment of effective techniques to protect personal privacy against governmental and corporate overreach.”
+#+end_quote
+
+Both of these documents, in line with similar documents, treat privacy and surveillance rather abstractly. On the one hand, this has merit: many of us, including myself, are experts on the technology and can speak to that with authority. Also, getting people working on privacy to agree that privacy is important is straight forward, getting them to agree on /why/ is a much more difficult proposition. On the other hand, when we are making political interventions such as passing resolutions or writing open letters, I think we should also ask ourselves this question. I suspect we won’t all agree, but the added clarity might still be helpful.
+
+Similar considerations have been voiced in several works before, e.g.
+
+#+begin_quote
+“The counter-surveillance movement is timely and deserves widespread support. However, as this article will argue and illustrate, raising the specter of an Orwellian system of mass surveillance, shifting the discussion to the technical domain, and couching that shift in economic terms undermine a political reading that would attend to the racial, gendered, classed, and colonial aspects of the surveillance programs. Our question is as follows: how can this specific discursive framing of counter-surveillance be re-politicized and broadened to enable a wider societal debate informed by the experiences of those subjected to targeted surveillance and associated state violence?” – Seda Gürses, Arun Kundnani & Joris Van Hoboken. [[https://journals.sagepub.com/doi/abs/10.1177/0163443716643006][Crypto and empire: the contradictions of counter-surveillance advocacy]] in /Media, Culture & Society/, 38(4), 576–590. 2016
+#+end_quote
+
+and
+
+#+begin_quote
+“History teaches that extensive governmental surveillance becomes politicalin character. As civil-rights attorney Frank Donner and the Church Commission reports thoroughly document, domestic surveillance under U.S. FBI director J. Edgar Hoover served as a mechanism to protect the status quo and neutralize change movements. Very little of the FBI’s surveillance-related efforts were directed at law-enforcement: as the activities surveilled were rarely illegal, unwelcome behavior would result in sabotage, threats, blackmail, and inappropriate prosecutions, instead. For example, leveraging audio surveillance tapes, the FBI’s attempted to get Dr. Martin Luther King, Jr., to kill himself. U.S. universities were thoroughly infiltrated with informants: selected students, faculty, staff, and administrators would report to an extensive network of FBI handlers on anything political going on on campus. The surveillance of dissent became an institutional pillar for maintaining political order. The U.S. COINTELPRO program would run for more than 15 years, permanently reshaping the U.S. political landscape.” – Phillip Rogaway, [[https://ia.cr/2015/1162][The moral character of cryptographic work]] in /Cryptology ePrint Archive/. 2016
+#+end_quote 
+
+The pertinent question then is what surveillance is /for/. For an answer we have to look no further than GCHQ’s page about the Investigatory Powers Act 2016, which “predominantly governs” its mission:
+
+#+begin_quote
+“Before an interception warrant can be issued, the Secretary of State must believe that a warrant is necessary on certain, limited grounds, and that the interception is proportionate to what it seeks to achieve. 
+
+These grounds are that interception is necessary: 
+- In the interests of national security; or 
+- In the interests of the economic well-being of the UK; or 
+- In support of the prevention or detection of serious crime” – GCHQ. [[https://www.gchq.gov.uk/information/investigatory-powers-act][Investigatory Powers Act]]. 2019
+#+end_quote
+
+To unpack what this means in detail, we can recall how and when the means of surveillance have been deployed in recent history, by GCHQ and other departments of the British State. A programme that might cover all three aspects was GCHQ’s Tempora programme which tapped into [[https://www.theguardian.com/uk/2013/jun/21/gchq-cables-secret-world-communications-nsa][fibre-optic cables for secret access to the world's communications]]. Similarly, [[https://www.bbc.co.uk/news/technology-31619907][hacking the SIM manufacturer Gemalto]] would also cover all three. [[https://www.telegraph.co.uk/news/worldnews/europe/germany/11956338/Germany-investigates-alleged-GCHQ-spying-in-Angela-Merkels-office.html][Spying on the German government]] is probably one for the economic well-being of the UK. Similarly, the London Metropolitan Police working with construction firms to [[https://www.theguardian.com/uk-news/2018/mar/23/officers-likely-to-have-passed-personal-files-to-blacklisters-says-met][blacklist trade unionists]] would fall into that category. UK intelligence services [[https://privacyinternational.org/press-release/2283/press-release-uk-intelligence-agency-admits-unlawfully-spying-privacy][spying on Privacy International]], [[https://www.spycops.co.uk/][police officers infiltrating]] [[https://en.wikipedia.org/wiki/Bob_Lambert_(undercover_police_officer)][Greenpeace]] and [[https://www.theguardian.com/uk-news/2018/oct/15/undercover-police-spies-infiltrated-uk-leftwing-groups-for-decades][other activist groups]], and [[https://www.theguardian.com/uk/2009/oct/25/police-domestic-extremists-database][databases of activists]] are plausibly done in the name of national security. The stop and search policy tackles, amongst other things, the serious crime of [[https://www.theguardian.com/law/2019/may/04/stop-and-search-new-row-racial-bias][walking while black]].
+
+When we write that “solutions which allow reconstructing invasive information about individuals must be fully justified” it is worth to pay close attention to the justifications offered and to ask: justified to whom and by what standard.
+
+* Appendix: The letter in full
+
+We, the undersigned, are scientists and researchers working in the UK in the fields of information security and privacy. We are concerned about plans by NHSX to deploy a contact tracing application. We urge that the health benefits of a digital solution be analysed in depth by specialists from all relevant academic disciplines, and sufficiently proven to be of value to justify the dangers involved.
+
+A contact tracing application is a mobile phone application which records, using Bluetooth, the contacts between individuals, in order to detect a possible risk of infection. Such applications, by design, come with risks for privacy and medical confidentiality which can be mitigated more or less well, but not completely, depending on the approach taken in their design. We believe that any such application will only be used in the necessary numbers if it gives reason to be trusted by those being asked to install it.
+
+It has been reported that NHSX is discussing an approach which records centrally the de-anonymised ID of someone who is infected and also the IDs of all those with whom the infected person has been in contact. This facility would enable (via mission creep) a form of surveillance. Echoing the [[https://drive.google.com/file/d/1OQg2dxPu-x-RZzETlpV3lFa259Nrpk1J/view][letter]] signed by 300 international leading researchers, we note that it is vital that, when we come out of the current crisis, we have not created a tool that enables data collection on the population, or on targeted sections of society, for surveillance. Thus, solutions which allow reconstructing invasive information about individuals must be fully justified. Such invasive information can include the “social graph” of who someone has physically met over a period of time. With access to the social graph, a bad actor (state, private sector, or hacker) could spy on citizens' real-world activities. We are particularly unnerved by a declaration that such a social graph is indeed aimed for by NHSX.
+
+We understand that the current proposed design is intended to meet the requirements set out by the public health teams, but we have seen conflicting advice from different groups about how much data the public health teams need. We hold that the usual data protection principles should apply: collect the minimum data necessary to achieve the objective of the application. We hold it is vital that if you are to build the necessary trust in the application the level of data being collected is justified publicly by the public health teams demonstrating why this is truly necessary rather than simply the easiest way, or a “nice to have”, given the dangers involved and invasive nature of the technology.
+
+We welcome the NHSX commitment to transparency, and in particular Matthew Gould's commitment made to the Science & Technology committee on 28 April that the data protection impact assessment (DPIA) for the contact tracing application will be published. We are calling on NHSX to publish the DPIA immediately, rather than just before deployment, to enable (a) public debate about its implications and (b) public scrutiny of the security and privacy safeguards put in place.
+
+We are also asking NHSX to, at a minimum, publicly commit that there will not be a database or databases, regardless of what controls are put in place, that would allow de-anonymization of users of its system, other than those self reporting as infected, to enable the data to be used for building, for example, social graphs.
+
+Finally, we are asking NHSX how it plans to phase out the application after the pandemic has passed to prevent mission creep.
+
+* Footnotes
+
+[fn:1] It is worth noting that this sentence does not, in fact, echo the international letter. Where the UK letter asks to justify such invasions, the international letter outright rejects them “without further discussion”. I think the international letter is better on this point.
+
+[fn:2] I should note that I was involved in coordinating and drafting that letter and that I signed the “letter signed by 300 international leading researchers”.
