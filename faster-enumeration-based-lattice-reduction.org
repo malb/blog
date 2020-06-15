@@ -1,0 +1,48 @@
+#+TITLE: Faster Enumeration-based Lattice Reduction
+#+BLOG: martinralbrecht
+#+POSTID: 1804
+#+DATE: [2020-06-12 Fri 14:55]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography
+#+TAGS: lattice-reduction, lattices, lattice-based-cryptography, 
+#+DESCRIPTION: 
+
+Our paper “Faster Enumeration-based Lattice Reduction: Root Hermite Factor \(k^{1/(2k)}\) in Time \(k^{k/8\, +\, o(k)}\)” – together with Shi Bai, Pierre-Alain Fouque, Paul Kirchner, Damien Stehlé and Weiqiang Wen – is now available on [[https://ia.cr/2020/707][ePrint]] (the work has been accepted to [[https://crypto.iacr.org/][CRYPTO 2020]]). Here’s the abstract:
+
+#+begin_quote
+We give a lattice reduction algorithm that achieves root Hermite factor \(k^{1/(2k)}\) in time \(k^{k/8 + o(k)}\) and polynomial memory. This improves on the previously best known enumeration-based algorithms which achieve the same quality, but in time \(k^{k/(2e) + o(k)}\). A cost of  \(k^{k/8 + o(k)}\) was previously mentioned as potentially achievable (Hanrot-Stehlé’10) or as a heuristic lower bound (Nguyen'10) for enumeration algorithms. We prove the complexity and quality of our algorithm under a heuristic assumption and provide empirical evidence from simulation and implementation experiments attesting to its performance for practical and cryptographic parameter sizes. Our work also suggests potential avenues for achieving costs below \(k^{k/8 + o(k)}\) for the same root Hermite factor, based on the geometry of SDBKZ-reduced bases.
+#+end_quote
+
+#+HTML:<!--more-->
+
+Concretely, this work reduces the cost of enumeration-based, i.e. polynomial memory, BKZ-k in dimension \(d\) from 
+\(\textrm{poly}(d) \cdot 2^{1/(2e)\, k\log k -k + 16}\)
+to
+\[\textrm{poly}(d) \cdot 2^{1/8\, k\log k - 0.547k + 10.4}.\] In the plot below “Alg. 3” is our new algorithm (well, our “practical variant”), “Fig. 2” refers to the \(k^{1/(2e)\,k + o(k)}\) cost and “Alg. 3, free preprocessing” is a plausible lower bound for our new “practical-variant” algorithm.
+
+[[./faster-enumeration-based-lattice-reduction-performance.png]]
+
+Speaking of lower bounds, if we assume free preprocessing then we can go even below the leading constant of \(1/8\) which was previously established as heuristic lower bound for enumeration-based algorithms:
+
+[[./faster-enumeration-based-lattice-reduction-lower-bounds.png]]
+
+The key idea behind our algorithm is that enumerating over a typical HKZ shape (red-ish part in the plot below) has cost \(k^{1/(2e)\,k + o(k)}\) but enumerating over a shape corresponding to the Geometric Series Assumption (GSA, green-ish part in the plot below) has cost  \(k^{1/8\,k + o(k)}\).
+
+[[./faster-enumeration-based-lattice-reduction-idea-0.png]]
+
+Thus, we need to make sure enumeration sees something more like the green-ish shape rather than the red-ish shape. To make that happen in (SD)BKZ, we preprocess a larger block than we enumerate over to push the “not so nice” part out of the enumeration window (FWIW I pitched the name “procrastinating BKZ” for that to my coauthors but they weren’t convinced):
+
+[[./faster-enumeration-based-lattice-reduction-idea-1.png]]
+
+Btw. the two slides above are from [[https://simons.berkeley.edu/talks/clone-quantum-algorithms-algebraic-lattices-pip][my talk]] at the Simon’s Institute where I explained (amongst other things) the key idea behind our algorithm.
+
+Now, to explain how we can beat \(1/8\) (assuming free preprocessing!) note that the beginning of the red-ish typical HKZ shape is flatter (i.e. “nicer”) than the green-ish GSA part. Thus, the optimal choice is to enumerate over a mix of those two. However, while we know how to recursively produce a GSA shape to achieve \(1/8\), we do not know how to do the same to produce the shape for a complexity of \(< 1/8\).
+
+*PS:* The [[https://ia.cr/2020/707][ePrint paper]] not only contains all the raw data in our plots as an attachment but also the [[https://github.com/fplll/fpylll][FPyLLL]]-based source code of our simulations and implementations.
+
+# ./faster-enumeration-based-lattice-reduction-performance.png http://martinralbrecht.files.wordpress.com/2020/06/faster-enumeration-based-lattice-reduction-performance.png
+
+# ./faster-enumeration-based-lattice-reduction-lower-bounds.png http://martinralbrecht.files.wordpress.com/2020/06/faster-enumeration-based-lattice-reduction-lower-bounds.png
+
+# ./faster-enumeration-based-lattice-reduction-idea-0.png http://martinralbrecht.files.wordpress.com/2020/06/faster-enumeration-based-lattice-reduction-idea-0.png
+# ./faster-enumeration-based-lattice-reduction-idea-1.png http://martinralbrecht.files.wordpress.com/2020/06/faster-enumeration-based-lattice-reduction-idea-1.png
