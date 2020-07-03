@@ -1,0 +1,55 @@
+#+BLOG: martinralbrecht
+#+POSTID: 1833
+#+DATE: [2020-06-26 Fri 12:39]
+#+TITLE: Postdoc at Royal Holloway on Lattice-based Cryptography
+#+BLOG: martinralbrecht
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography
+#+TAGS: job, postdoc, lattice-based-cryptography, lattices, 
+#+DESCRIPTION:
+
+We are looking for a postdoc to join us to work on lattice-based cryptography. This postdoc is funded by the EU H2020 [[http://prometheuscrypt.gforge.inria.fr][PROMETHEUS]] project for building privacy preserving systems from advanced lattice primitives. At Royal Holloway, the project is looked after by Rachel Player and me. Feel free to e-mail me with any queries you might have.
+
+The ISG is a nice place to work; it’s a very friendly environment with strong research going on in several areas. We got people working across the field of information security including several people working on cryptography. A postdoc here is a 100% research position, i.e. you wouldn’t have teaching duties. That said, if you’d like to gain some teaching experience, we can arrange for that as well.
+
+Also, if you have e.g. a [[https://en.wikipedia.org/wiki/Two-body_problem_(career)][two-body problem]] and would like to discuss flexibility about being in the office (assuming we’ll all be back in the office at some post-covid19 point), feel free to get in touch.
+
+#+HTML:<!--more-->
+
+#+BEGIN_QUOTE
+| Location:       | Egham                                          |
+| Salary:         | £42,456 per annum - including London Allowance |
+| Closing Date:   | Friday 24 July 2020                            |
+| Interview Date: | To be confirmed                                |
+| Reference:      | 0620-149                                       |
+
+Full-Time, Fixed-Term
+
+The ISG is seeking to recruit a post-doctoral research assistant to work in the area of cryptography. The position is available now until 1 June 2022.
+
+The PDRA will work alongside Dr. Martin Albrecht, Dr. Rachel Player and other cryptographic researchers at Royal Holloway on topics in lattice-based cryptography. This post is part of the EU H2020 PROMETHEUS project (http://prometheuscrypt.gforge.inria.fr) for building privacy preserving systems from advanced lattice primitives. Our research focus within this project is on cryptanalysis and implementations, but applicants with a strong background in other areas such as protocol/primitive design are also encouraged to apply.
+
+Applicants should have already completed, or be close to completing, a PhD in a relevant discipline. Applicants should have an outstanding research track record in cryptography. Applicants should be able to demonstrate scientific creativity, research independence, and the ability to communicate their ideas effectively in written and verbal form.
+
+In return we offer a highly competitive rewards and benefits package including:
+
+- Generous annual leave entitlement 
+- Training and Development opportunities
+- Pension Scheme with generous employer contribution
+- Various schemes including Cycle to Work, Season Ticket Loans and help with the cost of Eyesight testing. 
+- Free parking 
+
+The post is based in Egham, Surrey where the College is situated in a beautiful, leafy campus near to Windsor Great Park and within commuting distance from London.
+
+We particularly welcome applicants from backgrounds which are typically under-represented in cryptography. We are committed to enabling a healthy work-life balance.
+
+For an informal discussion about the post, please contact Martin Albrecht on Martin.Albrecht@rhul.ac.uk.
+
+To view further details of this post and to apply please visit https://jobs.royalholloway.ac.uk. For queries on the application process the Human Resources Department can be contacted by email at: recruitment@rhul.ac.uk
+
+Please quote the reference: 0620-149
+
+Closing Date:   *Midnight, 24 July 2020*
+
+Interview Date: TBC
+#+END_QUOTE

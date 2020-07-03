@@ -1,0 +1,63 @@
+#+TITLE: SSH++
+#+BLOG: martinralbrecht
+#+POSTID: 1829
+#+DATE: [2020-06-25 Thu 16:50]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY:
+#+TAGS: emacs, ssh
+
+My research often has a computational component which means logging into one of my servers, kicking off a long running computation, waiting a few days and recovering the output. Here’s how I, inspired by Filippo Valsorda’s [[https://blog.filippo.io/my-remote-shell-session-setup/][post]], addressed some of the pain points with this sort thing.
+
+#+HTML:<!--more-->
+
+To keep jobs running when logging off, I – like most people these days – use [[https://github.com/tmux/tmux/wiki][tmux]]. Here’s my =.tmux.conf=
+
+#+begin_src conf
+new-session
+
+# shell
+set -g default-command /bin/zsh
+set -g default-shell /bin/zsh
+
+# source config file
+bind r source-file ~/.tmux.conf
+
+# history
+set -g history-limit 20000
+
+bind-key P command-prompt -p 'save history to filename:' -I '~/tmux.history' 'capture-pane -S -32768 ; save-buffer %1 ; delete-buffer'
+#+end_src
+
+The key line for what’s to follow is =new-session=, i.e. =tmux= will automatically create a new session if there isn’t one already when calling =tmux attach=.
+
+To talk to the hosts, I – again, like many people these days – use [[https://mosh.org/][mosh]] which handles connection drops gracefully. Thus, switching WiFi networks doesn’t mean my SSH session dies.
+
+Combining the two above, I can call:
+#+begin_src shell
+mosh $HOSTNAME -- tmux a
+#+end_src
+which =mosh=​es into =$HOSTNAME= and calls =tmux a= there. Since this is too much type I have a shell script
+#+begin_src shell
+##!/usr/bin/env bash
+mosh $1 -- tmux a
+#+end_src
+which I call =motu=. To make this behave as well as =mosh= and =ssh= in terms of tab completion, my =.zshrc= contains
+#+begin_src conf
+compdef motu=ssh
+#+end_src
+which instructs [[https://www.zsh.org/][ZSH]] to use completions from =ssh= for =motu=. Now, typing =motu strombenzin= logs me into my server =strombenzin= with either a =tmux= session being created or with being dropped into the previous one. To “log out” I do =Ctrl-b d=, i.e. I simply detach the tmux session.
+
+Finally, being an [[https://www.gnu.org/software/emacs/][emacs]] users, I create a bunch of emacs commands to do the same from within emacs
+#+begin_src lisp
+(dolist (server-name '("strombenzin"
+                       …
+                       …))
+
+  (fset (intern (format "mosh/%s" server-name))
+        (malb/make-toggle-shell
+         (format "*mosh:%s*" server-name)
+         `(progn
+            (let ((vterm-shell (format "mosh %s -- tmux a" ,server-name)))
+              (vterm (format "*mosh:%s*" server-name)))))))
+#+end_src
+which creates commands such as =mosh/strombenzin= (=malb/make-toggle-shell= is from my emacs [[https://github.com/malb/emacs.d/blob/master/malb.org#L3530][configuration]]).
