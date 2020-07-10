@@ -1,7 +1,7 @@
+#+TITLE: Postdoc at Royal Holloway on Lattice-based Cryptography
 #+BLOG: martinralbrecht
 #+POSTID: 1833
 #+DATE: [2020-06-26 Fri 12:39]
-#+TITLE: Postdoc at Royal Holloway on Lattice-based Cryptography
 #+BLOG: martinralbrecht
 #+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
 #+CATEGORY: cryptography
