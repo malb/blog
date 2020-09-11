@@ -1,0 +1,176 @@
+#+TITLE: Conda, Jupyter and Emacs
+#+DATE: [2020-08-23 Sun 14:03]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: emacs
+#+TAGS: emacs, python, jupyter, conda, g6k
+#+POSTID: 1851
+
+[[https://jupyter.org/][Jupyter]] is great. Yet, I find myself missing all the [[https://github.com/malb/emacs.d][little tweaks]] I made to Emacs whenever I have Jupyter open in a browser. The obvious solution is to have Jupyter in Emacs. One solution is [[https://github.com/millejoh/emacs-ipython-notebook][EIN]], the Emacs IPython Notebook. However, I had a mixed experience with it: it would often hang and eat up memory (I never bothered to try to debug this behaviour). A neat alternative, for me, is [[https://github.com/nnicandro/emacs-jupyter][emacs-jupyter]]. Here’s my setup.
+
+#+HTML:<!--more-->
+
+* Virtual Environments with Conda
+
+I’ve moved my [[https://realpython.com/python-virtual-environments-a-primer/][Python virtual environments]] over to [[https://docs.conda.io/en/latest/][conda]]. [[https://virtualenv.pypa.io/en/stable/][Virtualenv]] in combination with [[https://virtualenvwrapper.readthedocs.io/en/latest/][virtualenvwrapper]] has served me well, but my projects often also involve some C/C++ libraries such as [[https://github.com/fplll/fplll][FPLLL]] for which conda is a better choice. The [[https://github.com/fplll/fpylll#getting-started][FPyLLL virtualenv instructions]] are pretty hacky and this sort of hackery can be avoided by using conda.
+
+The official [[https://docs.conda.io/projects/conda/en/latest/user-guide/install/rpm-debian.html][installation instructions]] for Debian are:
+#+begin_src shell
+# Install our public GPG key to trusted store
+curl https://repo.anaconda.com/pkgs/misc/gpgkeys/anaconda.asc | gpg --dearmor > conda.gpg
+install -o root -g root -m 644 conda.gpg \
+        /usr/share/keyrings/conda-archive-keyring.gpg
+
+# Check whether fingerprint is correct (will output an error message otherwise)
+gpg --keyring /usr/share/keyrings/conda-archive-keyring.gpg \
+    --no-default-keyring --fingerprint 34161F5BF5EB1D4BFBBB8F0A8AEB4F8B29D82806
+
+# Add our Debian repo
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/conda-archive-keyring.gpg] https://repo.anaconda.com/pkgs/misc/debrepo/conda stable main" \
+     > /etc/apt/sources.list.d/conda.list
+apt update
+apt install conda
+#+end_src
+
+This will install conda in =/opt/conda/=. You will need to add =source /opt/conda/etc/profile.d/conda.sh= to your shell’s init files to get the =conda= command etc in your =PATH=. In addition, if you’re running [[https://github.com/ohmyzsh/ohmyzsh][oh-my-zsh]] you may want to install [[https://github.com/esc/conda-zsh-completion][conda-zsh-completion]]. Run
+#+begin_src shell
+git clone https://github.com/esc/conda-zsh-completion \
+    ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/conda-zsh-completion
+#+end_src
+then add =plugins=(… conda-zsh-completion)= and  =autoload -U compinit && compinit= to your =~/.zshrc= to enable tab completion for commands and environments.
+
+Creating an environment for, say, [[https://github.com/fplll/g6k][G6K]] development then is as easy as
+#+begin_src shell
+conda create -n g6k python=3.7 fpylll
+conda activate g6k
+git clone https://github.com/fplll/g6k
+cd g6k
+conda install --file requirements.txt
+./rebuild.sh
+python setup.py install
+conda install jupyter # optional
+#+end_src
+
+Note that you can also install [[https://www.sagemath.org/][SageMath]] using conda ([[https://doc.sagemath.org/html/en/installation/conda.html][but this can be slow]]).
+
+* Jupyter Kernels in one Place
+
+Now, a [[https://janakiev.com/blog/jupyter-virtual-envs/][cool thing you can do]] with Jupyter and virtual environments is to add the different virtual environments as Jupyter kernels. In particular, running 
+#+begin_src shell
+python -m ipykernel install --user --name=$CONDA_DEFAULT_ENV
+#+end_src
+inside your conda environment will install a kernel of the same name, e.g. my =~/.local/share/jupyter/kernels/g6k/kernel.json= reads:
+#+begin_src json
+{
+    "argv": [
+        "/HOME-DIR/.conda/envs/g6k/bin/python",
+        "-m", "ipykernel_launcher",
+        "-f", "{connection_file}"
+    ],
+    "display_name": "g6k",
+    "language": "python"
+}                    
+#+end_src
+To list your kernels, run =jupyter kernelspec list=. To remove the kernel named =foo=, run: =jupyter kernelspec uninstall foo=.
+
+This also works for Sage. To install a SageMath kernel run:
+#+begin_src shell
+jupyter kernelspec install --user $SAGE_ROOT/local/share/jupyter/kernels/sagemath
+#+end_src
+from inside =sage -sh= (this can take a while because it copies 1.7GB of documentation for some reason). You’ll then need to fix
+#+begin_src diff
+{
+    "argv":
+    [
+-        "YOUR-SAGE-ROOT/local/bin/sage",
++        "YOUR-SAGE-ROOT/sage",
+        "--python", "-m", "sage.repl.ipython_kernel",
+        "-f", "{connection_file}"
+    ],
+    "display_name": "SageMath 9.1", "language": "sage"
+} 
+#+end_src
+and you’re set. 
+
+After doing this, you can run =jupyter console --kernel=sagemath= or =jupyter console --kernel=g6k= to open an iPython shell for your environment without activating a conda virtual environment first. 
+* Emacs
+
+Time to hook this all into Emacs.
+
+For conda, I use [[https://github.com/necaris/conda.el][conda.el]]. My [[https://github.com/malb/emacs.d/blob/master/malb.org#virtual-environments][config]] is pretty straight forward:
+#+begin_src emacs-lisp
+(use-package conda
+  :config (progn
+            (conda-env-initialize-interactive-shells)
+            (conda-env-initialize-eshell)
+            (conda-env-autoactivate-mode t)
+            (setq conda-env-home-directory (expand-file-name "~/.conda/"))
+            (custom-set-variables '(conda-anaconda-home "/opt/conda/"))))
+#+end_src
+Then, in each project related to G6K, I have a =.dir-locals.el= file containing =((nil . ((conda-project-env-path . "g6k"))))= which is then picked up by =conda-env-autoactivate-mode= to activate the “g6k” conda environment. I’ve also [[https://github.com/malb/emacs.d/blob/master/malb.org#modeline][added a segment]] to the [[https://github.com/seagle0128/doom-modeline][doom-modeline]] to show the current conda environment and tweaked my toggle shells to automatically [[https://github.com/malb/emacs.d/blob/master/malb.org#vterm][activate the right conda environment]] ([[https://github.com/malb/emacs.d/blob/master/malb.org#python-1][same]] for Python shells, which I should migrate over to emacs-jupyter).
+
+Next, to make use of [[https://github.com/nnicandro/emacs-jupyter][emacs-jupyter]], we need Emacs built with support for [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Dynamic-Modules.html][dynamic modules]]. Debian does not currently ship binaries which fulfil this criterion, so we need to build our own.
+
+1. Get the sources with =apt source -t unstable emacs=
+2. Enable modules in =/debian/rules=
+   #+begin_src diff
+confflags += --with-sound=alsa
++confflags += --with-modules
+confflags += --without-gconf
+   #+end_src
+3. Add a new version number with =dch --local malb=
+4. Build with =dpkg-buildpackage -us -uc=
+5. Install the produced Debian packages
+
+My config then is again pretty simple:
+#+begin_src emacs-lisp
+(use-package jupyter
+  :commands (jupyter-run-server-repl
+             jupyter-run-repl
+             jupyter-server-list-kernels)
+  :init (eval-after-load 'jupyter-org-extensions ; conflicts with my helm config, I use <f2 #>
+          '(unbind-key "C-c h" jupyter-org-interaction-mode-map)))
+#+end_src
+
+This already gives you a Jupyter [[https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop][REPL]] (i.e. what iPython used to be) for each of the kernels we installed above: upon running =jupyter-run-repl= you’re prompted with a choice of kernels. This repl is rich. For example, typing =plot(sin(x) 0, 2*pi)= into a SageMath kernel will show the plot in the Emacs buffer directly.
+
+Finally, to get that Jupyter notebook feeling, we can make use of the [[https://orgmode.org/worg/org-contrib/babel/][org-babel]] integration of emacs-jupyter. My babel config is
+#+begin_src emacs-lisp
+(use-package ob
+  :ensure nil
+  :config (progn
+            ;; load more languages for org-babel
+            (org-babel-do-load-languages
+             'org-babel-load-languages
+             '((python . t)
+               (shell . t)
+               (latex . t)
+               (ditaa . t)
+               (C . t)
+               (dot . t)
+               (plantuml . t)
+               (makefile . t)
+               (jupyter . t)))          ; must be last
+
+            (setq org-babel-default-header-args:sh    '((:results . "output replace"))
+                  org-babel-default-header-args:bash  '((:results . "output replace"))
+                  org-babel-default-header-args:shell '((:results . "output replace"))
+                  org-babel-default-header-args:jupyter-python '((:async . "yes")
+                                                                 (:session . "py")
+                                                                 (:kernel . "sagemath")))
+
+            (setq org-confirm-babel-evaluate nil
+                  org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar"
+                  org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
+
+            (add-to-list 'org-src-lang-modes (quote ("plantuml" . plantuml)))))
+#+end_src
+which enable to type type code into jupyter blocks (with tab completion etc) into org-mode files, e.g.
+#+begin_example
+,#+begin_src jupyter-python :kernel sagemath
+2^3
+,#+end_src
+
+,#+RESULTS:
+: 8
+#+end_example
+Again, the interface is a rich interface, showing plots etc in the buffer directly. To create new blocks, to move them around, etc. there is =jupyter-org-hydra/body= which I’ve bound to =<f2> #=.
