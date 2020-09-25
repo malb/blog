@@ -8,7 +8,9 @@
 #+TAGS: job, postdoc, lattice-based-cryptography, lattices, 
 #+DESCRIPTION:
 
-We are looking for a [[https://jobs.royalholloway.ac.uk/vacancy.aspx?ref=0620-149][postdoc]] to join us to work on lattice-based cryptography. This postdoc is funded by the EU H2020 [[http://prometheuscrypt.gforge.inria.fr][PROMETHEUS]] project for building privacy preserving systems from advanced lattice primitives. At Royal Holloway, the project is looked after by Rachel Player and me. Feel free to e-mail me with any queries you might have.
+*Update: 25/09/2020: New deadline: 30 October.*
+
+We are looking for a [[https://jobs.royalholloway.ac.uk/vacancy.aspx?ref=0620-149-R][postdoc]] to join us to work on lattice-based cryptography. This postdoc is funded by the EU H2020 [[http://prometheuscrypt.gforge.inria.fr][PROMETHEUS]] project for building privacy preserving systems from advanced lattice primitives. At Royal Holloway, the project is looked after by Rachel Player and me. Feel free to e-mail me with any queries you might have.
 
 The ISG is a nice place to work; it’s a very friendly environment with strong research going on in several areas. We got people working across the field of information security including several people working on cryptography. A postdoc here is a 100% research position, i.e. you wouldn’t have teaching duties. That said, if you’d like to gain some teaching experience, we can arrange for that as well.
 
@@ -19,9 +21,9 @@ Also, if you have e.g. a [[https://en.wikipedia.org/wiki/Two-body_problem_(care
 #+BEGIN_QUOTE
 | Location:       | Egham                                          |
 | Salary:         | £42,456 per annum - including London Allowance |
-| Closing Date:   | Friday 24 July 2020                            |
+| Closing Date:   | Friday 30 October 2020                                                 |
 | Interview Date: | To be confirmed                                |
-| Reference:      | [[https://jobs.royalholloway.ac.uk/vacancy.aspx?ref=0620-149][0620-149]]                                       |
+| Reference:      | [[https://jobs.royalholloway.ac.uk/vacancy.aspx?ref=0620-149-R][0620-149-R]]                                       |
 
 Full-Time, Fixed-Term
 
@@ -47,9 +49,9 @@ For an informal discussion about the post, please contact Martin Albrecht on Mar
 
 To view further details of this post and to apply please visit https://jobs.royalholloway.ac.uk. For queries on the application process the Human Resources Department can be contacted by email at: recruitment@rhul.ac.uk
 
-Please quote the reference: 0620-149
+Please quote the reference: *0620-149-R*
 
-Closing Date:   *Midnight, 24 July 2020*
+Closing Date:   *Midnight, 30 October 2020*
 
-Interview Date: TBC
+Interview Date: *TBC*
 #+END_QUOTE

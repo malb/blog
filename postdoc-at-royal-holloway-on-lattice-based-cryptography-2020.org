@@ -1,0 +1,44 @@
+#+TITLE: Postdoc at Royal Holloway on Lattice-based Cryptography
+#+BLOG: martinralbrecht
+#+POSTID: 1867
+#+DATE: [2020-09-17 Thu 17:13]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography
+#+TAGS: postdoc, job, lattice-based-cryptography, lattices, coding-theory, 
+#+DESCRIPTION:
+I’m looking for a postdoc to work with me and others – in the ISG and at Imperial College – on lattice-based cryptography and, ideally, its connections to coding theory.
+
+The ISG is a nice place to work; it’s a friendly environment with strong research going on in several areas. We got people working across the field of information security including several people working on cryptography. For example, [[https://pure.royalholloway.ac.uk/portal/en/persons/carlos-cid(a447674c-2c08-47a2-b318-57e3acc2bb66).html][Carlos Cid]], [[https://pure.royalholloway.ac.uk/portal/en/persons/anamaria-costache(032e770d-49a5-4298-b1e8-3ebac848daaa).html][Anamaria Costache]], [[https://pure.royalholloway.ac.uk/portal/en/persons/lydia-garms(ec9a8f31-8c97-40a5-bc37-82f2dd5f3fc5).html][Lydia Garms]], [[https://pure.royalholloway.ac.uk/portal/en/persons/jianwei-li(c48f9510-94ec-4976-9327-16cc608b03bb).html][Jianwei Li]], [[https://pure.royalholloway.ac.uk/portal/en/persons/sean-murphy(56b0d9f3-43d0-445a-88a3-266ccb8ae1dd).html][Sean Murphy]], [[https://pure.royalholloway.ac.uk/portal/en/persons/rachel-player(b3ea6a8b-0f94-41d7-9f89-7c93189d7781).html][Rachel Player]], [[https://pure.royalholloway.ac.uk/portal/en/persons/eamonn-postlethwaite(124eb90c-f5f3-4f6a-86f6-f75b4962bffe).html][Eamonn Postlethwaite]], [[https://pure.royalholloway.ac.uk/portal/en/persons/joe-rowell(01e6cf67-2447-49f8-9575-a60b42bda066).html][Joe Rowell]], [[https://pure.royalholloway.ac.uk/portal/en/persons/fernando-virdia(4ad6e099-9f70-4a5d-b0ac-cc37dd176547).html][Fernando Virdia]] and [[https://pure.royalholloway.ac.uk/portal/en/persons/martin-albrecht(ab997512-d7f9-4d99-92e1-33967032502b).html][me]] all have looked at or are looking at lattice-based cryptography.
+
+A postdoc here is a 100% research position, i.e. you wouldn’t have teaching duties. That said, if you’d like to gain some teaching experience, we can arrange for that as well.
+
+If you have e.g. a [[https://en.wikipedia.org/wiki/Two-body_problem_(career)][two-body problem]] and would like to discuss flexibility about being in the office (assuming we’ll all be back in the office at some post-covid19 point), feel free to get in touch.
+
+#+HTML:<!--more-->
+
+#+begin_quote
+| Location:       | Egham                                          |
+| Salary:         | £37,979 per annum - including London Allowance |
+| Closing Date:   | Saturday 31 October 2020                       |
+| Interview Date: | To be confirmed                                |
+| Reference:      | [[https://jobs.royalholloway.ac.uk/Vacancy.aspx?ref=0920-202][0920-202]]                                       |
+
+Full-Time, Fixed-Term
+
+The postdoc will work alongside Prof. Martin Albrecht and other cryptographic researchers in the ISG on topics in lattice-based cryptography and related fields. This post is funded by a joint grant between Royal Holloway and Imperial College ([[https://www.imperial.ac.uk/people/c.ling][Dr. Cong Ling]]) for bridging the gap between lattice-based cryptography and coding theory.
+
+Applicants should have already completed, or be close to completing, a PhD in a relevant discipline. Applicants should have an outstanding research track record in cryptography. Applicants should be able to demonstrate scientific creativity, research independence, and the ability to communicate their ideas effectively in written and verbal form.
+
+The ISG is one of the largest departments dedicated to information security in the world with 21 core academic staff in the department, as well as research and support staff. We work with many research partners in other departments and have circa 90 PhD students working on a wide range of security research, many of whom are fully funded through our Centre for Doctoral Training in Cyber Security. We have a strong, vibrant, embedded and successful multi-disciplinary research profile spanning from cryptography to systems security and social aspects of security. This vibrant environment incorporates visiting researchers, weekly research seminars, weekly reading groups, PhD seminars and mini conferences, the WISDOM group (Women in the Security Domain Or Mathematics) and we are proud of our collegial atmosphere and approach. 
+
+[…]
+
+For an informal discussion about the post, please contact Martin Albrecht on
+martin.albrecht@rhul.ac.uk.
+
+To view further details of this post and to apply please visit https://jobs.royalholloway.ac.uk. For queries on the application process the Human Resources Department can be contacted by email at: recruitment@rhul.ac.uk 
+
+Please quote the reference: [[https://jobs.royalholloway.ac.uk/Vacancy.aspx?ref=0920-202][0920-202]]\\
+Closing Date:   Midnight, 31 October 2020\\
+Interview Date: TBC\\
+#+end_quote
