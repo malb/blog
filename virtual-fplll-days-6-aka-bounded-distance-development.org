@@ -1,0 +1,16 @@
+#+TITLE: Virtual FPLLL Days 6 aka Bounded Distance Development
+#+BLOG: martinralbrecht
+#+POSTID: 1881
+#+DATE: [2020-10-26 Mon 11:01]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography
+#+TAGS: fplll, lattices, lattice-reduction, fpylll, g6k, 
+#+DESCRIPTION:
+
+The sixth [[https://github.com/fplll/fplll/wiki/virtual-fplll-days-6-aka-bounded-distance-development][FPLLL Days]] will be held on 19 and 20 November 2020. For obvious reasons they will be held online. (Who knows, we might end up liking the format enough to do more of these online in a post-COVID world, too).
+
+As with previous incarnations of FPLLL Days, everyone who wishes to contribute to open-source lattice-reduction software is welcome to attend. In particular, you do not have to work on [[https://github.com/fplll/fplll][FPLLL]] or any of its sibling projects like [[https://github.com/fplll/fpylll][FPyLLL]] or [[https://github.com/fplll/g6k][G6K]]. Work on whatever advances the state of the art or seems useful to you personally. That said, we do have the ambition to suggest projects from the universe of FPLLL and I personally hope that some people will dig in with me to do the sort of plumbing that keeps projects like these running. To give you an idea of what people worked on in the past, you can find the list of project of the previous FPLLL Days on the [[https://github.com/fplll/fplll/wiki/fplll-days-5][wiki]] and a report on the [[https://www.h2020prometheus.eu/dissemination/blogs/fplll-days-5][PROMETHEUS blog]].
+
+Format is yet to be determined. We are going to coordinate using [[https://fplll-days-6.zulipchat.com/][Zulip]]. I think it would also be useful to have a brief conference call, roll call style, on the first day to break the ice and to make it easier for people to reach out to each other for help during the event. This is why we’re asking people to indicate their timezone on the [[https://github.com/fplll/fplll/wiki/virtual-fplll-days-6-aka-bounded-distance-development][Wiki]]. If you have ideas for making this event a success, please [[https://groups.google.com/g/fplll-devel][let us know]].
+
+PS: For the record: Joe threatened a riot if I didn’t call it “Bounded Distance Development”, so credit goes to him for the name.
