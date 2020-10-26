@@ -1,0 +1,34 @@
+#+TITLE: The Vacuity of the Open Source Security Testing Methodology Manual
+#+BLOG: martinralbrecht
+#+POSTID: 1871
+#+DATE: [2020-10-21 Wed 17:00]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: misc
+#+TAGS: osstmm, security testing, penetration testing, paper, it-security
+#+DESCRIPTION:
+
+Our [[https://arxiv.org/abs/2010.06377][paper]] – together with [[https://pure.royalholloway.ac.uk/portal/en/persons/rikke-bjerg-jensen(21f74e0b-9a6e-47fb-9889-9f9a1f5cf2a4).html][Rikke Jensen]] – on the [[https://www.isecom.org/OSSTMM.3.pdf][Open Source Security Testing Methodology Manual]] has been accepted to the [[https://ssr2020.mozilla.org/programme][Security Standardisation Research Conference]] (SSR 2020). Here’s the abstract:
+
+#+begin_quote
+The Open Source Security Testing Methodology Manual (OSSTMM) provides a “scientific methodology for the accurate characterization of operational security”. It is extensively referenced in writings aimed at security testing professionals such as textbooks, standards and academic papers. In this work we offer a fundamental critique of OSSTMM and argue that it fails to deliver on its promise of actual security. Our contribution is threefold and builds on a textual critique of this methodology. First, OSSTMM’s central principle is that security can be understood as a quantity of which an entity has more or less. We show why this is wrong and how OSSTMM’s unified security score, the rav, is an empty abstraction. Second, OSSTMM disregards risk by replacing it with a trust metric which confuses multiple definitions of trust and, as a result, produces a meaningless score. Finally, OSSTMM has been hailed for its attention to human security. Yet it understands all human agency as a security threat that needs to be constantly monitored and controlled. Thus, we argue that OSSTMM is neither fit for purpose nor can it be salvaged, and it should be abandoned by security professionals.
+#+end_quote
+
+This is most definitely the strangest paper I have ever written. First, the idea for writing this paper came out of teaching [[https://rhul.rl.talis.com/modules/iy5610.html][IY5610 Security Testing]] in the [[https://www.royalholloway.ac.uk/studying-here/postgraduate/information-security/information-security/][Information Security MSc]] at Royal Holloway. Where my employer likes the tagline “research inspired teaching”, I guess this is a case of “teaching inspired research”.
+
+Second, this paper, bringing together scholarship from many different disciplines has a most eclectic list of references: security testing, cryptography, HCI, ethnography, military field manuals, supreme court decisions, we got it all.
+
+Third, the paper is unusual, at least for information security, in how it proceeds:
+
+#+begin_quote
+While information security research routinely features critiques of security technologies in the form of “attack papers”, analogues of such works for policies, frameworks and conceptions are largely absent from its core venues. This work is a textual critique of OSSTMM based on a close reading of the methodology and pursues two purposes. First, immediately, to show that OSSTMM is inadequate as a security testing methodology, despite being referenced routinely in the security testing literature. Second, more mediated, to show that the /ideas/ at the core of OSSTMM are wrong. As we show [later in the paper], these ideas are not OSSTMM's privilege. It is for this reason that we chose the form of a textual critique over alternative approaches such as empirical studies to the effectiveness of OSSTMM in practice.
+#+end_quote
+
+That said, the paper says things that I think are worth saying beyond OSSTMM. Both bogus quantification and questionable ideas about social aspects of information security are widespread in the field. Thus, while OSSTMM provides particularly striking examples of these mistakes, we think our points apply more broadly:
+
+#+begin_quote
+While OSSTMM expresses the methodological dogma that scientific knowledge equals quantification particularly crudely this is not its privilege. Rather, this conviction is common across information security, as exemplified, for example, in CVSS which claims to score security vulnerabilities by a single magnitude. Moreover, the somewhat bad reputation of security testing as a “tickbox exercise” speaks of the same limitation: counting rather than understanding. Echoing the [[https://insights.sei.cmu.edu/cert/2018/12/towards-improving-cvss.html][critique of CVSS]], we thus suggest, too, that security professionals “skip converting qualitative measurements to numbers”. The healthy debates in other disciplines provide material for a debate within information security to examine the correctness and utility of assigning numerical values to various pieces of data.
+
+A mistake we criticise in OSSTMM is the failure to recognise that the moments of a social organisation are different from the moments of a computer network. This, too, is no privilege of OSSTMM as can be easily verified by the prevalence of mantras along the lines of “humans/people/users are the weakest link”. This standpoint, which is as prevalent as it is wrong, offers the curious indictment that people fail to integrate into a piece of technology that does not work for them. In the context of security testing this standpoint has a home under the heading of “social engineering” and its most visible expression: routine but ineffective phishing simulations. It is worth noting, though, that even when the focus is exclusively on technology, not engaging with the social relations that this technology ought to serve may produce undesirable results, for example leading to designs of technological controls with draconian effects where less invasive means would have been adequate.
+
+More broadly, the tendency of information security to rely on psychology, dominated by individualistic and behavioural perspectives and quantitative approaches to understanding social and human aspects of security, may represent an obstacle. Alternative methodological approaches from the social sciences, particularly from sociology and even anthropology, such as semi-structured interviews, participant-led focus groups and ethnography offer promising avenues to deeply understand the security practices and needs in an organisation.
+#+end_quote
