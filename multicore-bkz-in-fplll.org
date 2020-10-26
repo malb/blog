@@ -1,0 +1,40 @@
+#+TITLE: Multicore BKZ in FPLLL
+#+DATE: [2020-10-26 Mon 14:12]
+#+BLOG: martinralbrecht
+#+POSTID: 1876
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography
+#+TAGS: lattice-reduction, multicore, fplll, lattices, 
+#+DESCRIPTION:
+
+There have been a [[https://eprint.iacr.org/2020/605][few]] [[https://www.iccs-meeting.org/archive/iccs2019/papers/115400516.pdf][works]] recently that give FPLLL a hard time when considering parallelism on multicore systems. That is, they compare FPLLL’s single-core implementation against their multi-core implementations, which is fair enough. However, support for parallel enumeration has existed for a while in the form of [[https://github.com/cr-marcstevens/fplll-extenum][fplll-extenum]]. Motivated by these works we merged that library into FPLLL itself a year ago. However, we didn’t document the multicore performance that this gives us. So here we go.
+
+I ran
+#+begin_src shell
+for t in 1 2 4 8; do
+  ./compare.py -j  $(expr 28 / $t)  -t $t -s 512 -u 80 ./fplll/strategies/default.json
+done
+#+end_src
+where [[https://github.com/fplll/strategizer/blob/master/compare.py][compare.py]] is from the strategizer and [[https://github.com/fplll/fplll/pull/446][default.json]] is from a PR against FPLLL. Note that these strategies were not optimised for multicore performance. I ran this on a system with two =Intel(R) Xeon(R) CPU E5-2690 v4 @ 2.60GHz= i.e. 28 cores. The resulting speed-ups are:
+[[./multicore-bkz-in-fplll-default.png]]
+
+As you can see, the speed-up is okay for two cores but diminishes as we throw more cores at the problem. I assume that this is partly due to block sizes being relatively small (for larger block sizes [[https://github.com/fplll/g6k][G6K]] – which scales rather well on multiple cores – will be faster). I also suspect that this is partly an artefact of not optimising for multiple cores, i.e. picking the trade-off between enumeration (multicore) and preprocessing (partly single-core due to LLL calls) right. If someone wants to step up and compute some strategies for multiple cores, that’d be neat.
+
+# ./multicore-bkz-in-fplll-default.png http://martinralbrecht.files.wordpress.com/2020/10/multicore-bkz-in-fplll-default.png
+
+# cores = {}
+
+# cores[1] = [(3, 0.0012), (4, 0.0012), (5, 0.0012), (6, 0.0013), (7, 0.0013), (8, 0.0014), (9, 0.0015), (10, 0.0016), (11, 0.0017), (12, 0.0019), (13, 0.0021), (14, 0.0023), (15, 0.0026), (16, 0.0031), (17, 0.0035), (18, 0.0040), (19, 0.0046), (20, 0.0054), (21, 0.0061), (22, 0.0071), (23, 0.0080), (24, 0.0090), (25, 0.0101), (26, 0.0112), (27, 0.0123), (28, 0.0138), (29, 0.0150), (30, 0.0168), (31, 0.0183), (32, 0.0202), (33, 0.0223), (34, 0.0246), (35, 0.0267), (36, 0.0300), (37, 0.0330), (38, 0.0363), (39, 0.0397), (40, 0.0445), (41, 0.0502), (42, 0.0551), (43, 0.0619), (44, 0.0739), (45, 0.0844), (46, 0.0914), (47, 0.1029), (48, 0.1117), (49, 0.1273), (50, 0.1349), (51, 0.1515), (52, 0.1692), (53, 0.1984), (54, 0.2178), (55, 0.2737), (56, 0.3038), (57, 0.3918), (58, 0.4729), (59, 0.6895), (60, 0.6384), (61, 0.8736), (62, 0.9806), (63, 1.3939), (64, 1.4766), (65, 2.1888), (66, 2.3839), (67, 3.4386), (68, 4.1179), (69, 5.5725), (70, 6.3981), (71, 8.9969), (72, 9.6397), (73, 13.4249), (74, 15.3056), (75, 21.2703), (76, 25.7112), (77, 39.6061), (78, 42.2513), (79, 61.8434), (80, 70.8330)]
+
+# cores[2] = [(3, 0.0012), (4, 0.0013), (5, 0.0013), (6, 0.0014), (7, 0.0015), (8, 0.0015), (9, 0.0016), (10, 0.0018), (11, 0.0018), (12, 0.0021), (13, 0.0023), (14, 0.0043), (15, 0.0028), (16, 0.0033), (17, 0.0037), (18, 0.0043), (19, 0.0048), (20, 0.0055), (21, 0.0063), (22, 0.0073), (23, 0.0081), (24, 0.0091), (25, 0.0101), (26, 0.0112), (27, 0.0124), (28, 0.0137), (29, 0.0151), (30, 0.0169), (31, 0.0181), (32, 0.0203), (33, 0.0221), (34, 0.0246), (35, 0.0267), (36, 0.0297), (37, 0.0326), (38, 0.0360), (39, 0.0475), (40, 0.0437), (41, 0.0485), (42, 0.0531), (43, 0.0589), (44, 0.0666), (45, 0.0764), (46, 0.0959), (47, 0.0994), (48, 0.1079), (49, 0.1200), (50, 0.1281), (51, 0.1420), (52, 0.1561), (53, 0.1760), (54, 0.1904), (55, 0.2245), (56, 0.2476), (57, 0.2969), (58, 0.3352), (59, 0.4791), (60, 0.4605), (61, 0.5887), (62, 0.6551), (63, 0.8829), (64, 0.9469), (65, 1.3000), (66, 1.4414), (67, 2.0658), (68, 2.4489), (69, 3.9031), (70, 4.4482), (71, 5.7963), (72, 6.5933), (73, 9.1909), (74, 9.8789), (75, 13.6843), (76, 16.2974), (77, 25.2799), (78, 28.8783), (79, 40.6768), (80, 46.0348),]
+
+# cores[4] = [(3, 0.0012), (4, 0.0012), (5, 0.0013), (6, 0.0013), (7, 0.0014), (8, 0.0014), (9, 0.0021), (10, 0.0017), (11, 0.0017), (12, 0.0020), (13, 0.0022), (14, 0.0025), (15, 0.0028), (16, 0.0032), (17, 0.0036), (18, 0.0042), (19, 0.0048), (20, 0.0056), (21, 0.0063), (22, 0.0073), (23, 0.0081), (24, 0.0091), (25, 0.0101), (26, 0.0146), (27, 0.0125), (28, 0.0137), (29, 0.0152), (30, 0.0169), (31, 0.0183), (32, 0.0205), (33, 0.0224), (34, 0.0246), (35, 0.0267), (36, 0.0298), (37, 0.0325), (38, 0.0358), (39, 0.0389), (40, 0.0435), (41, 0.0478), (42, 0.0518), (43, 0.0572), (44, 0.0642), (45, 0.0720), (46, 0.0881), (47, 0.1047), (48, 0.1063), (49, 0.1158), (50, 0.1246), (51, 0.1366), (52, 0.1499), (53, 0.1647), (54, 0.1771), (55, 0.2000), (56, 0.2196), (57, 0.2512), (58, 0.2753), (59, 0.3740), (60, 0.3709), (61, 0.4487), (62, 0.4958), (63, 0.6352), (64, 0.6951), (65, 0.8839), (66, 0.9924), (67, 1.3922), (68, 1.6443), (69, 3.0080), (70, 3.1761), (71, 4.4024), (72, 4.8089), (73, 6.8075), (74, 7.5202), (75, 9.8826), (76, 11.6077), (77, 16.1800), (78, 20.7962), (79, 27.1464), (80, 31.1774)]
+
+# cores[8] = [(3, 0.0011), (4, 0.0012), (5, 0.0012), (6, 0.0012), (7, 0.0014), (8, 0.0013), (9, 0.0014), (10, 0.0016), (11, 0.0017), (12, 0.0019), (13, 0.0021), (14, 0.0024), (15, 0.0027), (16, 0.0032), (17, 0.0036), (18, 0.0052), (19, 0.0047), (20, 0.0054), (21, 0.0077), (22, 0.0072), (23, 0.0081), (24, 0.0091), (25, 0.0101), (26, 0.0130), (27, 0.0123), (28, 0.0138), (29, 0.0151), (30, 0.0168), (31, 0.0183), (32, 0.0224), (33, 0.0221), (34, 0.0245), (35, 0.0267), (36, 0.0296), (37, 0.0326), (38, 0.0359), (39, 0.0389), (40, 0.0433), (41, 0.0471), (42, 0.0514), (43, 0.0564), (44, 0.0631), (45, 0.0697), (46, 0.0897), (47, 0.0989), (48, 0.1076), (49, 0.1169), (50, 0.1256), (51, 0.1382), (52, 0.1514), (53, 0.1653), (54, 0.1765), (55, 0.1962), (56, 0.2140), (57, 0.2360), (58, 0.2556), (59, 0.3335), (60, 0.3361), (61, 0.3887), (62, 0.4224), (63, 0.5086), (64, 0.5817), (65, 0.6889), (66, 0.7953), (67, 1.0534), (68, 1.2803), (69, 2.5839), (70, 2.7614), (71, 3.4894), (72, 4.1080), (73, 5.6682), (74, 6.2221), (75, 8.1335), (76, 9.4723), (77, 11.8851), (78, 16.7299), (79, 21.0982), (80, 24.5069),]
+
+# I = range(len(cores[1]))
+
+# G = line([(cores[1][i][0], cores[1][i][1]/cores[2][i][1]) for i in I], legend_label="1/2 cores", color=hue(0/3.)) + \
+# line([(cores[1][i][0], cores[1][i][1]/cores[4][i][1]) for i in I], legend_label="1/4 cores", color=hue(1/3.)) + \
+# line([(cores[1][i][0], cores[1][i][1]/cores[8][i][1]) for i in I], legend_label="1/8 cores", color=hue(2/3.))
+# G.save("/home/malb/speedup.png")
