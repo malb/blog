@@ -1,0 +1,53 @@
+#+TITLE: The 31st HP/HPE (Virtual) Colloquium on Information Security
+#+BLOG: martinralbrecht
+#+POSTID: 1885
+#+DATE: [2020-11-30 Mon 17:30]
+#+CATEGORY: misc
+
+This year, my colleague [[https://pure.royalholloway.ac.uk/portal/en/persons/rikke-bjerg-jensen(21f74e0b-9a6e-47fb-9889-9f9a1f5cf2a4).html][Rikke Jensen]] and I took over coordinating “HP/HPE Day”, our department’s annual flagship event. It will take place as a virtual event this year, which allows us to invite a bit more broadly than we usually do. [[https://www.eventbrite.co.uk/e/the-31st-hphpe-virtual-colloquium-on-information-security-tickets-128859336745][Registration]] is free but mandatory – tickets will be allocated on a first come, first served basis.
+
+#+html:<!--more-->
+
+Sponsorship from HP and HPE has enabled us to invite four distinguished speakers:
+
+* Monday 14th December
+
+** [[https://thomasdullien.github.io/about/][Thomas Dullien]] Co-Founder of Optimyze (Switzerland)
+
+*** Why I <3 offensive work -- why I don't <3 offensive work.
+
+A personal talk about my 24-year relationship with offensive security work -- and the question: "For whom."
+
+*Bio:* Thomas Dullien is a security researcher and entrepreneur well-known for his contributions to the theory and practice of vulnerability development and software reverse engineering. He won what was then Germany's biggest privately financed research prize in the natural sciences in 2006 (the Horst-Goertz Prize) for work on graph-based code similarity; started and ran a company to commercialize this research that got acquired by Google, and has worked on a wide range of topics - from the very practical (turning security patches into attacks) and quite concrete (turning physics-induced DRAM bitflips into useful attacks) to the rather theoretical (attempting to clarify the theoretical foundations of exploitation). After a few years of Google Project Zero, he is now co-founder of a startup called http://optimyze.cloud that focuses on efficient computation.
+
+** [[https://craphound.com/bio/][Cory Doctorow]] Activist, journalist and science fiction author (USA)
+
+*** Monopolies, Not Mind Control
+
+Long before the pandemic crisis, there was widespread concern over the impact that tech was having on the quality of our discourse, from disinformation campaigns to influence campaigns to polarization. It's true that the way we talk to each other and about the world has changed, both in form (thanks to the migration of discourse to online platforms) and in kind, whether that's the rise of nonverbal elements in our written discourse (emojis, memes, ASCII art and emoticons) or the kinds of online harassment and brigading campaigns that have grown with the Internet. A common explanation for the change in our discourse is that the biggest tech platforms use surveillance, data-collection, and machine learning to manipulate us, either to increase "engagement" (and thus pageviews and thus advertising revenues) or to persuade us of things that aren't true, for example, to convince us to buy something we don't want or support a politician we would otherwise oppose.
+
+There's a simple story about that relationship: by gathering a lot of data about us, and by applying self-modifying machine-learning algorithms to that data, Big Tech can target us with messages that slip past our critical faculties, changing our minds not with reason, but with a kind of technological mesmerism. This story originates with Big Tech itself. Marketing claims for programmatic advertising and targeted marketing (including political marketing) promise prospective clients that they can buy audiences for their ideas through Big Tech, which will mix its vast data-repositories with machine learning and overwhelm our cognitive defenses to convert us into customers for products or ideas.
+
+We should always be skeptical of marketing claims. These aren't peer-reviewed journal articles, they're commercial puffery. The fact that the claims convince marketers to give billions of dollars to Big Tech is no guarantee that the claims are true. After all, powerful decision-makers in business have a long history of believing things that turned out to be false. It's clear that our discourse is changing. Ideas that were on the fringe for years have gained new centrality. Some of these ideas are ones that we like (gender inclusivity, racial justice, anti-monopolistic sentiment) and some are ideas we dislike (xenophobia, conspiracy theories, and denial of the science of climate change and vaccines).
+
+Our world is also dominated by technology, so any change to our world probably involves technology. Untangling the causal relationships between technology and discourse is a thorny problem, but it's an important one.It's possible that Big Tech has invented a high-tech form of mesmerism, but whether you believe in that or not, there are many less controversial, more obvious ways in which Big Tech is influencing (and distorting) our discourse.
+
+*Bio:* Cory Doctorow is a science fiction author, activist, and journalist. His latest book is Attack Surface, a standalone adult sequel to Little Brother. He is also the author How to Destroy Surveillance Capitalism, nonfiction about conspiracies and monopolies; and of Radicalized and Walkaway, science fiction for adults, a YA graphic novel called In Real Life; and young adult novels like Homeland, Pirate Cinema and Little Brother. His first picture book was Poesy The Monster Slayer (Aug 2020). He maintains a daily blog at Pluralistic.net. He works for the Electronic Frontier Foundation, is a MIT Media Lab Research Affiliate, is a Visiting Professor of Computer Science at Open University, a Visiting Professor of Practice at the University of North Carolina's School of Library and Information Science and co-founded the UK Open Rights Group. Born in Toronto, Canada, he now lives in Los Angeles.
+
+* Tuesday 15 December 2020
+
+** [[https://resources.sei.cmu.edu/library/author.cfm?authorid=35154][Jonathan Spring]] Senior Member of the Technical Staff at the CERT Coordination Center, Software Engineering Institute, Carnegie Mellon University (USA)
+
+*** Better Vulnerability Prioritization with a Stakeholder-specific Vulnerability Categorization
+
+Many organizations use the Common Vulnerability Scoring System (CVSS) to prioritize actions during vulnerability management. This talk presents a testable Stakeholder-Specific Vulnerability Categorization (SSVC) that avoids some problems with CVSS. SSVC takes the form of decision trees for different vulnerability management communities. The documentation is available here: https://github.com/CERTCC/SSVC. We take the "stakeholder-specific" part seriously, and welcome contributions and questions from anyone with an interest in vulnerability management.
+
+*Bio:* Jonathan Spring is a Senior Member of the Technical Staff at the CERT Coordination Center, Software Engineering Institute, Carnegie Mellon University. His work focuses on producing reliable evidence for various levels of cybersecurity policies. Spring's approach combines practical work in areas such as vulnerability management and network analysis with reflecting on study design and other philosophical issues. He earned a doctoral degree in computer science and philosophy of science from University College London.
+
+** [[https://www.microsoft.com/en-us/research/people/melissac/][Melissa Chase]] Principal Researcher, Cryptography Group, Microsoft Research (USA)
+
+*** Advanced Cryptography in the Real World
+
+This talk will survey some of the advanced cryptographic primitives that are have been or are on track to be deployed in non-academic settings. First I will introduce private set intersection (PSI), a tool to allow two mutually untrusting parties each with a private set to jointly identify the intersection of the two sets without revealing anything about the non-intersecting items. I will discuss where it has been used and where else it might be applicable, and then describe how it can be constructed from another cryptographic primitive called an oblivious pseudorandom function (OPRF). Then, to give a broader view of practical advanced cryptography, I will briefly describe two other crypto primitives, anonymous credentials and VRFs, and present examples of where each has been deployed.
+
+*Bio:* Melissa Chase is a principal researcher in the cryptography group at Microsoft Research Redmond. Her research focuses on defining and constructing cryptographic protocols and primitives, with an emphasis on provable security and privacy-motivated applications. She has been at Microsoft for 12 years; before that she received a B.S. in Computer Science and Mathematics from Harvey Mudd College, and an M.S. and Ph.D. in Computer Science from Brown University. She has worked in a variety of areas within cryptography, including anonymous credentials, attribute based encryption, design of signature schemes and zero knowledge proofs, and more recently efficient PSI and systems for end-to-end encryption.
