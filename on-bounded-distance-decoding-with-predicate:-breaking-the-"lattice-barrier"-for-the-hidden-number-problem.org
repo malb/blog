@@ -1,0 +1,38 @@
+#+TITLE: On BDD with Predicate: Breaking the "Lattice Barrier" for the Hidden Number Problem
+#+BLOG: martinralbrecht
+#+POSTID: 1892
+#+DATE: [2020-12-10 Thu 11:56]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography
+#+TAGS: preprint, lattice-reduction, side-channel, cryptanalysis, hnp, ecdsa
+#+DESCRIPTION:
+
+[[https://cseweb.ucsd.edu/~nadiah/][Nadia]] and I put our [[https://ia.cr/2020/1540][pre-print]] and our [[https://github.com/malb/bdd-predicate/][source code]] online for solving bounded distance decoding when augmented with some predicate $f(\cdot)$ that evaluates to true on the target and false (almost) everywhere else. Here’s the abstract:
+
+#+begin_quote
+Lattice-based algorithms in cryptanalysis often search for a target vector satisfying integer linear constraints as a shortest or closest vector in some lattice. In this work, we observe that these formulations may discard non-linear information from the underlying application that can be used to distinguish the target vector even when it is far from being uniquely close or short.
+
+We formalize lattice problems augmented with a predicate distinguishing a target vector and give algorithms for solving instances of these problems. We apply our techniques to lattice-based approaches for solving the Hidden Number Problem, a popular technique for recovering secret DSA or ECDSA keys in side-channel attacks, and demonstrate that our algorithms succeed in recovering the signing key for instances that were previously believed to be unsolvable using lattice approaches. We carried out extensive experiments using our estimation and solving [[https://github.com/malb/bdd-predicate/][framework]], which we also make available with this work.
+#+end_quote
+
+#+html:<!--more-->
+
+In the usual statement of the [[https://kel.bz/post/hnp/][Hidden Number Problem]] (HNP), the adversary learns some most significant bits of random multiples of a secret integer modulo some known integer. This information can be written as integer-linear constraints on the secret and the problem can then be formulated as [[https://en.wikipedia.org/wiki/Lattice_problem][Bounded Distance Decoding]] (BDD): find a uniquely closest vector in a lattice to some target point $\vec{t}$. [[https://eprint.iacr.org/2017/815.pdf][Sufficiently strong]] [[https://github.com/fplll][lattice reduction]] will find this uniquely close vector, which can then be used to recover the secret.
+
+The requirement of uniqueness constrains the instances that can be successfully solved with this approach: a fixed instance of the problem is not expected to be solvable when few samples are known, since there are expected to be many spurious lattice points closer to the target than the desired solution. As the number of samples is increased, the expected distance between the target and the lattice shrinks relative to the normalised volume of the lattice, and at some point the problem is expected to become solvable.
+
+For some choices of input parameters, however, the problem may be infeasible to solve using these methods if the attacker cannot compute a sufficiently reduced lattice basis to find this solution; if the number of spurious non-solution vectors in the lattice does not decrease fast enough to yield a unique solution; or if simply too few samples can be obtained. In the context of the Hidden Number Problem, the expected infeasibility of lattice-based algorithms for certain parameters has been referred to as the "[[https://eprint.iacr.org/2020/615.pdf][lattice barrier]]" in numerous works.
+
+Nevertheless, the initial cryptanalytic problem may remain well defined even when the gap between the lattice and the target is not small enough to expect a unique closest vector. This is because formulating a problem as a HNP instance omits information: the cryptanalytic applications typically imply non-linear constraints that restrict the solution, often to a unique value.
+
+For example, in the most common application of the HNP to side-channel attacks, breaking [[https://eprint.iacr.org/2020/728.pdf][ECDSA from known nonce bits]], the desired solution corresponds to the discrete logarithm of a public value that the attacker knows. We may consider such additional non-linear constraints as a predicate $h(\cdot)$ that evaluates to true on the unique secret and false elsewhere. Thus, we may reformulate the search problem as a BDD with predicate problem: find a vector $\vec{v}$ in the lattice within some radius $R$ to the target $\vec{t}$ such that $f(\vec{v}-\vec{t}) := h(g(\vec{v}-\vec{t}))$ returns true, where $g(\cdot)$ is a function extracting a candidate secret $s$ from the vector $\vec{v}-\vec{t}$.
+
+In our work, we give two algorithms for solving the [[https://en.wikipedia.org/wiki/Lattice_problem][unique Shortest Vector]] with predicate problem which in turn enables us to solve BDD with predicate.
+
+1. One is based on lattice-point enumeration and in principle supports any norm $R$ of the target vector. This algorithm exploits the fact that enumeration /is/ exhaustive search inside a given radius.
+
+2. Our other algorithm is based on lattice sieving and is expected to succeed when $R \leq \sqrt{4/3} \cdot \mathrm{gh}(\Lambda)$ where $\mathrm{gh}(\Lambda)$ is the expected norm of a shortest vector in a lattice $\Lambda$ under the Gaussian heuristic. This algorithm makes use of the fact that a sieve produces a database of short vectors in the lattice, not just a single shortest vector.
+
+Thus, the key observation exploited by all our algorithms is that efficient SVP solvers are expected to consider every vector of the lattice within some radius $R$. Augmenting these algorithms with an additional predicate check then follows naturally. In both algorithms the predicate is checked ${(R/\mathrm{gh}(\Lambda))}^{d+o(d)}$ times, where $d$ is the dimension of the lattice, which is asymptotically smaller than the cost of the original algorithms.
+
+We experimentally demonstrate the performance of our algorithms in the context of ECDSA signatures with partial information about nonce bits. Here, we show how our techniques allow us to achieve previous records with fewer samples, bring problem instances previously believed to be intractable into feasible range, maximise the algorithm's success probability when only a fixed number of samples are available, increase the algorithm's success probability in the presence of noisy data, and give new tradeoffs between computation time and sample collection. We also present experimental evidence of our techniques' ability to solve instances given fewer samples than required by the information theoretic limit for lattice approaches. This is enabled by our predicate uniquely determining the secret.
