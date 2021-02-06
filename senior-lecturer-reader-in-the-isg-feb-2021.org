@@ -1,0 +1,71 @@
+#+TITLE: Reader/Senior Lecturer/Associate Professor in the ISG
+#+BLOG: martinralbrecht
+#+POSTID: 1905
+#+BLOG: martinralbrecht
+#+DATE: [2021-01-13 Wed 13:05]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: misc
+#+TAGS: job
+#+DESCRIPTION: Job advert for lecturer position in the ISG.
+
+The ISG is [[https://jobs.royalholloway.ac.uk/vacancy.aspx?ref=1220-277][recruiting]] a senior lecturer/[[https://en.wikipedia.org/wiki/Reader_(academic_rank)][reader]] (≡ associate professor in the US system). This is a full-time, permanent research and teaching position. 
+
+Look, I know this is post-Brexit England but let me give you a personal pitch of why you should apply:
+
+- It’s a big group. We got ~20 permanent members of staff working across the field of information security: cryptography, systems and social. Check out our [[https://seminars.isg.rhul.ac.uk/][seminar programme]] and our [[https://pure.royalholloway.ac.uk/portal/en/organisations/department-of-information-security(cb903903-da88-442b-8a73-24b97cad90ae)/publications.html][publications]] to get a sense of what is going on in the group.
+
+- It’s a group with a good mix of areas and lots of interaction. UK universities don’t work like German ones where professors have their little empires which don’t interact all too much. Rather, the hierarchies are pretty flat within a department (everybody is line managed by the Head of Department) which facilitates more interaction; at least within the ISG that’s true. For example, I’m currently working on a project with someone from the systems and software security lab and one of our social scientists. I doubt this sort of collaboration would have come about if we didn’t attend the same meetings, taught the same modules, went to lunch and the pub together etc. Interdisciplinarity from above is annoying, when it emerges spontaneously it can be great.
+
+- It’s a nice group. People are genuinely friendly and we help each other out. It will be easy to find someone to proof read your grant applications or share previously successfully funded ones etc. I don’t know any official numbers but the unionisation level seems to be relatively high, which I also take as an indication that people don’t adopt a “everyone for themselves” approach.
+
+- We got funding for our [[https://www.royalholloway.ac.uk/research-and-teaching/departments-and-schools/information-security/studying-here/centre-for-doctoral-training-in-cyber-security-for-the-everyday/][Centre for Doctoral Training]] for the next few years (then we have to reapply). This means 10 PhD positions *per year*. Also, our CDT attracts strong students. My research career really took off after getting a chance to work with our amazing students.
+
+- The ISG is its own department (in a school with Physics, EE, Mathematics and Computer Science). All of our teaching is on information security with a focus on our Information Security MSc (which is huge). So you’ll get to teach information security.
+
+- The ISG has strong industry links. Thus, if that’s your cup of tea, it will be easy to get introductions etc. A side effect of these strong links is that consulting opportunities tend to pop up. Consulting is not only permitted by the employer but encouraged (they take a cut if you do it through them).
+
+- The ISG is a large group but Royal Holloway is a relatively small university. That means getting things done by speaking to the person in charge is often possible, i.e. it’s not some massive bureaucracy and exceptions can be negotiated.
+
+- It’s within one standard deviation from London. This means [[http://sec.cs.ucl.ac.uk/people/][UCL]] and [[https://www.surrey.ac.uk/surrey-centre-cyber-security/people/core-members][Surrey]], and thus the researchers there, aren’t too far away. Also, you get to live in London (or near Egham if that’s your thing, no judgement).
+
+We’d appreciate any help in spreading the word. Happy to answer any questions I can answer.
+
+The ad says “senior lecturer” but, speaking for myself, I’d recommend to apply even if you’re going for the lecturer/assistant professor/Juniorprofessor stage in your career. Also, I’d encourage people from all areas of information security to apply.
+
+#+HTML:<!--more-->
+
+#+begin_quote
+| Location:       | Egham                                            |
+| Salary:         | £51,034 - £59,135 pa (+£2,134 London Allowance ) |
+| Closing Date:   | Sunday 28 February 2021                          |
+| Interview Date: | See advert                                       |
+| Reference:      | 1220-277                                         |
+
+Full-Time, Permanent
+
+Applications are invited for the post of Reader/Senior Lecturer in the Information Security Group
+
+Applications are invited from researchers whose interests are related to, or complement, current strengths of the ISG. We are particularly interested in applicants with outstanding research achievements and/or potential in the area of Systems and Software Security; and who are able to teach and help manage, computer, network and software security subjects at undergraduate and postgraduate level.
+
+Applicants should have a Ph.D. in a relevant subject or equivalent, be a self-motivated researcher, and have a strong publication record. Applicants should be able to demonstrate an enthusiasm for teaching and communicating with diverse audiences, as well as show an awareness of contemporary issues relating to cyber security.
+
+In return we offer a highly competitive rewards and benefits package including:
+
+- Generous annual leave entitlement 
+- Training and Development opportunities
+- Pension Scheme with generous employer contribution 
+- Various schemes including Cycle to Work, Season Ticket Loans and help with the cost of Eyesight testing. 
+- Free parking 
+
+The post is based in Egham, Surrey where the College is situated in a beautiful, leafy campus near to Windsor Great Park and within commuting distance from London.
+
+For an informal discussion about the post, please contact Prof. Keith Mayes on keith.mayes@rhul.ac.uk  
+
+To view further details of this post and to apply please visit https://jobs.royalholloway.ac.uk. For queries on the application process the Human Resources Department can be contacted by email at: recruitment@rhul.ac.uk 
+
+Please quote the reference: [[https://jobs.royalholloway.ac.uk/vacancy.aspx?ref=1220-277][1220-277]]
+
+Closing Date:   *Midnight, 28 February 2021*
+
+Interview Date: March 2021 (date TBC)
+#+end_quote
