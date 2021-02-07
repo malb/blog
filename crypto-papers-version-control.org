@@ -123,7 +123,7 @@ However, I think ideally our institutions should run their own local, say, GitLa
 
 ** My tools
 
-Finally, here’s my [[https://github.com/malb/emacs.d/blob/master/malb.org#latex][LaTeX config]] and my [[https://github.com/malb/emacs.d/blob/master/malb.org#git][Git config]] for Emacs. I also have a [[https://bitbucket.org/malb/paper-template][paper template]] available online in the hope this reduces the start-up time of writing a new paper. Finally, please consider publishing the [[https://bitbucket.org/malb/publications/src][LaTeX source code]] of your paper, so we can all focus on research instead of typesetting.
+Finally, here’s my [[https://github.com/malb/emacs.d/blob/master/malb.org#latex][LaTeX config]] and my [[https://github.com/malb/emacs.d/blob/master/malb.org#git][Git config]] for Emacs. I also have a [[https://github.com/malb/paper-template][paper template]] available online in the hope this reduces the start-up time of writing a new paper. Finally, please consider publishing the [[https://bitbucket.org/malb/publications/src][LaTeX source code]] of your paper, so we can all focus on research instead of typesetting.
 
 ** Changelog
 
