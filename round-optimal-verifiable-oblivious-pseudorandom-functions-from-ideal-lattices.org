@@ -1,0 +1,122 @@
+#+TITLE: Round-optimal Verifiable Oblivious Pseudorandom Functions from Ideal Lattices
+#+BLOG: martinralbrecht
+#+POSTID: 1910
+#+DATE: [2021-05-07 Fri 13:37]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: cryptography
+#+TAGS: cryptography, paper, ring-lwe, lwe, lattices, lattice-based-cryptography, voprf
+#+DESCRIPTION:
+
+[[https://pkc.iacr.org/2021/][PKC’21]] is nearly upon us which – in this day and age – means a new [[https://www.youtube.com/playlist?list=PLeeS-3Ml-rpr4AW1GYhTZBV9WNw4eXFU2][YouTube playlist]] of talks. [[https://pure.royalholloway.ac.uk/portal/en/persons/eamonn-postlethwaite(124eb90c-f5f3-4f6a-86f6-f75b4962bffe).html][Eamonn]] and [[https://fundamental.domains/][Fernando]] wrote a nice paper on [[https://ia.cr/2020/1308][on the success probability of solving unique SVP via BKZ]] which Fernando is describing here:
+
+#+BEGIN_EXPORT wp
+[embed width="123" height="456"]https://www.youtube.com/watch?v=_WlMG81ifQs[/embed]
+#+END_EXPORT
+
+[[https://twitter.com/alxdavids?lang=en][Alex]] is presenting our – with [[http://www.ens-lyon.fr/lecole/nous-connaitre/annuaire/amit-deo][Amit]] and [[https://homes.esat.kuleuven.be/~nsmart/][Nigel]] – work on [[https://ia.cr/2019/1271][round-optimal Verifiable Oblivious PseudoRandom Functions (VOPRF) from ideal lattices]] here:
+
+#+BEGIN_EXPORT wp
+[embed width="123" height="456"]https://www.youtube.com/watch?v=vWBGioaSmks[/embed]
+#+END_EXPORT
+
+Since Alex is doing an amazing job at walking you through our paper I won’t attempt this here. Rather, let me point out a – in my book – cute trick in one of our appendices that may have applications elsewhere.
+
+#+html:<!--more-->
+
+In a (V)OPRF a client – holding $x$ – and a server – holding $k$ – engage in a protocol to compute $y = F_k(x)$ where $F_k(\cdot)$ means evaluating a PRF under the key $k$. The client receives $y$ and the server just the information that the PRF has been evaluation. Critically, neither party learns the other party’s input. Finally, the “V” here means that the client also gets an assurance that $c$ is indeed $F_k(m)$. Perhaps the two most prominent examples of (V)OPRFs being used in practice are [[https://privacypass.github.io/][PrivacyPass]] and [[https://datatracker.ietf.org/doc/draft-irtf-cfrg-opaque/][OPAQUE]].
+
+Now, in a world where Diffie–Hellman is secure, i.e. where large scale quantum computers do not exist, there are two prominent constructions for OPRFs: multiplicative and exponential blinding.
+
+Multiplicative blinding proceeds as follows. Let =H(⋅)= be a hash function and =r= some random value picked freshly by Alice:
+#+begin_example
+Client ---> a = H(x)⋅g^r  ---> Server
+       <--- b = a^k, g^k  <---
+
+H(x)^k = b/v^r
+#+end_example
+This works out to
+\[b/v^r = a^k/v^r = (H(x) \cdot g^{r})^k/(g^k)^r = H(x)^k\]
+which is the PRF evaluation. Similarly, exponential blinding proceeds as follows:
+#+begin_example
+Client ---> a = H(x)^r ---> Server
+       <--- b = a^k    <---
+
+H(x)^k = b^(1/r)
+#+end_example
+This works out to
+\[b^{1/r} = {({(H(x)^r)}^k)}^{1/r} = H(x)^k\]
+which again is the PRF evaluation. The two forms of blinding are compared in “[[https://ia.cr/2021/273][On the (In)Security of the Diffie-Hellman Oblivious PRF with Multiplicative Blinding]]”.
+
+To port either to ring-LWE we may consult a DH to RLWE dictionary:
+| DH Land                                              | Ring-LWE Land                                                                                                                             |
+| <l30>                                                | <l30>                                                                                                                                     |
+|------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------|
+| \(g\)                                                | \(a\)                                                                                                                                     |
+| \(g^x\)                                              | \(a\cdot {s} + {e}\)                                                                                                                      |
+| \(g^x \cdot g^y = g^{x+y}\)                          | \((a\cdot {s} + {e_0}) + (a \cdot {t} + {e_1}) = a \cdot {(s+t)} + {e'}\)                                                                 |
+| \(g^x / g^y = g^{x-y}\)                              | \((a\cdot {s} + {e_0}) - (a \cdot {t} + {e_1}) = a \cdot {(s-t)} + {e'}\)                                                                 |
+| \((g^a)^b = (g^b)^a\)                                | \((a\cdot {s} + {e})\cdot {t} = (a\cdot {s} \cdot {t} + {e} \cdot {t}) \approx a\cdot {s} \cdot {t} \approx (a\cdot {t} + {e})\cdot {s}\) |
+| \((g, g^a, g^b, g^{ab}) \approx_c (g, g^a, g^b, u)\) | \((a,\ a\cdot {s} + {e},\ a\cdot {t} + {d},\ a \cdot {s} \cdot {t} + {e'}) \approx_c (a,\ a\cdot {s} + {e},\ a\cdot {t} + {d},\ u)\)      |
+In the table above \(s,t,e_0,e_1,e',d,e\) are all small.
+
+
+Well, consulting this dictionary we see that multiplicative blinding is supported “out of the box” but exponential blinding is not: there’s no immediate analogue for $g^{1/r}$ (see below). Indeed, the current version of our paper uses multiplicative blinding (which in ring-LWE land becomes additive blinding). Note that the non-trivial bit in case of multiplicative blinding is to deal with just how bloody backdoorable LWE is. At some point the server will have to compute $a \cdot k + e'$ for some client provided $a$ and some $e'$ sampled by the server. Multiplying your key $k$ with something provided by an untrusted party – here $a$ – is a very bad thing to do and we thus rely on heavy zero-knowledge proofs and a special PRF that is relatively easy to prove in our setting to show that $a$ is indeed well-formed. See Alex’ talk and our paper for details.
+
+The first version of our paper, though, used exponential blinding (which in ring-LWE land becomes multiplicative blinding) and we thus needed a little trick to make it work. Let’s start by translating the scheme to RLWE directly:
+#+begin_example
+Client ---> a = H(x)⋅r + e ---> Server
+       <--- b = a⋅k + e'   <---
+
+H(x)⋅k ≈? b⋅(1/r)
+#+end_example
+We *would like to say* that
+\[((H(x) \cdot r + e) \cdot k + e') \cdot (1/r) \approx H(x) \cdot k\]
+but that is contingent on \((e \cdot k + e') \cdot (1/r)\) being small. There are distributions for \(r\) where both \(r\) and \(r^{-1}\) are short, but it is not clear that those are good candidates for LWE secrets.
+
+Now, “every problem in computer science can be solved by adding another layer of indirection” and, using a well-known trick for [[https://ia.cr/2019/015][computing “full NTRU” keys]], this is what we ended up doing.
+
+1. Sample small ring elements $s$ and $t$. 
+2. Run the extended GCD algorithm to compute *some* \(u'\cdot s + v'\cdot t = 1\) (this may fail, restart if it does)
+3. Observe that \[(u' - r \cdot t)\cdot s + (v'+ r \cdot s)\cdot t = u'\cdot s - r \cdot t \cdot s + v'\cdot t + r \cdot s\cdot t = 1\]
+4. Use Babai’s rounding algorithm to find \(r\) s.t. \(u = u' - r \cdot t\) and \(v = v' + r \cdot s\) are small. That is, we end up with \(u \cdot s + v \cdot t = 1\) where \(u,s,v,t\) are all small;
+
+The protocol then becomes:
+#+begin_example
+Client ---> a_0 = H(x)⋅s + e_0, a_1 = H(x)⋅t + e_1 ---> Server
+       <--- b_0 = a_0⋅k + e_0', b_1 = a_1⋅k + e_1' <---
+
+H(x)⋅k ≈ u⋅b_0 + v⋅b_1
+#+end_example
+This works out because
+- \(u \cdot b_0 + v \cdot b_1 = u \cdot (a_0 \cdot k + e_0') + v \cdot (a_1 \cdot k + e_1')\)
+- \(u \cdot b_0 + v \cdot b_1 = u \cdot ((H(x) \cdot s + e_0) \cdot k + e_0') + v \cdot ((H(x) \cdot t + e_1) \cdot k + e_1')\)
+- \(u \cdot b_0 + v \cdot b_1 = (u \cdot s + v \cdot t) \cdot H(x) \cdot k + u \cdot e_0 \cdot k + u \cdot e_0' + v \cdot e_1 \cdot k + v \cdot e_1'\)  
+- \(u \cdot b_0 + v \cdot b_1 = H(x) \cdot k + u \cdot e_0 \cdot k + u \cdot e_0' + v \cdot e_1 \cdot k + v \cdot e_1' \approx H(x)\cdot k\)  
+
+Thus we can add another row to our DH-to-RLWE dictionary:
+
+| DH Land                                     | Ring-LWE Land                                                                                          |
+| <l30>                                       | <l30>                                                                                                  |
+|---------------------------------------------+--------------------------------------------------------------------------------------------------------|
+| \(g\)                                       | \(a\)                                                                                                  |
+| \(g^x\)                                     | \(a\cdot {s} + {e}\)                                                                                       |
+| \(g^x \cdot g^y = g^{x+y}\)                        | \((a\cdot {s} + {e_0}) + (a \cdot {t} + {e_1}) = a \cdot {(s+t)} + {e'}\)                                          |
+| \(g^x / g^y = g^{x-y}\)                        | \((a\cdot {s} + {e_0}) - (a \cdot {t} + {e_1}) = a \cdot {(s-t)} + {e'}\)                                          |
+| \((g^a)^b = (g^b)^a\)                       | \((a\cdot {s} + {e})\cdot {t} = (a\cdot {s} \cdot {t} + {e} \cdot {t}) \approx a\cdot {s} \cdot {t} \approx (a\cdot {t} + {e})\cdot {s}\)              |
+| \((g, g^a, g^b, g^{ab}) \approx_c (g, g^a, g^b, u)\) | \((a,\ a\cdot {s} + {e},\ a\cdot {t} + {d},\ a \cdot {s} \cdot {t} + {e'}) \approx_c (a,\ a\cdot {s} + {e},\ a\cdot {t} + {d},\ u)\) |
+| \((g^r)^{1/r}  = g\)                           | Find small \((u,s,v,t)\) s.t. \(u\cdot s + v \cdot t = 1\), then \(u \cdot (a \cdot s + e_0) + e'_0 + v \cdot (a \cdot t + e_1) + e'_1 \approx a\) |
+
+Just as in the additive blinding version, we still have to deal with the fact that multiplying our secret \(k\) by some untrusted \(a_0\) (and adding an error) is insecure, so the final version looks like this:
+
+#+begin_example
+Client ---> a_0 = H(x)⋅s + e_0, a_1 = H(x)⋅t + e_1 ---> Server
+            proof π_1 that a_0, a_1 are well-formed
+            
+       <--- b_0 = a_0⋅k + e_0', b_1 = a_1⋅k + e_1' <---
+            proof π_2 that b_0, b_1 are well-formed
+            
+H(x)⋅k ≈ u⋅b_0 + v⋅b_1
+#+end_example
+
+Those proofs \(\pi_1, \pi_2\) are also what makes our protocol completely impractical, especially \(\pi_1\) because it needs to attest e.g. \(H(x) \cdot s + e_0\) without revealing \(x, s, e_0\). Again, see Alex’ talk or our paper for the details.
+
