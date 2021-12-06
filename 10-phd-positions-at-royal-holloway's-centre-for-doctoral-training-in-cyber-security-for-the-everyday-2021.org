@@ -1,0 +1,44 @@
+#+TITLE: 10 PhD Positions at Royal Holloway's Centre for Doctoral Training in Cyber Security for the Everyday
+#+BLOG: martinralbrecht
+#+POSTID: 1966
+#+DATE: [2021-12-06 Mon 11:01]
+#+BLOG: martinralbrecht
+#+CATEGORY: cryptography
+#+TAGS: it security, cryptography, job, phd
+
+At Royal Holloway we are again taking applications for *ten* fully-funded PhD positions in Information Security. See the [[https://royalholloway.ac.uk/research-and-teaching/departments-and-schools/information-security/studying-here/centre-for-doctoral-training-in-cyber-security-for-the-everyday/][CDT website]] and the [[https://www.royalholloway.ac.uk/research-and-teaching/departments-and-schools/information-security/][ISG website]] for what kind of research we do. Also, check out our [[https://royalholloway.ac.uk/research-and-teaching/departments-and-schools/information-security/studying-here/centre-for-doctoral-training-in-cyber-security-for-the-everyday/][past and current CDT students]] and our [[https://seminars.isg.rhul.ac.uk/][research seminar schedule]] to get an idea of how broad and diverse the areas of information security are in which the ISG works. 
+
+More narrowly, to give you some idea of cryptographic research (and thus supervision capacity) in the [[https://cryptography.isg.rhul.ac.uk/][Cryptography Group]] at Royal Holloway: currently, we are nine permanent members of staff: [[https://dblp.org/pers/b/Blackburn:Simon_R=][Simon Blackburn]] (Maths), [[https://dblp.org/pid/54/7251.html][Saqib A. Kakvi]], [[https://dblp.uni-trier.de/pers/m/Martin:Keith][Keith Martin]], [[https://dblp.uni-trier.de/pers/m/Murphy:Sean][Sean Murphy]], [[https://dblp.uni-trier.de/pers/hd/n/Ng:Siaw=Lynn][Siaw-Lynn Ng]], [[https://dblp.org/pers/p/Player:Rachel][Rachel Player]], [[https://dblp.org/pers/q/Quaglia:Elizabeth_A=][Liz Quaglia]] and [[https://dblp.uni-trier.de/pers/a/Albrecht:Martin_R=][me]]. In addition, there are three postdocs working on cryptography and roughly 14 PhD students. Focus areas of cryptographic research currently are: lattice-based cryptography and applications, post-quantum cryptography, symmetric cryptography, statistics, access control, information-theoretic security and protocols.
+
+To give you a better sense of what is possible, here are some example projects. These are in no way prescriptive and serve to give some ideas:
+
+1. I am, as always, interested in exploring [[https://www.findaphd.com/phds/project/lattice-based-and-post-quantum-cryptography/?p137924][lattice-based and post-quantum cryptography]]; algorithms for solving the hard underlying protocols, efficient implementations, [[https://royalholloway.ac.uk/media/17300/isg_20-21_05.pdf][lifting pre-quantum constructions to the post-quantum era]].
+
+2. Together with my colleague [[https://rikkebjerg.gitlab.io/me/][Rikke Jensen]], we want to [[https://www.findaphd.com/phds/project/ethnographic-explorations-of-security-needs-and-practices-in-large-scale-protests/?p137917][explore security needs and practices in large-scale protests using ethnographic methods]]. We’ve done an interview-based (i.e. not ethnography-based) [[https://www.usenix.org/conference/usenixsecurity21/presentation/albrecht][pilot]] with protesters in Hong Kong and think [[https://martinralbrecht.wordpress.com/2020/07/10/what-does-secure-mean-in-information-security/][grounding cryptographic security notions]] in the needs, erm, on the ground, will prove rather fruitful.
+
+3. My colleague [[https://rachelplayer.github.io/][Rachel Player]] is looking at [[https://www.findaphd.com/phds/project/privacy-preserving-outsourced-computation/?p137921][privacy-preserving outsourced computation]], with a focus on (fully) homomorphic encryption.
+
+4. My (new) colleague [[https://dblp.org/pid/143/7311.html][Guido Schmitz]] uses [[https://www.findaphd.com/phds/project/formal-security-analysis-of-cryptographic-protocols/?p137926][formal methods to study cryptographic protocols]].
+
+Note that most of these positions are reserved for UK residents, which does, however, not mean nationality (see CDT website for details) and we can award three of our scholarships without any such constraint, i.e. international applicants. The studentship includes tuition fees and maintenance (£21,285 for each academic year).
+
+To apply, go [[https://royalholloway.ac.uk/research-and-teaching/departments-and-schools/information-security/studying-here/centre-for-doctoral-training-in-cyber-security-for-the-everyday/][here]]. Feel free to get in touch if you have questions about whether this is right for you. Official announcement follows.
+
+#+HTML:<!--more-->
+
+#+begin_quote
+We are delighted to announce that we are open for new applications to start in September 2022. 
+
+Please review the information below for full details on entrance requirements, eligibility and how to apply.
+
+The Centre was first established in 2013, and has as its main objective to develop cohorts of multidisciplinary researchers with a broad understanding of cyber security and a strong appreciation of the interplay between technical and social issues.
+
+Research in the CDT will address challenges concerning:
+
+- the technologies deployed in digital systems that people use, sometimes inadvertently, every day.
+- the everyday societal experience and practice of security.
+
+The CDT is centred around Royal Holloway's Information Security Group and partners with departments throughout the institution.  CDT researchers follow a four-year PhD programme. The first year consists of comprehensive multidisciplinary cyber security training. The remaining three years focus on research in an advanced topic in the field of cyber security. 
+
+In each annual cohort, we award approximately ten fully-funded PhD studentships (four years of enhanced stipend and fees). We welcome applications from candidates with undergraduate and/or masters qualifications in a wide range of technical and social disciplines of relevance to cyber security. 
+#+end_quote
