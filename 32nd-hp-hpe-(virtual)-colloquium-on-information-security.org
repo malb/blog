@@ -1,0 +1,68 @@
+#+TITLE: 32nd HP/HPE (Virtual) Colloquium On Information Security
+#+BLOG: martinralbrecht
+#+POSTID: 1969
+#+DATE: [2021-12-14 Tue 14:34]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: misc
+#+TAGS: misc, hpe-day, event, conference
+
+We got some great speakers lined up for the [[https://www.eventbrite.co.uk/e/the-32nd-hphpe-virtual-colloquium-on-information-security-tickets-212445057887][32nd HP/HPE (Virtual) Colloquium On Information Security]] on 16/17 December 2021. Details below.
+
+#+html:<!--more-->
+
+#+BEGIN_QUOTE
+We invite you to the 32nd HP/HPE Colloquium on Information Security, which will be held on Thursday 16th and Friday 17th December 2021, from 15:00 to 18:00 (UTC) on both days.
+
+This year, it will be a virtual event with exciting talks, poster sessions and online discussion and networking.
+
+Sponsorship from HP and HPE has enabled us to invite four distinguished speakers:
+
+Thursday 16th December:
+
+- [[https://alecmuffett.com/][Alec Muffett]]
+
+- [[https://nithyasambasivan.com/][Nithya Sambasivan]]
+
+Friday 17th December:
+
+- [[https://cmaurice.fr/][Clémentine Maurice]]
+
+- [[https://s2lab.cs.ucl.ac.uk/people/sullivan][Lorenzo Cavallaro]]
+
+Please find details about our speakers and their talks below.
+
+REGISTER NOW: Registration is free but mandatory — tickets will be allocated on a first come, first served basis. For now, attendance is by invitation only, but we will make some spaces available to the public at a later date.
+
+Joining instructions for Zoom and Zulip will be sent a week ahead of the event.
+
+We are looking forward to another enjoyable end-of-year event and we hope you will join us on both days.
+
+Martin Albrecht, Rikke Bjerg Jensen
+
+*Speakers*
+
+*Alec Muffet: “Ends” all the way down: how we misunderstand security, privacy, identity, and anonymity*
+
+Diffie says that encryption is possibly the only conceivable way to communicate a secret over distance through an untrusted medium. Less well understood is that end-to-end encryption is similarly perhaps the only way to maintain an entity relationship over both distance and time through an untrusted medium. We will demonstrate that this facility is critical for innovation because all concepts of identity are founded upon entity relationships, rather than upon traditional, blunt abstractions of attributes, credentials and claims. We will explore this model of information security, discussing how it impacts the future of technology and the public debate around end-to-end encryption.
+
+*Bio:* Alec is a full-time parent who has worked in host and network security for more than 30 years, with 25 of those in industry, holding senior engineering, architecture, and consulting roles at Sun Microsystems, Facebook, and Deliveroo. Alec is noted particularly for his work in password hashing, systems security, and end-to-end encrypted communications.
+
+*Nithya Sambasivan: The chilling effect of privacy and safety on non-Western women*
+
+The Internet isn’t gender equitable. In over two-thirds of countries worldwide, there are more male than female users online. In this talk, I will share findings on how safety & privacy threats limit women’s access and free expression online, drawn from our gender equity research in seven countries, spanning nearly 2 years. I will present novel and chilling abuse threats enabled by pervasive social media platforms, resulting in cyberstalking, impersonation and personal data leakages, and how our participants experienced and coped with the threats. I will also share how inadequate privacy on devices led participants to create privacy-preserving practices while sharing phones, such as locks, deleting traces, and avoiding specific digital activities. I will then discuss design implications towards a safer, more private Internet.
+
+*Bio:* Nithya Sambasivan is a Research Scientist at PAIR, Google Research and leads the human-computer interaction (HCI) group at the India lab. Her current research focuses on designing responsible AI systems by focusing on the humans of the AI/ML pipeline, specifically in the non-West. Her research is seminal to Google’s products and strategy for emerging markets, while also winning numerous best paper awards and nominations at top-tier computing conferences. Nithya has a PhD in Information and Computer Sciences from UC Irvine.
+
+*Clémentine Maurice: Evolution of micro-architectural attacks*
+
+Hardware is often considered as an abstract layer that behaves correctly, just executing instructions and outputing a result. However, the internal state of the hardware leaks information about the programs that are executing, paving the way for covert or side-channel attacks. In this presentation, we will cover the evolution of micro-architectural attacks. We will first have a look at a historical recap of past attacks and how the field evolved in the last years. We will then focus on recent trends, and will conclude with the different challenges and open questions that the field is facing.
+
+*Bio:* Clémentine Maurice is a full-time CNRS researcher in the Spirals team at CRIStAL (Lille, France). Prior to that, she obtained her PhD from Telecom ParisTech in October 2015, and then worked as a postdoctoral researcher at Graz University of Technology, Austria. Her research interests span software-based side-channel and fault attacks on commodity computers and servers, leveraging micro-architectural components. She also enjoys reverse-engineering processor parts. Beyond academic conferences, she presented her research at venues like the Chaos Communication Congress and BlackHat Europe.
+
+*Lorenzo Cavallaro: Dos and don’ts of machine learning in computer security*
+
+With the growing processing power of computing systems and the increased availability of massive datasets, machine learning algorithms have led to major breakthroughs in many different areas. This development has influenced computer security, inspiring many learning-based security systems, such as for malware detection, vulnerability discovery, and binary code analysis. Despite great potential, machine learning in security is prone to subtle pitfalls that undermine its performance and render learning-based systems potentially unsuitable for security tasks and practical deployment. In this talk, we look at common pitfalls in the design, implementation, and evaluation of learning-based security systems which we have identified across 30 papers from top-tier security conferences within the past decade. We further examine how individual pitfalls can lead to unrealistic and misleading results through a set of case studies and, as a remedy, derive actionable recommendations for avoiding them.
+
+*Bio:* Lorenzo grew up on pizza, spaghetti, and Phrack, first. Underground and academic research interests followed shortly thereafter. He is currently a Full Professor of Computer Science at UCL, where he leads the Systems Security Research Lab in the Information Security Research Group. Lorenzo’s research vision focuses on understanding and improving the effectiveness of machine learning methods for systems security in the presence of adversaries. In particular, he investigates the intertwined relationships of program analysis and machine learning and the implications they have towards realizing Trustworthy ML for Systems Security. Lorenzo has definitely never stopped wondering and having fun throughout.
+
+#+END_QUOTE
