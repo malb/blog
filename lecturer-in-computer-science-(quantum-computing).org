@@ -1,0 +1,55 @@
+#+TITLE: Lecturer (≅ Assistant Professor/Juniorprofessor/Maître de conférences) in Computer Science (Quantum Computing)
+#+BLOG: martinralbrecht
+#+POSTID: 1975
+#+DATE: [2021-12-17 Fri 13:37]
+#+OPTIONS: toc:nil num:nil todo:nil pri:nil tags:nil ^:nil
+#+CATEGORY: misc
+#+TAGS: job, quantum
+
+Our colleagues in [[https://www.royalholloway.ac.uk/research-and-teaching/departments-and-schools/computer-science/][Computer Science]] (I am a computer scientist by training but I sit in the [[https://www.royalholloway.ac.uk/research-and-teaching/departments-and-schools/information-security/][Department of Information Security]] aka the “Information Security Group”) are [[https://jobs.royalholloway.ac.uk/vacancy.aspx?ref=1221-502][looking to hire]] a lecturer (roughly equivalent to assistant professor, Juniorprofessor or maître de conférences) with a focus on quantum algorithms. I’m reproducing the full ad below, but here’s why I think that’s rather exciting and you should apply if that’s your jam.
+
+As you may know, several of us in the ISG work in the area of [[https://cryptography.isg.rhul.ac.uk/research-areas/][post-quantum cryptography]], an area adjacent to quantum computing. To give some examples, Simon and co-authors [[https://link.springer.com/chapter/10.1007%2F978-3-030-77870-5_9][showed]] that there are regimes where subexponential quantum attacks on SIDH exist; Eamonn, me and co-authors [[https://link.springer.com/chapter/10.1007%2F978-3-030-64834-3_20][gave]] resource estimates for running quantum sieving attacks on lattice-based schemes; Carlos and co-authors [[https://link.springer.com/chapter/10.1007%2F978-3-030-65277-7_17][gave]] polynomial-time quantum attacks (i.e. with superposition queries) against the CPA security of contracting Feistel structures; Chris [[https://www.sciencedirect.com/science/article/pii/S0167404820300997?via%3Dihub][discussed]] the impact of quantum computing on 5G; Fernando and co-authors [[https://link.springer.com/chapter/10.1007%2F978-3-030-45724-2_10][gave]] resource estimates (and Q# code!) for breaking AES on a quantum computer; Eamonn and co-authors [[https://link.springer.com/chapter/10.1007%2F978-3-030-34578-5_19][improved]] “low-memory” sieving in a quantum setting. We have a lively research community of PhD students, postdocs and staff. Speaking of PhD students, due to our [[https://www.royalholloway.ac.uk/research-and-teaching/departments-and-schools/information-security/studying-here/centre-for-doctoral-training-in-cyber-security-for-the-everyday/][CDT in Cyber Security of the Everyday]], we are currently recruiting 10 students per year across the field of information security, including the “quantum threat”. Moreover, as mentioned in the ad, the College considers quantum a [[https://intranet.royalholloway.ac.uk/staff/research/research-2021/advanced-quantum-science-and-technologies.aspx][key priority]]. Some of our physicists work in [[https://www.royalholloway.ac.uk/research-and-teaching/departments-and-schools/physics/research/research-groups/][various areas]] of quantum, some of our mathematicians work on [[https://www.royalholloway.ac.uk/research-and-teaching/departments-and-schools/mathematics/research/quantum-group/][quantum dynamics]].
+
+Feel free to reach out to me if you want to discuss what it is like working at Royal Holloway. For specifics about this post, reach out to [[https://pure.royalholloway.ac.uk/portal/en/persons/magnus-wahlstroem(a0940b3f-c15b-404f-b9f6-d26cb5664829).html][Magnus]] (HoD of CS). Also feel encouraged to disseminate this ad through your networks.
+
+#+html:<!--more-->
+
+#+begin_quote
+| Location:     | Egham                                                     |
+| Salary:       | £44,283 to £52,430 per annum - including London Allowance |
+| Post Type:    | Full Time                                                 |
+| Closing Date: | 23.59 hours GMT on Sunday 13 February 2022                |
+| Reference:    | [[https://jobs.royalholloway.ac.uk/vacancy.aspx?ref=1221-502][1221-502]]                                                  |
+
+The Department of Computer Science at Royal Holloway is looking to appoint multiple academic members of staff to support its research and teaching.
+
+We carry out outstanding research and deliver excellent teaching at both undergraduate and postgraduate level: we ranked 11th in the Research Excellence Framework (REF 2014) for the quality of our research output, and in teaching we are typically in the top 10 in the UK for graduate prospects (e.g., Guardian 2022).
+
+Over the past seven years, we have undertaken an ambitious plan of expansion: eighteen new academic members of staff were appointed, new undergraduate and integrated-masters programmes were created, and multiple new postgraduate-taught programmes were launched. We have strong research groups in the broad areas of Intelligent Systems, Machine Learning, Algorithms and Complexity, and Programming Languages and Systems, as well as good connections with the Information Security Group. We are also involved in multiple inter/multidisciplinary activities, from electrical engineering to psychology and social sciences. Our research strength generates significant interest and collaborative opportunity from universities and third stream partners. 
+
+Recently, Royal Holloway launched a research catalyst “Advanced Quantum Science and Technologies,” with multiple connections to Computer Science, Physics, Mathematics, and the Information Security Group, and the Computer Science department is seeking to strengthen its research activities via increased engagement in the catalyst.
+
+We are therefore recruiting academic members of staff with research expertise in Quantum Computing, to complement and extend the department’s research profile. We welcome applicants with expertise in any area of quantum computing, including but not limited to quantum algorithms, quantum information theory, quantum simulation, and potential application areas such as quantum linear algebra and quantum machine learning. We also welcome exceptional candidates from all disciplines in Computer Science, who can contribute to the new catalysts.
+
+The successful candidate will help us seek and seize opportunities for research funding and industrial engagement. They will hold a PhD or equivalent, and will have a proven research record with a solid background in the underlying theory. Experience in attracting funding, engaging with industry, or contributing to outreach activities would also be valuable.
+
+The appointee will be expected to contribute across the full range of departmental activities, including undergraduate and postgraduate teaching and the supervision of mainstream projects over a wide range of topics. In particular, duties and responsibilities of this post include: conducting individual or collaborative research projects; producing high-quality outputs for publication in high-profile journals or conference proceedings; applying for research funding; delivering high-quality teaching to all levels of students; supervising research postgraduate students. 
+
+This is a full-time and permanent (tenured) post, available from April 2022 or as soon as possible thereafter. The post is based in Egham, Surrey, within commuting distance from London, Europe’s most dynamic technology hub.
+
+In return we offer a highly competitive rewards and benefits package including:
+
+- Generous annual leave entitlement 
+- Training and Development opportunities
+- Pension Scheme with generous employer contribution 
+- Various schemes including Cycle to Work, Season Ticket Loans and help with the cost of Eyesight testing. 
+- Free parking 
+
+For further details of the Department see royalholloway.ac.uk/computerscience or contact the Head of Department at Magnus.Wahlstrom@rhul.ac.uk. For further details on the Royal Holloway research catalysts see intranet.royalholloway.ac.uk/staff/research/research-2021/research-catalysts.aspx
+
+To view further details of this post and to apply please visit https://jobs.royalholloway.ac.uk. For queries on the application process the Human Resources Department can be contacted by email at: recruitment@rhul.ac.uk 
+
+- Please quote the reference: 1221-502
+- Closing Date:   *Midnight, 13th February 2022*
+- Interview Date: *W/C 7th March 2022*
+#+end_quote
